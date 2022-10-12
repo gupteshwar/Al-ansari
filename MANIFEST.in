@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include al_ansari *.css
+recursive-include al_ansari *.csv
+recursive-include al_ansari *.html
+recursive-include al_ansari *.ico
+recursive-include al_ansari *.js
+recursive-include al_ansari *.json
+recursive-include al_ansari *.md
+recursive-include al_ansari *.png
+recursive-include al_ansari *.py
+recursive-include al_ansari *.svg
+recursive-include al_ansari *.txt
+recursive-exclude al_ansari *.pyc
