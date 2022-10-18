@@ -1,0 +1,62 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2022-07-06 12:39:56.167936",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "json": "{\"filters\":[[\"Employee\",\"status\",\"=\",\"Active\",false]],\"fields\":[[\"name\",\"Employee\"],[\"docstatus\",\"Employee\"],[\"employee_name\",\"Employee\"],[\"first_name\",\"Employee\"],[\"date_of_birth\",\"Employee\"],[\"place_of_birth\",\"Employee Dependants\"],[\"date_of_joining\",\"Employee\"],[\"group\",\"Employee\"],[\"scheduled_confirmation_date\",\"Employee\"],[\"contract_end_date\",\"Employee\"],[\"grade\",\"Employee\"],[\"designation\",\"Employee\"],[\"branch\",\"Employee\"],[\"department\",\"Employee\"],[\"job_category\",\"Employee\"],[\"company\",\"Employee\"],[\"holiday_list\",\"Employee\"],[\"blood_group\",\"Employee\"],[\"mol\",\"Employee\"],[\"spo_flex\",\"Employee\"],[\"salary_mode\",\"Employee\"],[\"bank_code\",\"Employee\"],[\"bank_ac_no\",\"Employee\"],[\"gender\",\"Employee\"],[\"nationality\",\"Employee\"],[\"religion\",\"Employee\"],[\"cell_number\",\"Employee\"],[\"document_type\",\"Employee Documents\"],[\"document_number\",\"Employee Documents\"],[\"issue_date\",\"Employee Documents\"],[\"expiry_date\",\"Employee Documents\"]],\"order_by\":\"`tabEmployee`.`modified` desc\",\"add_totals_row\":0,\"page_length\":20,\"column_widths\":{\"name\":120,\"employee_name\":120,\"first_name\":120,\"date_of_birth\":120,\"Employee Dependants:place_of_birth\":120,\"date_of_joining\":120,\"group\":120,\"scheduled_confirmation_date\":120,\"contract_end_date\":120,\"grade\":120,\"designation\":120,\"branch\":120,\"department\":120,\"job_category\":120,\"company\":120,\"holiday_list\":120,\"blood_group\":120,\"mol\":120,\"spo_flex\":120,\"salary_mode\":120,\"bank_code\":120,\"bank_ac_no\":120,\"gender\":120,\"nationality\":120,\"religion\":120,\"cell_number\":120,\"Employee Documents:document_type\":120,\"Employee Documents:document_number\":120,\"Employee Documents:issue_date\":120,\"Employee Documents:expiry_date\":120},\"group_by\":null}",
+ "letter_head": "Al Yusr International LLC",
+ "modified": "2022-10-18 14:00:51.309119",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Employee Details",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "",
+ "ref_doctype": "Employee",
+ "report_name": "Employee Details",
+ "report_type": "Report Builder",
+ "roles": [
+  {
+   "role": "HR Manager"
+  },
+  {
+   "role": "Employee"
+  },
+  {
+   "role": "HR User"
+  },
+  {
+   "role": "Al Yusr Admin Department"
+  },
+  {
+   "role": "Employee Self Service"
+  },
+  {
+   "role": "Admin Assistant"
+  },
+  {
+   "role": "HR Seperation Admin"
+  },
+  {
+   "role": "HR Employee Onboarding"
+  },
+  {
+   "role": "Interviewer"
+  },
+  {
+   "role": "Recruiter"
+  },
+  {
+   "role": "Leave Approver"
+  },
+  {
+   "role": "Head of Department"
+  }
+ ]
+}

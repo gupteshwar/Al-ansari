@@ -1,0 +1,46 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2022-06-29 10:41:21.372794",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Al Yusr International LLC",
+ "modified": "2022-10-18 13:59:17.803653",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Passport expiry on next 6 months",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "SELECT tabEmployee.employee,employee_name,company,visa_company,document_type,document_number,\r\nissue_date,expiry_date\r\nFROM tabEmployee,`tabEmployee Documents`\r\nWHERE\r\ntabEmployee.name = `tabEmployee Documents`.parent\r\nand `document_type` ='Passport'\r\nand date(`expiry_date`) >=date(now())\r\nand date(`expiry_date`) <=DATE_ADD(date(now()), INTERVAL 6 MONTH)\r\nAND \r\ntabEmployee.status = 'active'",
+ "ref_doctype": "Employee",
+ "report_name": "Passport expiry on next 6 months",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "HR Manager"
+  },
+  {
+   "role": "Employee"
+  },
+  {
+   "role": "HR User"
+  },
+  {
+   "role": "Al Yusr Admin Department"
+  },
+  {
+   "role": "Employee Self Service"
+  },
+  {
+   "role": "Admin Assistant"
+  },
+  {
+   "role": "HR Seperation Admin"
+  }
+ ]
+}

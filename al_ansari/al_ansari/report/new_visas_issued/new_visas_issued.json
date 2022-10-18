@@ -1,0 +1,40 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2022-05-31 08:27:05.791889",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Al Yusr International LLC",
+ "modified": "2022-10-18 14:00:16.059808",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "New Visas Issued",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "SELECT tabEmployee.employee,employee_name,company,visa_company,document_type,document_number,issue_date,expiry_date\r\nFROM\r\ntabEmployee,`tabEmployee Documents`\r\nWHERE\r\ntabEmployee.name = `tabEmployee Documents`.parent\r\nAND\r\nYEAR(issue_date) = YEAR(CURDATE())\r\nAND\r\nMONTHNAME(issue_date) = MONTHNAME(CURDATE())",
+ "ref_doctype": "Employee",
+ "report_name": "New Visas Issued",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "HR Manager"
+  },
+  {
+   "role": "Employee"
+  },
+  {
+   "role": "HR User"
+  },
+  {
+   "role": "Employee Self Service"
+  },
+  {
+   "role": "Al Yusr Admin Department"
+  }
+ ]
+}

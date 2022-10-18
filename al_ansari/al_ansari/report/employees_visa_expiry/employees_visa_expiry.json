@@ -1,0 +1,37 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2022-05-29 20:14:42.753979",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Al Yusr International LLC",
+ "modified": "2022-10-18 13:58:37.375082",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Employees Visa Expiry",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "SELECT tabEmployee.employee,employee_name,company,visa_company,document_type,document_number,issue_date,expiry_date\r\nFROM\r\ntabEmployee,`tabEmployee Documents`\r\nWHERE\r\ntabEmployee.name = `tabEmployee Documents`.parent\r\nAND \r\nexpiry_date <= CURDATE()\r\nAND \r\ntabEmployee.status = 'active'",
+ "ref_doctype": "Employee",
+ "report_name": "Employees Visa Expiry",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "HR Manager"
+  },
+  {
+   "role": "Employee"
+  },
+  {
+   "role": "HR User"
+  },
+  {
+   "role": "Employee Self Service"
+  }
+ ]
+}
