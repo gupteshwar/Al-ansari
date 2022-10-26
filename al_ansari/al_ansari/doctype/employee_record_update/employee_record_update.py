@@ -5,7 +5,16 @@ import frappe
 from frappe.model.document import Document
 
 class EmployeeRecordUpdate(Document):
-	pass
+	def before_submit(self):
+		
+		# to update record property in Employee Master
+		emp_rec = frappe.get_doc('Employee',{'name':self.employee})
+		# emp_rec.status = 'Left'
+
+		for i in self.update_details:
+			emp_rec.update({i.fieldname:i.new})
+		emp_rec.save()
+		frappe.msgprint("Employee record properties updated successfully")
 
 @frappe.whitelist()
 def get_employee_fields_label():
@@ -25,6 +34,9 @@ def get_employee_fields_label():
 			"reports_to",
 			"leave_policy",
 			"company_email",
+			"first_name",
+			"middle_name",
+			"last_name"
 		]:
 			fields.append({"value": df.fieldname, "label": df.label})
 	return fields

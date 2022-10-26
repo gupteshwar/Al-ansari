@@ -35,6 +35,13 @@ app_license = "MIT"
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
+doctype_js = {
+	"Employee" : "public/js/employee.js",
+	"Leave Application": "public/js/leave_application.js",
+	"Employee Checkin": "public/js/employee_checkin.js",
+	}
+
+fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
 
 # Home Pages
 # ----------
@@ -102,6 +109,11 @@ app_license = "MIT"
 #		"on_trash": "method"
 #	}
 # }
+doc_events = {
+	"Leave Application": {
+		"validate":["al_ansari.al_ansari.customization.leave_application.update_employee_status"]
+	}
+}
 
 # Scheduled Tasks
 # ---------------
