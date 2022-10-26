@@ -1,0 +1,45 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-10-19 11:14:14.007543",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "start_day",
+  "end_day",
+  "fraction_of_daily_salary_per_leave"
+ ],
+ "fields": [
+  {
+   "fieldname": "start_day",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Start Day"
+  },
+  {
+   "fieldname": "end_day",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "End Day"
+  },
+  {
+   "fieldname": "fraction_of_daily_salary_per_leave",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Fraction of Daily Salary Per Leave",
+   "precision": "2"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-10-19 11:17:28.505902",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Partial Paid Leave Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

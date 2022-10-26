@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:ERU-{employee}-{###}",
  "creation": "2022-10-18 09:04:38.357958",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -46,7 +47,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-10-18 09:09:47.009177",
+ "modified": "2022-10-19 08:36:17.001546",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Employee Record Update",
