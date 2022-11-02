@@ -1,0 +1,88 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-11-01 11:43:12.260182",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee_id",
+  "employee_name",
+  "no_of_lwp",
+  "no_of_working_days",
+  "column_break_5",
+  "deduction_ratio",
+  "el_allocated",
+  "to_be_deducted",
+  "to_be_allocated"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Employee ID",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "Employee Name"
+  },
+  {
+   "fieldname": "no_of_lwp",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "No of LWP",
+   "precision": "2"
+  },
+  {
+   "fieldname": "no_of_working_days",
+   "fieldtype": "Float",
+   "label": "No of working days",
+   "precision": "2"
+  },
+  {
+   "fieldname": "deduction_ratio",
+   "fieldtype": "Float",
+   "label": "Deduction Ratio",
+   "precision": "2"
+  },
+  {
+   "fieldname": "el_allocated",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "EL allocated",
+   "precision": "2"
+  },
+  {
+   "fieldname": "to_be_deducted",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "to be deducted",
+   "precision": "2"
+  },
+  {
+   "fieldname": "to_be_allocated",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "to be allocated",
+   "precision": "2"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-11-01 11:45:39.099397",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Deduction Ratio",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

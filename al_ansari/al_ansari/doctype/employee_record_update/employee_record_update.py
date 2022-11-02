@@ -36,7 +36,9 @@ def get_employee_fields_label():
 			"company_email",
 			"first_name",
 			"middle_name",
-			"last_name"
+			"last_name",
+			"project",
+			"date_of_joining"
 		]:
 			fields.append({"value": df.fieldname, "label": df.label})
 	return fields

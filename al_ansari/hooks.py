@@ -39,6 +39,7 @@ doctype_js = {
 	"Employee" : "public/js/employee.js",
 	"Leave Application": "public/js/leave_application.js",
 	"Employee Checkin": "public/js/employee_checkin.js",
+	"Shift Type": "public/js/shift_type.js",
 	}
 
 fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
@@ -110,9 +111,18 @@ fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Scrip
 #	}
 # }
 doc_events = {
+	"Employee": {
+		"before_save": ["al_ansari.al_ansari.customization.employee.before_save"]
+	},
+	"Expense Claim": {
+		"after_save": ["al_ansari.al_ansari.customization.expense_claim.transfer_child_attachment_to_parent"]
+	},
 	"Leave Application": {
 		"validate":["al_ansari.al_ansari.customization.leave_application.update_employee_status"]
-	}
+	},
+	"Employee Transfer": {
+		"before_submit": ["al_ansari.al_ansari.customization.employee_transfer.before_submit"]
+	},
 }
 
 # Scheduled Tasks
@@ -136,6 +146,16 @@ doc_events = {
 #	]
 # }
 
+scheduler_events = {
+	"cron": {
+			"2 * * * *": [
+				"al_ansari.al_ansari.customization.leave_application.check_update_working_status_for_leave"
+			]
+		},
+	# "daily": [
+	# 	"al_ansari.al_ansari.customization.leave_application.check_update_working_status_for_leave"
+	# ]
+}
 # Testing
 # -------
 
@@ -144,9 +164,10 @@ doc_events = {
 # Overriding Methods
 # ------------------------------
 #
-# override_whitelisted_methods = {
-#	"frappe.desk.doctype.event.event.get_events": "al_ansari.event.get_events"
-# }
+override_whitelisted_methods = {
+	# "frappe.desk.doctype.event.event.get_events": "al_ansari.event.get_events"
+	"erpnext.hr.utils.get_employee_fields_label": "al_ansari.al_ansari.customization.leave_application.get_employee_fields_label"
+}
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,

@@ -1,0 +1,52 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-10-27 08:55:47.193128",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "payroll_period",
+  "leave_type",
+  "count"
+ ],
+ "fields": [
+  {
+   "fieldname": "payroll_period",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Payroll Period",
+   "options": "Payroll Period",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "leave_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Leave Type",
+   "options": "Leave Type",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "count",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Count",
+   "precision": "2",
+   "read_only": 1,
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-10-27 09:10:45.740223",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Leave Count Detail",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
