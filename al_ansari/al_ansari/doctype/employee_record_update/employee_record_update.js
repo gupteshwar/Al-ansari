@@ -24,7 +24,7 @@ frappe.ui.form.on('Employee Record Update', {
 				method: 'al_ansari.al_ansari.doctype.employee_record_update.employee_record_update.get_employee_fields_label',
 				callback: function(r) {
 					if(r.message){
-						show_dialog(frm, 'update_detils', r.message);
+						show_dialog(frm, 'update_details', r.message);
 					}
 				}
 			});
