@@ -1,0 +1,63 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-11-11 12:01:32.542126",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee",
+  "shift_hours",
+  "actual_hours",
+  "productive_hours",
+  "overtime_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Employee",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "shift_hours",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Shift Hours",
+   "precision": "2"
+  },
+  {
+   "fieldname": "actual_hours",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Actual Hours",
+   "precision": "2"
+  },
+  {
+   "fieldname": "productive_hours",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Productive Hours",
+   "precision": "2"
+  },
+  {
+   "fieldname": "overtime_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Overtime Amount",
+   "precision": "3"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-11-11 12:02:01.949777",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Overtime Calculator Detail",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

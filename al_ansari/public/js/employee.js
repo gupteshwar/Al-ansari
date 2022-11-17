@@ -10,6 +10,13 @@ frappe.ui.form.on('Employee', {
 				};
 			});
 		}
+	},
+	validate: function(frm) {
+		if(frm.doc.hourly_rate) {
+			frm.set_value('h_ot_rate',frm.doc.hourly_rate * frm.doc.h_ot_multiplier )
+			frm.set_value('nh_ot_rate',frm.doc.hourly_rate * frm.doc.nh_ot_multiplier )
+
+		}
 	}
 });
 

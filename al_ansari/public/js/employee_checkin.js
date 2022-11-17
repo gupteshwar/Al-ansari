@@ -3,6 +3,53 @@ frappe.ui.form.on('Employee Checkin', {
 		frm.toggle_reqd('latitude',1)
 		frm.toggle_reqd('longitude',1)
 	},
+	refresh: function(frm) {
+		frm.add_custom_button(__('Capture Photo'), function() {
+			frm.events.capture_photo()
+		});	
+		if (!frm.doc.__islocal) {
+			frm.set_df_property("photo","hidden",0)
+			frm.set_df_property("check_in","hidden",0)
+			frm.set_df_property("profile_pic","hidden",0)
+		}
+		else
+		{
+			frm.set_df_property("photo","hidden",1)
+			frm.set_df_property("check_in","hidden",1)
+			frm.set_df_property("profile_pic","hidden",1)
+		}
+		document.getElementsByClassName("btn-attach")[0].style.display = "none";
+		document.getElementsByClassName("btn-xs")[0].style.display = "none";
+		if(frm.doc.photo)
+		{
+			frm.get_field("profile_pic").$wrapper.html(`<img src=${frm.doc.photo} width="150" height="200"><br><br><br>`);
+		}
+		else
+		{
+			frm.get_field("profile_pic").$wrapper.html(``);
+		}
+	},
+	capture_photo: () => {
+		const capture = new frappe.ui.Capture({
+			animate: false,
+			  error: true
+		})
+		capture.show()
+		capture.submit(data => {
+			cur_frm.call({
+				method: "al_ansari.al_ansari.customization.employee_checkin.upload_photo",
+				args: {
+					filedata: data
+				},
+				callback: function(r) {
+					if (r.message=="done") {
+						cur_frm.set_value("photo","");
+					}
+				}
+			});
+		})
+
+	},
 	log_type: function(frm) {
 		if(frm.doc.employee) {
 			frappe.call({
@@ -11,14 +58,35 @@ frappe.ui.form.on('Employee Checkin', {
 			        'doctype': 'Employee',
 			        'filters': {'name': frm.doc.employee},
 			        'fieldname': [
-			            'branch'
+			            'branch',
+			            'default_shift'
 			        ]
 			    },
 			    async:false,
 			    callback: function(r) {
 			        if (!r.exc) {
-			            validate_corordinates(frm,r.message.branch)
+			        	console.log(r.message)
+			            validate_corordinates(frm)
+			            frm.set_value('shift',r.message.default_shift)
 			        }
+			    }
+			});
+		}
+	},
+	validate: function(frm) {
+		if(frm.doc.log_type == 'OUT') {
+			// calculate the actual hours and validate working day
+			frappe.call({
+			    method: "al_ansari.al_ansari.customization.employee_checkin.calculate_actual_hours", //dotted path to server method
+			    args: {
+			    	"employee": frm.doc.employee,
+			    },
+			    callback: function(r) {
+			        // code snippet
+			        console.log("calculate_actual_hours==" + r.message["employee"])
+			        frm.set_value('overtime_rate', r.message["ot_rate"])
+			        frm.set_value('productive_hours',r.message["productive_hours_ratio"])
+			        frm.set_value('actual_hours', r.message["actual_hours"])
 			    }
 			});
 		}
@@ -27,36 +95,15 @@ frappe.ui.form.on('Employee Checkin', {
 
 var validate_corordinates = function(frm,branch){
 	// validate the Geolocation co-ordinates
+
 		frappe.call({
-		    method: 'frappe.client.get_value',
+		    method: "al_ansari.al_ansari.customization.employee_checkin.validate_login_coordinates",
 		    args: {
-		        'doctype': 'Branch Location',
-		        'filters': {'name':branch},
-		        'fieldname': [
-		            'from_latitude',
-		            'to_latitude',
-		            'from_longitude',
-		            'to_longitude'
-		        ]
+		        'frm': frm.doc
 		    },
-		    async:false,
 		    callback: function(r) {
 		        if (!r.exc) {
-		            // logic to check whether between the co-ordinates else set the field to blank
-		            var longi = Number(frm.doc.latitude)
-		            var lati = Number(frm.doc.longitude)
-		            var lati_1 = Number(r.message.from_latitude)
-		            var lati_2 = Number(r.message.to_latitude)
-		            var longi_1 = Number(r.message.from_longitude)
-		            var longi_2 = Number(r.message.to_longitude)
-		            console.log(lati_1+" "+lati_2+" "+longi_1+" "+longi_2)
-		            if(lati >= Math.min(lati_1,lati_2) && lati <= Math.max(lati_1,lati_2) && longi >= Math.min(longi_1,longi_2) && longi <= Math.max(longi_1,longi_2)){
-		            	console.log("OK")
-		            } else {
-		            	frm.set_value('latitude','')
-		            	frm.set_value('longitude','')
-		        		frappe.throw("Please ensure that you are within the branch locations")
-		            }
+		            console.log(r.message)
 		        }
 		    }
 		});

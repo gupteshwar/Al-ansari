@@ -40,6 +40,8 @@ doctype_js = {
 	"Leave Application": "public/js/leave_application.js",
 	"Employee Checkin": "public/js/employee_checkin.js",
 	"Shift Type": "public/js/shift_type.js",
+	"Expense Claim": "public/js/expense_claim.js",
+	"Leave Type": "public/js/leave_type.js",
 	}
 
 fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
@@ -112,16 +114,21 @@ fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Scrip
 # }
 doc_events = {
 	"Employee": {
-		"before_save": ["al_ansari.al_ansari.customization.employee.before_save"]
+		"before_save": ["al_ansari.al_ansari.customization.employee.before_save"],
 	},
 	"Expense Claim": {
-		"after_save": ["al_ansari.al_ansari.customization.expense_claim.transfer_child_attachment_to_parent"]
+		"before_submit": ["al_ansari.al_ansari.customization.expense_claim.transfer_child_attachment_to_parent"]
 	},
 	"Leave Application": {
-		"validate":["al_ansari.al_ansari.customization.leave_application.update_employee_status"]
+		# "validate":["al_ansari.al_ansari.customization.sleave_application.update_employee_status"],
+		"before_submit": ["al_ansari.al_ansari.customization.leave_application.update_employee_status"]
 	},
 	"Employee Transfer": {
 		"before_submit": ["al_ansari.al_ansari.customization.employee_transfer.before_submit"]
+	},
+	"Employee Checkin": {	
+		"after_insert": ["al_ansari.al_ansari.customization.employee_checkin.after_insert"],
+		"validate": ["al_ansari.al_ansari.customization.employee_checkin.validate"]
 	},
 }
 

@@ -4,5 +4,5 @@
 # import frappe
 import unittest
 
-class TestOvertimeHourlyRate(unittest.TestCase):
+class TestOvertimeCalculatorDetail(unittest.TestCase):
 	pass
