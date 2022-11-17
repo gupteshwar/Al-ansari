@@ -6,3 +6,10 @@ frappe.ui.form.on('Partial Paid Leave', {
 
 	// }
 });
+
+frappe.ui.form.on('Partial Paid Leave Item', {
+	fraction_of_daily_salary_per_leave: function(frm,cdt,cdn) {
+		var d = locals[cdt][cdn];
+		frappe.model.set_value(d.doctype, d.name, 'deduction', (1 - d.fraction_of_daily_salary_per_leave));
+	}
+});

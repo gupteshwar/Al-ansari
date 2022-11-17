@@ -9,7 +9,7 @@
   "from_date",
   "to_date",
   "column_break_3",
-  "get_applicants",
+  "get_employees",
   "section_break_5",
   "deduction_ratio"
  ],
@@ -29,11 +29,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "get_applicants",
-   "fieldtype": "Button",
-   "label": "Get Applicants"
-  },
-  {
    "fieldname": "section_break_5",
    "fieldtype": "Section Break"
   },
@@ -42,11 +37,16 @@
    "fieldtype": "Table",
    "label": "Deduction Ratio",
    "options": "Deduction Ratio"
+  },
+  {
+   "fieldname": "get_employees",
+   "fieldtype": "Button",
+   "label": "Get Employees"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-11-01 11:44:47.024336",
+ "modified": "2022-11-03 11:37:40.055160",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Earned Leave Deductions",
