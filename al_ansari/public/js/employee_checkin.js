@@ -73,7 +73,7 @@ frappe.ui.form.on('Employee Checkin', {
 			});
 		}
 	},
-	validate: function(frm) {
+	before_save: function(frm) {
 		if(frm.doc.log_type == 'OUT') {
 			// calculate the actual hours and validate working day
 			frappe.call({
