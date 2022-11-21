@@ -4,29 +4,31 @@ from frappe.handler import uploadfile
 from frappe.utils import add_months, cint, flt, getdate, time_diff_in_hours
 
 def after_insert(doc,method):
-# 	if frappe.cache().get_value('photo_filedata'):
-# 		docname = doc.name
-# 		filedata = frappe.cache().get_value('photo_filedata')
-# 		photoUpload(docname,filedata)
-# 		data = uploadfile()
-# 		frappe.db.set_value("Employee Checkin",docname,"photo",data.get('file_url'))
-# 		frappe.db.set_value("Employee Checkin",docname,"is_photo",1)
-# 		frappe.cache().set_value("photo_filedata", "")
-	actual_hours,rec = calculate_actual_hours_for_day(doc.employee)
-	if(doc.name == rec):
-		doc.actual_hours = actual_hours
-		doc.save()
-
-def validate(doc,method):
 	if frappe.cache().get_value('photo_filedata'):
 		docname = doc.name
 		filedata = frappe.cache().get_value('photo_filedata')
 		photoUpload(docname,filedata)
 		data = uploadfile()
-		doc.photo = data.get('file_url')
+		frappe.db.set_value("Employee Checkin",docname,"photo",data.get('file_url'))
+		frappe.db.set_value("Employee Checkin",docname,"is_photo",1)
 		frappe.cache().set_value("photo_filedata", "")
-	else:
-		frappe.throw("Photo Capture mandatory")
+	if doc.log_type == "OUT":
+		actual_hours,rec = calculate_actual_hours_for_day(doc.employee)
+		if(doc.name == rec):
+			doc.actual_hours = actual_hours
+			doc.save()
+
+def validate(doc,method):
+	if not doc.photo:
+		if frappe.cache().get_value('photo_filedata'):
+			docname = doc.name
+			filedata = frappe.cache().get_value('photo_filedata')
+			photoUpload(docname,filedata)
+			data = uploadfile()
+			doc.photo = data.get('file_url')
+			frappe.cache().set_value("photo_filedata", "")
+		else:
+			frappe.throw("Photo Capture mandatory")
 
 
 @frappe.whitelist()

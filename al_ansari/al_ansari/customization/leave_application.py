@@ -60,10 +60,9 @@ def update_employee_status(doc,method=None):
 						frac_of_day += item.fraction_of_daily_salary_per_leave
 				ct +=1
 				c+=1
-				print("frac_of_day==",frac_of_day)
+				# print("frac_of_day==",frac_of_day)
 			doc.fraction_of_daily_wage = c - frac_of_day
-			print("IF",doc.fraction_of_daily_wage)
-			# frappe.throw("dk")
+			# print("IF",doc.fraction_of_daily_wage)
 		else:
 			doc.start_day = 0
 			doc.end_day = date_diff(doc.to_date,doc.from_date) +1
@@ -78,9 +77,8 @@ def update_employee_status(doc,method=None):
 				ct +=1
 				c+=1
 			doc.fraction_of_daily_wage = c - frac_of_day
-			print("start_day",doc.start_day)
-			print("end_day",doc.end_day)
-		# frappe.throw("Hii")
+			# print("start_day",doc.start_day)
+			# print("end_day",doc.end_day)
 
 # to be excuted through scheduler crons
 def check_update_working_status_for_leave():

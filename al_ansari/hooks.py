@@ -117,7 +117,8 @@ doc_events = {
 		"before_save": ["al_ansari.al_ansari.customization.employee.before_save"],
 	},
 	"Expense Claim": {
-		"before_submit": ["al_ansari.al_ansari.customization.expense_claim.transfer_child_attachment_to_parent"]
+		"before_submit": ["al_ansari.al_ansari.customization.expense_claim.transfer_child_attachment_to_parent"],
+		"validate": ["al_ansari.al_ansari.customization.expense_claim.check_validation"]
 	},
 	"Leave Application": {
 		# "validate":["al_ansari.al_ansari.customization.sleave_application.update_employee_status"],
