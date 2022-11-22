@@ -24,6 +24,7 @@ def check_validation(doc,method=None):
 			where expense_date = %s
 			and supplier = %s
 			and supplier_invoice_number = %s
+			and docstatus = 1
 		""",(expense.expense_date,expense.supplier,expense.supplier_invoice_number),as_dict=1)
 		if len(exp_rec)>0:
 			frappe.throw("Please ensure that the line entries for fields Date, Supplier and Supplier Invoice in the table are not duplicate")

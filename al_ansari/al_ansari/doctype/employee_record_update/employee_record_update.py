@@ -3,6 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
+from datetime import datetime
 
 class EmployeeRecordUpdate(Document):
 	def before_submit(self):
@@ -12,7 +13,10 @@ class EmployeeRecordUpdate(Document):
 		# emp_rec.status = 'Left'
 
 		for i in self.update_details:
-			emp_rec.update({i.fieldname:i.new})
+			if i.fieldname == 'date_of_joining':
+				emp_rec.update({i.fieldname:datetime.strptime(i.new, '%d-%m-%Y')})
+			else:	
+				emp_rec.update({i.fieldname:i.new})
 		emp_rec.save()
 		frappe.msgprint("Employee record properties updated successfully")
 
