@@ -27,8 +27,8 @@ def validate(doc,method):
 			data = uploadfile()
 			doc.photo = data.get('file_url')
 			frappe.cache().set_value("photo_filedata", "")
-		else:
-			frappe.throw("Photo Capture mandatory")
+		# else:
+		# 	frappe.throw("Photo Capture mandatory")
 
 
 @frappe.whitelist()
@@ -81,7 +81,7 @@ def calculate_actual_hours(employee):
 
 		record[0]['shift_hours'] = shift_hours or 0
 		record[0]['productive_hours_ratio'] = productive_hours_ratio or 0
-		print("record[0]==",record[0])
+		# print("record[0]==",record[0])
 
 		return record[0]
 

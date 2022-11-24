@@ -83,7 +83,7 @@ frappe.ui.form.on('Employee Checkin', {
 			    },
 			    callback: function(r) {
 			        // code snippet
-			        console.log("calculate_actual_hours==" + r.message["employee"])
+			        console.log("calculate_actual_hours==" + r.message["actual_hours"])
 			        frm.set_value('overtime_rate', r.message["ot_rate"])
 			        frm.set_value('productive_hours',r.message["productive_hours_ratio"])
 			        frm.set_value('actual_hours', r.message["actual_hours"])

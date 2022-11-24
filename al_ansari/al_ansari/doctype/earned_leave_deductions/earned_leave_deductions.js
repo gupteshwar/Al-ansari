@@ -6,7 +6,7 @@ frappe.ui.form.on('Earned Leave Deductions', {
         // make negative entry in ledger
         frm.add_custom_button(__("Make Leave Allocation"), function() {
             frappe.call({
-                method: "al_ansari.al_ansari.doctype.earned_leave_deductions.earned_leave_deductions.negative_ledger_entry", //dotted path to server method
+                method: "al_ansari.al_ansari.doctype.earned_leave_deductions.earned_leave_deductions.negative_leave_allocation", //dotted path to server method
                 args: {
                     "frm" : frm.doc
                 },
