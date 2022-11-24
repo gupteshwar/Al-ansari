@@ -35,23 +35,6 @@
  },
  {
   "default_value": null,
-  "doc_type": "Employee Checkin",
-  "docstatus": 0,
-  "doctype": "Property Setter",
-  "doctype_or_field": "DocField",
-  "field_name": "time",
-  "modified": "2022-05-22 16:05:28.964914",
-  "name": "Employee Checkin-time-read_only",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "property": "read_only",
-  "property_type": "Check",
-  "row_name": null,
-  "value": "1"
- },
- {
-  "default_value": null,
   "doc_type": "Employee Education",
   "docstatus": 0,
   "doctype": "Property Setter",

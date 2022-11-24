@@ -4,6 +4,7 @@
 import frappe
 from frappe.model.document import Document
 import json
+from frappe import _
 
 class EarnedLeaveDeductions(Document):
 	pass
@@ -27,7 +28,8 @@ def no_of_working_days_employeewise(frm):
 			""",(item["employee_id"],frm.get("from_date"),frm.get("to_date")),as_dict=1)[0].h_count
 		print("holiday_count=====>",holiday_count)
 		# get leave allocation per month
-		el_allocated = frappe.db.get_value("Leave Allocation",{'employee':item["employee_id"],"leave_type":"Annual Leave"},['monthly_el_allocated']) or 0
+		# el_allocated = frappe.db.get_value("Leave Allocation",{'employee':item["employee_id"],"leave_type":"Annual Leave"},['monthly_el_allocated']) or 0
+		el_allocated = frappe.db.get_value("Leave Type",{'name':"Annual Leave"},['monthly_allocation']) or 0
 		
 		# get No. of LWP (summation of fraction of LWP on Leave application)
 		no_of_lwp = frappe.db.sql(""" 
@@ -39,14 +41,17 @@ def no_of_working_days_employeewise(frm):
 			and to_date <= %s
 			""",(item["employee_id"],frm.get("from_date"),frm.get("to_date")),as_dict=1)[0].no_of_lwp or 0
 		print("no_of_lwp=",no_of_lwp)
+
 		no_of_lwp_manual = frappe.db.sql(""" 
-			SELECT employee,sum(total_leave_days) as no_of_lwp
-			from `tabLeave Application` 
-			where employee = %s 
-			and docstatus = 1
-			and from_date >= %s
-			and to_date <= %s
-			and fraction_of_daily_wage = 0
+			SELECT la.employee,sum(la.total_leave_days) as no_of_lwp
+			from `tabLeave Application` la , `tabLeave Type` lt 
+			where la.leave_type = lt.name 
+			and la.employee = %s 
+			and la.docstatus = 1
+			and la.from_date >= %s
+			and la.to_date <= %s
+			and la.fraction_of_daily_wage = 0
+			and lt.is_lwp = 1
 			""",(item["employee_id"],frm.get("from_date"),frm.get("to_date")),as_dict=1)[0].no_of_lwp or 0
 		print("no_of_lwp_manual== ",no_of_lwp_manual)
 		if holiday_count:
@@ -111,8 +116,9 @@ def get_applicants(frm):
 				and to_date <= %s""",(frm.get("from_date"),frm.get("to_date")),as_dict=1)
 
 @frappe.whitelist()
-def negative_ledger_entry(frm):
+def negative_leave_allocation(frm):
 	frm = frappe.json.loads(frm)
+	allocation_issue = []
 	deduction_ratio = frm.get("deduction_ratio")
 	for i in deduction_ratio:
 		if i["to_be_deducted"] != 0:
@@ -122,9 +128,13 @@ def negative_ledger_entry(frm):
 			leave_alloc.leave_type= "Annual Leave"
 			leave_alloc.new_leaves_allocated = -(i["to_be_deducted"])
 			leave_alloc.from_date = frappe.utils.add_months(frm.get("from_date"), 1) # frm.get("from_date")
-			leave_alloc.to_date = frappe.utils.add_months(frm.get("end_date"), 1) # frm.get("to_date")
-			print("leave_alloc==>",leave_alloc.new_leaves_allocated)
+			leave_alloc.to_date = frappe.utils.add_months(frm.get("to_date"), 1) # frm.get("to_date")
 			leave_alloc.save()
-			# leave_alloc.submit()
+			leave_alloc.submit()
 		else:
-			frappe.throw("No record for making negative entry")
+			# frappe.throw("No record for making negative entry")
+			allocation_issue.append(i["employee_id"])
+	if len(allocation_issue) >0:
+		frappe.msgprint(_("The following entries couldn't be done due to some issues please try doing them manually if required.({0})").format(allocation_issue))
+	else:
+		frappe.msgprint(_("Allocation records created successfully"))

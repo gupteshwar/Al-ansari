@@ -1,27 +1,43 @@
 frappe.ui.form.on('Leave Application', {
 	refresh: function(frm) {
-
+		// if(frm.doc.employee){
+		// 	// fetch grade from employee record
+		// 	frappe.call({
+		// 	    method: 'frappe.client.get_value',
+		// 	    args: {
+		// 	        'doctype': 'Employee',
+		// 	        'filters': {'name': frm.doc.employee},
+		// 	        'fieldname': [
+		// 	            'grade'
+		// 	        ]
+		// 	    },
+		// 	    callback: function(r) {
+		// 	        if (!r.exc) {
+		// 	            set_filter_on_leave_type(frm,r.message.grade)
+		// 	        }
+		// 	    }
+		// 	});
+		// }
 	},
 	employee:function(frm) {
-		// if salary assignment letter issue then open field for Bank A/c
-		if(frm.doc.employee){
-			// fetch grade from employee record
-			frappe.call({
-			    method: 'frappe.client.get_value',
-			    args: {
-			        'doctype': 'Employee',
-			        'filters': {'name': frm.doc.employee},
-			        'fieldname': [
-			            'grade'
-			        ]
-			    },
-			    callback: function(r) {
-			        if (!r.exc) {
-			            set_filter_on_leave_type(frm,r.message.grade)
-			        }
-			    }
-			});
-		}
+		// if(frm.doc.employee){
+		// 	// fetch grade from employee record
+		// 	frappe.call({
+		// 	    method: 'frappe.client.get_value',
+		// 	    args: {
+		// 	        'doctype': 'Employee',
+		// 	        'filters': {'name': frm.doc.employee},
+		// 	        'fieldname': [
+		// 	            'grade'
+		// 	        ]
+		// 	    },
+		// 	    callback: function(r) {
+		// 	        if (!r.exc) {
+		// 	            set_filter_on_leave_type(frm,r.message.grade)
+		// 	        }
+		// 	    }
+		// 	});
+		// }
 	}
 });
 

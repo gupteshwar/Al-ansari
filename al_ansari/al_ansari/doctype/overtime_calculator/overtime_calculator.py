@@ -60,7 +60,7 @@ def get_employees_on_oc(from_date,to_date):
 				productive_total += (item2["productive_hours"] * abs(item2["shift_hours"]-item2["actual_hours"]))
 				shift_total += item2["shift_hours"]
 				ot_amt += (item2["overtime_rate"] * round((item2["productive_hours"] * abs(item2["shift_hours"]-item2["actual_hours"])),2))
-
+				# print("Overtime======",abs(item2["shift_hours"]-item2["actual_hours"]))
 		rec["actual_hours"] = actual_total
 		rec["productive_hours"] = productive_total
 		rec["shift_hours"] = shift_total
