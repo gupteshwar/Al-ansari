@@ -17,11 +17,13 @@
   {
    "fieldname": "from_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "From Date"
   },
   {
    "fieldname": "to_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "To Date"
   },
   {
@@ -46,7 +48,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-11-03 11:37:40.055160",
+ "modified": "2022-11-25 08:43:00.061811",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Earned Leave Deductions",

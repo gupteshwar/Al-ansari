@@ -30,6 +30,7 @@ def get_employees_on_oc(from_date,to_date):
 		Select 
 			ec.name,
 			ec.employee,
+			ec.employee_name,
 			max(ec.actual_hours) as actual_hours,
 			ec.overtime_rate,
 			ec.productive_hours,
@@ -61,6 +62,7 @@ def get_employees_on_oc(from_date,to_date):
 				shift_total += item2["shift_hours"]
 				ot_amt += (item2["overtime_rate"] * round((item2["productive_hours"] * abs(item2["shift_hours"]-item2["actual_hours"])),2))
 				# print("Overtime======",abs(item2["shift_hours"]-item2["actual_hours"]))
+		rec["employee_name"] = item1["employee_name"]
 		rec["actual_hours"] = actual_total
 		rec["productive_hours"] = productive_total
 		rec["shift_hours"] = shift_total

@@ -13,7 +13,7 @@ def after_insert(doc,method):
 		frappe.db.set_value("Employee Checkin",docname,"is_photo",1)
 		frappe.cache().set_value("photo_filedata", "")
 	if doc.log_type == "OUT":
-		actual_hours,rec = calculate_actual_hours_for_day(doc.employee)
+		actual_hours,rec = calculate_actual_hours_for_day(doc.employee,doc.time)
 		if(doc.name == rec):
 			doc.actual_hours = actual_hours
 			doc.save()
@@ -39,8 +39,6 @@ def upload_photo(filedata):
 def photoUpload(docname,filedata):
 	data = {
 		"from_form": 1,
-		"doctype": "Employee Checkin",
-		"docname": docname,
 		"filename": docname+".png",
 		"filedata":filedata
 	}
@@ -48,14 +46,21 @@ def photoUpload(docname,filedata):
 		frappe.form_dict[p] = data.get(p)
 
 @frappe.whitelist()
-def calculate_actual_hours(employee):
+def calculate_actual_hours(employee,time):
+	# record = frappe.db.sql("""
+	# 	SELECT employee, time from `tabEmployee Checkin` 
+	# 	where employee = %s
+	# 	and DATE(time) = CURDATE() 
+	# 	and log_type = 'IN';  
+	# 	""",(employee),as_dict=1)
+
 	record = frappe.db.sql("""
 		SELECT employee, time from `tabEmployee Checkin` 
 		where employee = %s
-		and DATE(time) = CURDATE() 
+		and DATE(time) = DATE(%s) 
 		and log_type = 'IN';  
-		""",(employee),as_dict=1)
-
+		""",(employee,time),as_dict=1)
+	print(record)
 	if record:
 		holiday_list,h_ot_rate,nh_ot_rate,default_shift,grade = frappe.db.get_value("Employee",employee,['holiday_list','h_ot_rate','nh_ot_rate','default_shift','grade'])
 		shift_hours = frappe.db.get_value("Shift Type",default_shift,["shift_hours"])
@@ -65,11 +70,16 @@ def calculate_actual_hours(employee):
 		print("holiday_list==",nh_ot_rate)
 		print("record[0]==",productive_hours_ratio)
 		if holiday_list :
+			# holiday_date = frappe.db.sql("""
+			# 	SELECT holiday_date from `tabHoliday`
+			# 	where holiday_date = CURDATE()
+			# 	and parent = %s
+			# 	""",(holiday_list),as_dict=1)
 			holiday_date = frappe.db.sql("""
 				SELECT holiday_date from `tabHoliday`
-				where holiday_date = CURDATE()
+				where holiday_date = Date(%s)
 				and parent = %s
-				""",(holiday_list),as_dict=1)
+				""",(time,holiday_list),as_dict=1)
 			print("holiday_date==",holiday_date)
 			if len(holiday_date)>0:
 				record[0]['ot_rate'] = h_ot_rate
@@ -119,24 +129,42 @@ def validate_login_coordinates(frm):
 				return False		
 
 @frappe.whitelist()
-def calculate_actual_hours_for_day(employee):
+def calculate_actual_hours_for_day(employee,time):
+	# first_login = frappe.db.sql(""" 
+	# 	Select name,time 
+	# 	from `tabEmployee Checkin`
+	# 	where DATE(creation) = DATE(CURDATE())
+	# 	and log_type = 'IN'
+	# 	and employee = %s
+	# 	order by creation asc limit 1
+	# 	""",(employee),as_dict=1)
+
+	# last_login = frappe.db.sql(""" 
+	# 	Select name,time 
+	# 	from `tabEmployee Checkin`
+	# 	where DATE(creation) = DATE(CURDATE())
+	# 	and log_type = 'OUT'
+	# 	and employee = %s
+	# 	order by creation desc limit 1
+	# 	""",(employee),as_dict=1)
+
 	first_login = frappe.db.sql(""" 
 		Select name,time 
 		from `tabEmployee Checkin`
-		where DATE(creation) = DATE(CURDATE())
+		where DATE(time) = DATE(%s)
 		and log_type = 'IN'
 		and employee = %s
 		order by creation asc limit 1
-		""",(employee),as_dict=1)
+		""",(time,employee),as_dict=1)
 
 	last_login = frappe.db.sql(""" 
 		Select name,time 
 		from `tabEmployee Checkin`
-		where DATE(creation) = DATE(CURDATE())
+		where DATE(time) = DATE(%s)
 		and log_type = 'OUT'
 		and employee = %s
 		order by creation desc limit 1
-		""",(employee),as_dict=1)
+		""",(time,employee),as_dict=1)
 
 	print("first_login = ",first_login[0]["time"])
 	print("last_login = ",last_login[0]["time"])

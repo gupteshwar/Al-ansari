@@ -80,6 +80,7 @@ frappe.ui.form.on('Employee Checkin', {
 			    method: "al_ansari.al_ansari.customization.employee_checkin.calculate_actual_hours", //dotted path to server method
 			    args: {
 			    	"employee": frm.doc.employee,
+			    	"time" : frm.doc.time
 			    },
 			    callback: function(r) {
 			        // code snippet
