@@ -18,6 +18,19 @@ frappe.ui.form.on('Earned Leave Deductions', {
             })
         });
     },
+    from_date: function(frm) {
+        if(frm.doc.from_date) {
+            frm.set_value('to_date',moment(frm.doc.from_date).endOf('month').format('YYYY-MM-DD'))
+        }
+        if((frm.doc.from_date && frm.doc.to_date)&&(frm.doc.from_date > frm.doc.to_date)) {
+            frappe.throw(" 'From date' cannot be greater than 'To Date' ")
+        }
+    },
+    to_date: function(frm) {
+        if((frm.doc.from_date && frm.doc.to_date)&&(frm.doc.from_date > frm.doc.to_date)) {
+            frappe.throw(" 'From date' cannot be greater than 'To Date' ")
+        }
+    },
 	get_employees: function(frm) {
         if(!frm.doc.from_date || !frm.doc.to_date) {
             frappe.throw("From Date and To Date should be selected to fetch Employee Records")
@@ -46,6 +59,9 @@ frappe.ui.form.on('Earned Leave Deductions', {
     validate: function(frm) {
         if(!frm.doc.from_date || !frm.doc.to_date) {
             frappe.throw("From Date and To Date should be selected to fetch Employee Records")
+        }
+        if(frm.doc.from_date > frm.doc.to_date) {
+            frappe.throw(" 'From date' cannot be greater than 'To Date' ")
         }
         if(frm.doc.deduction_ratio.length <=0) {
             frappe.throw("No records found in the Deduction Ratio table so cannot be saved")
