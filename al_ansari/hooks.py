@@ -42,6 +42,8 @@ doctype_js = {
 	"Shift Type": "public/js/shift_type.js",
 	"Expense Claim": "public/js/expense_claim.js",
 	"Leave Type": "public/js/leave_type.js",
+	"Payroll Entry": "public/js/payroll_entry.js",	
+	"Job Opening": "public/js/job_opening.js",
 	}
 
 fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']

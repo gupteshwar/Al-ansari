@@ -8,6 +8,7 @@
   "employee",
   "employee_name",
   "shift_hours",
+  "column_break_4",
   "actual_hours",
   "productive_hours",
   "overtime_amount"
@@ -18,46 +19,56 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Employee",
-   "options": "Employee"
+   "options": "Employee",
+   "read_only": 1
   },
   {
    "fieldname": "shift_hours",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Shift Hours",
-   "precision": "2"
+   "precision": "2",
+   "read_only": 1
   },
   {
    "fieldname": "actual_hours",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Actual Hours",
-   "precision": "2"
+   "precision": "2",
+   "read_only": 1
   },
   {
    "fieldname": "productive_hours",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Productive Hours",
-   "precision": "2"
+   "precision": "2",
+   "read_only": 1
   },
   {
    "fieldname": "overtime_amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Overtime Amount",
-   "precision": "3"
+   "precision": "3",
+   "read_only": 1
   },
   {
    "fieldname": "employee_name",
    "fieldtype": "Data",
-   "label": "Employee Name"
+   "label": "Employee Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-11-25 08:47:53.621113",
+ "modified": "2022-11-26 11:50:48.831280",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Overtime Calculator Detail",

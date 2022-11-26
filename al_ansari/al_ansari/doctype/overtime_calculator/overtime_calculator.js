@@ -4,17 +4,22 @@
 frappe.ui.form.on('Overtime Calculator', {
 	refresh: function(frm) {
 		frm.add_custom_button(__("Additional Salary"), function() {
-			frappe.call({
-			    method: "al_ansari.al_ansari.doctype.overtime_calculator.overtime_calculator.additional_salary_entry", //dotted path to server method
-			    args: {
-			    	"frm":frm.doc
-			    },
-			    callback: function(r) {
-			        // code snippet
-			        console.log(r.message)
-			        
-			    }
-			});
+			if(frm.doc.payroll_date) {
+				frappe.call({
+				    method: "al_ansari.al_ansari.doctype.overtime_calculator.overtime_calculator.additional_salary_entry", //dotted path to server method
+				    args: {
+				    	"frm":frm.doc
+				    },
+				    callback: function(r) {
+				        // code snippet
+				        console.log(r.message)
+				        
+				    }
+				});
+			}else {
+				frappe.throw("Please select the Payroll Date to create Additional Salary records")
+			}
+			
 		})
 	},
 	from_date: function(frm) {
