@@ -58,9 +58,10 @@ def get_employees_on_oc(from_date,to_date):
 		for item2 in overtime:
 			if emp == item2["employee"]:
 				actual_total += item2["actual_hours"]
-				productive_total += (item2["productive_hours"] * abs(item2["shift_hours"]-item2["actual_hours"]))
+				print("ot_hr ==",round((item2["actual_hours"]-item2["shift_hours"]),2) * item2["productive_hours"]*item2["overtime_rate"])
+				productive_total += (item2["productive_hours"] * round((item2["actual_hours"]-item2["shift_hours"]),2))
 				shift_total += item2["shift_hours"]
-				ot_amt += (item2["overtime_rate"] * round((item2["productive_hours"] * abs(item2["shift_hours"]-item2["actual_hours"])),2))
+				ot_amt += item2["overtime_rate"] * (item2["productive_hours"] * round((item2["actual_hours"]-item2["shift_hours"]),2))
 				# print("Overtime======",abs(item2["shift_hours"]-item2["actual_hours"]))
 		rec["employee_name"] = item1["employee_name"]
 		rec["actual_hours"] = actual_total
@@ -89,7 +90,7 @@ def additional_salary_entry(frm):
 			add_sal_doc.employee = rec["employee"]
 			add_sal_doc.salary_component = "Overtime"
 			add_sal_doc.amount = rec["overtime_amount"]
-			add_sal_doc.payroll_date = frappe.utils.nowdate()
+			add_sal_doc.payroll_date = frm["payroll_date"] #frappe.utils.nowdate()
 			add_sal_doc.save()
 			created_list.append(rec["idx"])
 			frappe.msgprint("Additional Salary component created successfully")

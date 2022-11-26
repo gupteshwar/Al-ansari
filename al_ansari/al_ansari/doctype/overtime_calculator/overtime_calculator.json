@@ -10,6 +10,7 @@
   "from_date",
   "to_date",
   "column_break_3",
+  "payroll_date",
   "get_employees",
   "section_break_3",
   "overtime_calculator_detail"
@@ -45,11 +46,16 @@
    "fieldname": "get_employees",
    "fieldtype": "Button",
    "label": "Get Employees"
+  },
+  {
+   "fieldname": "payroll_date",
+   "fieldtype": "Date",
+   "label": "Payroll Date"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-11-25 08:42:29.284906",
+ "modified": "2022-11-25 17:43:28.778464",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Overtime Calculator",

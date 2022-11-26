@@ -11,6 +11,13 @@ frappe.ui.form.on('Employee', {
 			});
 		}
 	},
+	payroll_cost_center:function(frm) {
+		frm.clear_table("cost_center_details")
+		var childTable = cur_frm.add_child("cost_center_details");
+		childTable.from_date= frappe.datetime.get_today()
+		childTable.cost_center = frm.doc.payroll_cost_center
+		cur_frm.refresh_fields("cost_center_details");
+	},
 	validate: function(frm) {
 		if(frm.doc.hourly_rate) {
 			frm.set_value('h_ot_rate',frm.doc.hourly_rate * frm.doc.h_ot_multiplier )
