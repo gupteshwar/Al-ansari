@@ -9,7 +9,7 @@ from al_ansari import __version__ as version
 setup(
 	name="al_ansari",
 	version=version,
-	description="Al Ansari Exchange",
+	description="Al Ansari Trading Enterprises LLC",
 	author="Indictrans",
 	author_email="neha.t@indictranstech.com",
 	packages=find_packages(),
