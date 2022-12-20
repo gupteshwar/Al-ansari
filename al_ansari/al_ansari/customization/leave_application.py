@@ -4,16 +4,16 @@ from frappe.utils import (getdate,date_diff)
 import datetime
 	
 def update_employee_status(doc,method=None):
-	if doc.workflow_state == 'On Leave' and (frappe.utils.nowdate()>=doc.from_date):
+	if doc.workflow_state == 'On Leave' and (frappe.utils.nowdate()==doc.from_date):
 		emp_rec = frappe.get_doc("Employee",{'name':doc.employee})
 		emp_rec.working_status = "On Leave"
 		emp_rec.save()
-		frappe.msgprint("Employee status update in master")
-	elif doc.workflow_state == 'Completed' and (frappe.utils.nowdate() == doc.rejoin_date):
-		emp_rec = frappe.get_doc("Employee",{'name':doc.employee})
-		emp_rec.working_status = "Active"
-		emp_rec.save()
-		frappe.msgprint("Employee status update in master")
+		frappe.msgprint("Employee working status updated in master")
+	# elif doc.workflow_state == 'Completed' and (frappe.utils.nowdate() == doc.rejoin_date):
+	# 	emp_rec = frappe.get_doc("Employee",{'name':doc.employee})
+	# 	emp_rec.working_status = "Active"
+	# 	emp_rec.save()
+	# 	frappe.msgprint("Employee working status updated in master")
 
 	# update the start day & end day on leave application before save
 	linked_ppl = frappe.db.get_value("Leave Type",doc.leave_type,"partial_paid_leave")
@@ -90,6 +90,12 @@ def check_update_working_status_for_leave():
 			if l_app.workflow_state == 'On Leave' and (datetime.datetime.now().date()>=l_app.from_date):
 				emp_rec = frappe.get_doc('Employee',l_app.employee)
 				emp_rec.working_status = 'On Leave'
+
+def after_save(doc,method):
+	if doc.rejoining_doc != "":
+		print("sdkjh=========================")
+		frappe.db.set_value("Rejoining Details",doc.rejoining_doc,"lwp_application",doc.name)
+
 
 # overriding core whitelisted method for employee transfer
 @frappe.whitelist()

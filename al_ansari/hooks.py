@@ -44,6 +44,8 @@ doctype_js = {
 	"Leave Type": "public/js/leave_type.js",
 	"Payroll Entry": "public/js/payroll_entry.js",	
 	"Job Opening": "public/js/job_opening.js",
+	"Salary Structure Assignment": "public/js/salary_structure_assignment.js",
+	"Additional Salary": "public/js/additional_salary.js",
 	}
 
 fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
@@ -124,12 +126,14 @@ doc_events = {
 	},
 	"Leave Application": {
 		# "validate":["al_ansari.al_ansari.customization.sleave_application.update_employee_status"],
-		"before_submit": ["al_ansari.al_ansari.customization.leave_application.update_employee_status"]
+		"before_submit": ["al_ansari.al_ansari.customization.leave_application.update_employee_status"],
+		"after_insert": ["al_ansari.al_ansari.customization.leave_application.after_save"]
 	},
 	"Employee Transfer": {
 		"before_submit": ["al_ansari.al_ansari.customization.employee_transfer.before_submit"]
 	},
 	"Employee Checkin": {	
+		"before_validate": ["al_ansari.al_ansari.customization.employee_checkin.calculate_actual_hours"],
 		"after_insert": ["al_ansari.al_ansari.customization.employee_checkin.after_insert"],
 		"validate": ["al_ansari.al_ansari.customization.employee_checkin.validate"]
 	},
