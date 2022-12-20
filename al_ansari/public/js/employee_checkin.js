@@ -50,53 +50,56 @@ frappe.ui.form.on('Employee Checkin', {
 		})
 
 	},
-	log_type: function(frm) {
-		if(frm.doc.employee) {
-			frappe.call({
-			    method: 'frappe.client.get_value',
-			    args: {
-			        'doctype': 'Employee',
-			        'filters': {'name': frm.doc.employee},
-			        'fieldname': [
-			            'branch',
-			            'default_shift'
-			        ]
-			    },
-			    async:false,
-			    callback: function(r) {
-			        if (!r.exc) {
-			        	console.log(r.message)
-			            validate_corordinates(frm)
-			            frm.set_value('shift',r.message.default_shift)
-			        }
-			    }
-			});
-		}
-	},
-	before_save: function(frm) {
-		if(frm.doc.log_type == 'OUT') {
-			// calculate the actual hours and validate working day
-			frappe.call({
-			    method: "al_ansari.al_ansari.customization.employee_checkin.calculate_actual_hours", //dotted path to server method
-			    args: {
-			    	"employee": frm.doc.employee,
-			    	"time" : frm.doc.time
-			    },
-			    callback: function(r) {
-			        // code snippet
-			        console.log("calculate_actual_hours==" + r.message["actual_hours"])
-			        frm.set_value('overtime_rate', r.message["ot_rate"])
-			        frm.set_value('productive_hours',r.message["productive_hours_ratio"])
-			        frm.set_value('actual_hours', r.message["actual_hours"])
-			    }
-			});
-		}
-	}
+	// log_type: function(frm) {
+	// 	if(frm.doc.employee) {
+	// 		frappe.call({
+	// 		    method: 'frappe.client.get_value',
+	// 		    args: {
+	// 		        'doctype': 'Employee',
+	// 		        'filters': {'name': frm.doc.employee},
+	// 		        'fieldname': [
+	// 		            'branch',
+	// 		            'default_shift'
+	// 		        ]
+	// 		    },
+	// 		    async:false,
+	// 		    callback: function(r) {
+	// 		        if (!r.exc) {
+	// 		        	console.log(r.message)
+	// 		            validate_corordinates(frm)
+	// 		            frm.set_value('shift',r.message.default_shift)
+	// 		        }
+	// 		    }
+	// 		});
+	// 	}
+	// },
+	// before_save: function(frm) {
+	// 	if(frm.doc.log_type == 'OUT') {
+	// 		// calculate the actual hours and validate working day
+	// 		frappe.call({
+	// 		    method: "al_ansari.al_ansari.customization.employee_checkin.calculate_actual_hours", //dotted path to server method
+	// 		    args: {
+	// 		    	"employee": frm.doc.employee,
+	// 		    	"time" : frm.doc.time
+	// 		    },
+	// 		    callback: function(r) {
+	// 		        // code snippet
+	// 		        console.log("calculate_actual_hours==" + r.message["actual_hours"])
+	// 		        frm.set_value('overtime_rate', r.message["ot_rate"])
+	// 		        frm.set_value('productive_hours',r.message["productive_hours_ratio"])
+	// 		        frm.set_value('actual_hours', r.message["actual_hours"])
+	// 		    }
+	// 		});
+	// 	}
+	// },
+	// validate: function (frm) {
+	// 	validate_corordinates(frm)
+	// }
 })
 
 var validate_corordinates = function(frm,branch){
 	// validate the Geolocation co-ordinates
-
+		frm.set_value("valid_location",0)
 		frappe.call({
 		    method: "al_ansari.al_ansari.customization.employee_checkin.validate_login_coordinates",
 		    args: {
@@ -104,7 +107,12 @@ var validate_corordinates = function(frm,branch){
 		    },
 		    callback: function(r) {
 		        if (!r.exc) {
-		            console.log(r.message)
+		        	console.log("Validate co-ordinates"+r.message)
+		            if(r.message == false) {
+		            	frm.set_value('valid_location',0)
+		            }else{
+		            	frm.set_value('valid_location',1)
+		            }
 		        }
 		    }
 		});

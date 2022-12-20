@@ -7,10 +7,19 @@
  "field_order": [
   "employee",
   "employee_name",
-  "shift_hours",
+  "productive_hours_ratio",
+  "holiday_overtime_rate",
+  "holiday_actual_hours",
+  "holiday_overtime",
+  "holiday_shift_total",
   "column_break_4",
-  "actual_hours",
+  "shift_hours",
   "productive_hours",
+  "actual_hours",
+  "non_holiday_overtime_rate",
+  "non_holiday_actual_hours",
+  "non_holiday_overtime",
+  "non_holiday_shift_total",
   "overtime_amount"
  ],
  "fields": [
@@ -35,16 +44,14 @@
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Actual Hours",
-   "precision": "2",
-   "read_only": 1
+   "precision": "2"
   },
   {
    "fieldname": "productive_hours",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Productive Hours",
-   "precision": "2",
-   "read_only": 1
+   "precision": "2"
   },
   {
    "fieldname": "overtime_amount",
@@ -63,12 +70,77 @@
   {
    "fieldname": "column_break_4",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "productive_hours_ratio",
+   "fieldtype": "Float",
+   "label": "Productive Hours Ratio",
+   "precision": "2"
+  },
+  {
+   "description": "Hourly Rate * Holiday Overtime Multiplier",
+   "fieldname": "holiday_overtime_rate",
+   "fieldtype": "Currency",
+   "label": "Holiday Overtime Rate",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "description": "Hourly Rate * Non Holiday Overtime Multiplier",
+   "fieldname": "non_holiday_overtime_rate",
+   "fieldtype": "Currency",
+   "label": "Non Holiday Overtime Rate ",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "holiday_actual_hours",
+   "fieldtype": "Float",
+   "label": "Holiday Actual Hours",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "non_holiday_actual_hours",
+   "fieldtype": "Float",
+   "label": "Non Holiday Actual Hours",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "holiday_shift_total",
+   "fieldtype": "Float",
+   "label": "Holiday Shift Total",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "non_holiday_shift_total",
+   "fieldtype": "Float",
+   "label": "Non Holiday Shift Total",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "holiday_overtime",
+   "fieldtype": "Float",
+   "label": "Holiday Overtime (In Hours)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "non_holiday_overtime",
+   "fieldtype": "Float",
+   "label": "Non Holiday Overtime (In Hours)",
+   "precision": "2",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-11-26 11:50:48.831280",
+ "modified": "2022-12-20 10:43:47.139437",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Overtime Calculator Detail",

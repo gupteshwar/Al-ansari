@@ -9,11 +9,14 @@
  "field_order": [
   "from_date",
   "to_date",
-  "column_break_3",
   "payroll_date",
+  "column_break_3",
+  "branch",
+  "reporting_manager",
   "get_employees",
   "section_break_3",
-  "overtime_calculator_detail"
+  "overtime_calculator_detail",
+  "amended_from"
  ],
  "fields": [
   {
@@ -51,11 +54,33 @@
    "fieldname": "payroll_date",
    "fieldtype": "Date",
    "label": "Payroll Date"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Overtime Calculator",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "reporting_manager",
+   "fieldtype": "Link",
+   "label": "Reporting Manager",
+   "options": "Employee"
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2022-11-25 17:43:28.778464",
+ "modified": "2022-12-15 15:45:17.916630",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Overtime Calculator",
