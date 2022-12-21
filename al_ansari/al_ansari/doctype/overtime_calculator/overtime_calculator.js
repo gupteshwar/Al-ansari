@@ -3,26 +3,26 @@
 
 frappe.ui.form.on('Overtime Calculator', {
 	refresh: function(frm) {
-		if(frm.doc.docstatus ==1){
-			frm.add_custom_button(__("Additional Salary"), function() {
-				if(frm.doc.payroll_date) {
-					frappe.call({
-					    method: "al_ansari.al_ansari.doctype.overtime_calculator.overtime_calculator.additional_salary_entry", //dotted path to server method
-					    args: {
-					    	"frm":frm.doc
-					    },
-					    callback: function(r) {
-					        // code snippet
-					        console.log(r.message)
+		// if(frm.doc.docstatus ==1){
+		// 	frm.add_custom_button(__("Additional Salary"), function() {
+		// 		if(frm.doc.payroll_date) {
+		// 			frappe.call({
+		// 			    method: "al_ansari.al_ansari.doctype.overtime_calculator.overtime_calculator.additional_salary_entry", //dotted path to server method
+		// 			    args: {
+		// 			    	"frm":frm.doc
+		// 			    },
+		// 			    callback: function(r) {
+		// 			        // code snippet
+		// 			        console.log(r.message)
 					        
-					    }
-					});
-				}else {
-					frappe.throw("Please select the Payroll Date to create Additional Salary records")
-				}
+		// 			    }
+		// 			});
+		// 		}else {
+		// 			frappe.throw("Please select the Payroll Date to create Additional Salary records")
+		// 		}
 				
-			})
-		}
+		// 	})
+		// }
 	},
 	from_date: function(frm) {
 	    if(frm.doc.from_date) {
@@ -49,12 +49,19 @@ frappe.ui.form.on('Overtime Calculator', {
 		if(frm.doc.from_date > frm.doc.to_date) {
 		    frappe.throw(" 'From date' cannot be greater than 'To Date' ")
 		}
-
-		for(var x=0;x<frm.doc.overtime_calculator_detail.length;x++) {
-			if(frm.doc.overtime_calculator_detail[x].actual_hours == undefined ||frm.doc.overtime_calculator_detail[x].actual_hours == 0)
-			frm.doc.overtime_calculator_detail[x].actual_hours = frm.doc.overtime_calculator_detail[x].holiday_actual_hours +frm.doc.overtime_calculator_detail[x].non_holiday_actual_hours
-			frm.doc.overtime_calculator_detail[x].productive_hours = frm.doc.overtime_calculator_detail[x].actual_hours * frm.doc.overtime_calculator_detail[x].productive_hours_ratio
+		if(!frm.doc.payroll_date) {
+			frappe.throw("Please enter the payroll date to proceed")
 		}
+		for(var x=0;x<frm.doc.overtime_calculator_detail.length;x++) {
+			// if(frm.doc.overtime_calculator_detail[x].actual_hours == undefined ||frm.doc.overtime_calculator_detail[x].actual_hours == 0)
+			frm.doc.overtime_calculator_detail[x].actual_hours = frm.doc.overtime_calculator_detail[x].holiday_actual_hours.toFixed(2) +frm.doc.overtime_calculator_detail[x].non_holiday_actual_hours.toFixed(2)
+			frm.doc.overtime_calculator_detail[x].holiday_productive_hours = (frm.doc.overtime_calculator_detail[x].holiday_overtime.toFixed(2) * frm.doc.overtime_calculator_detail[x].productive_hours_ratio)
+			frm.doc.overtime_calculator_detail[x].non_holiday_productive_hours = frm.doc.overtime_calculator_detail[x].non_holiday_overtime.toFixed(2)* frm.doc.overtime_calculator_detail[x].productive_hours_ratio
+			frm.doc.overtime_calculator_detail[x].overtime_amount = (frm.doc.overtime_calculator_detail[x].holiday_productive_hours.toFixed(2) * frm.doc.overtime_calculator_detail[x].holiday_overtime_rate) + (frm.doc.overtime_calculator_detail[x].non_holiday_productive_hours.toFixed(2) * frm.doc.overtime_calculator_detail[x].non_holiday_overtime_rate)
+			// frm.doc.overtime_calculator_detail[x].total_overtime = frm.doc.overtime_calculator_detail[x].holiday_overtime + frm.doc.overtime_calculator_detail[x].non_holiday_overtime
+		}	
+
+		// frm.doc.overtime_calculator_detail[x].non_holiday_overtime_amt = frm.doc.overtime_calculator_detail[x].total_overtime * frm.doc.overtime_calculator_detail[x].productive_hours_ratio
 		// frappe.call({
 	    //     method: "frappe.client.get_value",
 	    //     args: {
@@ -103,7 +110,7 @@ frappe.ui.form.on('Overtime Calculator', {
 		        	childTable.holiday_shift_total = r.message[i]["h_shift_total"]
 		        	childTable.non_holiday_shift_total = r.message[i]["nh_shift_total"]
 		        	childTable.shift_hours = r.message[i]["h_shift_total"] + r.message[i]["nh_shift_total"]
-		        	// childTable.actual_hours = Number(r.message[i]["holiday_actual_hours"]) + Number(r.message[i]["non_holiday_actual_hours"])
+		        	// childTable.total_overtime = Number(r.message[i]["holiday_overtime"]) + Number(r.message[i]["non_holiday_overtime"])
 		        }
 		        
 		        cur_frm.refresh_fields("overtime_calculator_detail");
