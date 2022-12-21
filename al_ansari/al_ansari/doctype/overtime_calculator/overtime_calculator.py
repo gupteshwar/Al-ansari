@@ -6,7 +6,9 @@ from frappe.model.document import Document
 from frappe import _
 
 class OvertimeCalculator(Document):
-	pass
+	# pass
+	def on_submit(self):
+		additional_salary_entry(self)	
 
 @frappe.whitelist()
 def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
@@ -118,7 +120,7 @@ def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
 				for h_ot in h_overtime:
 					h_actual_total += h_ot["actual_hours"]
 			# 		print("ot_hr ==",round((item2["actual_hours"]-item2["shift_hours"]),2) * item2["productive_hours"]*item2["overtime_rate"])
-					holiday_overtime_total += h_ot["actual_hours"]-h_ot["shift_hours"]
+					holiday_overtime_total += h_ot["actual_hours"]-h_ot["shift_hours"] if (h_ot["actual_hours"]>h_ot["shift_hours"]) else 0
 					h_shift_total += h_ot["shift_hours"]
 					# ot_amt += item2["overtime_rate"] * (item2["productive_hours"] * round((item2["actual_hours"]-item2["shift_hours"]),2))
 				
@@ -142,7 +144,7 @@ def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
 				for nh_ot in nh_overtime:
 					nh_actual_total += nh_ot["actual_hours"]
 			# 		print("ot_hr ==",round((item2["actual_hours"]-item2["shift_hours"]),2) * item2["productive_hours"]*item2["overtime_rate"])
-					non_holiday_overtime_total += nh_ot["actual_hours"]-nh_ot["shift_hours"] if (nh_ot["actual_hours"]-nh_ot["shift_hours"])>0 else nh_ot["shift_hours"]
+					non_holiday_overtime_total += nh_ot["actual_hours"]-nh_ot["shift_hours"] if (nh_ot["actual_hours"]>nh_ot["shift_hours"]) else 0
 					nh_shift_total += nh_ot["shift_hours"]
 					# ot_amt += item2["overtime_rate"] * (item2["productive_hours"] * round((item2["actual_hours"]-item2["shift_hours"]),2))
 				
@@ -168,22 +170,46 @@ def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
 
 	return emp_list
 
-@frappe.whitelist()
-def additional_salary_entry(frm):
-	frm = frappe.json.loads(frm)
+# @frappe.whitelist()
+# def additional_salary_entry(frm):
+# 	frm = frappe.json.loads(frm)
+# 	pending_list = []
+# 	created_list = []
+# 	for rec in frm["overtime_calculator_detail"]:
+# 		if(frappe.db.get_value("Additional Salary",{"employee":rec["employee"],"salary_component":"Overtime","payroll_date":frm["payroll_date"]})):
+# 			pending_list.append(rec["idx"])
+# 			frappe.msgprint(_("Additional Salary component is already created for row {0}.Please remove the entry from child table.").format(rec["idx"]))
+# 		else:
+# 			if rec["overtime_amount"] > 0:
+# 				add_sal_doc = frappe.new_doc("Additional Salary")
+# 				add_sal_doc.employee = rec["employee"]
+# 				add_sal_doc.salary_component = "Overtime"
+# 				add_sal_doc.amount = rec["overtime_amount"]
+# 				add_sal_doc.payroll_date = frm["payroll_date"]
+# 				add_sal_doc.save()
+# 				add_sal_doc.submit()
+# 				created_list.append(rec["idx"])
+# 				frappe.msgprint("Additional Salary component created successfully")
+
+
+def additional_salary_entry(self):
+	# frm = frappe.json.loads(frm)
 	pending_list = []
 	created_list = []
-	for rec in frm["overtime_calculator_detail"]:
-		if(frappe.db.get_value("Additional Salary",{"employee":rec["employee"],"salary_component":"Overtime","payroll_date":frm["payroll_date"]})):
-			pending_list.append(rec["idx"])
-			frappe.throw(	_("Additional Salary component is already created for row {0}").format(rec["idx"]))
+	for rec in range(len(self.overtime_calculator_detail)):
+		if(frappe.db.get_value("Additional Salary",{"employee":self.overtime_calculator_detail[rec].employee,"salary_component":"Overtime","payroll_date":self.payroll_date})):
+			pending_list.append(self.overtime_calculator_detail[rec].idx)
+			frappe.throw(_("Additional Salary component is already created for row {0}. Please remove the entry from child table and then try to submit.").format(self.overtime_calculator_detail[rec].idx))
 		else:
-			add_sal_doc = frappe.new_doc("Additional Salary")
-			add_sal_doc.employee = rec["employee"]
-			add_sal_doc.salary_component = "Overtime"
-			add_sal_doc.amount = rec["overtime_amount"]
-			add_sal_doc.payroll_date = frm["payroll_date"]
-			add_sal_doc.save()
-			add_sal_doc.submit()
-			created_list.append(rec["idx"])
-			frappe.msgprint("Additional Salary component created successfully")
+			if self.overtime_calculator_detail[rec].overtime_amount > 0:
+				add_sal_doc = frappe.new_doc("Additional Salary")
+				add_sal_doc.employee = self.overtime_calculator_detail[rec].employee
+				add_sal_doc.salary_component = "Overtime"
+				add_sal_doc.amount = self.overtime_calculator_detail[rec].overtime_amount
+				add_sal_doc.payroll_date = self.payroll_date
+				add_sal_doc.save()
+				add_sal_doc.submit()
+				created_list.append(self.overtime_calculator_detail[rec].idx)
+				frappe.msgprint("Additional Salary component created successfully")
+			else:
+				frappe.msgprint(_("Additional Salary Entry not done for row {0} as the Overtime Amount is 0").format(self.overtime_calculator_detail[rec].idx))
