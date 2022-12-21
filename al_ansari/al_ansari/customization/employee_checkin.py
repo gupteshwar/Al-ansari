@@ -125,7 +125,7 @@ def validate_login_coordinates(frm):
 		and LEAST(from_longitude,to_longitude)<= %s 
 		and GREATEST(from_longitude,to_longitude)>= %s
 		""",(frm.latitude,frm.latitude,frm.longitude,frm.longitude),as_list=1)
-	print("current login branch out of all assigned==",branch[0])
+	
 	if emp_branches:
 		if len(branch) <= 0:
 			frappe.msgprint("No suitable branch found for the for the co-ordinates recorded. Please check your location")
@@ -133,12 +133,9 @@ def validate_login_coordinates(frm):
 			return frm
 		else:
 			if branch[0][0] in emp_branches:
-				print("True")
 				frm.valid_location = 1
 				return frm 
 			else:
-				print("False")
-				# frappe.msgprint("Please check the branches assigned and login branch")		
 				frm.valid_location = 0
 				return frm
 

@@ -8,6 +8,8 @@ from frappe import _
 class OvertimeCalculator(Document):
 	# pass
 	def on_submit(self):
+		if not self.overtime_calculator_detail:
+			frappe.throw("The Overtime Calculator Details table cannot be empty.")
 		additional_salary_entry(self)	
 
 @frappe.whitelist()

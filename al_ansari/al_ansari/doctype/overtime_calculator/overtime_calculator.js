@@ -52,14 +52,19 @@ frappe.ui.form.on('Overtime Calculator', {
 		if(!frm.doc.payroll_date) {
 			frappe.throw("Please enter the payroll date to proceed")
 		}
-		for(var x=0;x<frm.doc.overtime_calculator_detail.length;x++) {
-			// if(frm.doc.overtime_calculator_detail[x].actual_hours == undefined ||frm.doc.overtime_calculator_detail[x].actual_hours == 0)
-			frm.doc.overtime_calculator_detail[x].actual_hours = frm.doc.overtime_calculator_detail[x].holiday_actual_hours.toFixed(2) +frm.doc.overtime_calculator_detail[x].non_holiday_actual_hours.toFixed(2)
-			frm.doc.overtime_calculator_detail[x].holiday_productive_hours = (frm.doc.overtime_calculator_detail[x].holiday_overtime.toFixed(2) * frm.doc.overtime_calculator_detail[x].productive_hours_ratio)
-			frm.doc.overtime_calculator_detail[x].non_holiday_productive_hours = frm.doc.overtime_calculator_detail[x].non_holiday_overtime.toFixed(2)* frm.doc.overtime_calculator_detail[x].productive_hours_ratio
-			frm.doc.overtime_calculator_detail[x].overtime_amount = (frm.doc.overtime_calculator_detail[x].holiday_productive_hours.toFixed(2) * frm.doc.overtime_calculator_detail[x].holiday_overtime_rate) + (frm.doc.overtime_calculator_detail[x].non_holiday_productive_hours.toFixed(2) * frm.doc.overtime_calculator_detail[x].non_holiday_overtime_rate)
-			// frm.doc.overtime_calculator_detail[x].total_overtime = frm.doc.overtime_calculator_detail[x].holiday_overtime + frm.doc.overtime_calculator_detail[x].non_holiday_overtime
-		}	
+		if(frm.doc.overtime_calculator_detail){
+			for(var x=0;x<frm.doc.overtime_calculator_detail.length;x++) {
+				// if(frm.doc.overtime_calculator_detail[x].actual_hours == undefined ||frm.doc.overtime_calculator_detail[x].actual_hours == 0)
+				frm.doc.overtime_calculator_detail[x].actual_hours = frm.doc.overtime_calculator_detail[x].holiday_actual_hours.toFixed(2) +frm.doc.overtime_calculator_detail[x].non_holiday_actual_hours.toFixed(2)
+				frm.doc.overtime_calculator_detail[x].holiday_productive_hours = (frm.doc.overtime_calculator_detail[x].holiday_overtime.toFixed(2) * frm.doc.overtime_calculator_detail[x].productive_hours_ratio)
+				frm.doc.overtime_calculator_detail[x].non_holiday_productive_hours = frm.doc.overtime_calculator_detail[x].non_holiday_overtime.toFixed(2)* frm.doc.overtime_calculator_detail[x].productive_hours_ratio
+				frm.doc.overtime_calculator_detail[x].overtime_amount = (frm.doc.overtime_calculator_detail[x].holiday_productive_hours.toFixed(2) * frm.doc.overtime_calculator_detail[x].holiday_overtime_rate) + (frm.doc.overtime_calculator_detail[x].non_holiday_productive_hours.toFixed(2) * frm.doc.overtime_calculator_detail[x].non_holiday_overtime_rate)
+				// frm.doc.overtime_calculator_detail[x].total_overtime = frm.doc.overtime_calculator_detail[x].holiday_overtime + frm.doc.overtime_calculator_detail[x].non_holiday_overtime
+			}	
+		} else {
+			frappe.throw("Please click the Get Employees button and then Save.")
+		}
+		
 
 		// frm.doc.overtime_calculator_detail[x].non_holiday_overtime_amt = frm.doc.overtime_calculator_detail[x].total_overtime * frm.doc.overtime_calculator_detail[x].productive_hours_ratio
 		// frappe.call({

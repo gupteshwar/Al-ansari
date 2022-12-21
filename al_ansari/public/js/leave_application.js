@@ -1,6 +1,6 @@
 frappe.ui.form.on('Leave Application', {
 	refresh: function(frm) {
-		if(frm.doc.docstatus==1) {
+		if(frm.doc.docstatus==1 && !frm.doc.rejoining_doc) {
 			frm.add_custom_button(__("Mark Rejoin Details"), function() {
 				var local_doc = frappe.model.get_new_doc('Rejoining Details');
 			    local_doc.employee = frm.doc.employee;

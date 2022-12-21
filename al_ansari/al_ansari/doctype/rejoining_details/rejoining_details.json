@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:RD-{YYYY}-{employee}-{###}",
  "creation": "2022-12-15 09:22:49.838254",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -85,7 +86,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-12-20 15:46:54.771136",
+ "modified": "2022-12-21 13:02:48.735122",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Rejoining Details",
