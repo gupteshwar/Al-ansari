@@ -16,6 +16,8 @@ frappe.ui.form.on('Rejoining Details', {
 	        return {
 	            "filters": {
 	                "docstatus": 1,
+	                "employee": frm.doc.employee,
+	                "rejoining_doc": ""
 	            }
 	        };
 	    });
