@@ -106,8 +106,8 @@ frappe.ui.form.on('Overtime Calculator', {
 		        	childTable.employee = r.message[i]["name"]
 		        	childTable.employee_name = r.message[i]["employee_name"]
 		        	childTable.productive_hours_ratio = r.message[i]["productive_hours_ratio"]
-		        	childTable.holiday_overtime_rate = r.message[i]["holiday_overtime_rate"]*r.message[i]["hourly_rate"]
-		        	childTable.non_holiday_overtime_rate = (r.message[i]["non_holiday_overtime_rate"]*r.message[i]["hourly_rate"])
+		        	childTable.holiday_overtime_rate = r.message[i]["holiday_overtime_rate"]
+		        	childTable.non_holiday_overtime_rate = (r.message[i]["non_holiday_overtime_rate"]
 		        	childTable.holiday_overtime = r.message[i]["holiday_overtime"]
 		        	childTable.non_holiday_overtime = r.message[i]["non_holiday_overtime"]
 		        	childTable.holiday_actual_hours = r.message[i]["holiday_actual_hours"]
