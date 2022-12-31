@@ -50,6 +50,13 @@ frappe.ui.form.on('Employee Checkin', {
 		})
 
 	},
+	employee:function(frm) {
+		if(frm.doc.time.split(" ")[1].split(":")[0]>="12") {
+			frm.set_value("log_type","OUT")
+		} else {
+			frm.set_value("log_type","IN")
+		}
+	},
 	// log_type: function(frm) {
 	// 	if(frm.doc.employee) {
 	// 		frappe.call({
