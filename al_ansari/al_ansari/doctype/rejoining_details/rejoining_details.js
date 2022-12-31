@@ -2,6 +2,9 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Rejoining Details', {
+	onload: function(frm) {
+		frm.set_value("status","Rejoined")
+	},
 	refresh: function(frm) {
 		// filter employee field dropdown
 		frm.set_query("employee", function() {

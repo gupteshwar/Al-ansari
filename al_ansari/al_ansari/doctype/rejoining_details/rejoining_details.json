@@ -9,6 +9,7 @@
  "field_order": [
   "employee",
   "initial_rejoin_date",
+  "leave_type",
   "status",
   "lwp_application",
   "column_break_3",
@@ -39,7 +40,8 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "On Leave\nRejoined",
+   "options": "Rejoined",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -72,7 +74,8 @@
   {
    "fieldname": "days_difference",
    "fieldtype": "Int",
-   "label": "Days Difference"
+   "label": "Late joining days",
+   "read_only": 1
   },
   {
    "allow_on_submit": 1,
@@ -81,12 +84,20 @@
    "label": "LWP Application",
    "options": "Leave Application",
    "read_only": 1
+  },
+  {
+   "fetch_from": "leave_application.leave_type",
+   "fieldname": "leave_type",
+   "fieldtype": "Link",
+   "label": "Leave Type",
+   "options": "Leave Type",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-12-21 13:02:48.735122",
+ "modified": "2022-12-30 20:00:03.383345",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Rejoining Details",

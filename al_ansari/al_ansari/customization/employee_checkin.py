@@ -48,6 +48,12 @@ def calculate_actual_hours(doc,method):
 			# return record[0]
 
 def validate(doc,method):
+	# set the log type as per time
+	if doc.is_new() == True:
+		if doc.time.split()[1].split(":")[0] >= "12":
+			doc.log_type = "OUT"
+		else:
+			doc.log_type = "IN"
 	valid_loc = validate_login_coordinates(doc)
 	print("valid_loc=",doc.valid_location)
 	# if valid_loc == 
@@ -63,8 +69,8 @@ def validate(doc,method):
 			data = uploadfile()
 			doc.photo = data.get('file_url')
 			frappe.cache().set_value("photo_filedata", "")
-		# else:
-		# 	frappe.throw("Photo Capture mandatory")
+		else:
+			frappe.throw("Photo Capture mandatory")
 
 def after_insert(doc,method):
 	if frappe.cache().get_value('photo_filedata'):

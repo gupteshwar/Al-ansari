@@ -17,7 +17,7 @@ def update_employee_status(doc,method=None):
 
 	# update the start day & end day on leave application before save
 	linked_ppl = frappe.db.get_value("Leave Type",doc.leave_type,"partial_paid_leave")
-	print("linked_ppl==>",linked_ppl)
+
 	if linked_ppl:
 		approved_leave_count = frappe.db.sql(""" 
 				SELECT
@@ -54,7 +54,7 @@ def update_employee_status(doc,method=None):
 			c=0 
 			frac_of_day = 0
 			while ct < doc.end_day:
-				print("ct==",ct)
+
 				for item in fraction_master.partial_paid_leave_item:
 					if item.start_day <= ct <= item.end_day:
 						frac_of_day += item.fraction_of_daily_salary_per_leave
@@ -93,7 +93,6 @@ def check_update_working_status_for_leave():
 
 def after_save(doc,method):
 	if doc.rejoining_doc != "":
-		print("sdkjh=========================")
 		frappe.db.set_value("Rejoining Details",doc.rejoining_doc,"lwp_application",doc.name)
 
 
