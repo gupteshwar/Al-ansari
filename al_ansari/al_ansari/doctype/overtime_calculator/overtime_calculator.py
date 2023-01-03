@@ -122,8 +122,8 @@ def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
 				for h_ot in h_overtime:
 					h_actual_total += h_ot["actual_hours"]
 			# 		print("ot_hr ==",round((item2["actual_hours"]-item2["shift_hours"]),2) * item2["productive_hours"]*item2["overtime_rate"])
-					holiday_overtime_total += h_ot["actual_hours"]-h_ot["shift_hours"] if (h_ot["actual_hours"]>h_ot["shift_hours"]) else 0
-					h_shift_total += h_ot["shift_hours"]
+					holiday_overtime_total += h_ot["actual_hours"] # -h_ot["shift_hours"] if (h_ot["actual_hours"]>h_ot["shift_hours"]) else 0
+					# h_shift_total += h_ot["shift_hours"]
 					# ot_amt += item2["overtime_rate"] * (item2["productive_hours"] * round((item2["actual_hours"]-item2["shift_hours"]),2))
 				
 				emp.update({
