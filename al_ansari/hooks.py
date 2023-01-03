@@ -163,7 +163,7 @@ doc_events = {
 
 scheduler_events = {
 	"cron": {
-			"2 * * * *": [
+			"2 0 * * *": [
 				"al_ansari.al_ansari.customization.leave_application.check_update_working_status_for_leave"
 			]
 		},
