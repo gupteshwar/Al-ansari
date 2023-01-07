@@ -29,7 +29,8 @@ class RejoiningDetails(Document):
 				leave_doc.follow_via_email = 0
 				leave_doc.rejoining_doc = self.name
 				leave_doc.save()
-				frappe.msgprint("LWP marked. Please check and submit the same")
+				leave_doc.submit()
+				# frappe.msgprint("LWP marked. Please check and submit the same")
 
 			# mark working status on emp master
 			if self.docstatus == 1:
