@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:EDL-{YYYY}-{######}",
  "creation": "2022-11-01 11:28:48.401973",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -11,7 +12,8 @@
   "column_break_3",
   "get_employees",
   "section_break_5",
-  "deduction_ratio"
+  "deduction_ratio",
+  "amended_from"
  ],
  "fields": [
   {
@@ -44,11 +46,21 @@
    "fieldname": "get_employees",
    "fieldtype": "Button",
    "label": "Get Employees"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Earned Leave Deductions",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2022-11-25 08:43:00.061811",
+ "modified": "2023-01-07 11:02:14.560308",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Earned Leave Deductions",
