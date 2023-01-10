@@ -44,6 +44,14 @@ frappe.ui.form.on('Payroll Entry', {
 			}
 			
 		}
+
+		frm.set_query("payroll_cost_center", function() {
+	        return {
+	            "filters": {
+	                "company": frm.doc.company,
+	            }
+	        };
+	    });
 	}
 })
 
