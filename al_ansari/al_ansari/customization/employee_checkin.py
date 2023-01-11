@@ -25,7 +25,6 @@ def calculate_actual_hours(doc,method):
 					where holiday_date = Date(%s)
 					and parent = %s
 					""",(doc.time,holiday_list),as_dict=1)
-				# print("holiday_date==",holiday_date)
 				if len(holiday_date) > 0:
 					# record[0]['ot_rate'] = h_ot_rate
 					doc.is_holiday = 1
@@ -46,33 +45,36 @@ def calculate_actual_hours(doc,method):
 			# return record[0]
 
 def validate(doc,method):
-	valid_loc = validate_login_coordinates(doc)
-	# print("valid_loc=",doc.valid_location)
+	if doc.manual_entry == 1:
+		valid_loc = validate_login_coordinates(doc)
+		# print("valid_loc=",doc.valid_location)
 
-	if valid_loc.valid_location == 0:
-		frappe.throw("Please make sure you are on valid location as per branches assigned to you")
+		if valid_loc.valid_location == 0:
+			frappe.throw("Please make sure you are on valid location as per branches assigned to you")
 
-	if not doc.photo:
+		if not doc.photo:
+			if frappe.cache().get_value('photo_filedata'):
+				docname = doc.name
+				filedata = frappe.cache().get_value('photo_filedata')
+				photoUpload(docname,filedata)
+				data = uploadfile()
+				doc.photo = data.get('file_url')
+				frappe.cache().set_value("photo_filedata", "")
+			else:
+				frappe.throw("Photo Capture mandatory")
+
+def after_insert(doc,method):
+	# called after insert
+	if doc.manual_entry == 1:
 		if frappe.cache().get_value('photo_filedata'):
 			docname = doc.name
 			filedata = frappe.cache().get_value('photo_filedata')
 			photoUpload(docname,filedata)
 			data = uploadfile()
-			doc.photo = data.get('file_url')
+			frappe.db.set_value("Employee Checkin",docname,"photo",data.get('file_url'))
+			frappe.db.set_value("Employee Checkin",docname,"is_photo",1)
 			frappe.cache().set_value("photo_filedata", "")
-		else:
-			frappe.throw("Photo Capture mandatory")
-
-def after_insert(doc,method):
-	# called after insert
-	if frappe.cache().get_value('photo_filedata'):
-		docname = doc.name
-		filedata = frappe.cache().get_value('photo_filedata')
-		photoUpload(docname,filedata)
-		data = uploadfile()
-		frappe.db.set_value("Employee Checkin",docname,"photo",data.get('file_url'))
-		frappe.db.set_value("Employee Checkin",docname,"is_photo",1)
-		frappe.cache().set_value("photo_filedata", "")
+			
 	if doc.log_type == "OUT":
 		actual_hours,rec = calculate_actual_hours_for_day(doc.employee,doc.time)
 		if(doc.name == rec):
@@ -81,10 +83,6 @@ def after_insert(doc,method):
 			if doc.employee:
 				holiday_list,h_ot_rate,nh_ot_rate,default_shift,grade = frappe.db.get_value("Employee",doc.employee,['holiday_list','h_ot_rate','nh_ot_rate','default_shift','grade'])
 				shift_hours = frappe.db.get_value("Shift Type",default_shift,["shift_hours"])
-				print("---------------------")
-				print("shift_hours =",shift_hours)
-				print("default_shift =",default_shift)
-				print("grade =",grade)
 				productive_hours_ratio = frappe.db.get_value("Employee Grade",grade,["productive_hours_ratio"])
 
 				if holiday_list :
@@ -151,8 +149,6 @@ def photoUpload(docname,filedata):
 
 @frappe.whitelist()
 def validate_login_coordinates(frm):
-	# frm = frappe.json.loads(frm)
-	# print(type(frm))
 	employee = frm.employee
 	# to get branches of employee
 	emp_branches = frappe.db.sql("""select GROUP_CONCAT(DISTINCT(ab.branch)) as branch
@@ -162,10 +158,8 @@ def validate_login_coordinates(frm):
 	# print("emp_branches == ",emp_branches)
 	# get branch name for employee
 	branch = frappe.db.get_value("Employee",frm.employee,"branch")
-	# print("branch",branch)
 	if branch:
 		emp_branches.append(branch)
-	# print("all branches assigned to emp ==",emp_branches)
 	if None in emp_branches and len(emp_branches) == 1:
 		frappe.throw("No Branch is assigned to you yet")
 		return False
