@@ -1,6 +1,7 @@
 frappe.ui.form.on('Leave Application', {
 	refresh: function(frm) {
-		if((frm.doc.docstatus==1 && !frm.doc.rejoining_details_ref && frm.doc.leave_type != 'Leave Without Pay') || (frm.doc.docstatus==1 && !frm.doc.rejoining_doc && frm.doc.leave_type == 'Leave Without Pay')){
+		// Rejoining Details button should be visible only on Annual Leave application
+		if(frm.doc.docstatus==1 && !frm.doc.rejoining_details_ref && frm.doc.leave_type == 'Annual Leave') {
 			frm.add_custom_button(__("Mark Rejoin Details"), function() {
 				var local_doc = frappe.model.get_new_doc('Rejoining Details');
 			    local_doc.employee = frm.doc.employee;

@@ -4,11 +4,23 @@ frappe.ui.form.on('Payroll Entry', {
 			// Calculate Overtime to mark additional salary entry
 			frm.add_custom_button(__("Overtime Entry"), function() {
 				if(frm.doc.start_date && frm.doc.end_date) {
-					var local_doc = frappe.model.get_new_doc('Overtime Calculator');
-				    local_doc.from_date = frm.doc.start_date;
-				    local_doc.to_date = frm.doc.end_date;
-				    local_doc.payroll_date = frm.doc.posting_date
-				    frappe.set_route('Form',"Overtime Calculator",local_doc.name);
+					// var local_doc = frappe.model.get_new_doc('Overtime Calculator');
+				    // local_doc.from_date = frm.doc.start_date;
+				    // local_doc.to_date = frm.doc.end_date;
+				    // local_doc.payroll_date = frm.doc.posting_date
+				    // frappe.set_route('Form',"Overtime Calculator",local_doc.name);
+				    frappe.call({
+    					method: "al_ansari.al_ansari.doctype.overtime_calculator.overtime_calculator.autofill_employees",
+    					args: {
+							"payroll_entry": frm.doc
+						},
+    					callback: function(r) {
+    						if (r.message){
+    							var doclist = frappe.model.sync(r.message);
+    							frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
+    						}
+    					}
+    				})
 				} else {
 					frappe.throw("Start and End dates should be selected")
 				}              
@@ -44,6 +56,14 @@ frappe.ui.form.on('Payroll Entry', {
 			}
 			
 		}
+
+		frm.set_query("payroll_cost_center", function() {
+	        return {
+	            "filters": {
+	                "company": frm.doc.company,
+	            }
+	        };
+	    });
 	}
 })
 

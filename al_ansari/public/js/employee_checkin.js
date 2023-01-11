@@ -2,6 +2,9 @@ frappe.ui.form.on('Employee Checkin', {
 	onload: function(frm) {
 		frm.toggle_reqd('latitude',1)
 		frm.toggle_reqd('longitude',1)
+		if(frm.is_new()) {
+			frm.set_value('manual_entry',1)
+		}
 	},
 	refresh: function(frm) {
 		frm.add_custom_button(__('Capture Photo'), function() {
@@ -57,70 +60,12 @@ frappe.ui.form.on('Employee Checkin', {
 			frm.set_value("log_type","IN")
 		}
 	},
-	// log_type: function(frm) {
-	// 	if(frm.doc.employee) {
-	// 		frappe.call({
-	// 		    method: 'frappe.client.get_value',
-	// 		    args: {
-	// 		        'doctype': 'Employee',
-	// 		        'filters': {'name': frm.doc.employee},
-	// 		        'fieldname': [
-	// 		            'branch',
-	// 		            'default_shift'
-	// 		        ]
-	// 		    },
-	// 		    async:false,
-	// 		    callback: function(r) {
-	// 		        if (!r.exc) {
-	// 		        	console.log(r.message)
-	// 		            validate_corordinates(frm)
-	// 		            frm.set_value('shift',r.message.default_shift)
-	// 		        }
-	// 		    }
-	// 		});
-	// 	}
-	// },
-	// before_save: function(frm) {
-	// 	if(frm.doc.log_type == 'OUT') {
-	// 		// calculate the actual hours and validate working day
-	// 		frappe.call({
-	// 		    method: "al_ansari.al_ansari.customization.employee_checkin.calculate_actual_hours", //dotted path to server method
-	// 		    args: {
-	// 		    	"employee": frm.doc.employee,
-	// 		    	"time" : frm.doc.time
-	// 		    },
-	// 		    callback: function(r) {
-	// 		        // code snippet
-	// 		        console.log("calculate_actual_hours==" + r.message["actual_hours"])
-	// 		        frm.set_value('overtime_rate', r.message["ot_rate"])
-	// 		        frm.set_value('productive_hours',r.message["productive_hours_ratio"])
-	// 		        frm.set_value('actual_hours', r.message["actual_hours"])
-	// 		    }
-	// 		});
-	// 	}
-	// },
-	// validate: function (frm) {
-	// 	validate_corordinates(frm)
-	// }
+	validate:function (frm) {
+		if(frm.doc.time.split(" ")[1].split(":")[0]>="12") {
+			frm.set_value("log_type","OUT")
+		} else {
+			frm.set_value("log_type","IN")
+		}
+	}
+	
 })
-
-var validate_corordinates = function(frm,branch){
-	// validate the Geolocation co-ordinates
-		frm.set_value("valid_location",0)
-		frappe.call({
-		    method: "al_ansari.al_ansari.customization.employee_checkin.validate_login_coordinates",
-		    args: {
-		        'frm': frm.doc
-		    },
-		    callback: function(r) {
-		        if (!r.exc) {
-		        	console.log("Validate co-ordinates"+r.message)
-		            if(r.message == false) {
-		            	frm.set_value('valid_location',0)
-		            }else{
-		            	frm.set_value('valid_location',1)
-		            }
-		        }
-		    }
-		});
-}
