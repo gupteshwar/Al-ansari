@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 import frappe
 from frappe.handler import uploadfile
 from frappe.utils import add_months, cint, flt, getdate, time_diff_in_hours
+from datetime import datetime
 
 # calculate actual hours for the day if log type is OUT
 def calculate_actual_hours(doc,method):
@@ -74,7 +75,7 @@ def after_insert(doc,method):
 			frappe.db.set_value("Employee Checkin",docname,"photo",data.get('file_url'))
 			frappe.db.set_value("Employee Checkin",docname,"is_photo",1)
 			frappe.cache().set_value("photo_filedata", "")
-			
+
 	if doc.log_type == "OUT":
 		actual_hours,rec = calculate_actual_hours_for_day(doc.employee,doc.time)
 		if(doc.name == rec):
@@ -106,17 +107,30 @@ def after_insert(doc,method):
 				doc.save()
 
 	# to update the employee's working status based on 'rejoin_date' on leave application
-	if doc.log_type == 'IN':
-		leave_app = frappe.db.get_list('Leave Application',
-			filters=[
-				['employee','=',doc.employee],
-				['docstatus','=',1],
-				['leave_type','!=','Annual Leave'],
-				['rejoin_date','<=',doc.time.split(" ")[0]],
-			],
-			fields = ['employee'],
-			order_by = "to_date desc",
-			limit_page_length = 1)
+	if doc.log_type == 'IN': 
+		leave_app = []
+		if type(doc.time) == type("Test"):
+			leave_app = frappe.db.get_list('Leave Application',
+				filters=[
+					['employee','=',doc.employee],
+					['docstatus','=',1],
+					['leave_type','!=','Annual Leave'],
+					['rejoin_date','<=',doc.time.split(" ")[0]],
+				],
+				fields = ['employee'],
+				order_by = "to_date desc",
+				limit_page_length = 1)
+		else:
+			leave_app = frappe.db.get_list('Leave Application',
+				filters=[
+					['employee','=',doc.employee],
+					['docstatus','=',1],
+					['leave_type','!=','Annual Leave'],
+					['rejoin_date','<=',doc.time.date()],
+				],
+				fields = ['employee'],
+				order_by = "to_date desc",
+				limit_page_length = 1)
 
 		employee_list = frappe.db.get_list('Employee',
 			filters=[
@@ -125,8 +139,7 @@ def after_insert(doc,method):
 				['working_status','=','On Leave'],
 			],
 			fields = ['name'])
-		print("leave_app = ",leave_app)
-		print("employee_list =",employee_list)
+		
 		if leave_app and employee_list:
 			if leave_app[0]['employee'] in employee_list[0]['name']:
 				frappe.db.set_value('Employee',doc.employee,'working_status','Working')
