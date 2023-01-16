@@ -53,8 +53,9 @@ frappe.ui.form.on('Payroll Entry', {
 						frappe.throw("Start and End dates should be selected")
 					}               
 				}, __("Create"));
+
 			}
-			
+
 		}
 
 		frm.set_query("payroll_cost_center", function() {
@@ -64,6 +65,17 @@ frappe.ui.form.on('Payroll Entry', {
 	            }
 	        };
 	    });
+
+		frm.set_query("partial_entry", function() {
+	        return {
+	            "filters": {
+	                "docstatus": 0,
+	            }
+	        };
+	    });
+	},
+	on_submit: function(frm) {
+		frappe.set_route("Form","Payroll Entry",frm.doc.payroll_entry)
 	}
 })
 
