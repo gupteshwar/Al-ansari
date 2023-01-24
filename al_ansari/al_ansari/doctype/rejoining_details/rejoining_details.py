@@ -26,8 +26,9 @@ class RejoiningDetails(Document):
 				leave_doc.from_date = self.initial_rejoin_date
 				leave_doc.leave_approver = frappe.get_value("Employee",self.employee,['leave_approver'])
 				leave_doc.to_date = frappe.utils.add_days(self.initial_rejoin_date,self.days_difference-1)
-				leave_doc.follow_via_email = 0
+				leave_doc.follow_via_email = 1
 				leave_doc.rejoining_doc = self.name
+				leave_doc.status = 'Approved'
 				leave_doc.save()
 				leave_doc.submit()
 				# frappe.msgprint("LWP marked. Please check and submit the same")
