@@ -8,7 +8,7 @@ from frappe import _
 
 class EarnedLeaveDeductions(Document):
 	# pass
-	def submit(self):
+	def on_submit(self):
 		self.negative_leave_allocation()
 
 	def negative_leave_allocation(self):
