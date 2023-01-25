@@ -30,7 +30,7 @@ class RejoiningDetails(Document):
 				leave_doc.rejoining_doc = self.name
 				leave_doc.status = 'Approved'
 				leave_doc.save()
-				leave_doc.submit()
+				# leave_doc.submit()
 				# frappe.msgprint("LWP marked. Please check and submit the same")
 
 			# mark working status on emp master
