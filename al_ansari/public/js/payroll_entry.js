@@ -39,13 +39,9 @@ frappe.ui.form.on('Payroll Entry', {
 							callback: function(r) {
 								if (r.message){
 									console.log(r.message)
-									if(r.message.length == 0) {
-										frappe.msgprint("No records found to update LWPs")
-									} else {
-										frm.set_value('lwp_updated',1)
-										frappe.msgprint("Records updated successfully")
-										frm.save()
-									}
+									frm.set_value('lwp_updated',1)
+									frappe.msgprint("Records updated successfully")
+									frm.save()
 								}
 							}
 						})
