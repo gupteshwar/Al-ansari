@@ -1,0 +1,32 @@
+{
+ "custom_fields": [],
+ "custom_perms": [],
+ "doctype": "Salary Detail",
+ "property_setters": [
+  {
+   "_assign": null,
+   "_comments": null,
+   "_liked_by": null,
+   "_user_tags": null,
+   "creation": "2023-01-09 10:24:19.760763",
+   "default_value": null,
+   "doc_type": "Salary Detail",
+   "docstatus": 0,
+   "doctype_or_field": "DocField",
+   "field_name": "do_not_include_in_total",
+   "idx": 0,
+   "modified": "2023-01-09 10:24:19.760763",
+   "modified_by": "Administrator",
+   "name": "Salary Detail-do_not_include_in_total-read_only",
+   "owner": "Administrator",
+   "parent": null,
+   "parentfield": null,
+   "parenttype": null,
+   "property": "read_only",
+   "property_type": "Check",
+   "row_name": null,
+   "value": "1"
+  }
+ ],
+ "sync_on_migrate": 1
+}

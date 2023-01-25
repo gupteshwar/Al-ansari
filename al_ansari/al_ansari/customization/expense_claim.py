@@ -8,13 +8,14 @@ def transfer_child_attachment_to_parent(doc,method=None):
 		if len(doc.expenses)>0:
 			for expense in doc.expenses:
 				attachments.append(expense.attachment)
-				print("attachment",expense.attachment)
 	if attachments:
 		for attachment in attachments:
-			print("url==",attachment)
-			file_rec = frappe.get_doc('File',{"file_url":attachment})
-			file_rec.attached_to_name = doc.name
-			file_rec.save()
+			if attachment:
+				file_rec = frappe.get_doc('File',{"file_url":attachment})
+				file_rec.attached_to_name = doc.name
+				file_rec.save()
+			else:
+				frappe.throw("Every expense should have proof attached")
 
 def check_validation(doc,method=None):
 	for expense in doc.expenses:
