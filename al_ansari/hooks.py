@@ -47,6 +47,7 @@ doctype_js = {
 	"Salary Structure Assignment": "public/js/salary_structure_assignment.js",
 	"Additional Salary": "public/js/additional_salary.js",
 	"Salary Slip": "public/js/salary_slip.js",
+	"Appraisal": "public/js/appraisal.js",
 	}
 
 fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
@@ -163,7 +164,7 @@ doc_events = {
 
 scheduler_events = {
 	"cron": {
-			"2 * * * *": [
+			"2 0 * * *": [
 				"al_ansari.al_ansari.customization.leave_application.check_update_working_status_for_leave"
 			]
 		},

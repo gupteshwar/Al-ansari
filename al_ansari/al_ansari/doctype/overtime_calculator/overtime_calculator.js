@@ -2,28 +2,6 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Overtime Calculator', {
-	refresh: function(frm) {
-		// if(frm.doc.docstatus ==1){
-		// 	frm.add_custom_button(__("Additional Salary"), function() {
-		// 		if(frm.doc.payroll_date) {
-		// 			frappe.call({
-		// 			    method: "al_ansari.al_ansari.doctype.overtime_calculator.overtime_calculator.additional_salary_entry", //dotted path to server method
-		// 			    args: {
-		// 			    	"frm":frm.doc
-		// 			    },
-		// 			    callback: function(r) {
-		// 			        // code snippet
-		// 			        console.log(r.message)
-					        
-		// 			    }
-		// 			});
-		// 		}else {
-		// 			frappe.throw("Please select the Payroll Date to create Additional Salary records")
-		// 		}
-				
-		// 	})
-		// }
-	},
 	from_date: function(frm) {
 	    if(frm.doc.from_date) {
 	        frm.set_value('to_date',moment(frm.doc.from_date).endOf('month').format('YYYY-MM-DD'))
@@ -58,7 +36,9 @@ frappe.ui.form.on('Overtime Calculator', {
 				frm.doc.overtime_calculator_detail[x].actual_hours = frm.doc.overtime_calculator_detail[x].holiday_actual_hours.toFixed(2) +frm.doc.overtime_calculator_detail[x].non_holiday_actual_hours.toFixed(2)
 				frm.doc.overtime_calculator_detail[x].holiday_productive_hours = (frm.doc.overtime_calculator_detail[x].holiday_overtime.toFixed(2) * frm.doc.overtime_calculator_detail[x].productive_hours_ratio)
 				frm.doc.overtime_calculator_detail[x].non_holiday_productive_hours = frm.doc.overtime_calculator_detail[x].non_holiday_overtime.toFixed(2)* frm.doc.overtime_calculator_detail[x].productive_hours_ratio
-				frm.doc.overtime_calculator_detail[x].overtime_amount = (frm.doc.overtime_calculator_detail[x].holiday_productive_hours.toFixed(2) * frm.doc.overtime_calculator_detail[x].holiday_overtime_rate) + (frm.doc.overtime_calculator_detail[x].non_holiday_productive_hours.toFixed(2) * frm.doc.overtime_calculator_detail[x].non_holiday_overtime_rate)
+				frm.doc.overtime_calculator_detail[x].holiday_overtime_amount = frm.doc.overtime_calculator_detail[x].holiday_productive_hours.toFixed(2) * frm.doc.overtime_calculator_detail[x].holiday_overtime_rate
+				frm.doc.overtime_calculator_detail[x].non_holiday_overtime_amount = frm.doc.overtime_calculator_detail[x].non_holiday_productive_hours.toFixed(2) * frm.doc.overtime_calculator_detail[x].non_holiday_overtime_rate
+				frm.doc.overtime_calculator_detail[x].overtime_amount = frm.doc.overtime_calculator_detail[x].holiday_overtime_amount + frm.doc.overtime_calculator_detail[x].non_holiday_overtime_amount
 				// frm.doc.overtime_calculator_detail[x].total_overtime = frm.doc.overtime_calculator_detail[x].holiday_overtime + frm.doc.overtime_calculator_detail[x].non_holiday_overtime
 			}	
 		} else {

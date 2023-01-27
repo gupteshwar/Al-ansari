@@ -1,11 +1,7 @@
 frappe.ui.form.on('Salary Slip', { 
-	onload: function(frm) {
-		frm.get_field('earnings').grid.cannot_add_rows = true;
-		frm.get_field('deductions').grid.cannot_add_rows = true;
-	},
 	refresh: function(frm) {
-		frm.get_field('earnings').grid.cannot_add_rows = true;
-		frm.get_field('deductions').grid.cannot_add_rows = true;	
+		frm.set_df_property("earnings", "read_only", 1);
+		frm.set_df_property("deductions", "read_only", 1);
 	}
 })
 
