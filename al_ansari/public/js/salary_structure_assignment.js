@@ -20,9 +20,6 @@ frappe.ui.form.on('Salary Structure Assignment', {
 	living: function(frm) {
 		frm.set_value('total_monthly_salary',calculate_total_monthly_salary(frm))
 	},
-	living: function(frm) {
-		frm.set_value('total_monthly_salary',calculate_total_monthly_salary(frm))
-	},
 	gsm: function(frm) {
 		frm.set_value('total_monthly_salary',calculate_total_monthly_salary(frm))
 	},
