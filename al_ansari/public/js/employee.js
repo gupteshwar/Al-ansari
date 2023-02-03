@@ -1,4 +1,13 @@
 frappe.ui.form.on('Employee', {
+	refresh: function(frm) {
+		frm.set_query("payroll_cost_center", function() {
+	        return {
+	            "filters": {
+	                "company": frm.doc.company,
+	            }
+	        };
+	    });
+	},
 	salary_assignment_issued: function(frm) {
 		if(frm.doc.salary_assignment_issued == 1){
 			frm.set_query("bank_account", function() {

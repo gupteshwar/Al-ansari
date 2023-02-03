@@ -881,7 +881,7 @@
    "name": "Employee-group",
    "no_copy": 0,
    "non_negative": 0,
-   "options": "Omani\nExpat\nOmani2\nExpat2",
+   "options": "Omani\nExpat\nOmani2\nExpat2\nInvestor\nNopay",
    "owner": "a.amjid@alyusroman.com",
    "parent": null,
    "parentfield": null,
