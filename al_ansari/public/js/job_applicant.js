@@ -46,6 +46,7 @@ function auto_populate_child_table(frm) {
     
 }
 
+<<<<<<< HEAD
 function auto_populate_description(frm) {
     frm.doc.documentations = []
     $.each(description,function (i,r) {
@@ -75,3 +76,5 @@ function validate_education_date(frm) {
         }
     })
 }
+=======
+>>>>>>> c27abee... update_in_hooks
