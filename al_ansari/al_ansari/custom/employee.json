@@ -401,7 +401,7 @@
    "name": "Employee-visa_company",
    "no_copy": 0,
    "non_negative": 0,
-   "options": "Company",
+   "options": "Visa Company",
    "owner": "a.amjid@alyusroman.com",
    "parent": null,
    "parentfield": null,
