@@ -1,0 +1,55 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-02-07 15:59:31.331612",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "grading",
+  "with_experience",
+  "without_experience",
+  "please_tick_appropriate"
+ ],
+ "fields": [
+  {
+   "fieldname": "grading",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Grading",
+   "options": "\nOutstanding\nAbove Average\nAverage\nBelow Average"
+  },
+  {
+   "fieldname": "with_experience",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "With Experience",
+   "options": "\n46 - 55\n36 - 45\n26 - 35\n11 - 25"
+  },
+  {
+   "fieldname": "without_experience",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Without Experience",
+   "options": "\n36 - 55\n26 - 35\n16 - 25\n1 - 15"
+  },
+  {
+   "default": "0",
+   "fieldname": "please_tick_appropriate",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Please tick appropriate"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-02-07 16:09:07.650301",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Grading",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
