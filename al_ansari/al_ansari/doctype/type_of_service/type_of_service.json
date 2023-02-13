@@ -1,0 +1,48 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:type_of_service",
+ "creation": "2023-01-05 17:32:05.207759",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "type_of_service"
+ ],
+ "fields": [
+  {
+   "fieldname": "type_of_service",
+   "fieldtype": "Data",
+   "label": "Type Of Service",
+   "unique": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [
+  {
+   "link_doctype": "Type Of Service",
+   "link_fieldname": "type_of_service"
+  }
+ ],
+ "modified": "2023-01-19 11:09:11.882528",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Type Of Service",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
