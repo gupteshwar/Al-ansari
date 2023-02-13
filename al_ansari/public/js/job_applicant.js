@@ -2,10 +2,6 @@ frappe.ui.form.on("Job Applicant",{
     onload:function(frm){
         auto_populate_child_table(frm);
     },
-    refresh:function (frm) {
-        add_select_field(frm)
-        
-    }
 })
 
 var arr = ["Are you currently employed?","Why do you want to leave your current job? & Relocate?","If you are appointed, how long you need to join us?",
@@ -29,16 +25,4 @@ function auto_populate_child_table(frm) {
             })
             refresh_field("questions_and_answers")
     }
-
-function add_select_field(frm){
-$.each(frm.doc.questions_and_answers, function(i, r){
-    if (r.questions == "No of dependents:____2__?"){
-        console.log("innnn")
-        set_field_options(r.select, 'options', ['Married', 'Unmarried']);
-        console.log("out")
-    }
-
-})
-    frm.refresh_field('questions_and_answers')
-}
 
