@@ -50,6 +50,17 @@ doctype_js = {
 	"Appraisal": "public/js/appraisal.js",
 	"Job Applicant": "public/js/job_applicant.js",
 	"Interview Feedback": "public/js/interview_feedback.js"
+	"Customer": "public/js/customer.js",
+	"Journal Entry": "public/js/journal_entry.js",
+	"Purchase Invoice": "public/js/purchase_invoice.js",
+	"Sales Invoice": "public/js/sales_invoice.js",
+	"Sales Order": "public/js/sales_order.js",
+	"Purchase Order": "public/js/purchase_order.js",
+	"Blanket Order": "public/js/blanket_order.js",
+	"Request for Quotation": "public/js/request_for_quotation.js",
+	"POS Closing Entry" : "public/js/pos_closing_entry.js",
+	"POS Opening Entry" : "public/js/pos_opening_entry.js",
+	"Job Applicant": "public/js/job_applicant.js"
 	}
 
 fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
@@ -141,8 +152,14 @@ doc_events = {
 		"after_insert": ["al_ansari.al_ansari.customization.employee_checkin.after_insert"],
 		"validate": ["al_ansari.al_ansari.customization.employee_checkin.validate"]
 	},
+	"Payment Entry":{
+		"before_save":["al_ansari.al_ansari.customization.payment_entry.validate_paid_amt_greater_than_outstanding_amt"]
+	},
+	"Sales Order":{
+		"before_save":["al_ansari.al_ansari.customization.sales_order.before_save"],
+		"on_submit":["al_ansari.al_ansari.customization.sales_order.on_submit"]
+	}
 }
-
 # Scheduled Tasks
 # ---------------
 
