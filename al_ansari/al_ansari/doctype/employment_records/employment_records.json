@@ -18,22 +18,9 @@
  "fields": [
   {
    "fieldname": "company_name",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Company Name",
-   "options": "Company"
-  },
-  {
-   "fieldname": "from",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "From"
-  },
-  {
-   "fieldname": "to",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "To"
+   "label": "Company Name"
   },
   {
    "fieldname": "column_break_4",
@@ -53,7 +40,7 @@
   },
   {
    "fieldname": "salary",
-   "fieldtype": "Data",
+   "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Salary"
   },
@@ -62,12 +49,24 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Reason for Leaving"
+  },
+  {
+   "fieldname": "from",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "From"
+  },
+  {
+   "fieldname": "to",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "To"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-02-07 10:53:22.737008",
+ "modified": "2023-02-14 10:52:25.011503",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Employment Records",
