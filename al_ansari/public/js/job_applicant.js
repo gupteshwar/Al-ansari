@@ -2,6 +2,23 @@ frappe.ui.form.on("Job Applicant",{
     onload:function(frm){
         auto_populate_child_table(frm);
     },
+    before_save:function(frm) {
+        validate_employment_date(frm);
+        validate_education_date(frm);
+    },
+    marital_status:function (frm) {
+        update_answers(frm)
+    },
+    experience_in_countries:function (frm) {
+        answers(frm)
+    },
+    years_of_experience:function (frm) {
+        answers(frm)
+    },
+    validate:function (frm) {
+        update_answers(frm)
+        answers(frm)
+    }
 })
 
 var arr = ["Are you currently employed?","Why do you want to leave your current job? & Relocate?","If you are appointed, how long you need to join us?",
@@ -26,3 +43,39 @@ function auto_populate_child_table(frm) {
             refresh_field("questions_and_answers")
     }
 
+function validate_employment_date(frm) {
+    (frm.doc.records || []).forEach(function(date) {
+        if(date.from >= date.to){
+            frappe.throw(__("'To' date should be greater than 'From' date"))
+        }
+    })
+
+}
+
+function validate_education_date(frm) {
+    (frm.doc.education || []).forEach(function(date){
+        if(date.from_date >= date.to_date){
+            frappe.throw(__("'To' date should be greater than 'From' date"))
+        }
+    })
+}
+
+function update_answers(frm) {
+    (frm.doc.questions_and_answers || []).forEach(function(x) {
+        if(frm.doc.marital_status){
+            if(x.questions == "No of dependents?"){
+                x.answers = frm.doc.marital_status
+            }
+        }
+})
+}
+
+function answers(frm) {
+    (frm.doc.questions_and_answers || []).forEach(function(x) {
+        if(frm.doc.experience_in_countries){
+            if(x.questions == "Years of experience in Oman and Other Country?"){
+                x.answers = frm.doc.experience_in_countries +":"+ frm.doc.years_of_experience
+            }
+        }
+    })
+}
