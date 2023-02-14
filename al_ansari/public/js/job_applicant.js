@@ -28,11 +28,15 @@ var arr = ["Are you currently employed?","Why do you want to leave your current 
 ,"Please provide references, each from your current and previous employer?"
 ,"Can we contact the 02 references you have provided? If No, why?"
 ,"Please indicate your interview availability?"
+<<<<<<< HEAD
 ,"No of dependents?"]
 
 var description = ["Attested University Degree","Valid contact number in Oman","Valid Passport more than 6 months",
 "Experience certificates to support your experience","Valid Oman Driving license"]
 
+=======
+,"No of dependents:?"]
+>>>>>>> c8426fe... field_changes_phase_2
 
 function auto_populate_child_table(frm) {
     var job_applic = frappe.model.get_doc("Job Applicant", frm.doc.name)

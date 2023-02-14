@@ -416,7 +416,7 @@
    "report_hide": 0,
    "reqd": 0,
    "search_index": 0,
-   "translatable": 0,
+   "translatable": 1,
    "unique": 0,
    "width": null
   },
@@ -431,7 +431,7 @@
    "collapsible": 0,
    "collapsible_depends_on": null,
    "columns": 0,
-   "creation": "2023-02-07 16:15:30.424217",
+   "creation": "2023-02-07 16:11:35.291843",
    "default": null,
    "depends_on": null,
    "description": null,
