@@ -14,6 +14,10 @@ frappe.ui.form.on("Job Applicant",{
     },
     years_of_experience:function (frm) {
         answers(frm)
+    },
+    validate:function (frm) {
+        update_answers(frm)
+        answers(frm)
     }
 })
 
@@ -50,7 +54,6 @@ function validate_employment_date(frm) {
 
 function validate_education_date(frm) {
     (frm.doc.education || []).forEach(function(date){
-        console.log(date)
         if(date.from_date >= date.to_date){
             frappe.throw(__("'To' date should be greater than 'From' date"))
         }
@@ -60,7 +63,6 @@ function validate_education_date(frm) {
 function update_answers(frm) {
     (frm.doc.questions_and_answers || []).forEach(function(x) {
         if(frm.doc.marital_status){
-            console.log(frm.doc.marital_status)
             if(x.questions == "No of dependents?"){
                 x.answers = frm.doc.marital_status
             }
@@ -72,7 +74,6 @@ function answers(frm) {
     (frm.doc.questions_and_answers || []).forEach(function(x) {
         if(frm.doc.experience_in_countries){
             if(x.questions == "Years of experience in Oman and Other Country?"){
-                console.log(frm.doc.experience_in_countries,frm.doc.years_of_experience)
                 x.answers = frm.doc.experience_in_countries +":"+ frm.doc.years_of_experience
             }
         }
