@@ -7,8 +7,8 @@
  "engine": "InnoDB",
  "field_order": [
   "name_and_address_of_schoolcollegeuniversity",
-  "from",
-  "to",
+  "from_date",
+  "to_date",
   "degree_of_certificatesdiploma",
   "major_course_of_study"
  ],
@@ -18,18 +18,6 @@
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "Name and Address of School/College/University"
-  },
-  {
-   "fieldname": "from",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "From"
-  },
-  {
-   "fieldname": "to",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "To"
   },
   {
    "fieldname": "degree_of_certificatesdiploma",
@@ -42,12 +30,24 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Major Course of Study"
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "From"
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "To"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-02-09 09:59:01.124153",
+ "modified": "2023-02-14 10:52:52.405404",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Employee Education Details",
