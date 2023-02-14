@@ -18,6 +18,19 @@ frappe.ui.form.on("Job Applicant",{
         validate_employment_date(frm);
         validate_education_date(frm);
     },
+    before_save:function(frm) {
+        validate_employment_date(frm);
+        validate_education_date(frm);
+    },
+    marital_status:function (frm) {
+        update_answers(frm)
+    },
+    experience_in_countries:function (frm) {
+        answers(frm)
+    },
+    years_of_experience:function (frm) {
+        answers(frm)
+    }
 })
 
 var arr = ["Are you currently employed?","Why do you want to leave your current job? & Relocate?","If you are appointed, how long you need to join us?",
@@ -28,15 +41,12 @@ var arr = ["Are you currently employed?","Why do you want to leave your current 
 ,"Please provide references, each from your current and previous employer?"
 ,"Can we contact the 02 references you have provided? If No, why?"
 ,"Please indicate your interview availability?"
-<<<<<<< HEAD
 ,"No of dependents?"]
 
 var description = ["Attested University Degree","Valid contact number in Oman","Valid Passport more than 6 months",
 "Experience certificates to support your experience","Valid Oman Driving license"]
 
-=======
-,"No of dependents:?"]
->>>>>>> c8426fe... field_changes_phase_2
+
 
 function auto_populate_child_table(frm) {
     var job_applic = frappe.model.get_doc("Job Applicant", frm.doc.name)
@@ -50,7 +60,6 @@ function auto_populate_child_table(frm) {
     
 }
 
-<<<<<<< HEAD
 function auto_populate_description(frm) {
     frm.doc.documentations = []
     $.each(description,function (i,r) {
@@ -72,6 +81,7 @@ function validate_employment_date(frm) {
 
 }
 
+
 function validate_education_date(frm) {
     (frm.doc.education || []).forEach(function(date){
         console.log(date)
@@ -80,5 +90,3 @@ function validate_education_date(frm) {
         }
     })
 }
-=======
->>>>>>> c27abee... update_in_hooks
