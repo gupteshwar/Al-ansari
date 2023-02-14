@@ -1,7 +1,7 @@
 frappe.ui.form.on("Sales Order",{
     before_save : function(frm){
         item_rate(frm)
-        // validate_posting_date(frm)
+        validate_posting_date(frm)
     },
     on_submit: function(frm){
         if(frm.doc.docstatus ==1){
