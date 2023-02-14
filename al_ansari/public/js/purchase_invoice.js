@@ -1,7 +1,7 @@
 frappe.ui.form.on('Purchase Invoice',{
     before_save:function (frm) {
         validate_posting_and_supp_inv_date(frm);
-        // validate_posting_date(frm)
+        validate_posting_date(frm)
     }
 
 })
