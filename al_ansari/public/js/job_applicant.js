@@ -30,6 +30,10 @@ frappe.ui.form.on("Job Applicant",{
     },
     years_of_experience:function (frm) {
         answers(frm)
+    },
+    validate:function (frm) {
+        update_answers(frm)
+        answers(frm)
     }
 })
 
@@ -84,7 +88,6 @@ function validate_employment_date(frm) {
 
 function validate_education_date(frm) {
     (frm.doc.education || []).forEach(function(date){
-        console.log(date)
         if(date.from_date >= date.to_date){
             frappe.throw(__("'To' date should be greater than 'From' date"))
         }
