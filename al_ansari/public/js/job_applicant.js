@@ -12,7 +12,7 @@ var arr = ["Are you currently employed?","Why do you want to leave your current 
 ,"Please provide references, each from your current and previous employer?"
 ,"Can we contact the 02 references you have provided? If No, why?"
 ,"Please indicate your interview availability?"
-,"No of dependents:____2__?"]
+,"No of dependents:?"]
 
 function auto_populate_child_table(frm) {
     console.log(frm)
