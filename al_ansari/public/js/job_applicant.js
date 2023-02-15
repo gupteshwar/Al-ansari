@@ -18,23 +18,6 @@ frappe.ui.form.on("Job Applicant",{
         validate_employment_date(frm);
         validate_education_date(frm);
     },
-    before_save:function(frm) {
-        validate_employment_date(frm);
-        validate_education_date(frm);
-    },
-    marital_status:function (frm) {
-        update_answers(frm)
-    },
-    experience_in_countries:function (frm) {
-        answers(frm)
-    },
-    years_of_experience:function (frm) {
-        answers(frm)
-    },
-    validate:function (frm) {
-        update_answers(frm)
-        answers(frm)
-    }
 })
 
 var arr = ["Are you currently employed?","Why do you want to leave your current job? & Relocate?","If you are appointed, how long you need to join us?",
@@ -93,3 +76,4 @@ function validate_education_date(frm) {
         }
     })
 }
+
