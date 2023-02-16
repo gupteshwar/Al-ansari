@@ -14,7 +14,6 @@ frappe.ui.form.on("Request for Quotation",{
 
 function get_quotation_items(frm){
     frappe.model.with_doc("Quotation", frm.doc.quotation, function() {
-        console.log("innnn")
         var quot_doc= frappe.model.get_doc("Quotation", frm.doc.quotation)
         
         frm.doc.items = []

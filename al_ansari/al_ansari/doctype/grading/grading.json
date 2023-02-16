@@ -14,24 +14,21 @@
  "fields": [
   {
    "fieldname": "grading",
-   "fieldtype": "Select",
+   "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Grading",
-   "options": "\nOutstanding\nAbove Average\nAverage\nBelow Average"
+   "label": "Grading"
   },
   {
    "fieldname": "with_experience",
-   "fieldtype": "Select",
+   "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "With Experience",
-   "options": "\n46 - 55\n36 - 45\n26 - 35\n11 - 25"
+   "label": "With Experience"
   },
   {
    "fieldname": "without_experience",
-   "fieldtype": "Select",
+   "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Without Experience",
-   "options": "\n36 - 55\n26 - 35\n16 - 25\n1 - 15"
+   "label": "Without Experience"
   },
   {
    "default": "0",
@@ -44,7 +41,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-02-07 16:09:07.650301",
+ "modified": "2023-02-15 10:23:31.472310",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Grading",

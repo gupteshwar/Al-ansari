@@ -58,7 +58,8 @@ doctype_js = {
 	"Request for Quotation": "public/js/request_for_quotation.js",
 	"POS Closing Entry" : "public/js/pos_closing_entry.js",
 	"POS Opening Entry" : "public/js/pos_opening_entry.js",
-	"Job Applicant": "public/js/job_applicant.js"
+	"Job Applicant": "public/js/job_applicant.js",
+	"Interview Feedback": "public/js/interview_feedback.js"
 	}
 
 fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
