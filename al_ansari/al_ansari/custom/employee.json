@@ -1001,7 +1001,7 @@
    "name": "Employee-left_reason",
    "no_copy": 0,
    "non_negative": 0,
-   "options": "\nAbsconding\nTerminated\nDeath\nRetire",
+   "options": "\nAbsconding\nTerminated\nResignation\nDeath\nRetire",
    "owner": "Administrator",
    "parent": null,
    "parentfield": null,

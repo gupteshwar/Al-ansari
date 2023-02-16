@@ -20,7 +20,16 @@ frappe.ui.form.on('Salary Structure Assignment', {
 	living: function(frm) {
 		frm.set_value('total_monthly_salary',calculate_total_monthly_salary(frm))
 	},
-	validate: function(frm) {
+	living: function(frm) {
+		frm.set_value('total_monthly_salary',calculate_total_monthly_salary(frm))
+	},
+	gsm: function(frm) {
+		frm.set_value('total_monthly_salary',calculate_total_monthly_salary(frm))
+	},
+	utility: function(frm) {
+		frm.set_value('total_monthly_salary',calculate_total_monthly_salary(frm))
+	},
+	fixed_overtime: function(frm) {
 		frm.set_value('total_monthly_salary',calculate_total_monthly_salary(frm))
 	}
 })
@@ -33,6 +42,9 @@ function calculate_total_monthly_salary(frm) {
 								frm.doc.medical +
 								frm.doc.food +
 								frm.doc.others +
-								frm.doc.living					
+								frm.doc.living +
+								frm.doc.gsm +
+								frm.doc.utility +
+								frm.doc.fixed_overtime			
 	return total_monthly_salary
 }
