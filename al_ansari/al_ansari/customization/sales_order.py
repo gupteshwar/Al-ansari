@@ -4,7 +4,6 @@ def before_save(doc,method):
     validate_item_qty(doc,method)
 
 def on_submit(doc,method):
-    print("itss hereeeee")
     update_sales_details(doc,method)
    
 def validate_item_qty(doc,method):
@@ -23,14 +22,13 @@ def validate_item_qty(doc,method):
                     frappe.throw(f"Sales Order exceeds Blanket Order by {exceeds_qty}")
 
 def update_sales_details(doc,method):
-    print("\n\n\n\n\n\ninnnnnnnnnnnnnn")
     for i in doc.items:
         if i.blanket_order:
             blank_doc = frappe.get_doc("Blanket Order",i.blanket_order)
     
-    blank_doc.append('sales_details',{
-        'sales_order':doc.name,
-        'grand_total':doc.grand_total
-    })
-    blank_doc.save()
+            blank_doc.append('sales_details',{
+                'sales_order':doc.name,
+                'grand_total':doc.grand_total
+            })
+            blank_doc.save()
 
