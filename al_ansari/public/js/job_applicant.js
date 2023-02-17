@@ -35,6 +35,7 @@ function auto_populate_child_table(frm) {
 }
 
 function auto_populate_description(frm) {
+    frm.doc.documentations = []
     $.each(description,function (i,r) {
         var x = frm.add_child("documentations");
         x.description = r
