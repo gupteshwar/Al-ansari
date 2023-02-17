@@ -30,13 +30,6 @@ function auto_populate_grading_table(frm) {
     refresh_field("grading")
     
 }
-<<<<<<< HEAD
-=======
-// frappe.model.get_value('Print Settings', {'name': 'Print Settings'}, 'pdf_page_size',
-//   function(d) {
-//     console.log(d)
-//   })
->>>>>>> 78b5130... update_print_format_change_phase_1
 
 function set_position_field(frm) {
     frappe.call({
@@ -50,16 +43,8 @@ function set_position_field(frm) {
         },
         callback: function(r) {
             console.log(r.message['designation'])
-<<<<<<< HEAD
-            frm.set_value('position',r.message['designation'])
-        }
-    })
-}
 
-=======
-            if (frm)
             frm.set_value('position',r.message['designation'])
         }
     })
 }
->>>>>>> 78b5130... update_print_format_change_phase_1

@@ -1,6 +1,5 @@
 frappe.ui.form.on("Job Applicant",{
     onload:function(frm){
-<<<<<<< HEAD
         if(frm.is_new()){
             auto_populate_child_table(frm);
             auto_populate_description(frm);
@@ -18,11 +17,11 @@ frappe.ui.form.on("Job Applicant",{
     before_save:function(frm) {
         validate_employment_date(frm);
         validate_education_date(frm);
-=======
-        auto_populate_child_table(frm);
-        auto_populate_description(frm);
->>>>>>> 78b5130... update_print_format_change_phase_1
     },
+    before_save:function(frm) {
+            validate_employment_date(frm);
+            validate_education_date(frm);
+        },
 })
 
 var arr = ["Are you currently employed?","Why do you want to leave your current job? & Relocate?","If you are appointed, how long you need to join us?",
@@ -38,11 +37,7 @@ var arr = ["Are you currently employed?","Why do you want to leave your current 
 var description = ["Attested University Degree","Valid contact number in Oman","Valid Passport more than 6 months",
 "Experience certificates to support your experience","Valid Oman Driving license"]
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 78b5130... update_print_format_change_phase_1
 function auto_populate_child_table(frm) {
     var job_applic = frappe.model.get_doc("Job Applicant", frm.doc.name)
     frm.doc.questions_and_answers = []
@@ -56,10 +51,7 @@ function auto_populate_child_table(frm) {
 }
 
 function auto_populate_description(frm) {
-<<<<<<< HEAD
-    frm.doc.documentations = []
-=======
->>>>>>> 78b5130... update_print_format_change_phase_1
+
     $.each(description,function (i,r) {
         var x = frm.add_child("documentations");
         x.description = r
@@ -68,7 +60,7 @@ function auto_populate_description(frm) {
     })
     frm.get_field("documentations").grid.cannot_add_rows = true;
     refresh_field("documentations")
-<<<<<<< HEAD
+
 }
 
 function validate_employment_date(frm) {
@@ -88,7 +80,3 @@ function validate_education_date(frm) {
         }
     })
 }
-
-=======
-}
->>>>>>> 78b5130... update_print_format_change_phase_1

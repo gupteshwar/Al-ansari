@@ -49,7 +49,7 @@ doctype_js = {
 	"Salary Slip": "public/js/salary_slip.js",
 	"Appraisal": "public/js/appraisal.js",
 	"Job Applicant": "public/js/job_applicant.js",
-	"Interview Feedback": "public/js/interview_feedback.js"
+	"Interview Feedback": "public/js/interview_feedback.js",
 	"Customer": "public/js/customer.js",
 	"Journal Entry": "public/js/journal_entry.js",
 	"Purchase Invoice": "public/js/purchase_invoice.js",
