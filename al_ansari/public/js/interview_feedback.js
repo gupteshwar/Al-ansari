@@ -30,10 +30,6 @@ function auto_populate_grading_table(frm) {
     refresh_field("grading")
     
 }
-// frappe.model.get_value('Print Settings', {'name': 'Print Settings'}, 'pdf_page_size',
-//   function(d) {
-//     console.log(d)
-//   })
 
 function set_position_field(frm) {
     frappe.call({
@@ -47,7 +43,6 @@ function set_position_field(frm) {
         },
         callback: function(r) {
             console.log(r.message['designation'])
-            if (frm)
             frm.set_value('position',r.message['designation'])
         }
     })
