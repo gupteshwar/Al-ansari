@@ -11,7 +11,7 @@ frappe.ui.form.on("POS Closing Entry",{
 
 function payment_mode(frm){
     (frm.doc.payment_reconciliation || []).forEach(function(payment_mode){
-        if(payment_mode.mode_of_payment=="Cash"){
+        if(payment_mode.mode_of_payment=="Cash" && payment_mode.closing_amount > 0){
             frappe.msgprint("Transfer Cash To Branch")
             // frappe.throw(__("Transfer Cash To Branch"))
         }

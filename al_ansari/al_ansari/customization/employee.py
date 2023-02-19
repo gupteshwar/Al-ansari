@@ -27,3 +27,25 @@ def before_save(doc,method=None):
 	# 					'cost_center': doc.payroll_cost_center
 	# 				})
 	# 	emp_rec.save()
+
+def valid_employee_adv(doc,method):
+	start_dt = frappe.db.sql("""SELECT DATE(CONCAT(YEAR(CURDATE()),'-01-01')) st_dt""",as_dict=1)[0].st_dt
+	end_dt = frappe.db.sql("""SELECT DATE(CONCAT(YEAR(CURDATE()),'-12-31')) ed_dt""",as_dict=1)[0].ed_dt
+	total_adv = frappe.db.sql(""" 
+			Select sum(return_amount) as return_total,
+			 		sum(advance_amount) as advance_total,
+					sum(claimed_amount) as claimed_total
+			from `tabEmployee Advance`
+			where
+				employee = %s and
+				docstatus = 1 and
+				posting_date between %s and %s
+		""",(doc.employee,start_dt,end_dt),as_dict=1)
+
+	advance_limit = frappe.get_value('Employee',doc.employee,'advance_limit')
+	if len(total_adv)>=1:
+		if (advance_limit-(total_adv[0].advance_total-total_adv[0].claimed_total-total_adv[0].return_total)) <= 0:
+			frappe.throw("The advance amount cannot be zero or less than zero")
+		else:
+			if((advance_limit-(total_adv[0].advance_total-total_adv[0].claimed_total-total_adv[0].return_total)) < doc.advance_amount):
+				frappe.throw("The advance amount cannot exceed the advance limit amount")
