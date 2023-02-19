@@ -24,3 +24,10 @@ def submit_consign_tracking(doc):
 			})
 	consign_doc.save(ignore_permissions=True)
 
+@frappe.whitelist()
+def get_consign_name(docname):
+    if docname:
+        consign_name = frappe.db.get_value("Consignment Tracking",{"purchase_order":docname},'name')
+    if consign_name:
+        consign_doc = frappe.get_doc("Consignment Tracking",consign_name)
+        return consign_doc
