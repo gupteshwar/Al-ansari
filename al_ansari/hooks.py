@@ -61,7 +61,8 @@ doctype_js = {
 	"POS Closing Entry" : "public/js/pos_closing_entry.js",
 	"POS Opening Entry" : "public/js/pos_opening_entry.js",
 	"Job Applicant": "public/js/job_applicant.js",
-	"Interview Feedback": "public/js/interview_feedback.js"
+	"Employee Advance": "public/js/employee_advance.js",
+	"Quotation": "public/js/quotation.js",
 	}
 
 fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
@@ -159,7 +160,10 @@ doc_events = {
 	"Sales Order":{
 		"before_save":["al_ansari.al_ansari.customization.sales_order.before_save"],
 		"on_submit":["al_ansari.al_ansari.customization.sales_order.on_submit"]
-	}
+	},
+	"Employee Advance":{
+		"on_submit":["al_ansari.al_ansari.customization.employee.valid_employee_adv"]
+	},
 }
 # Scheduled Tasks
 # ---------------
