@@ -14,7 +14,7 @@ def calculate_actual_hours(doc,method):
 			and DATE(time) = DATE(%s) 
 			and log_type = 'IN';  
 			""",(doc.employee,doc.time),as_dict=1)
-		print(record)
+		print("r==",record)
 		if record:
 			holiday_list,h_ot_rate,nh_ot_rate,default_shift,grade = frappe.db.get_value("Employee",doc.employee,['holiday_list','h_ot_rate','nh_ot_rate','default_shift','grade'])
 			shift_hours = frappe.db.get_value("Shift Type",default_shift,["shift_hours"])
@@ -48,7 +48,7 @@ def calculate_actual_hours(doc,method):
 def validate(doc,method):
 	if doc.manual_entry == 1:
 		valid_loc = validate_login_coordinates(doc)
-		# print("valid_loc=",doc.valid_location)
+		print("valid_loc=",doc.valid_location)
 
 		if valid_loc.valid_location == 0:
 			frappe.throw("Please make sure you are on valid location as per branches assigned to you")
@@ -185,14 +185,17 @@ def validate_login_coordinates(frm):
 		and LEAST(from_longitude,to_longitude)<= %s 
 		and GREATEST(from_longitude,to_longitude)>= %s
 		""",(frm.latitude,frm.latitude,frm.longitude,frm.longitude),as_list=1)
-	
+
 	if emp_branches:
 		if len(branch) <= 0:
 			frappe.msgprint("No suitable branch found for the for the co-ordinates recorded. Please check your location")
 			frm.valid_location = 0
 			return frm
 		else:
-			if branch[0][0] in emp_branches:
+			branch = [b[0] for b in branch]
+			c_branch =list(set(branch) & set(emp_branches))
+
+			if c_branch:
 				frm.valid_location = 1
 				return frm 
 			else:
