@@ -1,6 +1,6 @@
 frappe.ui.form.on("Purchase Order",{
     before_save : function(frm){
-        validate_posting_date(frm)
+        // validate_posting_date(frm)
         item_rate(frm)
     },
 })
