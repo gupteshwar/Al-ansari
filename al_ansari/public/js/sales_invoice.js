@@ -7,7 +7,7 @@ frappe.ui.form.on("Sales Invoice",{
         })
     },
     before_save:function(frm) {
-        validate_posting_date(frm)   
+        // validate_posting_date(frm)   
     }
 })
 
