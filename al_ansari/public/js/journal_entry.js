@@ -1,6 +1,6 @@
 frappe.ui.form.on('Journal Entry', {
     before_save:function(frm){
-        validate_posting_date(frm)
+        // validate_posting_date(frm)
     }
 
 })
