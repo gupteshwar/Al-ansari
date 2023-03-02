@@ -53,7 +53,7 @@
   },
   {
    "fieldname": "salary",
-   "fieldtype": "Data",
+   "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Salary"
   },
@@ -61,13 +61,25 @@
    "fieldname": "reason_for_leaving",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Reason for Leaving"
+   "label": "reason for leaving"
+  },
+  {
+   "fieldname": "from",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "From"
+  },
+  {
+   "fieldname": "to",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "To"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-02-07 10:53:22.737008",
+ "modified": "2023-02-16 15:21:37.066108",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Employment Records",

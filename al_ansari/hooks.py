@@ -48,7 +48,8 @@ doctype_js = {
 	"Additional Salary": "public/js/additional_salary.js",
 	"Salary Slip": "public/js/salary_slip.js",
 	"Appraisal": "public/js/appraisal.js",
-	"Job Applicant": "public/js/job_applicant.js"
+	"Job Applicant": "public/js/job_applicant.js",
+	"Interview Feedback": "public/js/interview_feedback.js"
 	}
 
 fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
