@@ -1,0 +1,89 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "TEL#",
+ "creation": "2023-04-04 12:05:36.665351",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "telecom_company",
+  "servicetype",
+  "linenumber",
+  "accountnumber",
+  "packagename",
+  "monthly_rental",
+  "employee",
+  "branch"
+ ],
+ "fields": [
+  {
+   "fieldname": "telecom_company",
+   "fieldtype": "Select",
+   "label": "Telecom Company",
+   "options": "Omantel\nOoredoo\nVodafone\nAirtel\nJio\nEtisalat\nDu"
+  },
+  {
+   "fieldname": "servicetype",
+   "fieldtype": "Select",
+   "label": "ServiceType",
+   "options": "Landline\nInternet\nMobile\nWireless"
+  },
+  {
+   "fieldname": "linenumber",
+   "fieldtype": "Data",
+   "label": "LineNumber"
+  },
+  {
+   "fieldname": "accountnumber",
+   "fieldtype": "Data",
+   "label": "AccountNumber"
+  },
+  {
+   "fieldname": "packagename",
+   "fieldtype": "Data",
+   "label": "PackageName"
+  },
+  {
+   "fieldname": "monthly_rental",
+   "fieldtype": "Data",
+   "label": "Monthly Rental"
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-04-04 12:06:09.659096",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Telecom Services",
+ "name_case": "UPPER CASE",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
