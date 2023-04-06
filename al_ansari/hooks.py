@@ -164,6 +164,9 @@ doc_events = {
 	"Employee Advance":{
 		"on_submit":["al_ansari.al_ansari.customization.employee.valid_employee_adv"]
 	},
+	"Payment Request": {
+		"validate":"al_ansari.al_ansari.customization.payment_request.payment_request_validate"
+	},
 }
 # Scheduled Tasks
 # ---------------
