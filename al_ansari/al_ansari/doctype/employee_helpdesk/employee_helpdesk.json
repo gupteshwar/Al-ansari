@@ -93,21 +93,12 @@
    "options": "Employee Helpdesk",
    "print_hide": 1,
    "read_only": 1
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Employee Helpdesk",
-   "print_hide": 1,
-   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-04-12 10:51:21.417594",
+ "modified": "2023-04-13 17:30:04.775298",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Employee Helpdesk",
