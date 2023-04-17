@@ -63,7 +63,7 @@ doctype_js = {
 	"Quotation": "public/js/quotation.js",
 	}
 
-fixtures = ['Role','Custom Field','Property Setter','Print Format','Report','Workflow','Workflow State','Workflow Action']
+# fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
 
 # Home Pages
 # ----------
