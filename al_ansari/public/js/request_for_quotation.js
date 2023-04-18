@@ -1,13 +1,13 @@
 frappe.ui.form.on("Request for Quotation",{
 
-        onload: function(frm,cdt,cdn) {
-            if (frm.doc.quotation){
+    onload: function(frm,cdt,cdn) {
+        if (frm.doc.quotation){
             get_quotation_items(frm)
-            }
+        }
     },
     quotation: function(frm,cdt,cdn) {
         get_quotation_items(frm)      
-},
+    },
 })
 
 

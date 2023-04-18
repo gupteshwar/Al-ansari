@@ -3,6 +3,26 @@ frappe.ui.form.on("Purchase Order",{
         // validate_posting_date(frm)
         item_rate(frm)
     },
+    onload_post_render:function(frm) {
+        if(frm.doc.supplier) {
+            frappe.call({
+                method: 'frappe.client.get_value',
+                    args: {
+                        'doctype': 'Supplier',
+                        'filters': {'name': frm.doc.supplier},
+                        'fieldname': [
+                            'type_of_entity'
+                        ]
+                    },
+                    callback: function(r) {
+                        if (!r.exc) {
+                            // code snippet
+                            frm.set_value('type_of_entity',r.message.type_of_entity)
+                        }
+                    }
+            })
+        }
+    }
 })
 
 function validate_posting_date(frm) {
