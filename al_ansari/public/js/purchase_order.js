@@ -4,7 +4,7 @@ frappe.ui.form.on("Purchase Order",{
         item_rate(frm)
     },
     onload_post_render:function(frm) {
-        if(frm.doc.supplier) {
+        if(frm.is_new() && frm.doc.supplier) {
             frappe.call({
                 method: 'frappe.client.get_value',
                     args: {
