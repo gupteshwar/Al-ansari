@@ -58,11 +58,14 @@ doctype_js = {
 	"Purchase Order": "public/js/purchase_order.js",
 	"Blanket Order": "public/js/blanket_order.js",
 	"Request for Quotation": "public/js/request_for_quotation.js",
+	"Supplier Quotation": "public/js/supplier_quotation.js",
 	"POS Closing Entry" : "public/js/pos_closing_entry.js",
 	"POS Opening Entry" : "public/js/pos_opening_entry.js",
 	"Job Applicant": "public/js/job_applicant.js",
 	"Employee Advance": "public/js/employee_advance.js",
 	"Quotation": "public/js/quotation.js",
+	"Purchase Receipt": "public/js/purchase_receipt.js",
+	"Purchase Invoice": "public/js/purchase_invoice.js",
 	}
 
 # fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
@@ -209,7 +212,8 @@ scheduler_events = {
 #
 override_whitelisted_methods = {
 	# "frappe.desk.doctype.event.event.get_events": "al_ansari.event.get_events"
-	"erpnext.hr.utils.get_employee_fields_label": "al_ansari.al_ansari.customization.leave_application.get_employee_fields_label"
+	"erpnext.hr.utils.get_employee_fields_label": "al_ansari.al_ansari.customization.leave_application.get_employee_fields_label",
+	"erpnext.selling.doctype.sales_order.sale_order.make_delivery_note": "al_ansari.al_ansari.customization.sales_order.make_delivery_note"
 }
 #
 # each overriding function accepts a `data` argument;
