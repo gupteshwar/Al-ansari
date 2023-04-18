@@ -213,7 +213,6 @@ scheduler_events = {
 override_whitelisted_methods = {
 	# "frappe.desk.doctype.event.event.get_events": "al_ansari.event.get_events"
 	"erpnext.hr.utils.get_employee_fields_label": "al_ansari.al_ansari.customization.leave_application.get_employee_fields_label",
-	"erpnext.selling.doctype.sales_order.sale_order.make_delivery_note": "al_ansari.al_ansari.customization.sales_order.make_delivery_note"
 }
 #
 # each overriding function accepts a `data` argument;
