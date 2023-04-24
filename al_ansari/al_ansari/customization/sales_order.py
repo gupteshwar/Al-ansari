@@ -1,4 +1,5 @@
 import frappe
+import json
 
 def before_save(doc,method):
     validate_item_qty(doc,method)
@@ -31,3 +32,38 @@ def update_sales_details(doc,method):
                 'grand_total':doc.grand_total
             })
             blank_doc.save()
+
+
+@frappe.whitelist()
+def validation_for_duplicate_PR_in_landed_cost_voucher(doc):
+    doc = json.loads(doc)
+
+    purchase_receipts = doc['purchase_receipts'] 
+    valid_pr = []
+    new_doc = 0
+    try:
+        if doc['__islocal']:
+            new_doc = 1
+    except:
+        new_doc = 0
+
+    if new_doc == 1:
+        for i in range(len(purchase_receipts)):
+            r = frappe.db.sql(""" Select parent from `tabLanded Cost Purchase Receipt`
+                where receipt_document_type = %s
+                and receipt_document = %s
+                """,(purchase_receipts[i]['receipt_document_type'],purchase_receipts[i]['receipt_document']),as_dict=1)
+            if not r:
+                valid_pr.append(doc['purchase_receipts'][i]['receipt_document'])
+    elif new_doc == 0:
+        for j in range(len(purchase_receipts)):
+            r = frappe.db.sql(""" Select parent from `tabLanded Cost Purchase Receipt`
+                where receipt_document_type = %s
+                and receipt_document = %s
+                """,(purchase_receipts[j]['receipt_document_type'],purchase_receipts[j]['receipt_document']),as_dict=1)
+            if not r:
+                valid_pr.append(purchase_receipts[j]['receipt_document'])
+            elif r:
+                if r[0]['parent'] == doc['parent']:
+                    valid_pr.append(purchase_receipts[j]['receipt_document'])
+    return valid_pr
