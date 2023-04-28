@@ -8,6 +8,7 @@
  "engine": "InnoDB",
  "field_order": [
   "company",
+  "description",
   "section_break_3",
   "landed_cost_charges"
  ],
@@ -15,8 +16,10 @@
   {
    "fieldname": "company",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Company",
-   "options": "Company"
+   "options": "Company",
+   "reqd": 1
   },
   {
    "fieldname": "section_break_3",
@@ -27,11 +30,19 @@
    "fieldtype": "Table",
    "label": "Landed Cost Charges",
    "options": "Landed Cost Charges Item"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "label": "Description",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-04-24 17:24:52.733019",
+ "modified": "2023-04-28 14:19:20.363194",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Landed Cost Charges Template",
@@ -50,6 +61,7 @@
    "write": 1
   }
  ],
+ "search_fields": "description",
  "sort_field": "modified",
  "sort_order": "DESC"
 }
