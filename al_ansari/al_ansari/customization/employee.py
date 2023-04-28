@@ -5,6 +5,8 @@ def before_save(doc,method=None):
 	if doc.project:
 		project_name = frappe.db.get_value('Project',doc.project,"project_name")
 		doc.project_name = project_name
+	doc.h_ot_rate = doc.hourly_rate * doc.h_ot_multiplier
+	doc.nh_ot_rate = doc.hourly_rate * doc.nh_ot_multiplier
 	# # updating the cost center in child table alon wih dates and cost center
 	# # frappe.throw(doc.is_new())
 	# if doc.is_new() == 0:
