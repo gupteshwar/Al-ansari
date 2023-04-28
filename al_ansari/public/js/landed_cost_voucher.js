@@ -44,13 +44,16 @@ frappe.ui.form.on('Landed Cost Voucher', {
 	},
 	validate: function(frm) {
 		// print("validate")
-		if (frm.doc.taxes.length >0) {
+		if (frm.doc.taxes.length >0 && frm.doc.percentage_based == 1) {
 			var tax_total = 0
 			for (var k=0;k<frm.doc.taxes.length;k++) {
 				tax_total = tax_total + frm.doc.taxes[k].amount
 			}
 			frm.set_value("total_taxes_and_charges",tax_total)
-			distribute_charges(frm)
+			if (frm.doc.total_taxes_and_charges>0)
+				distribute_charges(frm)
+			else
+				frappe.throw(__("The Total Taxes and Charges cannot be 0.00"))
 		}
 	}	
 })
