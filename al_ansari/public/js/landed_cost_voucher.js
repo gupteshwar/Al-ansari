@@ -1,3 +1,4 @@
+
 frappe.ui.form.on('Landed Cost Voucher', {
 	onload: function(frm) {
 		if (frm.doc.percentage_based == 1) {
@@ -16,31 +17,34 @@ frappe.ui.form.on('Landed Cost Voucher', {
 	}, 
 	landed_cost_charges_template: function(frm) {
 		// add charges as per the template selected
-		frappe.call('al_ansari.al_ansari.doctype.landed_cost_charges_template.landed_cost_charges_template.get_template_items', {
-		    landed_cost_charges: frm.doc.landed_cost_charges_template
-		}).then(r => {
-		    console.log(r.message)
-		    for(var i=0;i<r.message.length;i++){
-		    	frm.clear_table("taxes")
-		    	var row = cur_frm.add_child("taxes");
-		    	row.expense_account = r.message[i].expense_account
-		    	row.description = r.message[i].description
-		    	row.account_currency = r.message[i].account_currency
-		    	row.exchange_rate = r.message[i].exchange_rate
-		    	row.amount = r.message[i].amount
-		    	row.base_amount = r.message[i].base_amount
-		    	cur_frm.refresh_fields("taxes");
-		    }
+		frm.clear_table("taxes")
+		cur_frm.refresh_fields("taxes");
+		if(frm.doc.landed_cost_charges_template) {
+			frappe.call('al_ansari.al_ansari.doctype.landed_cost_charges_template.landed_cost_charges_template.get_template_items', {
+			    landed_cost_charges: frm.doc.landed_cost_charges_template
+			}).then(r => {
+			    console.log(r.message)
+			    for(var i=0;i<r.message.length;i++){
+			    	var row = cur_frm.add_child("taxes");
+			    	row.expense_account = r.message[i].expense_account
+			    	row.description = r.message[i].description
+			    	row.account_currency = r.message[i].account_currency
+			    	row.exchange_rate = r.message[i].exchange_rate
+			    	row.amount = r.message[i].amount
+			    	row.base_amount = r.message[i].base_amount
+			    	cur_frm.refresh_fields("taxes");
+			    }
 
-		    if (frm.doc.taxes.length >0) {
-				var tax_total = 0
-				for (var k=0;k<frm.doc.taxes.length;k++) {
-					tax_total = tax_total + frm.doc.taxes[k].amount
+			    if (frm.doc.taxes.length >0) {
+					var tax_total = 0
+					for (var k=0;k<frm.doc.taxes.length;k++) {
+						tax_total = tax_total + frm.doc.taxes[k].amount
+					}
+					frm.set_value("total_taxes_and_charges",tax_total)
+					// distribute_charges(frm)
 				}
-				frm.set_value("total_taxes_and_charges",tax_total)
-				// distribute_charges(frm)
-			}
-		})
+			})
+		}	
 	},
 	validate: function(frm) {
 		// print("validate")
