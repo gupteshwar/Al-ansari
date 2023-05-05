@@ -203,20 +203,48 @@ def auto_mark_lwp_for_emp(attendances,f_holiday_list,employee,lwp_for,no_rec):
 			if mark_lwp:
 				for ml in mark_lwp:
 					lwp_dates = [item for item in ml if item not in f_attendance_list]#ml- f_attendance_list
-					if len(lwp_dates) > 0:
-						leave_app = frappe.new_doc('Leave Application')
-						leave_app.employee = employee['employee']
-						leave_app.leave_type = 'Leave Without Pay'
-						leave_app.leave_approver = frappe.get_value('Employee',employee['employee'],'leave_approver')
-						leave_app.from_date = lwp_dates[0]
-						leave_app.to_date = lwp_dates[len(lwp_dates)-1]
-						leave_app.status = "Approved"
-						leave_app.save()
-						leave_app.submit()
+					# check if lwp dates are consecutive 
+					if len(lwp_dates)>0:
+						consecutive_lwp_dates = check_lwp_dates_are_consecutive(lwp_dates)
+						if len(consecutive_lwp_dates)==1:#len(lwp_dates) > 0:
+							leave_app = frappe.new_doc('Leave Application')
+							leave_app.employee = employee['employee']
+							leave_app.leave_type = 'Leave Without Pay'
+							leave_app.leave_approver = frappe.get_value('Employee',employee['employee'],'leave_approver')
+							leave_app.from_date = lwp_dates[0]
+							leave_app.to_date = lwp_dates[len(lwp_dates)-1]
+							leave_app.status = "Approved"
+							leave_app.save()
+							leave_app.submit()
+						else:
+							for cld in consecutive_lwp_dates:
+								leave_app = frappe.new_doc('Leave Application')
+								leave_app.employee = employee['employee']
+								leave_app.leave_type = 'Leave Without Pay'
+								leave_app.leave_approver = frappe.get_value('Employee',employee['employee'],'leave_approver')
+								leave_app.from_date = cld[0]
+								leave_app.to_date = cld[len(cld)-1]
+								leave_app.status = "Approved"
+								leave_app.save()
+								leave_app.submit()
+
 			else:
 				no_rec.append(employee['employee'])
 			
 	return no_rec
+
+def check_lwp_dates_are_consecutive(lwp_dates):
+	con_lwp_list = [] 
+	con_lwp = []
+	for idx in range(len(lwp_dates)):
+		c=1
+		con_lwp.append(lwp_dates[idx])
+		if(lwp_dates[idx] + timedelta(days=c) in lwp_dates):
+			con_lwp.append(lwp_dates[idx] + timedelta(days=c))
+		else:
+			con_lwp_list.append(con_lwp)
+			con_lwp = []
+	return con_lwp_list
 
 @frappe.whitelist()
 def validate_to_mark_lwp(payroll_entry):
@@ -288,4 +316,5 @@ def calculate_dates_for_auto_lwp(f_holiday_list,f_attendance_list):
 		elif(flat_lwp[idx] + timedelta(days=c) not in flat_lwp):
 			mark_lwp.append(consecutive_lwp)
 			consecutive_lwp = []
+
 	return mark_lwp
