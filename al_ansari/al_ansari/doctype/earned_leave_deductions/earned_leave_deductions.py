@@ -65,8 +65,26 @@ def no_of_working_days_employeewise(frm):
 		# print("holiday_count=====>",holiday_count)
 		# get leave allocation per month
 		# el_allocated = frappe.db.get_value("Leave Allocation",{'employee':item["employee_id"],"leave_type":"Annual Leave"},['monthly_el_allocated']) or 0
-		el_allocated = frappe.db.get_value("Leave Type",{'name':"Annual Leave"},['monthly_allocation']) or 0
-		
+		# el_allocated = frappe.db.get_value("Leave Type",{'name':"Annual Leave"},['monthly_allocation']) or 0
+		earned_leaves_list = frappe.get_list("Leave Type",fields="name",filters = [["is_earned_leave","=",1]]) 
+		el_list =  [d['name'] for d in earned_leaves_list if 'name' in d]
+
+		monthly_el_allocated = frappe.get_list("Leave Allocation",
+							fields="monthly_el_allocated", 
+							filters = [['employee','=',item["employee_id"]],
+									["leave_type",'IN',el_list],
+									['leave_policy_assignment','!=',''],
+									['docstatus','=',1],
+									['from_date',"<=",frm.get("from_date")],
+									['to_date',">=",frm.get("from_date")],
+									['from_date',"<=",frm.get("to_date")],
+									['to_date',">=",frm.get("to_date")]
+									],
+							order_by = "creation desc"
+									) 
+		monthly_el_list =  [d['monthly_el_allocated'] for d in monthly_el_allocated if 'monthly_el_allocated' in d]
+		el_allocated = sum(monthly_el_list)
+		# el_allocated = monthly_el_allocated[0]['monthly_el_allocated'] if monthly_el_allocated else 0
 		# get No. of LWP (summation of fraction of LWP on Leave application)
 		no_of_lwp = frappe.db.sql(""" 
 			SELECT employee,sum(fraction_of_daily_wage) as no_of_lwp 
@@ -76,7 +94,7 @@ def no_of_working_days_employeewise(frm):
 			and from_date >= %s
 			and to_date <= %s
 			""",(item["employee_id"],frm.get("from_date"),frm.get("to_date")),as_dict=1)[0].no_of_lwp or 0
-		print("no_of_lwp=",no_of_lwp)
+		# print("no_of_lwp=",no_of_lwp)
 
 		no_of_lwp_manual = frappe.db.sql(""" 
 			SELECT la.employee,sum(la.total_leave_days) as no_of_lwp
@@ -89,7 +107,7 @@ def no_of_working_days_employeewise(frm):
 			and la.fraction_of_daily_wage = 0
 			and lt.is_lwp = 1
 			""",(item["employee_id"],frm.get("from_date"),frm.get("to_date")),as_dict=1)[0].no_of_lwp or 0
-		print("no_of_lwp_manual== ",no_of_lwp_manual)
+		# print("no_of_lwp_manual== ",no_of_lwp_manual)
 		if holiday_count:
 			working_days.append({"employee":item["employee_id"],"no_of_working_days":(days_of_month-holiday_count),"el_allocated":el_allocated,"no_of_lwp":no_of_lwp+no_of_lwp_manual})
 		else:
