@@ -94,8 +94,8 @@ def check_update_working_status_for_leave():
 				emp_rec.working_status = 'On Leave'
 
 def after_save(doc,method):
-	if doc.rejoining_doc != "":
-		frappe.db.set_value("Rejoining Details",doc.rejoining_doc,"lwp_application",doc.name)
+	if doc.rejoining_details_ref != "" and doc.leave_type == 'Leave Without Pay':
+		frappe.db.set_value("Rejoining Details",doc.rejoining_details_ref,"lwp_application",doc.name)
 
 
 # overriding core whitelisted method for employee transfer
