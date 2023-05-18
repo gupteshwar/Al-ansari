@@ -45,6 +45,64 @@ class EarnedLeaveDeductions(Document):
 		else:
 			frappe.msgprint(_("Allocation records created successfully"))
 
+	@frappe.whitelist()
+	def get_applicants(self):
+		filters = self.make_filters()
+		cond =get_filter_condition(filters)
+		employee_list = frappe.db.sql(
+		"""
+			select
+				distinct t1.employee, t1.employee_name
+			from
+				`tabLeave Application` t1, `tabEmployee` t2
+			where
+				t1.employee = t2.employee
+				and t1.from_date >= '%(from_date)s'
+				and t1.to_date <= '%(to_date)s'
+				and t2.payroll_cost_center = '%(payroll_cost_center)s'
+				%(cond)s 
+		"""
+			%{
+				"from_date": self.from_date,
+				"to_date": self.to_date,
+				"payroll_cost_center": self.payroll_cost_center,
+				'cond':cond
+			},
+			as_dict=True
+		)
+		if not employee_list:
+			error_msg = _(
+				"No employees found for the mentioned criteria:<br>From Date: {0}<br>To Date: {1}<br>Payroll Cost Center: {2}"
+			).format(
+				frappe.bold(self.from_date),
+				frappe.bold(self.to_date),
+				frappe.bold(self.payroll_cost_center),
+			)
+			if self.branch:
+				error_msg += "<br>" + _("Branch: {0}").format(frappe.bold(self.branch))
+			if self.reporting_manager:
+				error_msg += "<br>" + _("Reporting Manager: {0}").format(frappe.bold(self.reporting_manager))
+			frappe.throw(error_msg, title=_("No employees found"))
+
+		return employee_list
+
+	def make_filters(self):
+		filters = frappe._dict()
+		filters["from_date"] = self.from_date
+		filters["to_date"] = self.to_date
+		filters["reports_to"] = self.reporting_manager
+		filters["branch"] = self.branch
+		filters["payroll_cost_center"] = self.payroll_cost_center 
+		return filters
+
+def get_filter_condition(filters):
+	cond = ""
+	for f in ["branch", "reports_to"]: 
+		if filters.get(f):
+			cond += " and t2." + f + " = " + frappe.db.escape(filters.get(f))
+
+	return cond
+
 
 @frappe.whitelist()
 def no_of_working_days_employeewise(frm):
@@ -114,16 +172,3 @@ def no_of_working_days_employeewise(frm):
 			working_days.append({"employee":item["employee_id"],"no_of_working_days":days_of_month,"el_allocated":el_allocated,"no_of_lwp":no_of_lwp+no_of_lwp_manual})
 
 	return working_days
-
-@frappe.whitelist()
-def get_applicants(frm):
-	frm = frappe.json.loads(frm)
-
-	return frappe.db.sql(""" 
-				SELECT 
-					DISTINCT(employee),
-					employee_name
-				from `tabLeave Application`
-				where 
-				from_date >= %s
-				and to_date <= %s""",(frm.get("from_date"),frm.get("to_date")),as_dict=1)

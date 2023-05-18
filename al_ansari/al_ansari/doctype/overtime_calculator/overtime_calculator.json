@@ -14,6 +14,7 @@
   "column_break_3",
   "branch",
   "reporting_manager",
+  "payroll_cost_center",
   "get_employees",
   "section_break_3",
   "overtime_calculator_detail",
@@ -76,12 +77,19 @@
    "fieldtype": "Link",
    "label": "Reporting Manager",
    "options": "Employee"
+  },
+  {
+   "fieldname": "payroll_cost_center",
+   "fieldtype": "Link",
+   "label": "Payroll Cost Center",
+   "options": "Cost Center",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-05-04 17:13:36.028840",
+ "modified": "2023-05-18 15:34:10.849259",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Overtime Calculator",
