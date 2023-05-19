@@ -5688,85 +5688,6 @@
   "filters": [],
   "is_standard": "Yes",
   "javascript": null,
-  "json": "{}",
-  "letter_head": "Al Yusr International LLC",
-  "modified": "2022-05-29 17:11:46.081110",
-  "module": "HR",
-  "name": "Document Expiring",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "prepared_report": 0,
-  "query": null,
-  "ref_doctype": "Employee Documents",
-  "reference_report": null,
-  "report_name": "Document Expiring",
-  "report_script": null,
-  "report_type": "Report Builder",
-  "roles": []
- },
- {
-  "add_total_row": 0,
-  "columns": [],
-  "disable_prepared_report": 0,
-  "disabled": 0,
-  "docstatus": 0,
-  "doctype": "Report",
-  "filters": [],
-  "is_standard": "Yes",
-  "javascript": null,
-  "json": "{\"filters\":[[\"Employee Documents\",\"document_type\",\"=\",\"Visa\",false]],\"fields\":[[\"name\",\"Employee\"],[\"employee_name\",\"Employee\"],[\"status\",\"Employee\"],[\"document_type\",\"Employee Documents\"],[\"document_number\",\"Employee Documents\"],[\"expiry_date\",\"Employee Documents\"]],\"order_by\":\"`tabEmployee`.`modified` desc\",\"add_totals_row\":0,\"page_length\":500,\"column_widths\":{\"name\":120,\"employee_name\":120,\"status\":120,\"Employee Documents:document_type\":120,\"Employee Documents:document_number\":120,\"Employee Documents:expiry_date\":120},\"group_by\":null}",
-  "letter_head": "Al Yusr International LLC",
-  "modified": "2022-05-29 19:54:33.442978",
-  "module": "HR",
-  "name": "Visas Expired",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "prepared_report": 0,
-  "query": null,
-  "ref_doctype": "Employee",
-  "reference_report": null,
-  "report_name": "Visas Expired",
-  "report_script": null,
-  "report_type": "Report Builder",
-  "roles": [
-   {
-    "parent": "Visas Expired",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "HR Manager"
-   },
-   {
-    "parent": "Visas Expired",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "Employee"
-   },
-   {
-    "parent": "Visas Expired",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "HR User"
-   },
-   {
-    "parent": "Visas Expired",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "Employee Self Service"
-   }
-  ]
- },
- {
-  "add_total_row": 0,
-  "columns": [],
-  "disable_prepared_report": 0,
-  "disabled": 0,
-  "docstatus": 0,
-  "doctype": "Report",
-  "filters": [],
-  "is_standard": "Yes",
-  "javascript": null,
   "json": null,
   "letter_head": "Al Yusr International LLC",
   "modified": "2022-10-18 13:58:37.375082",
@@ -6213,6 +6134,1416 @@
     "parentfield": "roles",
     "parenttype": "Report",
     "role": "Head of Department"
+   }
+  ]
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": "abc",
+  "modified": "2022-10-19 02:59:00.365307",
+  "module": "Core",
+  "name": "Database Storage Usage By Tables",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "",
+  "ref_doctype": "Error Log",
+  "reference_report": null,
+  "report_name": "Database Storage Usage By Tables",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Database Storage Usage By Tables",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": "{}",
+  "letter_head": "Al Yusr International LLC",
+  "modified": "2022-05-29 17:11:46.081110",
+  "module": "HR",
+  "name": "Document Expiring",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Employee Documents",
+  "reference_report": null,
+  "report_name": "Document Expiring",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": []
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": "{\"filters\":[[\"Employee Documents\",\"document_type\",\"=\",\"Visa\",false]],\"fields\":[[\"name\",\"Employee\"],[\"employee_name\",\"Employee\"],[\"status\",\"Employee\"],[\"document_type\",\"Employee Documents\"],[\"document_number\",\"Employee Documents\"],[\"expiry_date\",\"Employee Documents\"]],\"order_by\":\"`tabEmployee`.`modified` desc\",\"add_totals_row\":0,\"page_length\":500,\"column_widths\":{\"name\":120,\"employee_name\":120,\"status\":120,\"Employee Documents:document_type\":120,\"Employee Documents:document_number\":120,\"Employee Documents:expiry_date\":120},\"group_by\":null}",
+  "letter_head": "Al Yusr International LLC",
+  "modified": "2022-05-29 19:54:33.442978",
+  "module": "HR",
+  "name": "Visas Expired",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "Visas Expired",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "parent": "Visas Expired",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Visas Expired",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee"
+   },
+   {
+    "parent": "Visas Expired",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Visas Expired",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee Self Service"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-03-20 12:25:55.801634",
+  "module": "HR",
+  "name": "Attendance Report Customized Report",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\ntabEmployee.employee,tabEmployee.employee_name,payroll_cost_center as \"Cost Center\", date(time) as \"CDate\",min(time(time)) as \"ChecIn\",max(time(time)) as \"ChecOut\"\r\n,TIMEDIFF(max(time),min(time)) as \"Hours\"\r\nFROM\r\ntabEmployee,`tabEmployee Checkin`\r\nWHERE\r\ntabEmployee.name = `tabEmployee Checkin`.employee\r\nAND\r\ntabEmployee.status = 'active'\r\nGROUP BY\r\ntabEmployee.employee,tabEmployee.employee_name,payroll_cost_center, date(time)",
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "Attendance Report Customized Report",
+  "report_script": "\n",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Attendance Report Customized Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Attendance Report Customized Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Attendance Report Customized Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Attendance Report Customized Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "fieldname": "Employee",
+    "fieldtype": "Link",
+    "label": "Employee",
+    "mandatory": 0,
+    "options": "Employee",
+    "parent": "Daily Time Card",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "fieldname": "Cost Center",
+    "fieldtype": "Link",
+    "label": "Cost Center",
+    "mandatory": 0,
+    "options": "Cost Center",
+    "parent": "Daily Time Card",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-04-11 12:55:33.690778",
+  "module": "HR",
+  "name": "Daily Time Card",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n    tabEmployee.employee,\r\n    tabEmployee.employee_name,\r\n    tabEmployee.payroll_cost_center AS \"Cost Center\",\r\n    DATE(`tabEmployee Checkin`.time) AS \"CDate\",\r\n    MIN(TIME(`tabEmployee Checkin`.time)) AS \"CheckIn\",\r\n    MAX(TIME(`tabEmployee Checkin`.time)) AS \"CheckOut\",\r\n    TIMEDIFF(MAX(`tabEmployee Checkin`.time), MIN(`tabEmployee Checkin`.time)) AS \"Hours\",\r\n    IF(MIN(TIME(`tabEmployee Checkin`.time)) < TIME(DATE_ADD(`tabEmployee Checkin`.shift_start, INTERVAL 1 HOUR)) AND \r\n       MAX(TIME(`tabEmployee Checkin`.time)) > MIN(TIME(`tabEmployee Checkin`.time)) AND \r\n       TIMEDIFF(MAX(`tabEmployee Checkin`.time), MIN(`tabEmployee Checkin`.time)) >= TIMEDIFF(`tabEmployee Checkin`.shift_end, `tabEmployee Checkin`.shift_start), 'Present', 'Absent') AS \"State\"\r\nFROM\r\n    tabEmployee\r\nINNER JOIN\r\n    `tabEmployee Checkin` ON tabEmployee.name = `tabEmployee Checkin`.employee\r\nWHERE\r\n    tabEmployee.status = 'Active'\r\nGROUP BY\r\n    tabEmployee.employee,\r\n    tabEmployee.employee_name,\r\n    tabEmployee.payroll_cost_center,\r\n    DATE(`tabEmployee Checkin`.time);\r\n",
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "Daily Time Card",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Daily Time Card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Daily Time Card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Daily Time Card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Daily Time Card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-03-08 14:35:46.754339",
+  "module": "CRM",
+  "name": "All Open Opportunities",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Opportunity",
+  "reference_report": null,
+  "report_name": "All Open Opportunities",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "All Open Opportunities",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "All Open Opportunities",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{}",
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-03-08 15:07:00.333451",
+  "module": "CRM",
+  "name": "Open Opportunities",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Opportunity",
+  "reference_report": null,
+  "report_name": "Open Opportunities",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "parent": "Open Opportunities",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "Open Opportunities",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-03-13 10:36:17.600455",
+  "module": "CRM",
+  "name": "Opportunities Lost in last 7 Days",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\ntabOpportunity. profit_center as \"Profit Center\",\r\nCOUNT(tabOpportunity.opportunity_amount) as \"Total\",\r\nSUM(tabOpportunity.opportunity_amount) as \"Amount\"\r\nFROM\r\ntabOpportunity\r\nWHERE\r\ntabOpportunity.modified BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE()\r\nAND tabOpportunity.status = 'Lost'\r\nGROUP BY\r\ntabOpportunity. profit_center\r\n",
+  "ref_doctype": "Opportunity",
+  "reference_report": null,
+  "report_name": "Opportunities Lost in last 7 Days",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Opportunities Lost in last 7 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   },
+   {
+    "parent": "Opportunities Lost in last 7 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "Opportunities Lost in last 7 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-03-13 10:38:07.841323",
+  "module": "CRM",
+  "name": "Opportunities Converted in last 7 Days",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\ntabOpportunity. profit_center as \"Profit Center\",\r\nCOUNT(tabOpportunity.opportunity_amount) as \"Total\",\r\nSUM(tabOpportunity.opportunity_amount) as \"Amount\"\r\nFROM\r\ntabOpportunity\r\nWHERE\r\ntabOpportunity.modified BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE()\r\nAND tabOpportunity.status = 'Converted'\r\nGROUP BY\r\ntabOpportunity. profit_center\r\n",
+  "ref_doctype": "Opportunity",
+  "reference_report": null,
+  "report_name": "Opportunities Converted in last 7 Days",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Opportunities Converted in last 7 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   },
+   {
+    "parent": "Opportunities Converted in last 7 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "Opportunities Converted in last 7 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-03-13 10:39:48.885006",
+  "module": "CRM",
+  "name": "New Opportunities last 7 Days",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\ntabOpportunity. profit_center as \"Profit Center\",\r\nCOUNT(tabOpportunity.opportunity_amount) as \"Total\",\r\nSUM(tabOpportunity.opportunity_amount) as \"Amount\"\r\nFROM\r\ntabOpportunity\r\nWHERE\r\ntabOpportunity. creation BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE()\r\nGROUP BY\r\ntabOpportunity. profit_center\r\n",
+  "ref_doctype": "Opportunity",
+  "reference_report": null,
+  "report_name": "New Opportunities last 7 Days",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "New Opportunities last 7 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   },
+   {
+    "parent": "New Opportunities last 7 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "New Opportunities last 7 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-03-22 00:13:22.450280",
+  "module": "CRM",
+  "name": "Opportunities by Profit Center",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\ntabOpportunity. profit_center as \"Profit Center\",\r\nCOUNT(tabOpportunity.opportunity_amount) as \"Total\",\r\nSUM(`tabOpportunity`.`opportunity_amount`) as \"Amount\"\r\nFROM\r\ntabOpportunity\r\nWHERE\r\ntabOpportunity.status NOT IN ('Closed', 'Converted', 'Lost')\r\nGROUP BY\r\ntabOpportunity. profit_center\r\n",
+  "ref_doctype": "Opportunity",
+  "reference_report": null,
+  "report_name": "Opportunities by Profit Center",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Opportunities by Profit Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   },
+   {
+    "parent": "Opportunities by Profit Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "Opportunities by Profit Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-04-10 14:12:04.662662",
+  "module": "HR",
+  "name": "Daily Time Card - Amjid",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n    tabEmployee.employee,\r\n    tabEmployee.employee_name,\r\n    tabEmployee.payroll_cost_center AS \"Cost Center\",\r\n    DATE(`tabEmployee Checkin`.time) AS \"CDate\",\r\n    MIN(TIME(`tabEmployee Checkin`.time)) AS \"CheckIn\",\r\n    MAX(TIME(`tabEmployee Checkin`.time)) AS \"CheckOut\",\r\n    TIMEDIFF(MAX(`tabEmployee Checkin`.time), MIN(`tabEmployee Checkin`.time)) AS \"Hours\",\r\n    IF(MIN(TIME(`tabEmployee Checkin`.time)) < TIME(DATE_ADD(`tabEmployee Checkin`.shift_start, INTERVAL 1 HOUR)) AND \r\n       MAX(TIME(`tabEmployee Checkin`.time)) > MIN(TIME(`tabEmployee Checkin`.time)) AND \r\n       TIMEDIFF(MAX(`tabEmployee Checkin`.time), MIN(`tabEmployee Checkin`.time)) >= TIMEDIFF(`tabEmployee Checkin`.shift_end, `tabEmployee Checkin`.shift_start), 'Present', 'Absent') AS \"State\"\r\nFROM\r\n    tabEmployee\r\nINNER JOIN\r\n    `tabEmployee Checkin` ON tabEmployee.name = `tabEmployee Checkin`.employee\r\nWHERE\r\n    tabEmployee.status = 'Active' AND tabEmployee.employee = 'E50067'\r\nGROUP BY\r\n    tabEmployee.employee,\r\n    tabEmployee.employee_name,\r\n    tabEmployee.payroll_cost_center,\r\n    DATE(`tabEmployee Checkin`.time);\r\n",
+  "ref_doctype": "Employee Checkin",
+  "reference_report": null,
+  "report_name": "Daily Time Card - Amjid",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Daily Time Card - Amjid",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Daily Time Card - Amjid",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Daily Time Card - Amjid",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Daily Time Card - Amjid",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-04-11 08:39:09.343932",
+  "module": "HR",
+  "name": "Daily Time Card - Logged in User",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    tabEmployee.employee,\r\n    tabEmployee.employee_name,\r\n    tabEmployee.payroll_cost_center AS \"Cost Center\", \r\n    DATE(`tabEmployee Checkin`.time) AS \"CDate\",\r\n    MIN(TIME(`tabEmployee Checkin`.time)) AS \"ChecIn\",\r\n    MAX(TIME(`tabEmployee Checkin`.time)) AS \"ChecOut\",\r\n    TIMEDIFF(MAX(`tabEmployee Checkin`.time), MIN(`tabEmployee Checkin`.time)) AS \"Hours\"\r\nFROM \r\n    tabEmployee \r\nINNER JOIN \r\n    `tabEmployee Checkin` ON tabEmployee.name = `tabEmployee Checkin`.employee\r\nWHERE \r\n    tabEmployee.status = 'Active' \r\nAND    tabEmployee.reports_to = employee1\r\n \r\nGROUP BY \r\n    tabEmployee.employee,\r\n    tabEmployee.employee_name,\r\n    tabEmployee.payroll_cost_center,\r\n    DATE(`tabEmployee Checkin`.time)\r\n",
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "Daily Time Card - Logged in User",
+  "report_script": "employee_id = frappe.session.user\r\nemployee1 = frappe.get_doc('Employee', {'user_id': employee_id})\r\nemployee_code = employee.employee\r\n",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Daily Time Card - Logged in User",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Daily Time Card - Logged in User",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Daily Time Card - Logged in User",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Daily Time Card - Logged in User",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-03-16 14:55:17.467565",
+  "module": "CRM",
+  "name": "Top 15 Opportunities",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n  tabOpportunity.customer_name as \"Customer Name\",\r\n  subject as \"Project\",\r\n  profit_center  as\" Profit Center\",\r\n  status,\r\n  Sales_stage as \"Stage\",\r\n  probability,\r\n  tabOpportunity.opportunity_amount as \"Amount\"\r\nFROM\r\n  tabOpportunity\r\nWHERE\r\n  tabOpportunity.status NOT IN ('Closed', 'Lost', 'Converted')\r\nORDER BY\r\ntabOpportunity.opportunity_amount DESC\r\nLIMIT 15",
+  "ref_doctype": "Opportunity",
+  "reference_report": null,
+  "report_name": "Top 15 Opportunities",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Top 15 Opportunities",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   },
+   {
+    "parent": "Top 15 Opportunities",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "Top 15 Opportunities",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-03-20 17:05:52.990929",
+  "module": "Support",
+  "name": "Open Issues",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT creation AS \"Date\",\r\n       description AS \"Issue Description\",\r\n       issue_type AS \"Issue Type\",\r\n       status AS \"Status\"\r\nFROM tabIssue\r\nWHERE status != \"Closed\";",
+  "ref_doctype": "Issue",
+  "reference_report": null,
+  "report_name": "Open Issues",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Open Issues",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Support Team"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-03-21 23:48:43.022297",
+  "module": "CRM",
+  "name": "Open Opportunities List",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n*\r\nFROM\r\ntabOpportunity\r\nWHERE\r\ntabOpportunity.status NOT IN ('Closed', 'Converted', 'Lost')\r\n",
+  "ref_doctype": "Opportunity",
+  "reference_report": null,
+  "report_name": "Open Opportunities List",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Open Opportunities List",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "Open Opportunities List",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-03-22 01:08:00.201595",
+  "module": "CRM",
+  "name": "Opportunities by Sales Stage",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\ntabOpportunity. sales_stage as \"Sales Stage\",\r\nCOUNT(tabOpportunity.opportunity_amount) as \"Total\",\r\nSUM(`tabOpportunity`.`opportunity_amount`) as \"Amount\"\r\nFROM\r\ntabOpportunity\r\nWHERE\r\ntabOpportunity.status NOT IN ('Closed', 'Converted', 'Lost')\r\nGROUP BY\r\ntabOpportunity. sales_stage\r\n",
+  "ref_doctype": "Opportunity",
+  "reference_report": null,
+  "report_name": "Opportunities by Sales Stage",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Opportunities by Sales Stage",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   },
+   {
+    "parent": "Opportunities by Sales Stage",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "Opportunities by Sales Stage",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-03-23 00:20:00.602324",
+  "module": "HR",
+  "name": "Daily Time Card Logged in Employee",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "",
+  "ref_doctype": "Attendance",
+  "reference_report": null,
+  "report_name": "Daily Time Card Logged in Employee",
+  "report_script": "employee_id = frappe.session.user\r\nemployee = frappe.get_doc('Employee', {'user_id': employee_id})\r\nemployee_code = employee.employee\r\n\r\nquery = \"\"\"\r\nSELECT \r\n    tabEmployee.employee,\r\n    tabEmployee.employee_name,\r\n    tabEmployee.payroll_cost_center AS \"Cost Center\", \r\n    DATE(`tabEmployee Checkin`.time) AS \"CDate\",\r\n    MIN(TIME(`tabEmployee Checkin`.time)) AS \"ChecIn\",\r\n    MAX(TIME(`tabEmployee Checkin`.time)) AS \"ChecOut\",\r\n    TIMEDIFF(MAX(`tabEmployee Checkin`.time), MIN(`tabEmployee Checkin`.time)) AS \"Hours\"\r\nFROM \r\n    tabEmployee \r\nINNER JOIN \r\n    `tabEmployee Checkin` ON tabEmployee.name = `tabEmployee Checkin`.employee\r\nWHERE \r\n    tabEmployee.status = 'Active' \r\nAND    tabEmployee.employee = '{0}'\r\nGROUP BY \r\n    tabEmployee.employee,\r\n    tabEmployee.employee_name,\r\n    tabEmployee.payroll_cost_center,\r\n    DATE(`tabEmployee Checkin`.time)\r\n\"\"\".format(employee_code)\r\n\r\ndata = frappe.db.sql(query, as_dict=True)\r\n",
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Daily Time Card Logged in Employee",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Daily Time Card Logged in Employee",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Daily Time Card Logged in Employee",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Daily Time Card Logged in Employee",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   },
+   {
+    "parent": "Daily Time Card Logged in Employee",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-03-30 13:53:12.939810",
+  "module": "HR",
+  "name": "Cost Center Missing",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    employee,\r\n    employee_name,\r\n    status,\r\n    working_status\r\n    \r\nFROM \r\n    `tabEmployee`\r\nWHERE \r\n    `tabEmployee`.`payroll_cost_center` IS NULL AND status='active'\r\n",
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "Cost Center Missing",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Cost Center Missing",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Cost Center Missing",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee"
+   },
+   {
+    "parent": "Cost Center Missing",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Cost Center Missing",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Al Yusr Admin Department"
+   },
+   {
+    "parent": "Cost Center Missing",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee Self Service"
+   },
+   {
+    "parent": "Cost Center Missing",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Admin Assistant"
+   },
+   {
+    "parent": "Cost Center Missing",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Seperation Admin"
+   },
+   {
+    "parent": "Cost Center Missing",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Employee Onboarding"
+   },
+   {
+    "parent": "Cost Center Missing",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Interviewer"
+   },
+   {
+    "parent": "Cost Center Missing",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Recruiter"
+   },
+   {
+    "parent": "Cost Center Missing",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Leave Approver"
+   },
+   {
+    "parent": "Cost Center Missing",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Head of Department"
+   },
+   {
+    "parent": "Cost Center Missing",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Cost Center Missing",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-04-11 08:36:06.149057",
+  "module": "HR",
+  "name": "Check in Detials",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "",
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "Check in Detials",
+  "report_script": "SELECT\r\n    tabEmployee.employee,\r\n    tabEmployee.employee_name,\r\n    tabEmployee.payroll_cost_center AS \"Cost Center\",\r\n    DATE(`tabEmployee Checkin`.time) AS \"CDate\",\r\n    MIN(TIME(`tabEmployee Checkin`.time)) AS \"CheckIn\",\r\n    MAX(TIME(`tabEmployee Checkin`.time)) AS \"CheckOut\",\r\n    TIMEDIFF(MAX(`tabEmployee Checkin`.time), MIN(`tabEmployee Checkin`.time)) AS \"Hours\",\r\n    IF(MIN(TIME(`tabEmployee Checkin`.time)) < TIME(DATE_ADD(`tabEmployee Checkin`.shift_start, INTERVAL 1 HOUR)) AND \r\n       MAX(TIME(`tabEmployee Checkin`.time)) > MIN(TIME(`tabEmployee Checkin`.time)) AND \r\n       TIMEDIFF(MAX(`tabEmployee Checkin`.time), MIN(`tabEmployee Checkin`.time)) >= TIMEDIFF(`tabEmployee Checkin`.shift_end, `tabEmployee Checkin`.shift_start), 'Present', 'Absent') AS \"State\"\r\nFROM\r\n    tabEmployee\r\nINNER JOIN\r\n    `tabEmployee Checkin` ON tabEmployee.name = `tabEmployee Checkin`.employee\r\nWHERE\r\n    tabEmployee.status = 'Active'\r\n    AND `tabEmployee`.name IN (SELECT `tabDocPerm`.docname FROM `tabDocPerm` WHERE `tabDocPerm`.parent='Employee' AND `tabDocPerm`.user='{0}' AND `tabDocPerm`.read=1)\r\nGROUP BY\r\n    tabEmployee.employee,\r\n    tabEmployee.employee_name,\r\n    tabEmployee.payroll_cost_center,\r\n    DATE(`tabEmployee Checkin`.time);",
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Check in Detials",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Check in Detials",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Check in Detials",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Check in Detials",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-04-18 09:44:47.525352",
+  "module": "CRM",
+  "name": "New Leads in Last 2 Weeks",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \nname,\ntitle,\nlead_name,\ncompany_name,\nsource,\nmodified_by,\nlead_owner,\nstatus,\ncontact_by\nfrom tabLead\nWHERE `tabLead`.`creation` BETWEEN DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND CURDATE();\n",
+  "ref_doctype": "Lead",
+  "reference_report": null,
+  "report_name": "New Leads in Last 2 Weeks",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "New Leads in Last 2 Weeks",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Manager"
+   },
+   {
+    "parent": "New Leads in Last 2 Weeks",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "New Leads in Last 2 Weeks",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "New Leads in Last 2 Weeks",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-04-18 09:52:56.388328",
+  "module": "CRM",
+  "name": "Leads Converted in Last 2 Weeks",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \nname as Subject,\ntitle as Title,\nlead_name as Name,\ncompany_name as Company,\nsource,\nmodified_by as Modified,\nlead_owner as Owner,\nstatus,\ncontact_by\nfrom tabLead\nWHERE `tabLead`.`creation` BETWEEN DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND CURDATE() AND Status = 'Opportunity';",
+  "ref_doctype": "Lead",
+  "reference_report": null,
+  "report_name": "Leads Converted in Last 2 Weeks",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Leads Converted in Last 2 Weeks",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Manager"
+   },
+   {
+    "parent": "Leads Converted in Last 2 Weeks",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Leads Converted in Last 2 Weeks",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "Leads Converted in Last 2 Weeks",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-05-17 14:24:40.037659",
+  "module": "HR",
+  "name": "Employee Birthday Current Month",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT e.name, e.employee, e.employee_name, e.employment_type, e.company, e.gender, e.date_of_birth, e.date_of_joining, e.employee_number, e.designation, \r\n       CONCAT(s.employee_name, ' (', s.employee, ')') AS reports_to, e.grade, e.branch, e.cell_number, e.personal_email, e.nationality, e.place_of_birth, \r\n       e.job_category, e.visa_company, e.payroll_cost_center, e.religion\r\nFROM tabEmployee e\r\nLEFT JOIN tabEmployee s ON e.reports_to = s.employee\r\nWHERE MONTH(e.date_of_birth) = MONTH(CURDATE()) AND e.status = 'active';",
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "Employee Birthday Current Month",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Employee Birthday Current Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Employee Birthday Current Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Employee Birthday Current Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Head of Department"
+   },
+   {
+    "parent": "Employee Birthday Current Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   },
+   {
+    "parent": "Employee Birthday Current Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "Employee Birthday Current Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-05-08 23:07:03.972652",
+  "module": "HR",
+  "name": "Employee with Email",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT * FROM `tabEmployee`;",
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "Employee with Email",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Employee with Email",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Employee with Email",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-05-08 19:47:49.309953",
+  "module": "HR",
+  "name": "Employee Attendance Counter Last Month",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT employee,\r\n\r\nSUM(CASE WHEN status = 'Present' THEN 1 ELSE 0 END) AS Present,\r\n    SUM(CASE WHEN status = 'Absent' THEN 1 ELSE 0 END) AS Absent,\r\n    SUM(CASE WHEN status = 'On Leave' THEN 1 ELSE 0 END) AS `On Leave`,\r\n    SUM(CASE WHEN status = 'Work From Home' THEN 1 ELSE 0 END) AS `Work From Home`,\r\n    SUM(CASE WHEN status = 'Half Day' THEN 1 ELSE 0 END) AS `Half Day`\r\nFROM `tabAttendance`\r\nWHERE\r\nMONTH(attendance_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) \r\nand \r\ndocstatus = 1\r\nGROUP BY employee\r\n;",
+  "ref_doctype": "Attendance",
+  "reference_report": null,
+  "report_name": "Employee Attendance Counter Last Month",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Employee Attendance Counter Last Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Employee Attendance Counter Last Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Employee Attendance Counter Last Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Employee Attendance Counter Last Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   },
+   {
+    "parent": "Employee Attendance Counter Last Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll Manager"
+   },
+   {
+    "parent": "Employee Attendance Counter Last Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "Employee Attendance Counter Last Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 1,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-05-08 23:05:12.756292",
+  "module": "HR",
+  "name": "Provision for Leave Salary - Summary",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    `tabEmployee`.`payroll_cost_center` AS `Payroll Cost Center`,\r\n    SUM(`tabLeave Allocation`.`total_leaves_allocated` * (`tabSalary Structure Assignment`.`total_monthly_salary` / 30)) AS `Salary Deduction`\r\nFROM \r\n    `tabLeave Allocation`\r\nINNER JOIN \r\n    `tabEmployee` \r\nON \r\n    `tabLeave Allocation`.`employee` = `tabEmployee`.`name`\r\nINNER JOIN \r\n    `tabSalary Structure Assignment`\r\nON \r\n    `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\nWHERE \r\n    `tabLeave Allocation`.`leave_type` = 'Annual Leave' \r\n    AND  `tabLeave Allocation`.`docstatus` = 1\r\n    AND YEAR(`tabLeave Allocation`.`to_date`) = YEAR(CURDATE())\r\n    AND `tabEmployee`.`status` = 'Active'\r\n    AND `tabSalary Structure Assignment`.`docstatus` = 1\r\n    AND `tabSalary Structure Assignment`.`from_date` = (\r\n        SELECT \r\n            MAX(`from_date`)\r\n        FROM \r\n            `tabSalary Structure Assignment`\r\n        WHERE \r\n            `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee` \r\n    )\r\nGROUP BY `tabEmployee`.`payroll_cost_center`;\r\n",
+  "ref_doctype": "Salary Structure Assignment",
+  "reference_report": null,
+  "report_name": "Provision for Leave Salary - Summary",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Provision for Leave Salary - Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-05-09 12:44:31.287436",
+  "module": "Core",
+  "name": "USER AND ROLES",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n    * from `tabHas Role`",
+  "ref_doctype": "User",
+  "reference_report": null,
+  "report_name": "USER AND ROLES",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "USER AND ROLES",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 1,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-05-08 23:05:25.104207",
+  "module": "HR",
+  "name": "Provision - Leave Salary",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    `emp`.`name` AS `Employee`,\r\n    `emp`.`employee_name`,\r\n       `emp`.`payroll_cost_center`,\r\n         `la`.`total_leaves_allocated`,\r\n    `ssa`.`total_monthly_salary` AS `Total Monthly Salary`,\r\n    (`ssa`.`total_monthly_salary` / 30) * `la`.`total_leaves_allocated` AS `Leave Salary`\r\nFROM \r\n    `tabLeave Allocation` AS `la`\r\nINNER JOIN \r\n    `tabEmployee` AS `emp`\r\nON \r\n    `la`.`employee` = `emp`.`name`\r\nINNER JOIN \r\n    (SELECT \r\n        `name`, \r\n        `employee`, \r\n        `total_monthly_salary`\r\n    FROM \r\n        `tabSalary Structure Assignment`\r\n    WHERE \r\n        `from_date` = (\r\n            SELECT \r\n                MAX(`from_date`)\r\n            FROM \r\n                `tabSalary Structure Assignment` \r\n            WHERE \r\n                `tabSalary Structure Assignment`.`employee` = `employee`\r\n                AND `docstatus` = 1\r\n        )\r\n    ) AS `ssa`\r\nON \r\n    `emp`.`name` = `ssa`.`employee`\r\nWHERE \r\n    `la`.`leave_type` = 'Annual Leave' \r\n    AND YEAR(`la`.`to_date`) = YEAR(CURDATE())\r\n    AND `emp`.`status` = 'Active'\r\n    AND  `la`.`docstatus` = 1;\r\n",
+  "ref_doctype": "Salary Structure Assignment",
+  "reference_report": null,
+  "report_name": "Provision - Leave Salary",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Provision - Leave Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 1,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-05-14 16:43:55.962477",
+  "module": "HR",
+  "name": "Employees with Current Salary",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    `tabEmployee`.`employee` AS `Employee`,\r\n    `tabEmployee`.`employee_name` AS `Employee Name`,\r\n   `tabEmployee`.`date_of_joining` AS `Joined`,\r\n   `tabEmployee`.`designation` AS `Designation`,\r\n   `tabEmployee`.`grade` AS `Grade`,\r\n   `tabEmployee`.`payroll_cost_center` AS `Cost Center`,\r\n   `tabEmployee`.`bank_name` AS `Bank`,\r\n   `tabEmployee`.`bank_ac_no` AS `Bank Account`,\r\n   `tabEmployee`.`working_status` AS `Working Status`,\r\n    `tabEmployee`.`visa_company` AS `Visa`,\r\n    `tabEmployee`.`salary_hold` AS `Salary Hold`,\r\n   `tabEmployee`.`bank_ac_no` AS `Bank Account`,\r\n    `tabSalary Structure Assignment`.`salary_structure` AS `Salary Structure`,\r\n    `tabSalary Structure Assignment`.`from_date` AS `From Date`,\r\n    `tabSalary Structure Assignment`.`base` AS `Basic`,\r\n    `tabSalary Structure Assignment`.`hra` AS `HRA`,\r\n    `tabSalary Structure Assignment`.`food` AS `Food`,\r\n    `tabSalary Structure Assignment`.`transport` AS `Transport`,\r\n    `tabSalary Structure Assignment`.`others` AS `others`,\r\n    `tabSalary Structure Assignment`.`living` AS `Living`,\r\n    `tabSalary Structure Assignment`.`fixed_overtime` AS `Fixed OT`,\r\n    `tabSalary Structure Assignment`.`utility` AS `Utility`,\r\n    `tabSalary Structure Assignment`.`gsm` AS `GSM`,\r\n    `tabSalary Structure Assignment`.`transport` AS `Transport`,\r\n    `tabSalary Structure Assignment`.`total_monthly_salary` AS `Total`,\r\n    `tabSalary Structure Assignment`.`monthly_pay` AS `Base for Overtime`,\r\n    `tabSalary Structure Assignment`.`workflow_state` AS `Approval Status`,\r\n   `tabSalary Structure Assignment`.`company` AS `Company`\r\n   \r\nFROM \r\n    `tabEmployee`\r\nINNER JOIN\r\n    `tabSalary Structure Assignment`\r\nON\r\n    `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\nWHERE\r\n    `tabSalary Structure Assignment`.`from_date` = (\r\n        SELECT \r\n            MAX(`from_date`)\r\n        FROM \r\n            `tabSalary Structure Assignment`\r\n        WHERE \r\n            `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\n    )\r\nAND     `tabSalary Structure Assignment`.`docstatus` = 1\r\n",
+  "ref_doctype": "Salary Structure Assignment",
+  "reference_report": null,
+  "report_name": "Employees with Current Salary",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Employees with Current Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll Manager"
    }
   ]
  },
@@ -7347,39 +8678,33 @@
   "filters": [],
   "is_standard": "Yes",
   "javascript": null,
-  "json": "{\"add_total_row\": 0, \"sort_by\": \"Serial No.modified\", \"sort_order\": \"desc\", \"sort_by_next\": null, \"filters\": [[\"Serial No\", \"delivery_document_type\", \"in\", [\"Delivery Note\", \"Sales Invoice\"]], [\"Serial No\", \"warehouse\", \"=\", \"\"]], \"sort_order_next\": \"desc\", \"columns\": [[\"name\", \"Serial No\"], [\"item_code\", \"Serial No\"], [\"warranty_expiry_date\", \"Serial No\"], [\"warranty_period\", \"Serial No\"], [\"maintenance_status\", \"Serial No\"], [\"purchase_document_no\", \"Serial No\"], [\"purchase_date\", \"Serial No\"], [\"supplier\", \"Serial No\"], [\"supplier_name\", \"Serial No\"], [\"delivery_document_no\", \"Serial No\"], [\"delivery_date\", \"Serial No\"], [\"customer\", \"Serial No\"], [\"customer_name\", \"Serial No\"], [\"item_name\", \"Serial No\"], [\"description\", \"Serial No\"], [\"item_group\", \"Serial No\"], [\"brand\", \"Serial No\"]]}",
+  "json": null,
   "letter_head": null,
-  "modified": "2017-02-24 20:01:53.097456",
-  "module": "Stock",
-  "name": "Serial No Warranty Expiry",
+  "modified": "2023-05-09 17:31:36.187568",
+  "module": "HR",
+  "name": "Employee Leave Balance",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
-  "prepared_report": 0,
+  "prepared_report": 1,
   "query": null,
-  "ref_doctype": "Serial No",
+  "ref_doctype": "Employee",
   "reference_report": null,
-  "report_name": "Serial No Warranty Expiry",
+  "report_name": "Employee Leave Balance",
   "report_script": null,
-  "report_type": "Report Builder",
+  "report_type": "Script Report",
   "roles": [
    {
-    "parent": "Serial No Warranty Expiry",
+    "parent": "Employee Leave Balance",
     "parentfield": "roles",
     "parenttype": "Report",
-    "role": "Item Manager"
+    "role": "HR User"
    },
    {
-    "parent": "Serial No Warranty Expiry",
+    "parent": "Employee Leave Balance",
     "parentfield": "roles",
     "parenttype": "Report",
-    "role": "Stock Manager"
-   },
-   {
-    "parent": "Serial No Warranty Expiry",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "Stock User"
+    "role": "HR Manager"
    }
   ]
  },
@@ -7439,33 +8764,39 @@
   "filters": [],
   "is_standard": "Yes",
   "javascript": null,
-  "json": null,
+  "json": "{\"add_total_row\": 0, \"sort_by\": \"Serial No.modified\", \"sort_order\": \"desc\", \"sort_by_next\": null, \"filters\": [[\"Serial No\", \"delivery_document_type\", \"in\", [\"Delivery Note\", \"Sales Invoice\"]], [\"Serial No\", \"warehouse\", \"=\", \"\"]], \"sort_order_next\": \"desc\", \"columns\": [[\"name\", \"Serial No\"], [\"item_code\", \"Serial No\"], [\"warranty_expiry_date\", \"Serial No\"], [\"warranty_period\", \"Serial No\"], [\"maintenance_status\", \"Serial No\"], [\"purchase_document_no\", \"Serial No\"], [\"purchase_date\", \"Serial No\"], [\"supplier\", \"Serial No\"], [\"supplier_name\", \"Serial No\"], [\"delivery_document_no\", \"Serial No\"], [\"delivery_date\", \"Serial No\"], [\"customer\", \"Serial No\"], [\"customer_name\", \"Serial No\"], [\"item_name\", \"Serial No\"], [\"description\", \"Serial No\"], [\"item_group\", \"Serial No\"], [\"brand\", \"Serial No\"]]}",
   "letter_head": null,
-  "modified": "2022-11-04 12:32:35.340197",
-  "module": "HR",
-  "name": "Employee Leave Balance",
+  "modified": "2017-02-24 20:01:53.097456",
+  "module": "Stock",
+  "name": "Serial No Warranty Expiry",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
-  "prepared_report": 1,
+  "prepared_report": 0,
   "query": null,
-  "ref_doctype": "Employee",
+  "ref_doctype": "Serial No",
   "reference_report": null,
-  "report_name": "Employee Leave Balance",
+  "report_name": "Serial No Warranty Expiry",
   "report_script": null,
-  "report_type": "Script Report",
+  "report_type": "Report Builder",
   "roles": [
    {
-    "parent": "Employee Leave Balance",
+    "parent": "Serial No Warranty Expiry",
     "parentfield": "roles",
     "parenttype": "Report",
-    "role": "HR User"
+    "role": "Item Manager"
    },
    {
-    "parent": "Employee Leave Balance",
+    "parent": "Serial No Warranty Expiry",
     "parentfield": "roles",
     "parenttype": "Report",
-    "role": "HR Manager"
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "Serial No Warranty Expiry",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
    }
   ]
  },
@@ -8101,33 +9432,6 @@
   "javascript": null,
   "json": null,
   "letter_head": null,
-  "modified": "2020-06-24 17:16:13.307053",
-  "module": "Education",
-  "name": "Student Monthly Attendance Sheet",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "prepared_report": 0,
-  "query": null,
-  "ref_doctype": "Student Attendance",
-  "reference_report": null,
-  "report_name": "Student Monthly Attendance Sheet",
-  "report_script": null,
-  "report_type": "Script Report",
-  "roles": []
- },
- {
-  "add_total_row": 0,
-  "columns": [],
-  "disable_prepared_report": 0,
-  "disabled": 0,
-  "docstatus": 0,
-  "doctype": "Report",
-  "filters": [],
-  "is_standard": "Yes",
-  "javascript": null,
-  "json": null,
-  "letter_head": null,
   "modified": "2017-02-24 20:16:50.550242",
   "module": "HR",
   "name": "Monthly Attendance Sheet",
@@ -8185,6 +9489,33 @@
   "ref_doctype": "Student Attendance",
   "reference_report": null,
   "report_name": "Absent Student Report",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": []
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2020-06-24 17:16:13.307053",
+  "module": "Education",
+  "name": "Student Monthly Attendance Sheet",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Student Attendance",
+  "reference_report": null,
+  "report_name": "Student Monthly Attendance Sheet",
   "report_script": null,
   "report_type": "Script Report",
   "roles": []
