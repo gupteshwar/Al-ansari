@@ -25,13 +25,15 @@
    "fieldname": "from_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "From Date"
+   "label": "From Date",
+   "reqd": 1
   },
   {
    "fieldname": "to_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "To Date"
+   "label": "To Date",
+   "reqd": 1
   },
   {
    "fieldname": "section_break_3",
@@ -89,7 +91,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-05-18 15:34:10.849259",
+ "modified": "2023-05-19 19:21:01.589612",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Overtime Calculator",
