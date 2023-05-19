@@ -4,6 +4,9 @@
 frappe.ui.form.on('Rejoining Details', {
 	onload: function(frm) {
 		frm.set_value("status","Rejoined")
+		if (frm.is_new() ==1) {
+			frm.set_value("lwp_application","")
+		}
 	},
 	refresh: function(frm) {
 		// filter employee field dropdown

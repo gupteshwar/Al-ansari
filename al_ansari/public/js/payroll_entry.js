@@ -72,6 +72,10 @@ frappe.ui.form.on('Payroll Entry', {
 	},
 	on_submit: function(frm) {
 		frappe.set_route("Form","Payroll Entry",frm.doc.payroll_entry)
+	},
+	validate: function(frm) {
+		if(frm.doc.payroll_cost_center != frm.doc.cost_center) {
+			frappe.throw(__("The values selected for Payroll Cost Center and Cost Center should match"))
+		}
 	}
 })
-

@@ -8,6 +8,16 @@ import json
 
 class OvertimeCalculator(Document):
 	# pass
+	def validate(self):
+		if len(self.overtime_calculator_detail)>0:
+			for ocd in range(len(self.overtime_calculator_detail)):
+				self.overtime_calculator_detail[ocd].actual_hours = round(self.overtime_calculator_detail[ocd].holiday_actual_hours,2) +round(self.overtime_calculator_detail[ocd].non_holiday_actual_hours,2)
+				self.overtime_calculator_detail[ocd].holiday_productive_hours = (round(self.overtime_calculator_detail[ocd].holiday_overtime,2) * round(self.overtime_calculator_detail[ocd].productive_hours_ratio,2))
+				self.overtime_calculator_detail[ocd].non_holiday_productive_hours = round(self.overtime_calculator_detail[ocd].non_holiday_overtime,2)* round(self.overtime_calculator_detail[ocd].productive_hours_ratio,2)
+				self.overtime_calculator_detail[ocd].holiday_overtime_amount = round(self.overtime_calculator_detail[ocd].holiday_productive_hours,2) * self.overtime_calculator_detail[ocd].holiday_overtime_rate
+				self.overtime_calculator_detail[ocd].non_holiday_overtime_amount = round(self.overtime_calculator_detail[ocd].non_holiday_productive_hours,2) * self.overtime_calculator_detail[ocd].non_holiday_overtime_rate
+				self.overtime_calculator_detail[ocd].overtime_amount = self.overtime_calculator_detail[ocd].holiday_overtime_amount + self.overtime_calculator_detail[ocd].non_holiday_overtime_amount
+
 	def on_submit(self):
 		if not self.overtime_calculator_detail:
 			frappe.throw("The Overtime Calculator Details table cannot be empty.")
@@ -21,6 +31,7 @@ def autofill_employees(payroll_entry):
 	oc_doc.to_date = payroll_entry.end_date
 	oc_doc.payroll_date = payroll_entry.posting_date
 	oc_doc.branch = payroll_entry.branch
+	oc_doc.payroll_cost_center = payroll_entry.cost_center
 	# for emp in payroll_entry.employees:
 	# 	oc_doc.append('overtime_calculator_detail',{"employee":emp.employee,"employee_name":emp.employee_name})
 	emp_list = []
@@ -75,7 +86,8 @@ def validate_employees_on_oc(from_date,to_date,emp_list):
 					e.working_status != 'On Leave' and
 					e.name = %s and
 					ec.is_holiday = 1
-					group by date(ec.time);
+					group by date(ec.time)
+					order by date(ec.time) desc;
 				""",(from_date,to_date,emp["name"]),as_dict=1)
 
 			nh_overtime = frappe.db.sql(""" 
@@ -99,7 +111,8 @@ def validate_employees_on_oc(from_date,to_date,emp_list):
 					e.working_status != 'On Leave' and
 					e.name = %s and
 					ec.is_holiday = 0
-					group by date(ec.time);
+					group by date(ec.time)
+					order by date(ec.time) desc;
 				""",(from_date,to_date,emp["name"]),as_dict=1)
 
 			final_shift_total = 0.00
@@ -138,7 +151,7 @@ def validate_employees_on_oc(from_date,to_date,emp_list):
 					})
 			else:
 				emp.update({
-					"holiday_overtime_rate":frappe.get_value("Employee",emp["name"],["h_ot_rate"]),
+					"holiday_overtime_rate":0 ,#frappe.get_value("Employee",emp["name"],["h_ot_rate"]),
 					"holiday_overtime":holiday_overtime_total,
 					"holiday_actual_hours":h_actual_total,
 					"h_shift_total":h_shift_total
@@ -163,7 +176,7 @@ def validate_employees_on_oc(from_date,to_date,emp_list):
 
 			else:
 				emp.update({
-					"non_holiday_overtime_rate":frappe.get_value("Employee",emp["name"],["nh_ot_rate"]),
+					"non_holiday_overtime_rate": 0 ,#frappe.get_value("Employee",emp["name"],["nh_ot_rate"]),
 					"non_holiday_overtime":non_holiday_overtime_total,
 					"non_holiday_actual_hours":nh_actual_total,
 					"nh_shift_total":nh_shift_total
@@ -177,14 +190,16 @@ def validate_employees_on_oc(from_date,to_date,emp_list):
 	return emp_list
 
 @frappe.whitelist()
-def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
+def get_employees_on_oc(from_date,to_date,branch,reporting_manager,payroll_cost_center):
 	emp_list = []
 
 	if reporting_manager == " " and branch !=" ":
 		emp_list = frappe.db.get_list('Employee',
 		    filters={
 		        'branch': branch,
-		        'status': 'Active'
+		        'status': 'Active',
+		        'payroll_cost_center':payroll_cost_center
+
 		    },
 		    fields=['name','employee_name','hourly_rate','grade']
 		)
@@ -193,7 +208,8 @@ def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
 		emp_list = frappe.db.get_list('Employee',
 		    filters={
 		        'reports_to': reporting_manager,
-		        'status': 'Active'
+		        'status': 'Active',
+		        'payroll_cost_center':payroll_cost_center
 		    },
 		    fields=['name','employee_name','hourly_rate','grade']
 		)
@@ -203,7 +219,8 @@ def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
 		    filters={
 		    	'branch': branch,
 		        'reports_to': reporting_manager,
-		        'status': 'Active'
+		        'status': 'Active',
+		        'payroll_cost_center':payroll_cost_center
 		    },
 		    fields=['name','employee_name','hourly_rate','grade']
 		)
@@ -214,7 +231,6 @@ def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
 	if emp_list:
 		for emp in emp_list:
 			productive_hours_ratio = frappe.get_value("Employee Grade",emp["grade"],"productive_hours_ratio")
-			print("dhj==",productive_hours_ratio)
 			h_overtime = frappe.db.sql(""" 
 				Select 
 					ec.name,
@@ -236,7 +252,8 @@ def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
 					e.working_status != 'On Leave' and
 					e.name = %s and
 					ec.is_holiday = 1
-					group by date(ec.time);
+					group by date(ec.time)
+					order by date(ec.time) desc;
 				""",(from_date,to_date,emp["name"]),as_dict=1)
 
 			nh_overtime = frappe.db.sql(""" 
@@ -260,7 +277,8 @@ def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
 					e.working_status != 'On Leave' and
 					e.name = %s and
 					ec.is_holiday = 0
-					group by date(ec.time);
+					group by date(ec.time)
+					order by date(ec.time) desc;
 				""",(from_date,to_date,emp["name"]),as_dict=1)
 			emp.update({
 				"productive_hours_ratio":productive_hours_ratio
@@ -275,12 +293,10 @@ def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
 			if h_overtime :
 				emp.update({
 					"employee_name":h_overtime[0]["employee_name"] ,
-					# "productive_hours_ratio":h_overtime[0]["productive_hours"] 
 					})
 			if nh_overtime:
 				emp.update({
 					"employee_name":nh_overtime[0]["employee_name"],
-					# "productive_hours_ratio":nh_overtime[0]["productive_hours"]
 					})
 
 			if h_overtime:
@@ -288,10 +304,7 @@ def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
 
 				for h_ot in h_overtime:
 					h_actual_total += h_ot["actual_hours"]
-			# 		print("ot_hr ==",round((item2["actual_hours"]-item2["shift_hours"]),2) * item2["productive_hours"]*item2["overtime_rate"])
-					holiday_overtime_total += h_ot["actual_hours"] # -h_ot["shift_hours"] if (h_ot["actual_hours"]>h_ot["shift_hours"]) else 0
-					# h_shift_total += h_ot["shift_hours"]
-					# ot_amt += item2["overtime_rate"] * (item2["productive_hours"] * round((item2["actual_hours"]-item2["shift_hours"]),2))
+					holiday_overtime_total += h_ot["actual_hours"] 
 				
 				emp.update({
 					"holiday_overtime_rate":h_overtime[0]["overtime_rate"],
@@ -301,7 +314,7 @@ def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
 					})
 			else:
 				emp.update({
-					"holiday_overtime_rate":frappe.get_value("Employee",emp["name"],["h_ot_rate"]),
+					"holiday_overtime_rate":0 ,
 					"holiday_overtime":holiday_overtime_total,
 					"holiday_actual_hours":h_actual_total,
 					"h_shift_total":h_shift_total
@@ -312,10 +325,8 @@ def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
 
 				for nh_ot in nh_overtime:
 					nh_actual_total += nh_ot["actual_hours"]
-			# 		print("ot_hr ==",round((item2["actual_hours"]-item2["shift_hours"]),2) * item2["productive_hours"]*item2["overtime_rate"])
 					non_holiday_overtime_total += nh_ot["actual_hours"]-nh_ot["shift_hours"] if (nh_ot["actual_hours"]>nh_ot["shift_hours"]) else 0
 					nh_shift_total += nh_ot["shift_hours"]
-					# ot_amt += item2["overtime_rate"] * (item2["productive_hours"] * round((item2["actual_hours"]-item2["shift_hours"]),2))
 				
 				emp.update({
 					"non_holiday_overtime_rate":nh_overtime[0]["overtime_rate"],
@@ -326,7 +337,7 @@ def get_employees_on_oc(from_date,to_date,branch,reporting_manager):
 
 			else:
 				emp.update({
-					"non_holiday_overtime_rate":frappe.get_value("Employee",emp["name"],["nh_ot_rate"]),
+					"non_holiday_overtime_rate":0 ,
 					"non_holiday_overtime":non_holiday_overtime_total,
 					"non_holiday_actual_hours":nh_actual_total,
 					"nh_shift_total":nh_shift_total
@@ -356,7 +367,6 @@ def additional_salary_entry(self):
 				add_sal_doc.save()
 				add_sal_doc.submit()
 				created_list.append(self.overtime_calculator_detail[rec].idx)
-				# frappe.msgprint("Additional Salary component created successfully")
 			else:
 				pending_list.append(self.overtime_calculator_detail[rec].employee)
 				frappe.throw(_("Additional Salary Entry not done for the following records: {0}").format(pending_list))

@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format: OR-{employee}-{YYYY}-{#####}",
  "creation": "2022-10-26 13:32:49.799211",
@@ -13,6 +14,7 @@
   "column_break_3",
   "branch",
   "reporting_manager",
+  "payroll_cost_center",
   "get_employees",
   "section_break_3",
   "overtime_calculator_detail",
@@ -23,13 +25,15 @@
    "fieldname": "from_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "From Date"
+   "label": "From Date",
+   "reqd": 1
   },
   {
    "fieldname": "to_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "To Date"
+   "label": "To Date",
+   "reqd": 1
   },
   {
    "fieldname": "section_break_3",
@@ -75,12 +79,19 @@
    "fieldtype": "Link",
    "label": "Reporting Manager",
    "options": "Employee"
+  },
+  {
+   "fieldname": "payroll_cost_center",
+   "fieldtype": "Link",
+   "label": "Payroll Cost Center",
+   "options": "Cost Center",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-01-10 14:15:42.959610",
+ "modified": "2023-05-19 19:21:01.589612",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Overtime Calculator",

@@ -22,26 +22,23 @@ frappe.ui.form.on('Earned Leave Deductions', {
         if(!frm.doc.from_date || !frm.doc.to_date) {
             frappe.throw("From Date and To Date should be selected to fetch Employee Records")
         }
+        if(!frm.doc.payroll_cost_center) {
+            frappe.throw("Payroll Cost Center needs to be selected for fetching Employees")
+        }
         frm.clear_table("deduction_ratio")
-		// fetch applicants from the attendance doctype whose status is 'On leave' or 'Absent'
-		 frappe.call({
-            method: "al_ansari.al_ansari.doctype.earned_leave_deductions.earned_leave_deductions.get_applicants", //dotted path to server method
-            args: {
-            	"frm" : frm.doc
-            },
-            callback: function(r) {
-                // code snippet
-                console.log(r.message)
-                for(var j=0; j<r.message.length;j++){
-                	var childTable = cur_frm.add_child("deduction_ratio");
-                	childTable.employee_id= r.message[j].employee
-                	childTable.employee_name = r.message[j].employee_name
-                	// childTable.no_of_lwp = r.message[j].no_of_lwp
-                	// childTable.el_allocated = r.message[j].el_allocated
-                	cur_frm.refresh_fields("deduction_ratio");
-                }
+        frm.refresh_fields("deduction_ratio");
+        frappe.call({
+            doc: frm.doc,
+            method: 'get_applicants',
+        }).then(r => {
+            if(r.message)
+            for(var j=0; j<r.message.length;j++){
+                 var childTable = cur_frm.add_child("deduction_ratio");
+                 childTable.employee_id= r.message[j].employee
+                 childTable.employee_name = r.message[j].employee_name
+                 cur_frm.refresh_fields("deduction_ratio");
             }
-        })
+        });
 	},
     validate: function(frm) {
         if(!frm.doc.from_date || !frm.doc.to_date) {
@@ -64,15 +61,16 @@ frappe.ui.form.on('Earned Leave Deductions', {
                 if(r.message.length == frm.doc.deduction_ratio.length) {
                     for(var j=0; j<frm.doc.deduction_ratio.length;j++){
                     // var childTable = cur_frm.add_child("deduction_ratio");
-                    if(frm.doc.deduction_ratio[j].employee_id == r.message[j].employee)
-                    frm.doc.deduction_ratio[j].no_of_working_days= r.message[j].no_of_working_days
-                    frm.doc.deduction_ratio[j].el_allocated= r.message[j].el_allocated
-                    frm.doc.deduction_ratio[j].no_of_lwp= r.message[j].no_of_lwp
-                    frm.doc.deduction_ratio[j].deduction_ratio = frm.doc.deduction_ratio[j].no_of_lwp/r.message[j].no_of_working_days
-                    frm.doc.deduction_ratio[j].to_be_deducted = frm.doc.deduction_ratio[j].el_allocated * (frm.doc.deduction_ratio[j].no_of_lwp/r.message[j].no_of_working_days)
-                    frm.doc.deduction_ratio[j].to_be_allocated = frm.doc.deduction_ratio[j].el_allocated -(frm.doc.deduction_ratio[j].el_allocated * (frm.doc.deduction_ratio[j].no_of_lwp/r.message[j].no_of_working_days))                
-                    cur_frm.refresh_fields("deduction_ratio");
-                }
+                        if(frm.doc.deduction_ratio[j].employee_id == r.message[j].employee) {
+                            frm.doc.deduction_ratio[j].no_of_working_days= r.message[j].no_of_working_days
+                            frm.doc.deduction_ratio[j].el_allocated= r.message[j].el_allocated
+                            frm.doc.deduction_ratio[j].no_of_lwp= r.message[j].no_of_lwp
+                            frm.doc.deduction_ratio[j].deduction_ratio = frm.doc.deduction_ratio[j].no_of_lwp/r.message[j].no_of_working_days
+                            frm.doc.deduction_ratio[j].to_be_deducted = frm.doc.deduction_ratio[j].el_allocated * (frm.doc.deduction_ratio[j].no_of_lwp/r.message[j].no_of_working_days)
+                            frm.doc.deduction_ratio[j].to_be_allocated = frm.doc.deduction_ratio[j].el_allocated -(frm.doc.deduction_ratio[j].el_allocated * (frm.doc.deduction_ratio[j].no_of_lwp/r.message[j].no_of_working_days))
+                            cur_frm.refresh_fields("deduction_ratio");
+                        }
+                    }
                 }
                 
             }

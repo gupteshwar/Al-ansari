@@ -170,9 +170,9 @@ scheduler_events = {
 				"al_ansari.al_ansari.customization.leave_application.check_update_working_status_for_leave"
 			]
 		},
-	# "daily": [
-	# 	"al_ansari.al_ansari.customization.leave_application.check_update_working_status_for_leave"
-	# ]
+	"daily": [
+		"al_ansari.al_ansari.customization.leave_application.check_update_working_status_for_leave"
+	]
 }
 # Testing
 # -------
