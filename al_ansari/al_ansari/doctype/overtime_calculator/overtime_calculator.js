@@ -44,30 +44,6 @@ frappe.ui.form.on('Overtime Calculator', {
 		} else {
 			frappe.throw("Please click the Get Employees button and then Save.")
 		}
-		
-
-		// frm.doc.overtime_calculator_detail[x].non_holiday_overtime_amt = frm.doc.overtime_calculator_detail[x].total_overtime * frm.doc.overtime_calculator_detail[x].productive_hours_ratio
-		// frappe.call({
-	    //     method: "frappe.client.get_value",
-	    //     args: {
-	    //             doctype: "Overtime Calculator",
-	    //             fieldname: "name",
-	    //             filters: {
-		// 					from_date: frm.doc.from_date,
-		// 					to_date: frm.doc.to_date,
-		// 					docstatus: 1
-	    //             }
-	    //     },
-	    //     callback: function(response) {
-	    //          var name = response.message.name;
-	    //          if (name) {
-	    //             frappe.msgprint("Record for same time period already exists");
-		// 			validated=false;
-	    // 			return false;
-			
-	    //          }
-	    //     }
-		// });
 	},
 	get_employees: function(frm) {
 		frappe.call({
@@ -76,7 +52,8 @@ frappe.ui.form.on('Overtime Calculator', {
 		    	"from_date": frm.doc.from_date,
 		    	"to_date": frm.doc.to_date,
 		    	"branch": frm.doc.branch || " ",
-		    	"reporting_manager": frm.doc.reporting_manager || " "
+		    	"reporting_manager": frm.doc.reporting_manager || " ",
+		    	"payroll_cost_center": frm.doc.payroll_cost_center || " ",
 		    },
 		    callback: function(r) {
 		        // code snippet

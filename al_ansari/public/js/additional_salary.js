@@ -28,15 +28,16 @@ frappe.ui.form.on('Additional Salary', {
 	                filters: {
 	                	employee: frm.doc.employee,
 						payroll_date: frm.doc.payroll_date,
-						salary_component: 'Overtime'
+						salary_component: 'OVERTIME',
+						docstatus:1
 	                }
 	        },
 	        callback: function(response) {
-	             var name = response.message.name;
-	             console.log("response.message="+response.message.name)
+	             var name = response.message.name || "";
+	             // console.log("response.message="+name)
 	             if (name) {
-	                  frappe.msgprint("Overtime entry for same payroll date already exists for the employee selected");
-				validated=false;
+	                frappe.msgprint("Overtime entry for same payroll date already exists for the employee selected");
+					frappe.validated=false;
 	    			return false;
 	             }
 	        }

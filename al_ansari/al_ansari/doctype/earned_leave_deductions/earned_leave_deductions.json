@@ -9,7 +9,11 @@
  "field_order": [
   "from_date",
   "to_date",
+  "payroll_date",
   "column_break_3",
+  "branch",
+  "reporting_manager",
+  "payroll_cost_center",
   "get_employees",
   "section_break_5",
   "deduction_ratio",
@@ -20,13 +24,15 @@
    "fieldname": "from_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "From Date"
+   "label": "From Date",
+   "reqd": 1
   },
   {
    "fieldname": "to_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "To Date"
+   "label": "To Date",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_3",
@@ -55,12 +61,36 @@
    "options": "Earned Leave Deductions",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "payroll_cost_center",
+   "fieldtype": "Link",
+   "label": "Payroll Cost Center",
+   "options": "Cost Center",
+   "reqd": 1
+  },
+  {
+   "fieldname": "payroll_date",
+   "fieldtype": "Date",
+   "label": "Payroll Date"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "reporting_manager",
+   "fieldtype": "Link",
+   "label": "Reporting Manager",
+   "options": "Employee"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-01-07 11:02:14.560308",
+ "modified": "2023-05-20 14:06:43.741239",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Earned Leave Deductions",

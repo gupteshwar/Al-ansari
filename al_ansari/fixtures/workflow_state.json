@@ -3,7 +3,7 @@
   "docstatus": 0,
   "doctype": "Workflow State",
   "icon": "question-sign",
-  "modified": "2022-05-16 11:03:29.989231",
+  "modified": "2023-02-01 15:12:20.378643",
   "name": "Pending",
   "parent": null,
   "parentfield": null,
@@ -15,7 +15,7 @@
   "docstatus": 0,
   "doctype": "Workflow State",
   "icon": "ok-sign",
-  "modified": "2022-05-16 11:03:29.992565",
+  "modified": "2023-02-01 15:12:20.389143",
   "name": "Approved",
   "parent": null,
   "parentfield": null,
@@ -27,7 +27,7 @@
   "docstatus": 0,
   "doctype": "Workflow State",
   "icon": "remove",
-  "modified": "2022-05-16 11:03:29.996058",
+  "modified": "2023-02-01 15:12:20.399592",
   "name": "Rejected",
   "parent": null,
   "parentfield": null,
@@ -394,5 +394,41 @@
   "parenttype": null,
   "style": "",
   "workflow_state_name": "Draft"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2023-02-16 18:55:59.038553",
+  "name": "Leave Granted",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "style": "",
+  "workflow_state_name": "Leave Granted"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2023-03-12 12:07:33.791737",
+  "name": "Approved to Proceed",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "style": "",
+  "workflow_state_name": "Approved to Proceed"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2023-03-12 12:08:15.394728",
+  "name": "Proceed to Annual Leave",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "style": "",
+  "workflow_state_name": "Proceed to Annual Leave"
  }
 ]
