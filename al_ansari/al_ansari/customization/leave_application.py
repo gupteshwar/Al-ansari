@@ -83,15 +83,27 @@ def update_employee_status(doc,method=None):
 			# print("end_day",doc.end_day)
 
 # to be excuted through scheduler crons
+@frappe.whitelist()
 def check_update_working_status_for_leave():
-	leave_app_list = frappe.db.get_list('Leave Application',{'from_date':frappe.utils.nowdate()})
-	cur_date = datetime.datetime.now()
+	leave_app_list = frappe.get_list('Leave Application',
+					fields=["name","employee","employee_name","from_date","to_date"],
+					filters = [
+							["from_date", "<=", frappe.utils.now()],
+							["to_date",">=",frappe.utils.now()],
+							["workflow_state","=","On Leave"],
+							["leave_type","=","Annual Leave"]])
+	
+	cur_date = datetime.now()
 	if leave_app_list:
 		for leave_app in leave_app_list:
 			l_app = frappe.get_doc('Leave Application',leave_app.name)
-			if l_app.workflow_state == 'On Leave' and (datetime.datetime.now().date()>=l_app.from_date):
-				emp_rec = frappe.get_doc('Employee',l_app.employee)
-				emp_rec.working_status = 'On Leave'
+			try:
+				if l_app.workflow_state == 'On Leave' and (datetime.now().date()>=l_app.from_date):
+					emp_rec = frappe.get_doc('Employee',l_app.employee)
+					emp_rec.working_status = 'On Leave'
+					emp_rec.save()
+			except:
+				pass
 
 def after_save(doc,method):
 	if doc.rejoining_details_ref != "" and doc.leave_type == 'Leave Without Pay':
