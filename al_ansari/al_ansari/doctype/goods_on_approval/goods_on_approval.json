@@ -10,6 +10,7 @@
   "naming_series",
   "customer",
   "company",
+  "status",
   "column_break_3",
   "posting_date",
   "return_by_date",
@@ -79,12 +80,20 @@
    "fieldtype": "Link",
    "label": "Cost Center",
    "options": "Cost Center"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Pending\nGoods Sent\nGoods Partially Sent\nGoods Received\nGoods Partially Received\nPending\nGoods Partially Received/Sent",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-02-18 19:43:00.572401",
+ "modified": "2023-05-24 17:11:15.451233",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Goods On Approval",

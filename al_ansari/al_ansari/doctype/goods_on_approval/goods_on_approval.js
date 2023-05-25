@@ -6,40 +6,41 @@ frappe.provide("erpnext.accounts.dimensions");
 
 frappe.ui.form.on('Goods On Approval', {
 	refresh: function(frm) {
+		frm.set_query("cost_center", function() {
+					return {
+						filters: {"company": frm.doc.company}
+					};
+				});
+		frm.set_query("s_warehouse", "stock_entry_detail", function() {
+		    return {
+		        query: "erpnext.controllers.queries.warehouse_query",
+		        filters: {
+		        	"is_group": 0,
+		        	"company": frm.doc.company,
+		    			}
+		    };
+		});
+
+		frm.set_query("t_warehouse", "stock_entry_detail", function() {
+		    return {
+		        query: "erpnext.controllers.queries.warehouse_query",
+		        filters: {
+		        	"is_group": 0,
+		        	"company": frm.doc.company,
+		    			}
+		    };
+		});
+
 		if(!frm.is_new()){
 			frm.add_custom_button(__("Goods on Approval"), function() { 
+
 				frappe.model.with_doctype('Stock Entry', function() {
 				var se = frappe.model.get_new_doc('Stock Entry')
 				se.stock_entry_type = "Goods on Approval"
 				se.company = frm.doc.company
 				se.goods_on_approval_ref = frm.doc.name
 				frm.doc.stock_entry_detail.forEach(function(item) {
-					var mr_item = frappe.model.add_child(se,'items');
-					mr_item.item_code = item.item_code;
-					mr_item.item_name = item.item_name;
-					mr_item.uom = item.uom;
-					mr_item.stock_uom = item.stock_uom;
-					mr_item.conversion_factor = item.conversion_factor;
-					mr_item.item_group = item.item_group;
-					mr_item.description = item.description;
-					mr_item.image = item.image;
-					mr_item.qty = item.qty;
-					mr_item.s_warehouse = item.s_warehouse;
-					mr_item.t_warehouse = item.t_warehouse;
-					mr_item.required_date = frappe.datetime.nowdate();
-					mr_item.basic_rate = item.basic_rate;
-					mr_item.transfer_qty = item.transfer_qty;
-				})
-				frappe.set_route('Form', 'Stock Entry', se.name);
-			});
-			}, __("Create"));
-			frm.add_custom_button(__("Goods received on Approval"), function() { 
-					frappe.model.with_doctype('Stock Entry', function() {
-					var se = frappe.model.get_new_doc('Stock Entry')
-					se.stock_entry_type = "Goods On Approval"
-					se.company = frm.doc.company
-					se.goods_on_approval_ref = frm.doc.name
-					frm.doc.stock_entry_detail.forEach(function(item) {
+					if (item.qty - item.goods_on_approval_count >0) {
 						var mr_item = frappe.model.add_child(se,'items');
 						mr_item.item_code = item.item_code;
 						mr_item.item_name = item.item_name;
@@ -49,12 +50,41 @@ frappe.ui.form.on('Goods On Approval', {
 						mr_item.item_group = item.item_group;
 						mr_item.description = item.description;
 						mr_item.image = item.image;
-						mr_item.qty = item.qty;
+						mr_item.qty = item.qty - item.goods_on_approval_count;
 						mr_item.s_warehouse = item.s_warehouse;
 						mr_item.t_warehouse = item.t_warehouse;
 						mr_item.required_date = frappe.datetime.nowdate();
 						mr_item.basic_rate = item.basic_rate;
 						mr_item.transfer_qty = item.transfer_qty;
+					}
+				})
+				frappe.set_route('Form', 'Stock Entry', se.name);
+			});
+			}, __("Create"));
+			frm.add_custom_button(__("Goods Return Entry"), function() { 
+					frappe.model.with_doctype('Stock Entry', function() {
+					var se = frappe.model.get_new_doc('Stock Entry')
+					se.stock_entry_type = "Goods Return Entry"
+					se.company = frm.doc.company
+					se.goods_on_approval_ref = frm.doc.name
+					frm.doc.stock_entry_detail.forEach(function(item) {
+						if (item.qty - item.goods_received_count > 0){
+							var mr_item = frappe.model.add_child(se,'items');
+							mr_item.item_code = item.item_code;
+							mr_item.item_name = item.item_name;
+							mr_item.uom = item.uom;
+							mr_item.stock_uom = item.stock_uom;
+							mr_item.conversion_factor = item.conversion_factor;
+							mr_item.item_group = item.item_group;
+							mr_item.description = item.description;
+							mr_item.image = item.image;
+							mr_item.qty = item.qty - item.goods_received_count;
+							mr_item.s_warehouse = item.s_warehouse;
+							mr_item.t_warehouse = item.t_warehouse;
+							mr_item.required_date = frappe.datetime.nowdate();
+							mr_item.basic_rate = item.basic_rate;
+							mr_item.transfer_qty = item.transfer_qty;
+						}
 					})
 					frappe.set_route('Form', 'Stock Entry', se.name);
 				});
@@ -90,6 +120,39 @@ frappe.ui.form.on('Goods On Approval', {
 			});
 		}
 	},
+
+	get_warehouse_details: function(frm, cdt, cdn) {
+		var child = locals[cdt][cdn];
+		if(!child.bom_no) {
+			frappe.call({
+				method: "erpnext.stock.doctype.stock_entry.stock_entry.get_warehouse_details",
+				args: {
+					"args": {
+						'item_code': child.item_code,
+						'warehouse': cstr(child.s_warehouse) || cstr(child.t_warehouse),
+						'transfer_qty': child.transfer_qty,
+						'serial_no': child.serial_no,
+						'qty': child.s_warehouse ? -1* child.transfer_qty : child.transfer_qty,
+						'posting_date': frm.doc.posting_date,
+						'posting_time': frm.doc.posting_time,
+						'company': frm.doc.company,
+						'voucher_type': frm.doc.doctype,
+						'voucher_no': child.name,
+						'allow_zero_valuation': 1
+					}
+				},
+				callback: function(r) {
+					if (!r.exc) {
+						["actual_qty", "basic_rate"].forEach((field) => {
+							frappe.model.set_value(cdt, cdn, field, (r.message[field] || 0.0));
+						});
+						frm.events.calculate_basic_amount(frm, child);
+					}
+				}
+			});
+		}
+	},
+
 	cost_center: function(frm, cdt, cdn) {
 		erpnext.utils.copy_value_in_all_rows(frm.doc, cdt, cdn, "items", "cost_center");
 	},
@@ -144,7 +207,7 @@ frappe.ui.form.on('Stock Entry Detail', {
 
 	s_warehouse: function(frm, cdt, cdn) {
 		frm.events.set_serial_no(frm, cdt, cdn, () => {
-			frm.events.get_warehouse_details(frm, cdt, cdn);
+			// frm.events.get_warehouse_details(frm, cdt, cdn);
 		});
 
 		// set allow_zero_valuation_rate to 0 if s_warehouse is selected.
@@ -155,7 +218,7 @@ frappe.ui.form.on('Stock Entry Detail', {
 	},
 
 	t_warehouse: function(frm, cdt, cdn) {
-		frm.events.get_warehouse_details(frm, cdt, cdn);
+		// frm.events.get_warehouse_details(frm, cdt, cdn);
 	},
 
 	basic_rate: function(frm, cdt, cdn) {
