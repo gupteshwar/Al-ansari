@@ -36,13 +36,16 @@ function validate_posting_date(frm) {
 }
 
 function item_rate(frm){
-   
-    (frm.doc.items || []).forEach(function(item_rate){
+        let item_rate_issue = [];
+        (frm.doc.items || []).forEach(function(item){
 
-        if (item_rate.rate < item_rate.price_list_rate){
-            frappe.throw(__("Item rate is below price list rate"))
+            if (item.rate < item.price_list_rate){
+                item_rate_issue.push(item.idx)
+            }
+        })
+        if (item_rate_issue.length > 0) {
+            frappe.throw(__("Item Rate is below Item Price List Rate for the following rows <br>{0}",[item_rate_issue.join(',')]))
         }
-    })
 }
 
 

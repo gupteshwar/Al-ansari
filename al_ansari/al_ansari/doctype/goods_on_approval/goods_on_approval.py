@@ -88,17 +88,17 @@ class GoodsOnApproval(Document):
 		args["posting_date"] = self.posting_date
 		# args["posting_time"] = self.posting_time
 
-		stock_and_rate = get_warehouse_details(args) if args.get("warehouse") else {}
-		ret.update(stock_and_rate)
+		# stock_and_rate = get_warehouse_details(args) if args.get("warehouse") else {}
+		# ret.update(stock_and_rate)
 
 		# automatically select batch for outgoing item
-		if (
-			args.get("s_warehouse", None)
-			and args.get("qty")
-			and ret.get("has_batch_no")
-			and not args.get("batch_no")
-		):
-			args.batch_no = get_batch_no(args["item_code"], args["s_warehouse"], args["qty"])
+		# if (
+		# 	args.get("s_warehouse", None)
+		# 	and args.get("qty")
+		# 	and ret.get("has_batch_no")
+		# 	and not args.get("batch_no")
+		# ):
+		# 	args.batch_no = get_batch_no(args["item_code"], args["s_warehouse"], args["qty"])
 
 		# if (
 		# 	self.purpose == "Send to Subcontractor" and self.get("purchase_order") and args.get("item_code")

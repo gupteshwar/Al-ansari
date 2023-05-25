@@ -169,8 +169,12 @@ doc_events = {
 		"on_submit":["al_ansari.al_ansari.customization.employee.valid_employee_adv"]
 	},
 	"Payment Request": {
-		"validate":"al_ansari.al_ansari.customization.payment_request.payment_request_validate"
+		"validate": ["al_ansari.al_ansari.customization.payment_request.payment_request_validate"]
 	},
+	"Stock Entry":{
+		"before_submit": ["al_ansari.al_ansari.customization.stock_entry.before_submit"],
+		"on_submit": ["al_ansari.al_ansari.customization.stock_entry.on_submit"]
+	}
 }
 # Scheduled Tasks
 # ---------------
