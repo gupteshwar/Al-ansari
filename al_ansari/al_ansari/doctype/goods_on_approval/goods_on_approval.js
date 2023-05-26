@@ -73,9 +73,8 @@ frappe.ui.form.on('Goods On Approval', {
 		    };
 		});
 
-		if(!frm.is_new()){
+		if(!frm.is_new() && frm.doc.docstatus == 1 && frm.doc.status!= "Completed"){
 			frm.add_custom_button(__("Goods on Approval"), function() { 
-
 				frappe.model.with_doctype('Stock Entry', function() {
 				var se = frappe.model.get_new_doc('Stock Entry')
 				se.stock_entry_type = "Goods on Approval"

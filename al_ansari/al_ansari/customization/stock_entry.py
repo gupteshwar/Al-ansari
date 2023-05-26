@@ -37,8 +37,11 @@ def validate_qty_from_goods_on_approval(doc):
 						st.stock_entry_type = "Goods on Approval"
 					""",(item.item_code,doc.goods_on_approval_ref),as_dict=1)
 
-				if goa_i_qty[0]['i_qty'] > goa_qty[0]['g_qty']:
-					exceeds_goa_qty.append(item.idx)
+				if goa_i_qty[0]['i_qty'] and goa_qty[0]['g_qty']:
+					if goa_i_qty[0]['i_qty'] > goa_qty[0]['g_qty']:
+						exceeds_goa_qty.append(item.idx)
+				else:
+					frappe.throw("Please check if the enteries made are proper")
 					
 			if doc.stock_entry_type == 'Goods Return Entry':
 				goa_i_qty = frappe.db.sql("""Select sum(sed.qty) as i_qty
@@ -61,11 +64,14 @@ def validate_qty_from_goods_on_approval(doc):
 						st.stock_entry_type = "Goods Return Entry"
 					""",(item.item_code,doc.goods_on_approval_ref),as_dict=1)
 
-				if gra_i_qty[0]['i_qty'] > goa_qty[0]['g_qty']:
-					exceeds_goa_qty.append(item.idx)
+				if goa_i_qty[0]['i_qty'] and gra_i_qty[0]['i_qty']:
+					if gra_i_qty[0]['i_qty'] > goa_qty[0]['g_qty']:
+						exceeds_goa_qty.append(item.idx)
+					else:
+						if gra_i_qty[0]['i_qty'] > goa_i_qty[0]['i_qty']:
+							exceeds_goa_i_qty.append(item.idx)
 				else:
-					if gra_i_qty[0]['i_qty'] > goa_i_qty[0]['i_qty']:
-						exceeds_goa_i_qty.append(item.idx)
+					frappe.throw(_("Cannot be Submitted as there is no entry found in Stock Entry records for Goods on Approval against Goods On Approval Ref as {0}").format(doc.goods_on_approval_ref))
 					
 		if exceeds_goa_qty:
 			frappe.throw(_("The quantity should not exceed the quantity in Goods On Approval Doctype ({0}) child table for row {1}").format(doc.goods_on_approval_ref, exceeds_goa_qty))
