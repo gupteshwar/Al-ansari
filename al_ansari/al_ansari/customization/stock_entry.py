@@ -90,24 +90,36 @@ def update_in_goods_on_approval(doc):
 def update_goa_status(doc):
 	goa_doc = frappe.get_doc('Goods On Approval',doc.goods_on_approval_ref)
 
-	for item in goa_doc.stock_entry_detail:
-		if item.qty == item.goods_on_approval_count:
-			if item.goods_on_approval_count == item.goods_received_count and item.goods_received_count != 0:
-				goa_doc.status = "Goods Received"
-		if item.qty == item.goods_on_approval_count:
-			if item.goods_on_approval_count != item.goods_received_count and item.goods_received_count != 0:
-				goa_doc.status = "Goods Partially Received"
-				break
-		if item.qty == item.goods_on_approval_count:
-			if item.goods_on_approval_count != item.goods_received_count and item.goods_received_count == 0:
-				goa_doc.status = "Goods Sent"
-		if item.qty > item.goods_on_approval_count:
-			if item.goods_on_approval_count == item.goods_received_count and item.goods_received_count != 0:
-				goa_doc.status = "Goods Partially Sent"
-				break
-		if item.qty > item.goods_on_approval_count:
-			if item.goods_on_approval_count != item.goods_received_count and item.goods_received_count != 0:
-				goa_doc.status = " Goods Partially Received/Sent"
-				break
+	# for item in goa_doc.stock_entry_detail:
+	# 	if item.qty == item.goods_on_approval_count:
+	# 		if item.goods_on_approval_count == item.goods_received_count and item.goods_received_count != 0:
+	# 			goa_doc.status = "Goods Received"
+	# 	if item.qty == item.goods_on_approval_count:
+	# 		if item.goods_on_approval_count != item.goods_received_count and item.goods_received_count != 0:
+	# 			goa_doc.status = "Goods Partially Received"
+	# 			break
+	# 	if item.qty == item.goods_on_approval_count:
+	# 		if item.goods_on_approval_count != item.goods_received_count and item.goods_received_count == 0:
+	# 			goa_doc.status = "Goods Sent"
+	# 	if item.qty > item.goods_on_approval_count:
+	# 		if item.goods_on_approval_count == item.goods_received_count and item.goods_received_count != 0:
+	# 			goa_doc.status = "Goods Partially Sent"
+	# 			break
+	# 	if item.qty > item.goods_on_approval_count:
+	# 		if item.goods_on_approval_count != item.goods_received_count and item.goods_received_count != 0:
+	# 			goa_doc.status = " Goods Partially Received/Sent"
+	# 			break
+	item = 0
+	itemwise_status = []
+	while item < len(goa_doc.stock_entry_detail):
+		if goa_doc.stock_entry_detail[item].goods_on_approval_count == goa_doc.stock_entry_detail[item].goods_received_count and goa_doc.stock_entry_detail[item].goods_on_approval_count == goa_doc.stock_entry_detail[item].qty:
+			itemwise_status.append("Complete")
+		else:
+			itemwise_status.append("In Process")
+		item +=1
 	
+	if "In Process" in itemwise_status:
+		goa_doc.status = "In Process"
+	else:
+		goa_doc.status = "Completed"
 	goa_doc.save()
