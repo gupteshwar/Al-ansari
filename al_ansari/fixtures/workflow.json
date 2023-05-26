@@ -168,8 +168,8 @@
   "docstatus": 0,
   "doctype": "Workflow",
   "document_type": "Appraisal",
-  "is_active": 0,
-  "modified": "2022-10-20 11:01:23.617890",
+  "is_active": 1,
+  "modified": "2023-05-25 14:30:08.629466",
   "name": "Appraisal Workflow",
   "override_status": 0,
   "parent": "Appraisal",
@@ -178,7 +178,7 @@
   "send_email_alert": 0,
   "states": [
    {
-    "allow_edit": "Employee Self Service",
+    "allow_edit": "Employee",
     "doc_status": "0",
     "is_optional_state": 0,
     "message": null,
@@ -191,20 +191,7 @@
     "update_value": null
    },
    {
-    "allow_edit": "Employee Self Service",
-    "doc_status": "0",
-    "is_optional_state": 0,
-    "message": null,
-    "next_action_email_template": null,
-    "parent": "Appraisal Workflow",
-    "parentfield": "states",
-    "parenttype": "Workflow",
-    "state": "Pending",
-    "update_field": "",
-    "update_value": ""
-   },
-   {
-    "allow_edit": "Employee Self Service",
+    "allow_edit": "HOD",
     "doc_status": "0",
     "is_optional_state": 0,
     "message": null,
@@ -217,7 +204,7 @@
     "update_value": ""
    },
    {
-    "allow_edit": "Line Manager",
+    "allow_edit": "HR Manager",
     "doc_status": "0",
     "is_optional_state": 0,
     "message": null,
@@ -225,7 +212,20 @@
     "parent": "Appraisal Workflow",
     "parentfield": "states",
     "parenttype": "Workflow",
-    "state": "Approved by Line Manager",
+    "state": "Approved by HOD",
+    "update_field": null,
+    "update_value": ""
+   },
+   {
+    "allow_edit": "System Manager",
+    "doc_status": "1",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Appraisal Workflow",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Approved by HOD",
     "update_field": null,
     "update_value": ""
    },
@@ -240,55 +240,20 @@
     "parenttype": "Workflow",
     "state": "Posted",
     "update_field": null,
-    "update_value": ""
-   },
-   {
-    "allow_edit": "HOD",
-    "doc_status": "1",
-    "is_optional_state": 0,
-    "message": null,
-    "next_action_email_template": null,
-    "parent": "Appraisal Workflow",
-    "parentfield": "states",
-    "parenttype": "Workflow",
-    "state": "Approved by HOD",
-    "update_field": null,
-    "update_value": ""
+    "update_value": null
    }
   ],
   "transitions": [
    {
     "action": "Review",
     "allow_self_approval": 1,
-    "allowed": "Employee Self Service",
+    "allowed": "Employee",
     "condition": null,
     "next_state": "Submitted by Staff",
     "parent": "Appraisal Workflow",
     "parentfield": "transitions",
     "parenttype": "Workflow",
     "state": "Draft"
-   },
-   {
-    "action": "Review",
-    "allow_self_approval": 1,
-    "allowed": "Employee Self Service",
-    "condition": null,
-    "next_state": "Submitted by Staff",
-    "parent": "Appraisal Workflow",
-    "parentfield": "transitions",
-    "parenttype": "Workflow",
-    "state": "Pending"
-   },
-   {
-    "action": "Approve",
-    "allow_self_approval": 1,
-    "allowed": "Line Manager",
-    "condition": null,
-    "next_state": "Approved by Line Manager",
-    "parent": "Appraisal Workflow",
-    "parentfield": "transitions",
-    "parenttype": "Workflow",
-    "state": "Submitted by Staff"
    },
    {
     "action": "Approve",
@@ -299,7 +264,7 @@
     "parent": "Appraisal Workflow",
     "parentfield": "transitions",
     "parenttype": "Workflow",
-    "state": "Approved by Line Manager"
+    "state": "Submitted by Staff"
    },
    {
     "action": "Post",
@@ -310,12 +275,12 @@
     "parent": "Appraisal Workflow",
     "parentfield": "transitions",
     "parenttype": "Workflow",
-    "state": "Approved by Line Manager"
+    "state": "Approved by HOD"
    },
    {
     "action": "Post",
     "allow_self_approval": 1,
-    "allowed": "HR Manager",
+    "allowed": "System Manager",
     "condition": null,
     "next_state": "Posted",
     "parent": "Appraisal Workflow",
