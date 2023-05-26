@@ -5,7 +5,49 @@ frappe.provide("erpnext.stock");
 frappe.provide("erpnext.accounts.dimensions");
 
 frappe.ui.form.on('Goods On Approval', {
+	setup: function(frm) {
+		frm.set_indicator_formatter('item_code', function(doc) {
+			// if (!doc.s_warehouse) {
+			// 	return 'blue';
+			// } else {
+			// 	return (doc.qty<=doc.actual_qty) ? 'green' : 'orange';
+			// }
+			// Pending
+			if ((doc.goods_on_approval_count == doc.goods_received_count) && (doc.goods_on_approval_count == 0)){
+				return 'grey'
+			} else if ((doc.goods_on_approval_count == doc.goods_received_count) && (doc.goods_on_approval_count!=0) && (doc.goods_on_approval_count != doc.qty)){
+				return 'blue'
+			}  else if ((doc.goods_on_approval_count > doc.goods_received_count) && (doc.goods_on_approval_count != doc.qty)){
+				return 'orange'
+			} else if ((doc.goods_on_approval_count > doc.goods_received_count) && (doc.goods_on_approval_count == doc.qty)){
+				return 'pink'
+			} else if ((doc.goods_on_approval_count == doc.goods_received_count) && (doc.goods_on_approval_count == doc.qty)){
+				return 'green'
+			}
+
+		});
+	},
 	refresh: function(frm) {
+		frm.set_indicator_formatter('item_code', function(doc) {
+			// if (!doc.s_warehouse) {
+			// 	return 'blue';
+			// } else {
+			// 	return (doc.qty<=doc.actual_qty) ? 'green' : 'orange';
+			// }
+			// Pending
+			if ((doc.goods_on_approval_count == doc.goods_received_count) && (doc.goods_on_approval_count == 0)){
+				return 'white'
+			} else if ((doc.goods_on_approval_count == doc.goods_received_count) && (doc.goods_on_approval_count!=0) && (doc.goods_on_approval_count != doc.qty)){
+				return 'blue'
+			}  else if ((doc.goods_on_approval_count > doc.goods_received_count) && (doc.goods_on_approval_count != doc.qty)){
+				return 'orange'
+			} else if ((doc.goods_on_approval_count > doc.goods_received_count) && (doc.goods_on_approval_count == doc.qty)){
+				return 'yellow'
+			} else if ((doc.goods_on_approval_count == doc.goods_received_count) && (doc.goods_on_approval_count == doc.qty)){
+				return 'green'
+			}
+
+		});
 		frm.set_query("cost_center", function() {
 					return {
 						filters: {"company": frm.doc.company}

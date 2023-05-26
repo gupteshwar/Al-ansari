@@ -86,14 +86,14 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Pending\nGoods Sent\nGoods Partially Sent\nGoods Received\nGoods Partially Received\nPending\nGoods Partially Received/Sent",
+   "options": "Pending\nGoods Sent\nGoods Partially Sent\nGoods Received\nGoods Partially Received\nPending\nGoods Partially Received/Sent\nIn Process\nCompleted",
    "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-05-24 17:11:15.451233",
+ "modified": "2023-05-26 09:54:41.279011",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Goods On Approval",
