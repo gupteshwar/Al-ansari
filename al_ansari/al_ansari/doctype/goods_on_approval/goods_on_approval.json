@@ -10,11 +10,15 @@
   "naming_series",
   "customer",
   "company",
-  "status",
   "column_break_3",
   "posting_date",
   "return_by_date",
+  "status",
+  "section_break_8",
+  "project",
   "cost_center",
+  "column_break_11",
+  "branches",
   "section_break_6",
   "stock_entry_detail",
   "amended_from"
@@ -76,24 +80,45 @@
    "options": "Company"
   },
   {
-   "fieldname": "cost_center",
-   "fieldtype": "Link",
-   "label": "Cost Center",
-   "options": "Cost Center"
-  },
-  {
    "allow_on_submit": 1,
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
    "options": "Pending\nGoods Sent\nGoods Partially Sent\nGoods Received\nGoods Partially Received\nPending\nGoods Partially Received/Sent\nIn Process\nCompleted",
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break",
+   "label": "Accounting Dimensions"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "branches",
+   "fieldtype": "Link",
+   "label": "Branches",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-05-26 09:54:41.279011",
+ "modified": "2023-05-29 17:10:17.073679",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Goods On Approval",
