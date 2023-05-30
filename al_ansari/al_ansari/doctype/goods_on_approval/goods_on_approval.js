@@ -49,10 +49,13 @@ frappe.ui.form.on('Goods On Approval', {
 
 		});
 		frm.set_query("cost_center", function() {
-					return {
-						filters: {"company": frm.doc.company}
-					};
-				});
+			return {
+				filters: {
+						"company": frm.doc.company,
+						"is_group": 0
+						}
+			};
+		});
 		frm.set_query("s_warehouse", "stock_entry_detail", function() {
 		    return {
 		        query: "erpnext.controllers.queries.warehouse_query",
@@ -80,6 +83,9 @@ frappe.ui.form.on('Goods On Approval', {
 				se.stock_entry_type = "Goods on Approval"
 				se.company = frm.doc.company
 				se.goods_on_approval_ref = frm.doc.name
+				se.project = frm.doc.project
+				se.branch = frm.doc.branches
+				se.cost_center = frm.doc.cost_center
 				frm.doc.stock_entry_detail.forEach(function(item) {
 					if (item.qty - item.goods_on_approval_count >0) {
 						var mr_item = frappe.model.add_child(se,'items');
@@ -97,6 +103,9 @@ frappe.ui.form.on('Goods On Approval', {
 						mr_item.required_date = frappe.datetime.nowdate();
 						mr_item.basic_rate = item.basic_rate;
 						mr_item.transfer_qty = item.transfer_qty;
+						mr_item.cost_center = item.cost_center;
+						mr_item.project = item.project;
+						mr_item.branch = item.branch;
 					}
 				})
 				frappe.set_route('Form', 'Stock Entry', se.name);
@@ -108,6 +117,9 @@ frappe.ui.form.on('Goods On Approval', {
 					se.stock_entry_type = "Goods Return Entry"
 					se.company = frm.doc.company
 					se.goods_on_approval_ref = frm.doc.name
+					se.project = frm.doc.project
+					se.branch = frm.doc.branches
+					se.cost_center = frm.doc.cost_center
 					frm.doc.stock_entry_detail.forEach(function(item) {
 						if (item.qty - item.goods_received_count > 0){
 							var mr_item = frappe.model.add_child(se,'items');
@@ -125,6 +137,9 @@ frappe.ui.form.on('Goods On Approval', {
 							mr_item.required_date = frappe.datetime.nowdate();
 							mr_item.basic_rate = item.basic_rate;
 							mr_item.transfer_qty = item.transfer_qty;
+							mr_item.cost_center = item.cost_center;
+							mr_item.project = item.project;
+							mr_item.branch = item.branch;
 						}
 					})
 					frappe.set_route('Form', 'Stock Entry', se.name);
@@ -232,6 +247,18 @@ frappe.ui.form.on('Goods On Approval', {
 		frm.set_value("total_additional_costs",
 			flt(total_additional_costs, precision("total_additional_costs")));
 	},
+	validate: function(frm) {
+		if(frm.doc.stock_entry_detail) {
+			for(var i=0;i<frm.doc.stock_entry_detail.length;i++) {
+				if (frm.doc.stock_entry_detail[i]['s_warehouse'] == "") {
+					frappe.throw("Source warehouse is mandatory to be filled")
+				}
+				if (frm.doc.stock_entry_detail[i]['t_warehouse'] =="") {
+					frappe.throw("Target warehouse is mandatory to be filled")
+				}
+			}
+		}
+	}
 });
 
 
@@ -303,6 +330,12 @@ frappe.ui.form.on('Stock Entry Detail', {
 
 	item_code: function(frm, cdt, cdn) {
 		var d = locals[cdt][cdn];
+		if(frm.doc.cost_center) 
+		{
+			d.cost_center = frm.doc.cost_center
+			d.project = frm.doc.project
+			d.branch = frm.doc.branches
+		}
 		if(d.item_code) {
 			var args = {
 				'item_code'			: d.item_code,
@@ -340,7 +373,7 @@ frappe.ui.form.on('Stock Entry Detail', {
 						}
 
 						if (no_batch_serial_number_value && !frappe.flags.hide_serial_batch_dialog) {
-							erpnext.stock.select_batch_and_serial_no(frm, d);
+							// erpnext.stock.select_batch_and_serial_no(frm, d);
 						}
 					}
 				}
@@ -351,7 +384,7 @@ frappe.ui.form.on('Stock Entry Detail', {
 		erpnext.utils.copy_value_in_all_rows(frm.doc, cdt, cdn, "items", "expense_account");
 	},
 	cost_center: function(frm, cdt, cdn) {
-		erpnext.utils.copy_value_in_all_rows(frm.doc, cdt, cdn, "items", "cost_center");
+		// erpnext.utils.copy_value_in_all_rows(frm.doc, cdt, cdn, "items", "cost_center");
 	},
 	sample_quantity: function(frm, cdt, cdn) {
 		validate_sample_quantity(frm, cdt, cdn);
@@ -378,3 +411,13 @@ var validate_sample_quantity = function(frm, cdt, cdn) {
 		});
 	}
 };
+
+// frappe.ui.form.on('Stock Item Details', {
+// 	stock_item_details_add: function(frm, cdt, cdn) {
+//         if(frm.doc.cost_center) {
+//             row = locals[cdt][cdn]
+//             row.cost_center = frm.doc.cost_center
+//         }
+//         frm.refresh_fields('stock_item_details')
+//     }
+// })
