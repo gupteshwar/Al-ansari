@@ -65,9 +65,10 @@ frappe.ui.form.on('Earned Leave Deductions', {
                             frm.doc.deduction_ratio[j].no_of_working_days= r.message[j].no_of_working_days
                             frm.doc.deduction_ratio[j].el_allocated= r.message[j].el_allocated
                             frm.doc.deduction_ratio[j].no_of_lwp= r.message[j].no_of_lwp
-                            frm.doc.deduction_ratio[j].deduction_ratio = frm.doc.deduction_ratio[j].no_of_lwp/r.message[j].no_of_working_days
-                            frm.doc.deduction_ratio[j].to_be_deducted = frm.doc.deduction_ratio[j].el_allocated * (frm.doc.deduction_ratio[j].no_of_lwp/r.message[j].no_of_working_days)
-                            frm.doc.deduction_ratio[j].to_be_allocated = frm.doc.deduction_ratio[j].el_allocated -(frm.doc.deduction_ratio[j].el_allocated * (frm.doc.deduction_ratio[j].no_of_lwp/r.message[j].no_of_working_days))
+                            frm.doc.deduction_ratio[j].days_of_month= r.message[j].days_of_month
+                            frm.doc.deduction_ratio[j].deduction_ratio = frm.doc.deduction_ratio[j].el_allocated/frm.doc.deduction_ratio[j].days_of_month
+                            frm.doc.deduction_ratio[j].to_be_deducted = (frm.doc.deduction_ratio[j].el_allocated/frm.doc.deduction_ratio[j].days_of_month) * frm.doc.deduction_ratio[j].no_of_lwp 
+                            frm.doc.deduction_ratio[j].to_be_allocated = (frm.doc.deduction_ratio[j].el_allocated - ((frm.doc.deduction_ratio[j].el_allocated/frm.doc.deduction_ratio[j].days_of_month) * frm.doc.deduction_ratio[j].no_of_lwp))
                             cur_frm.refresh_fields("deduction_ratio");
                         }
                     }

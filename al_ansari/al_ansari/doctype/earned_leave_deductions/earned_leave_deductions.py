@@ -167,8 +167,8 @@ def no_of_working_days_employeewise(frm):
 			""",(item["employee_id"],frm.get("from_date"),frm.get("to_date")),as_dict=1)[0].no_of_lwp or 0
 		# print("no_of_lwp_manual== ",no_of_lwp_manual)
 		if holiday_count:
-			working_days.append({"employee":item["employee_id"],"no_of_working_days":(days_of_month-holiday_count),"el_allocated":el_allocated,"no_of_lwp":no_of_lwp+no_of_lwp_manual})
+			working_days.append({"employee":item["employee_id"],"no_of_working_days":(days_of_month-holiday_count),"el_allocated":el_allocated,"no_of_lwp":no_of_lwp+no_of_lwp_manual,"days_of_month":days_of_month})
 		else:
-			working_days.append({"employee":item["employee_id"],"no_of_working_days":days_of_month,"el_allocated":el_allocated,"no_of_lwp":no_of_lwp+no_of_lwp_manual})
+			working_days.append({"employee":item["employee_id"],"no_of_working_days":days_of_month,"el_allocated":el_allocated,"no_of_lwp":no_of_lwp+no_of_lwp_manual,"days_of_month":days_of_month})
 
 	return working_days
