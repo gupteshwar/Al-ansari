@@ -14,7 +14,9 @@
   "deduction_ratio",
   "el_allocated",
   "to_be_deducted",
-  "to_be_allocated"
+  "to_be_allocated",
+  "allocation_from_date",
+  "allocation_end_date"
  ],
  "fields": [
   {
@@ -87,12 +89,24 @@
    "fieldtype": "Float",
    "label": "Days of Month",
    "read_only": 1
+  },
+  {
+   "fieldname": "allocation_from_date",
+   "fieldtype": "Date",
+   "label": "Allocation From Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "allocation_end_date",
+   "fieldtype": "Date",
+   "label": "Allocation End Date",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-05-30 15:30:27.692672",
+ "modified": "2023-05-31 14:24:01.796766",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Deduction Ratio",
