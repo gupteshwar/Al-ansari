@@ -65,6 +65,7 @@ class EarnedLeaveDeductions(Document):
 				`tabLeave Application` t1, `tabEmployee` t2
 			where
 				t1.employee = t2.employee
+				and t2.status = 'Active'
 				and t1.from_date >= '%(from_date)s'
 				and t1.to_date <= '%(to_date)s'
 				%(cond)s 
