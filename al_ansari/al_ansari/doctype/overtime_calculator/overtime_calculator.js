@@ -46,21 +46,17 @@ frappe.ui.form.on('Overtime Calculator', {
 		}
 	},
 	get_employees: function(frm) {
-		frappe.call({
-		    method: "al_ansari.al_ansari.doctype.overtime_calculator.overtime_calculator.get_employees_on_oc", //dotted path to server method
-		    args: {
-		    	"from_date": frm.doc.from_date,
-		    	"to_date": frm.doc.to_date,
-		    	"branch": frm.doc.branch || " ",
-		    	"reporting_manager": frm.doc.reporting_manager || " ",
-		    	"payroll_cost_center": frm.doc.payroll_cost_center || " ",
-		    },
-		    callback: function(r) {
-		        // code snippet
-		        frm.clear_table('overtime_calculator_detail')
-		        for(var i=0;i<r.message.length;i++){
-		        	var childTable = cur_frm.add_child("overtime_calculator_detail");
-		        	childTable.employee = r.message[i]["name"]
+		if(frm.doc.branch || frm.doc.reporting_manager) {
+			frappe.call({
+	            doc: frm.doc,
+	            method: 'get_employees_on_oc',
+	        }).then(r => {
+	        	frm.clear_table('overtime_calculator_detail')
+	            if(r.message)
+	            for(var i=0; i<r.message.length;i++){
+	            	console.log(r.message)
+	                var childTable = cur_frm.add_child("overtime_calculator_detail");
+	                childTable.employee = r.message[i]["name"]
 		        	childTable.employee_name = r.message[i]["employee_name"]
 		        	childTable.productive_hours_ratio = r.message[i]["productive_hours_ratio"]
 		        	childTable.holiday_overtime_rate = r.message[i]["holiday_overtime_rate"]
@@ -72,11 +68,12 @@ frappe.ui.form.on('Overtime Calculator', {
 		        	childTable.holiday_shift_total = r.message[i]["h_shift_total"]
 		        	childTable.non_holiday_shift_total = r.message[i]["nh_shift_total"]
 		        	childTable.shift_hours = r.message[i]["h_shift_total"] + r.message[i]["nh_shift_total"]
-		        	// childTable.total_overtime = Number(r.message[i]["holiday_overtime"]) + Number(r.message[i]["non_holiday_overtime"])
-		        }
-		        
-		        cur_frm.refresh_fields("overtime_calculator_detail");
-		    }
-		});
+	                
+	            }
+	            cur_frm.refresh_fields("overtime_calculator_detail");
+	        });
+		} else {
+			frappe.throw("Please select either the branch or reporting manager to fetch the employees")
+		}
 	}
 });
