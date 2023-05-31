@@ -64,8 +64,7 @@
    "fieldname": "payroll_cost_center",
    "fieldtype": "Link",
    "label": "Payroll Cost Center",
-   "options": "Cost Center",
-   "reqd": 1
+   "options": "Cost Center"
   },
   {
    "fieldname": "payroll_date",
@@ -88,7 +87,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-05-18 15:33:26.558330",
+ "modified": "2023-05-31 16:55:04.461302",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Earned Leave Deductions",
