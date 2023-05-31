@@ -13,35 +13,43 @@ class EarnedLeaveDeductions(Document):
 
 	def negative_leave_allocation(self):
 		allocation_issue = []
+		duplication_issue = []
 		for i in self.deduction_ratio:
 			if i.to_be_deducted >0:
 				existing_rec= frappe.get_list('Leave Allocation',
 					fields= ["name"],
 					filters= [
-							['from_date',"=",frappe.utils.add_months(self.from_date, 1)],
-							['to_date',"=",frappe.utils.add_months(self.to_date, 1)],
+							['edl_from_date',"=",frappe.utils.add_months(self.from_date, 1)],
+							['edl_to_date',"=",frappe.utils.add_months(self.to_date, 1)],
 							['employee',"=",i.employee_id],
 							['leave_type',"=", "Annual Leave"],
-							]
+						]
 					)
 				if existing_rec:
-					allocation_issue.append(i.employee_id)
+					duplication_issue.append(i.employee_id)
 				else:
-					leave_alloc = frappe.new_doc("Leave Allocation")
-					leave_alloc.employee = i.employee_id
-					leave_alloc.employee_name = i.employee_name
-					leave_alloc.leave_type= "Annual Leave"
-					leave_alloc.new_leaves_allocated = -(i.to_be_deducted)
-					leave_alloc.from_date = frappe.utils.add_months(self.from_date, 1) # frm.get("from_date")
-					leave_alloc.to_date = frappe.utils.add_months(self.to_date, 1) # frm.get("to_date")
-					leave_alloc.save()
-					leave_alloc.submit()
+					if i.allocation_from_date and i.allocation_end_date:
+						leave_alloc = frappe.new_doc("Leave Allocation")
+						leave_alloc.employee = i.employee_id
+						leave_alloc.employee_name = i.employee_name
+						leave_alloc.leave_type= "Annual Leave"
+						leave_alloc.new_leaves_allocated = -(i.to_be_deducted)
+						leave_alloc.edl_from_date = frappe.utils.add_months(self.from_date, 1) # frm.get("from_date")
+						leave_alloc.edl_to_date =  frappe.utils.add_months(self.to_date, 1) # frm.get("to_date")
+						leave_alloc.from_date = i.allocation_from_date 		# frappe.utils.add_months(self.from_date, 1) # frm.get("from_date")
+						leave_alloc.to_date = i.allocation_end_date 	# frappe.utils.add_months(self.to_date, 1) # frm.get("to_date")
+						leave_alloc.save()
+						leave_alloc.submit()
+					else:
+						allocation_issue.append(i.employee_id)
 			else:
 				# frappe.throw("No record for making negative entry")
 				allocation_issue.append(i.employee_id)
 
-		if len(allocation_issue) >0:
-			frappe.throw(_("The entries for the following emplyoees couldn't be done as they may already exist. Please try entering them manually if required and remove from the table to proceed with other records.({0})").format(allocation_issue))
+		if len(duplication_issue) >0:
+			frappe.throw(_("The entries for the following employees couldn't be done as they may already exist. Please try entering them manually if required and remove from the table to proceed with other records.({0})").format(duplication_issue))
+		elif len(allocation_issue) > 0:
+			frappe.throw(_("Please check the EL allocation is proper and updated in the Earned Leave Deduction record else remove the record to proceed with other records.({0})").format(allocation_issue))
 		else:
 			frappe.msgprint(_("Allocation records created successfully"))
 
@@ -59,7 +67,6 @@ class EarnedLeaveDeductions(Document):
 				t1.employee = t2.employee
 				and t1.from_date >= '%(from_date)s'
 				and t1.to_date <= '%(to_date)s'
-				and t2.payroll_cost_center = '%(payroll_cost_center)s'
 				%(cond)s 
 		"""
 			%{
@@ -82,6 +89,8 @@ class EarnedLeaveDeductions(Document):
 				error_msg += "<br>" + _("Branch: {0}").format(frappe.bold(self.branch))
 			if self.reporting_manager:
 				error_msg += "<br>" + _("Reporting Manager: {0}").format(frappe.bold(self.reporting_manager))
+			if self.payroll_cost_center:
+				error_msg += "<br>" + _("Payroll Cost Center: {0}").format(frappe.bold(self.payroll_cost_center))
 			frappe.throw(error_msg, title=_("No employees found"))
 
 		return employee_list
@@ -97,7 +106,7 @@ class EarnedLeaveDeductions(Document):
 
 def get_filter_condition(filters):
 	cond = ""
-	for f in ["branch", "reports_to"]: 
+	for f in ["branch", "reports_to","payroll_cost_center"]: 
 		if filters.get(f):
 			cond += " and t2." + f + " = " + frappe.db.escape(filters.get(f))
 
@@ -128,7 +137,7 @@ def no_of_working_days_employeewise(frm):
 		el_list =  [d['name'] for d in earned_leaves_list if 'name' in d]
 
 		monthly_el_allocated = frappe.get_list("Leave Allocation",
-							fields="monthly_el_allocated", 
+							fields=["monthly_el_allocated","from_date","to_date"], 
 							filters = [['employee','=',item["employee_id"]],
 									["leave_type",'IN',el_list],
 									['leave_policy_assignment','!=',''],
@@ -139,9 +148,11 @@ def no_of_working_days_employeewise(frm):
 									['to_date',">=",frm.get("to_date")]
 									],
 							order_by = "creation desc"
-									) 
-		monthly_el_list =  [d['monthly_el_allocated'] for d in monthly_el_allocated if 'monthly_el_allocated' in d]
-		el_allocated = sum(monthly_el_list)
+							) 
+		# print("monthly_el_allocated===========================",monthly_el_allocated)
+		if monthly_el_allocated:
+			monthly_el_list =  [d['monthly_el_allocated'] for d in monthly_el_allocated if 'monthly_el_allocated' in d]
+			el_allocated = sum(monthly_el_list)
 		# el_allocated = monthly_el_allocated[0]['monthly_el_allocated'] if monthly_el_allocated else 0
 		# get No. of LWP (summation of fraction of LWP on Leave application)
 		no_of_lwp = frappe.db.sql(""" 
@@ -166,9 +177,16 @@ def no_of_working_days_employeewise(frm):
 			and lt.is_lwp = 1
 			""",(item["employee_id"],frm.get("from_date"),frm.get("to_date")),as_dict=1)[0].no_of_lwp or 0
 		# print("no_of_lwp_manual== ",no_of_lwp_manual)
-		if holiday_count:
-			working_days.append({"employee":item["employee_id"],"no_of_working_days":(days_of_month-holiday_count),"el_allocated":el_allocated,"no_of_lwp":no_of_lwp+no_of_lwp_manual,"days_of_month":days_of_month})
+
+		if monthly_el_allocated:
+			if holiday_count:
+				working_days.append({"employee":item["employee_id"],"no_of_working_days":(days_of_month-holiday_count),"el_allocated":el_allocated,"no_of_lwp":no_of_lwp+no_of_lwp_manual,"days_of_month":days_of_month,"allocation_from_date":monthly_el_allocated[0].from_date if monthly_el_allocated[0].from_date else None,"allocation_end_date":monthly_el_allocated[0].to_date if monthly_el_allocated[0].to_date else None})
+			else:
+				working_days.append({"employee":item["employee_id"],"no_of_working_days":days_of_month,"el_allocated":el_allocated,"no_of_lwp":no_of_lwp+no_of_lwp_manual,"days_of_month":days_of_month,"allocation_from_date":monthly_el_allocated[0].from_date if monthly_el_allocated[0].from_date else None,"allocation_end_date":monthly_el_allocated[0].to_date if monthly_el_allocated[0].to_date else None})
 		else:
-			working_days.append({"employee":item["employee_id"],"no_of_working_days":days_of_month,"el_allocated":el_allocated,"no_of_lwp":no_of_lwp+no_of_lwp_manual,"days_of_month":days_of_month})
+			if holiday_count:
+				working_days.append({"employee":item["employee_id"],"no_of_working_days":(days_of_month-holiday_count),"el_allocated":0,"no_of_lwp":no_of_lwp+no_of_lwp_manual,"days_of_month":days_of_month,"allocation_from_date":None,"allocation_end_date":None})
+			else:
+				working_days.append({"employee":item["employee_id"],"no_of_working_days":days_of_month,"el_allocated":0,"no_of_lwp":no_of_lwp+no_of_lwp_manual,"days_of_month":days_of_month,"allocation_from_date":None,"allocation_end_date":None})
 
 	return working_days
