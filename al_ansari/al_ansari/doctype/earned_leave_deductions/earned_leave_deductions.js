@@ -22,9 +22,7 @@ frappe.ui.form.on('Earned Leave Deductions', {
         if(!frm.doc.from_date || !frm.doc.to_date) {
             frappe.throw("From Date and To Date should be selected to fetch Employee Records")
         }
-        if(!frm.doc.payroll_cost_center) {
-            frappe.throw("Payroll Cost Center needs to be selected for fetching Employees")
-        }
+        
         frm.clear_table("deduction_ratio")
         frm.refresh_fields("deduction_ratio");
         frappe.call({
@@ -47,8 +45,10 @@ frappe.ui.form.on('Earned Leave Deductions', {
         if(frm.doc.from_date > frm.doc.to_date) {
             frappe.throw(" 'From date' cannot be greater than 'To Date' ")
         }
-        if(frm.doc.deduction_ratio.length <=0) {
+        if(frm.doc.deduction_ratio && frm.doc.deduction_ratio.length <=0) {
             frappe.throw("No records found in the Deduction Ratio table so cannot be saved")
+        } else if (!frm.doc.deduction_ratio) {
+            frappe.throw("To save the records Deduction Ratio table should have atleast one entry. Try clicking the the 'Get Employees' button and then save.")
         }
         frappe.call({
             method: "al_ansari.al_ansari.doctype.earned_leave_deductions.earned_leave_deductions.no_of_working_days_employeewise", //dotted path to server method
@@ -64,6 +64,8 @@ frappe.ui.form.on('Earned Leave Deductions', {
                         if(frm.doc.deduction_ratio[j].employee_id == r.message[j].employee) {
                             frm.doc.deduction_ratio[j].no_of_working_days= r.message[j].no_of_working_days
                             frm.doc.deduction_ratio[j].el_allocated= r.message[j].el_allocated
+                            frm.doc.deduction_ratio[j].allocation_from_date= r.message[j].allocation_from_date
+                            frm.doc.deduction_ratio[j].allocation_end_date= r.message[j].allocation_end_date
                             frm.doc.deduction_ratio[j].no_of_lwp= r.message[j].no_of_lwp
                             frm.doc.deduction_ratio[j].days_of_month= r.message[j].days_of_month
                             frm.doc.deduction_ratio[j].deduction_ratio = frm.doc.deduction_ratio[j].el_allocated/frm.doc.deduction_ratio[j].days_of_month
