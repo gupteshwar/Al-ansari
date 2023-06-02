@@ -1,13 +1,23 @@
 frappe.ui.form.on("Job Applicant",{
     onload:function(frm){
-        auto_populate_child_table(frm);
-        auto_populate_description(frm);
+        if(frm.is_new()){
+            auto_populate_child_table(frm);
+            auto_populate_description(frm);
+        } else {
+            if(frm.doc.questions_and_answers.length == 0) {
+                auto_populate_child_table(frm)
+                frm.save()
+            }
+            if(frm.doc.documentations.length == 0) {
+                auto_populate_description(frm);
+                frm.save()
+            }
+        }
     },
     before_save:function(frm) {
         validate_employment_date(frm);
         validate_education_date(frm);
     },
-        
 })
 
 var arr = ["Are you currently employed?","Why do you want to leave your current job? & Relocate?","If you are appointed, how long you need to join us?",
