@@ -1188,7 +1188,7 @@
   "doctype": "Workflow",
   "document_type": "Job Offer",
   "is_active": 1,
-  "modified": "2023-02-07 14:44:58.230214",
+  "modified": "2023-06-05 16:10:14.641817",
   "name": "Job Offer Approval",
   "override_status": 0,
   "parent": null,
@@ -1236,8 +1236,8 @@
     "update_value": "Submitted to VP"
    },
    {
-    "allow_edit": "System Manager",
-    "doc_status": "1",
+    "allow_edit": "Hiring Manager",
+    "doc_status": "0",
     "is_optional_state": 0,
     "message": null,
     "next_action_email_template": null,
@@ -1247,6 +1247,19 @@
     "state": "Approved",
     "update_field": null,
     "update_value": "Approved"
+   },
+   {
+    "allow_edit": "System Manager",
+    "doc_status": "1",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Job Offer Approval",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Completed",
+    "update_field": "",
+    "update_value": ""
    }
   ],
   "transitions": [
@@ -1282,6 +1295,17 @@
     "parentfield": "transitions",
     "parenttype": "Workflow",
     "state": "Submitted to VP"
+   },
+   {
+    "action": "Post",
+    "allow_self_approval": 1,
+    "allowed": "Hiring Manager",
+    "condition": null,
+    "next_state": "Completed",
+    "parent": "Job Offer Approval",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Approved"
    }
   ],
   "workflow_name": "Job Offer Approval",
@@ -1636,7 +1660,7 @@
   "doctype": "Workflow",
   "document_type": "Overtime Calculator",
   "is_active": 1,
-  "modified": "2023-04-27 10:40:08.459406",
+  "modified": "2023-06-04 16:34:45.842829",
   "name": "Overtime Calculator",
   "override_status": 0,
   "parent": null,
@@ -1672,19 +1696,6 @@
    },
    {
     "allow_edit": "Vice President",
-    "doc_status": "0",
-    "is_optional_state": 0,
-    "message": null,
-    "next_action_email_template": null,
-    "parent": "Overtime Calculator",
-    "parentfield": "states",
-    "parenttype": "Workflow",
-    "state": "Approved by HOD",
-    "update_field": null,
-    "update_value": "Approved by HOD"
-   },
-   {
-    "allow_edit": "System Manager",
     "doc_status": "1",
     "is_optional_state": 0,
     "message": null,
@@ -1694,7 +1705,7 @@
     "parenttype": "Workflow",
     "state": "Approved",
     "update_field": null,
-    "update_value": "Approved"
+    "update_value": "Approved by HOD"
    }
   ],
   "transitions": [
@@ -1710,26 +1721,15 @@
     "state": "Draft"
    },
    {
-    "action": "Submit",
-    "allow_self_approval": 1,
-    "allowed": "HOD",
-    "condition": null,
-    "next_state": "Approved by HOD",
-    "parent": "Overtime Calculator",
-    "parentfield": "transitions",
-    "parenttype": "Workflow",
-    "state": "Submitted"
-   },
-   {
     "action": "Approve",
     "allow_self_approval": 1,
-    "allowed": "Vice President",
+    "allowed": "HOD",
     "condition": null,
     "next_state": "Approved",
     "parent": "Overtime Calculator",
     "parentfield": "transitions",
     "parenttype": "Workflow",
-    "state": "Approved by HOD"
+    "state": "Submitted"
    }
   ],
   "workflow_name": "Overtime Calculator",
@@ -2178,7 +2178,7 @@
   "doctype": "Workflow",
   "document_type": "Attendance Request",
   "is_active": 1,
-  "modified": "2023-05-10 13:03:58.887401",
+  "modified": "2023-06-08 15:20:06.789125",
   "name": "Attendance Request",
   "override_status": 0,
   "parent": null,
@@ -2262,7 +2262,7 @@
    },
    {
     "action": "Approve",
-    "allow_self_approval": 0,
+    "allow_self_approval": 1,
     "allowed": "HOD",
     "condition": null,
     "next_state": "Approved",
@@ -3835,7 +3835,7 @@
   "doctype": "Workflow",
   "document_type": "HelpTicket",
   "is_active": 1,
-  "modified": "2023-06-01 10:34:01.925778",
+  "modified": "2023-06-05 10:32:29.371819",
   "name": "Employee Helpdesk",
   "override_status": 0,
   "parent": null,
@@ -3866,8 +3866,8 @@
     "parentfield": "states",
     "parenttype": "Workflow",
     "state": "Resolved",
-    "update_field": "",
-    "update_value": ""
+    "update_field": "progress",
+    "update_value": "Completed"
    },
    {
     "allow_edit": "System Manager",

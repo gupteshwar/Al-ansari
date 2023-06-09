@@ -4027,5 +4027,39 @@
   "property_type": "Check",
   "row_name": null,
   "value": "1"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Earned Leave Deductions",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocType",
+  "field_name": null,
+  "modified": "2023-06-05 17:02:22.118204",
+  "name": "Earned Leave Deductions-main-allow_import",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "property": "allow_import",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "1"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Job Offer",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocType",
+  "field_name": null,
+  "modified": "2023-06-08 10:32:52.373750",
+  "name": "Job Offer-main-default_print_format",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "property": "default_print_format",
+  "property_type": "Data",
+  "row_name": null,
+  "value": "Job Offer SBU3"
  }
 ]
