@@ -9,7 +9,17 @@ from frappe import _
 class EarnedLeaveDeductions(Document):
 	# pass
 	def on_submit(self):
+		allocation_na = []
+		if self.deduction_ratio:
+			for d in range(len(self.deduction_ratio)):
+				if not self.deduction_ratio[d].allocation_from_date or not self.deduction_ratio[d].allocation_end_date:
+					allocation_na.append(self.deduction_ratio[d].employee_id)
+		if allocation_na:
+			frappe.throw(_("Allocation not available for the records {0}").format(allocation_na))
 		self.negative_leave_allocation()
+
+	def on_cancel(self):
+		self.cancel_negative_leave_allocation_eld()
 
 	def negative_leave_allocation(self):
 		allocation_issue = []
@@ -23,6 +33,7 @@ class EarnedLeaveDeductions(Document):
 							['edl_to_date',"=",frappe.utils.add_months(self.to_date, 1)],
 							['employee',"=",i.employee_id],
 							['leave_type',"=", "Annual Leave"],
+							['docstatus','=',1]
 						]
 					)
 				if existing_rec:
@@ -52,6 +63,31 @@ class EarnedLeaveDeductions(Document):
 			frappe.throw(_("Please check the EL allocation is proper and updated in the Earned Leave Deduction record else remove the record to proceed with other records.({0})").format(allocation_issue))
 		else:
 			frappe.msgprint(_("Allocation records created successfully"))
+
+	def cancel_negative_leave_allocation_eld(self):
+		emp_rec = self.deduction_ratio
+		to_cancel = []
+		leave_all_eld = frappe.get_list('Leave Allocation',
+					fields= ["name","employee","new_leaves_allocated"],
+					filters= [
+							['edl_from_date',"=",frappe.utils.add_months(self.from_date, 1)],
+							['edl_to_date',"=",frappe.utils.add_months(self.to_date, 1)],
+							['leave_type',"=", "Annual Leave"],
+							['docstatus',"=",1]
+						])
+		
+		issue_to_cancel = []
+		emp_flatlist = [emp.get('employee_id') for emp in emp_rec if emp.get('employee_id')]
+
+		for eld in leave_all_eld:
+			if eld["employee"] in emp_flatlist:
+				try:
+					leave_alloc_doc = frappe.get_doc("Leave Allocation",eld["name"])
+					leave_alloc_doc.cancel()
+				except:
+					issue_to_cancel.append(eld["employee"])
+		if len(issue_to_cancel)>0:
+			frappe.throw(_("Unable to cancel the following records {0}")).format(issue_to_cancel)
 
 	@frappe.whitelist()
 	def get_applicants(self):
