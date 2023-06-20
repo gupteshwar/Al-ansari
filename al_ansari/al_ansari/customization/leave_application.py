@@ -4,24 +4,21 @@ from frappe.utils import (getdate,date_diff,unique)
 import datetime
 import json
 from datetime import timedelta, date, datetime
+import pandas as pd
 	
+# before_submmit: update_employee_status - to calculate the LWP in fraction refering the partial paid leave master record and leave type
 def update_employee_status(doc,method=None):
 	if doc.workflow_state == 'On Leave' and (frappe.utils.nowdate()==doc.from_date):
 		emp_rec = frappe.get_doc("Employee",{'name':doc.employee})
 		emp_rec.working_status = "On Leave"
 		emp_rec.save()
 		frappe.msgprint("Employee working status updated in master")
-	# elif doc.workflow_state == 'Completed' and (frappe.utils.nowdate() == doc.rejoin_date):
-	# 	emp_rec = frappe.get_doc("Employee",{'name':doc.employee})
-	# 	emp_rec.working_status = "Active"
-	# 	emp_rec.save()
-	# 	frappe.msgprint("Employee working status updated in master")
 
 	# update the start day & end day on leave application before save
 	linked_ppl = frappe.db.get_value("Leave Type",doc.leave_type,"partial_paid_leave")
 
 	if linked_ppl:
-		approved_leave_count = frappe.db.sql(""" 
+		approved_leave = frappe.db.sql(""" 
 				SELECT
 					la.name,
 					la.status,
@@ -44,11 +41,10 @@ def update_employee_status(doc,method=None):
 			""",(frappe.defaults.get_user_default("year_start_date"),
 				frappe.defaults.get_user_default("year_end_date"),
 				doc.employee),as_dict=1)
-		print("approved_leave_count==",approved_leave_count) 
 
-		if approved_leave_count[0].name != None:
+		if approved_leave[0].name != None:
 
-			doc.start_day = approved_leave_count[0].count+1 
+			doc.start_day = approved_leave[0].count+1 
 			doc.end_day = doc.start_day + date_diff(doc.to_date,doc.from_date)+1
 
 			fraction_master = frappe.get_doc("Partial Paid Leave",linked_ppl)
@@ -62,9 +58,7 @@ def update_employee_status(doc,method=None):
 						frac_of_day += item.fraction_of_daily_salary_per_leave
 				ct +=1
 				c+=1
-				# print("frac_of_day==",frac_of_day)
 			doc.fraction_of_daily_wage = c - frac_of_day
-			# print("IF",doc.fraction_of_daily_wage)
 		else:
 			doc.start_day = 0
 			doc.end_day = date_diff(doc.to_date,doc.from_date) +1
@@ -79,8 +73,50 @@ def update_employee_status(doc,method=None):
 				ct +=1
 				c+=1
 			doc.fraction_of_daily_wage = c - frac_of_day
-			# print("start_day",doc.start_day)
-			# print("end_day",doc.end_day)
+			
+	add_fractional_eld(doc,linked_ppl)
+
+def add_fractional_eld(doc,linked_ppl):
+	# update the child table
+	start_day = doc.start_day
+	end_day = doc.end_day
+	if doc.eld_fraction_monthly:
+		previous_end_day = 0
+		for eld in doc.eld_fraction_monthly:
+			eld.no_of_days = date_diff(eld.to_date, eld.from_date)+1
+			if eld.idx == 1:
+				eld.start_day = doc.start_day if doc.start_day!=0 else doc.start_day+1
+				eld.end_day = eld.start_day + eld.no_of_days
+				previous_end_day = eld.end_day
+			else:
+				eld.start_day = previous_end_day
+				eld.end_day = eld.start_day + eld.no_of_days
+				previous_end_day = eld.end_day
+			eld.fraction = calculate_fractional_wage(eld,linked_ppl)
+
+def calculate_fractional_wage(eld,linked_ppl):
+	fraction_master = frappe.get_doc("Partial Paid Leave",linked_ppl)
+	ct = eld.start_day
+	c=0 
+	frac_of_day = 0
+	while ct < eld.end_day:
+		for item in fraction_master.partial_paid_leave_item:
+			if item.start_day <= ct <= item.end_day:
+				frac_of_day += item.fraction_of_daily_salary_per_leave
+		ct +=1
+		c+=1
+	return c - frac_of_day
+
+@frappe.whitelist()
+def split_entries_monthly(from_date,to_date):
+	# split date range for long leaves across the month
+	from_date = datetime.strptime(from_date,'%Y-%m-%d')
+	to_date = datetime.strptime(to_date,'%Y-%m-%d')
+
+	s = pd.date_range(start=from_date, end=to_date, freq="MS")
+	e = (s[1:]-pd.to_timedelta(1, unit='D'))
+
+	return list(zip(s.strftime('%Y-%m-%d').tolist(), e.strftime('%Y-%m-%d').tolist() + [to_date.strftime('%Y-%m-%d')]))
 
 # to be excuted through scheduler crons
 @frappe.whitelist()
