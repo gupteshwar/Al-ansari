@@ -505,7 +505,11 @@
    "hide_border": 0,
    "hide_days": 0,
    "hide_seconds": 0,
+<<<<<<< HEAD
    "idx": 24,
+=======
+   "idx": 23,
+>>>>>>> 37a2bb2... Fix:LWP calculation across the month
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,
@@ -546,7 +550,11 @@
    "_liked_by": null,
    "_user_tags": null,
    "allow_in_quick_entry": 0,
+<<<<<<< HEAD
    "allow_on_submit": 1,
+=======
+   "allow_on_submit": 0,
+>>>>>>> 37a2bb2... Fix:LWP calculation across the month
    "bold": 0,
    "collapsible": 0,
    "collapsible_depends_on": null,
@@ -565,7 +573,11 @@
    "hide_border": 0,
    "hide_days": 0,
    "hide_seconds": 0,
+<<<<<<< HEAD
    "idx": 25,
+=======
+   "idx": 24,
+>>>>>>> 37a2bb2... Fix:LWP calculation across the month
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,

@@ -5,7 +5,10 @@ import datetime
 import json
 from datetime import timedelta, date, datetime
 import pandas as pd
+<<<<<<< HEAD
 from frappe import _
+=======
+>>>>>>> 37a2bb2... Fix:LWP calculation across the month
 	
 # before_submmit: update_employee_status - to calculate the LWP in fraction refering the partial paid leave master record and leave type
 def update_employee_status(doc,method=None):
@@ -75,7 +78,11 @@ def update_employee_status(doc,method=None):
 				c+=1
 			doc.fraction_of_daily_wage = c - frac_of_day
 			
+<<<<<<< HEAD
 		add_fractional_eld(doc,linked_ppl)
+=======
+	add_fractional_eld(doc,linked_ppl)
+>>>>>>> 37a2bb2... Fix:LWP calculation across the month
 
 def add_fractional_eld(doc,linked_ppl):
 	# update the child table
@@ -109,6 +116,7 @@ def calculate_fractional_wage(eld,linked_ppl):
 	return c - frac_of_day
 
 @frappe.whitelist()
+<<<<<<< HEAD
 def split_entries_monthly(leave_type,from_date,to_date):
 	# split date range for long leaves across the month
 	linked_ppl = frappe.db.get_value("Leave Type",leave_type,"partial_paid_leave")
@@ -126,6 +134,17 @@ def split_entries_monthly(leave_type,from_date,to_date):
 		else:
 			return [[from_date.date(),to_date.date()]]
 		
+=======
+def split_entries_monthly(from_date,to_date):
+	# split date range for long leaves across the month
+	from_date = datetime.strptime(from_date,'%Y-%m-%d')
+	to_date = datetime.strptime(to_date,'%Y-%m-%d')
+
+	s = pd.date_range(start=from_date, end=to_date, freq="MS")
+	e = (s[1:]-pd.to_timedelta(1, unit='D'))
+
+	return list(zip(s.strftime('%Y-%m-%d').tolist(), e.strftime('%Y-%m-%d').tolist() + [to_date.strftime('%Y-%m-%d')]))
+>>>>>>> 37a2bb2... Fix:LWP calculation across the month
 
 # to be excuted through scheduler crons
 @frappe.whitelist()

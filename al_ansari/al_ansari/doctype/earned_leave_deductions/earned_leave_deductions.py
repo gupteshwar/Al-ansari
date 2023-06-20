@@ -70,12 +70,8 @@ class EarnedLeaveDeductions(Document):
 							['edl_to_date',"=",frappe.utils.add_months(self.to_date, 1)],
 							['employee',"=",i.employee_id],
 							['leave_type',"=", "Annual Leave"],
-<<<<<<< HEAD
 							['docstatus','=',1],
 							['company',"=",self.company]
-=======
-							['docstatus','=',1]
->>>>>>> c3b49b0... [feat]-Earned Leave Cancellation
 						]
 					)
 				if existing_rec:
@@ -116,12 +112,8 @@ class EarnedLeaveDeductions(Document):
 							['edl_from_date',"=",frappe.utils.add_months(self.from_date, 1)],
 							['edl_to_date',"=",frappe.utils.add_months(self.to_date, 1)],
 							['leave_type',"=", "Annual Leave"],
-<<<<<<< HEAD
 							['docstatus',"=",1],
 							['company',"=",self.company]
-=======
-							['docstatus',"=",1]
->>>>>>> c3b49b0... [feat]-Earned Leave Cancellation
 						])
 		
 		issue_to_cancel = []
