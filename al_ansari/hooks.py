@@ -68,6 +68,7 @@ doctype_js = {
 	"Purchase Invoice": "public/js/purchase_invoice.js",
 	"Landed Cost Voucher": "public/js/landed_cost_voucher.js",
 	"Stock Entry": "public/js/stock_entry.js",
+    "Asset Movement": "public/js/asset_movement.js"
 	}
 
 # fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
