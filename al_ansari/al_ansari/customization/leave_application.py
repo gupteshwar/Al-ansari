@@ -305,11 +305,9 @@ def auto_mark_lwp_for_emp(attendances,f_holiday_list,employee,lwp_for,no_rec):
 		elif lwp_for == 'Both':
 			if len(f_attendance_list)>0:
 				mark_lwp = calculate_dates_for_auto_lwp(f_holiday_list,f_attendance_list)
-
 			if mark_lwp:
 				for mlp in mark_lwp:
-					lwp_dates = [i for i in mlp if i not in leave_attendance_list].sort()
-					# print("Lwp_dates===",lwp_dates)
+					lwp_dates = [i for i in mlp if i not in leave_attendance_list]
 					if lwp_dates:
 						consecutive_lwp_dates = check_lwp_dates_are_consecutive(lwp_dates)
 						if consecutive_lwp_dates:
