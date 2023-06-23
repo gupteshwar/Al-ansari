@@ -5,6 +5,7 @@ import datetime
 import json
 from datetime import timedelta, date, datetime
 import pandas as pd
+from frappe import _
 	
 # before_submmit: update_employee_status - to calculate the LWP in fraction refering the partial paid leave master record and leave type
 def update_employee_status(doc,method=None):
@@ -217,6 +218,8 @@ def get_leave_n_ab_marked_employee_attendance(end_date, employee, start_date,f_h
 	lwp_for = "Both"
 	if attendances:
 		no_rec = auto_mark_lwp_for_emp(attendances,f_holiday_list,employee,lwp_for,no_rec)
+	else:
+		no_rec.append({employee['employee']:"No Absent or Leave records found"})
 	return no_rec
 
 
@@ -264,8 +267,10 @@ def auto_mark_lwp_for_emp(attendances,f_holiday_list,employee,lwp_for,no_rec):
 					leave_app.status = "Approved"
 					leave_app.save()
 					leave_app.submit()
+				no_rec.append({employee['employee']:"LWP Marked"})
+
 			else:
-				no_rec.append(employee['employee'])
+				no_rec.append({employee['employee']:"No LWP"})
 
 		elif lwp_for == 'On Leave':
 			if len(f_attendance_list)>0:
@@ -305,6 +310,9 @@ def auto_mark_lwp_for_emp(attendances,f_holiday_list,employee,lwp_for,no_rec):
 		elif lwp_for == 'Both':
 			if len(f_attendance_list)>0:
 				mark_lwp = calculate_dates_for_auto_lwp(f_holiday_list,f_attendance_list)
+			else:
+				no_rec.append({employee['employee']:"No records found to be marked as LWP"})
+
 			if mark_lwp:
 				for mlp in mark_lwp:
 					lwp_dates = [i for i in mlp if i not in leave_attendance_list]
@@ -333,6 +341,12 @@ def auto_mark_lwp_for_emp(attendances,f_holiday_list,employee,lwp_for,no_rec):
 									leave_app.status = "Approved"
 									leave_app.save()
 									leave_app.submit()
+							no_rec.append({employee['employee']:"LWP Marked"})
+
+					else:
+						no_rec.append({employee['employee']:"No LWPs found to marked.All are already marked"})
+	if not no_rec:
+		no_rec.append({employee['employee']:"LWPs marked"})
 	return no_rec
 
 def check_lwp_dates_are_consecutive(lwp_dates):
@@ -355,12 +369,13 @@ def validate_to_mark_lwp(payroll_entry):
 	start_dt = datetime.strptime(payroll_entry['start_date'], '%Y-%M-%d' )
 	end_dt = datetime.strptime(payroll_entry['end_date'], '%Y-%M-%d' )
 	no_rec = []
+	# rec_update = []
 	for rec in range(len(employees)):
 		f_holiday_list = get_employee_holiday_list(employees[rec],payroll_entry['start_date'],payroll_entry['end_date'])
 		# no_rec = get_leave_marked_employee_attendance(payroll_entry['end_date'],employees[rec],payroll_entry['start_date'],f_holiday_list,no_rec)
 		# no_rec = get_ab_marked_employee_attendance(payroll_entry['end_date'],employees[rec],payroll_entry['start_date'],f_holiday_list,no_rec)
-		no_rec = get_leave_n_ab_marked_employee_attendance(payroll_entry['end_date'],employees[rec],payroll_entry['start_date'],f_holiday_list,no_rec)
-	
+		rec_update = get_leave_n_ab_marked_employee_attendance(payroll_entry['end_date'],employees[rec],payroll_entry['start_date'],f_holiday_list,no_rec)
+
 	return no_rec
 
 def calculate_dates_for_auto_lwp(f_holiday_list,f_attendance_list):
@@ -418,3 +433,23 @@ def calculate_dates_for_auto_lwp(f_holiday_list,f_attendance_list):
 			mark_lwp.append(consecutive_lwp)
 			consecutive_lwp = []
 	return mark_lwp
+
+@frappe.whitelist()
+def validate_if_lwp_are_marked(frm):
+	frm = json.loads(frm)
+	emp_details = frm["employees"]
+	error_rec = []
+	for ed in emp_details:
+		rec = frappe.get_all(
+		"Attendance",
+		fields=["employee"],
+		filters={"employee": ed['employee'],
+				"status": ("In",["Absent"]) ,
+				"docstatus":1,
+				"attendance_date": ("between", [frm['start_date'], frm['end_date']]),
+				},
+		order_by = "attendance_date"
+	)
+		if rec:
+			error_rec.append(ed['employee'])
+	return error_rec
