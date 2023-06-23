@@ -4,24 +4,21 @@ from frappe.utils import (getdate,date_diff,unique)
 import datetime
 import json
 from datetime import timedelta, date, datetime
+import pandas as pd
 	
+# before_submmit: update_employee_status - to calculate the LWP in fraction refering the partial paid leave master record and leave type
 def update_employee_status(doc,method=None):
 	if doc.workflow_state == 'On Leave' and (frappe.utils.nowdate()==doc.from_date):
 		emp_rec = frappe.get_doc("Employee",{'name':doc.employee})
 		emp_rec.working_status = "On Leave"
 		emp_rec.save()
 		frappe.msgprint("Employee working status updated in master")
-	# elif doc.workflow_state == 'Completed' and (frappe.utils.nowdate() == doc.rejoin_date):
-	# 	emp_rec = frappe.get_doc("Employee",{'name':doc.employee})
-	# 	emp_rec.working_status = "Active"
-	# 	emp_rec.save()
-	# 	frappe.msgprint("Employee working status updated in master")
 
 	# update the start day & end day on leave application before save
 	linked_ppl = frappe.db.get_value("Leave Type",doc.leave_type,"partial_paid_leave")
 
 	if linked_ppl:
-		approved_leave_count = frappe.db.sql(""" 
+		approved_leave = frappe.db.sql(""" 
 				SELECT
 					la.name,
 					la.status,
@@ -44,11 +41,10 @@ def update_employee_status(doc,method=None):
 			""",(frappe.defaults.get_user_default("year_start_date"),
 				frappe.defaults.get_user_default("year_end_date"),
 				doc.employee),as_dict=1)
-		print("approved_leave_count==",approved_leave_count) 
 
-		if approved_leave_count[0].name != None:
+		if approved_leave[0].name != None:
 
-			doc.start_day = approved_leave_count[0].count+1 
+			doc.start_day = approved_leave[0].count+1 
 			doc.end_day = doc.start_day + date_diff(doc.to_date,doc.from_date)+1
 
 			fraction_master = frappe.get_doc("Partial Paid Leave",linked_ppl)
@@ -62,9 +58,7 @@ def update_employee_status(doc,method=None):
 						frac_of_day += item.fraction_of_daily_salary_per_leave
 				ct +=1
 				c+=1
-				# print("frac_of_day==",frac_of_day)
 			doc.fraction_of_daily_wage = c - frac_of_day
-			# print("IF",doc.fraction_of_daily_wage)
 		else:
 			doc.start_day = 0
 			doc.end_day = date_diff(doc.to_date,doc.from_date) +1
@@ -79,8 +73,50 @@ def update_employee_status(doc,method=None):
 				ct +=1
 				c+=1
 			doc.fraction_of_daily_wage = c - frac_of_day
-			# print("start_day",doc.start_day)
-			# print("end_day",doc.end_day)
+			
+	add_fractional_eld(doc,linked_ppl)
+
+def add_fractional_eld(doc,linked_ppl):
+	# update the child table
+	start_day = doc.start_day
+	end_day = doc.end_day
+	if doc.eld_fraction_monthly:
+		previous_end_day = 0
+		for eld in doc.eld_fraction_monthly:
+			eld.no_of_days = date_diff(eld.to_date, eld.from_date)+1
+			if eld.idx == 1:
+				eld.start_day = doc.start_day if doc.start_day!=0 else doc.start_day+1
+				eld.end_day = eld.start_day + eld.no_of_days
+				previous_end_day = eld.end_day
+			else:
+				eld.start_day = previous_end_day
+				eld.end_day = eld.start_day + eld.no_of_days
+				previous_end_day = eld.end_day
+			eld.fraction = calculate_fractional_wage(eld,linked_ppl)
+
+def calculate_fractional_wage(eld,linked_ppl):
+	fraction_master = frappe.get_doc("Partial Paid Leave",linked_ppl)
+	ct = eld.start_day
+	c=0 
+	frac_of_day = 0
+	while ct < eld.end_day:
+		for item in fraction_master.partial_paid_leave_item:
+			if item.start_day <= ct <= item.end_day:
+				frac_of_day += item.fraction_of_daily_salary_per_leave
+		ct +=1
+		c+=1
+	return c - frac_of_day
+
+@frappe.whitelist()
+def split_entries_monthly(from_date,to_date):
+	# split date range for long leaves across the month
+	from_date = datetime.strptime(from_date,'%Y-%m-%d')
+	to_date = datetime.strptime(to_date,'%Y-%m-%d')
+
+	s = pd.date_range(start=from_date, end=to_date, freq="MS")
+	e = (s[1:]-pd.to_timedelta(1, unit='D'))
+
+	return list(zip(s.strftime('%Y-%m-%d').tolist(), e.strftime('%Y-%m-%d').tolist() + [to_date.strftime('%Y-%m-%d')]))
 
 # to be excuted through scheduler crons
 @frappe.whitelist()
@@ -135,36 +171,54 @@ def get_employee_fields_label():
 	return fields
 
 def get_ab_marked_employee_attendance(end_date, employee, start_date,f_holiday_list,no_rec):
-		attendances = frappe.get_all(
-			"Attendance",
-			fields=["name","employee","attendance_date"],
-			filters={"employee": employee['employee'],
-					"status":"Absent", 
-					"docstatus":1,
-					"attendance_date": ("between", [start_date, end_date]),
-					},
-			order_by = "attendance_date"
-		)
-		lwp_for = "Absent"
-		if attendances:
-			no_rec = auto_mark_lwp_for_emp(attendances,f_holiday_list,employee,lwp_for,no_rec)
-		return no_rec
+	attendances = frappe.get_all(
+		"Attendance",
+		fields=["name","employee","attendance_date"],
+		filters={"employee": employee['employee'],
+				"status":"Absent", 
+				"docstatus":1,
+				"attendance_date": ("between", [start_date, end_date]),
+				},
+		order_by = "attendance_date"
+	)
+	lwp_for = "Absent"
+	if attendances:
+		no_rec = auto_mark_lwp_for_emp(attendances,f_holiday_list,employee,lwp_for,no_rec)
+	return no_rec
 
 def get_leave_marked_employee_attendance(end_date, employee, start_date,f_holiday_list,no_rec):
-		attendances = frappe.get_all(
-			"Attendance",
-			fields=["name","employee","attendance_date"],
-			filters={"employee": employee['employee'],
-					"status":"On Leave", 
-					"docstatus":1,
-					"attendance_date": ("between", [start_date, end_date]),
-					},
-			order_by = "attendance_date"
-		)
-		lwp_for = "On Leave"
-		if attendances:
-			no_rec = auto_mark_lwp_for_emp(attendances,f_holiday_list,employee,lwp_for,no_rec)
-		return no_rec
+	attendances = frappe.get_all(
+		"Attendance",
+		fields=["name","employee","attendance_date"],
+		filters={"employee": employee['employee'],
+				"status":"On Leave", 
+				"docstatus":1,
+				"attendance_date": ("between", [start_date, end_date]),
+				},
+		order_by = "attendance_date"
+	)
+	lwp_for = "On Leave"
+	if attendances:
+		no_rec = auto_mark_lwp_for_emp(attendances,f_holiday_list,employee,lwp_for,no_rec)
+	return no_rec
+
+def get_leave_n_ab_marked_employee_attendance(end_date, employee, start_date,f_holiday_list,no_rec):
+	
+	attendances= frappe.get_all(
+		"Attendance",
+		fields=["name","employee","attendance_date","status"],
+		filters={"employee": employee['employee'],
+				"status": ("In",["On Leave","Absent"]) ,
+				"docstatus":1,
+				"attendance_date": ("between", [start_date, end_date]),
+				},
+		order_by = "attendance_date"
+	)
+	lwp_for = "Both"
+	if attendances:
+		no_rec = auto_mark_lwp_for_emp(attendances,f_holiday_list,employee,lwp_for,no_rec)
+	return no_rec
+
 
 def get_employee_holiday_list(employee,start_dt,end_dt):
 	emp_holiday_list = frappe.get_value('Employee',employee['employee'],'holiday_list')
@@ -185,7 +239,11 @@ def auto_mark_lwp_for_emp(attendances,f_holiday_list,employee,lwp_for,no_rec):
 	if len(attendances)>0:
 		f_attendance_list = [ad["attendance_date"] for ad in attendances if "attendance_date" in ad]
 		ab_attendance_list = [ad["name"] for ad in attendances if "name" in ad]
-		
+		leave_attendance_list = []
+		for i in range(len(attendances)):
+			if attendances[i].status == "On Leave":
+				# print(attendances[i])
+				leave_attendance_list.append(attendances[i].attendance_date)
 		if lwp_for == 'Absent':
 
 			if len(f_attendance_list)>0:
@@ -213,6 +271,7 @@ def auto_mark_lwp_for_emp(attendances,f_holiday_list,employee,lwp_for,no_rec):
 			if len(f_attendance_list)>0:
 				mark_lwp = calculate_dates_for_auto_lwp(f_holiday_list,f_attendance_list)
 			if mark_lwp:
+
 				for ml in mark_lwp:
 					lwp_dates = [item for item in ml if item not in f_attendance_list]#ml- f_attendance_list
 					# check if lwp dates are consecutive 
@@ -239,10 +298,41 @@ def auto_mark_lwp_for_emp(attendances,f_holiday_list,employee,lwp_for,no_rec):
 								leave_app.status = "Approved"
 								leave_app.save()
 								leave_app.submit()
-
+					
 			else:
 				no_rec.append(employee['employee'])
-			
+
+		elif lwp_for == 'Both':
+			if len(f_attendance_list)>0:
+				mark_lwp = calculate_dates_for_auto_lwp(f_holiday_list,f_attendance_list)
+			if mark_lwp:
+				for mlp in mark_lwp:
+					lwp_dates = [i for i in mlp if i not in leave_attendance_list]
+					if lwp_dates:
+						consecutive_lwp_dates = check_lwp_dates_are_consecutive(lwp_dates)
+						if consecutive_lwp_dates:
+							if len(consecutive_lwp_dates)==1:
+								leave_app = frappe.new_doc('Leave Application')
+								leave_app.employee = employee['employee']
+								leave_app.leave_type = 'Leave Without Pay'
+								leave_app.leave_approver = frappe.get_value('Employee',employee['employee'],'leave_approver')
+								leave_app.from_date = lwp_dates[0]
+								leave_app.to_date = lwp_dates[len(lwp_dates)-1]
+								leave_app.status = "Approved"
+								leave_app.save()
+								leave_app.submit()
+
+							else:
+								for cld in consecutive_lwp_dates:
+									leave_app = frappe.new_doc('Leave Application')
+									leave_app.employee = employee['employee']
+									leave_app.leave_type = 'Leave Without Pay'
+									leave_app.leave_approver = frappe.get_value('Employee',employee['employee'],'leave_approver')
+									leave_app.from_date = cld[0]
+									leave_app.to_date = cld[len(cld)-1]
+									leave_app.status = "Approved"
+									leave_app.save()
+									leave_app.submit()
 	return no_rec
 
 def check_lwp_dates_are_consecutive(lwp_dates):
@@ -267,9 +357,10 @@ def validate_to_mark_lwp(payroll_entry):
 	no_rec = []
 	for rec in range(len(employees)):
 		f_holiday_list = get_employee_holiday_list(employees[rec],payroll_entry['start_date'],payroll_entry['end_date'])
-		no_rec = get_leave_marked_employee_attendance(payroll_entry['end_date'],employees[rec],payroll_entry['start_date'],f_holiday_list,no_rec)
-		no_rec = get_ab_marked_employee_attendance(payroll_entry['end_date'],employees[rec],payroll_entry['start_date'],f_holiday_list,no_rec)
-		
+		# no_rec = get_leave_marked_employee_attendance(payroll_entry['end_date'],employees[rec],payroll_entry['start_date'],f_holiday_list,no_rec)
+		# no_rec = get_ab_marked_employee_attendance(payroll_entry['end_date'],employees[rec],payroll_entry['start_date'],f_holiday_list,no_rec)
+		no_rec = get_leave_n_ab_marked_employee_attendance(payroll_entry['end_date'],employees[rec],payroll_entry['start_date'],f_holiday_list,no_rec)
+	
 	return no_rec
 
 def calculate_dates_for_auto_lwp(f_holiday_list,f_attendance_list):
@@ -299,7 +390,6 @@ def calculate_dates_for_auto_lwp(f_holiday_list,f_attendance_list):
 		elif(f_holiday_list[idx] + timedelta(days=c) not in f_holiday_list):
 			wo.append(consecutive_wo)
 			consecutive_wo = []
-
 	sandwich = []
 	paycut = []
 	for w in wo:
@@ -307,15 +397,14 @@ def calculate_dates_for_auto_lwp(f_holiday_list,f_attendance_list):
 		next_day = w[len(w)-1]+timedelta(days=1)
 		if(previous_day in f_attendance_list and next_day in f_attendance_list):
 			sandwich.append(w)
-		elif(previous_day in f_attendance_list and w[0]+timedelta(days=1) in f_holiday_list):
-			paycut.append(w)
-		elif(w[len(w)-1]+timedelta(days=1) not in f_holiday_list and w[len(w)-1]+timedelta(days=1) in f_attendance_list):
-			paycut.append(w)
+		# elif(previous_day in f_attendance_list and w[0]+timedelta(days=1) in f_holiday_list):
+		# 	paycut.append(w)
+		# elif(w[len(w)-1]+timedelta(days=1) not in f_holiday_list and w[len(w)-1]+timedelta(days=1) in f_attendance_list):
+		# 	paycut.append(w)
 
 	all_lwp = ab + sandwich + paycut
 	flat_lwp = [element for innerList in all_lwp for element in innerList]
 	flat_lwp = sorted(flat_lwp)
-	
 	mark_lwp = []
 	consecutive_lwp = []
 	for idx in range(len(flat_lwp)):
@@ -328,5 +417,4 @@ def calculate_dates_for_auto_lwp(f_holiday_list,f_attendance_list):
 		elif(flat_lwp[idx] + timedelta(days=c) not in flat_lwp):
 			mark_lwp.append(consecutive_lwp)
 			consecutive_lwp = []
-
 	return mark_lwp
