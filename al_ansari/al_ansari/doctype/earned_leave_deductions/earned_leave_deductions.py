@@ -98,26 +98,29 @@ class EarnedLeaveDeductions(Document):
 			select
 				distinct t1.employee, t1.employee_name
 			from
-				`tabAttendance` t1, `tabEmployee` t2
+				`tabLeave Application` t1, `tabEmployee` t2
 			where
 				t1.employee = t2.employee
 				and t2.status = 'Active'
-				and t1.attendance_date between '%(from_date)s' and '%(to_date)s'
+				and t1.from_date >= '%(from_date)s'
+				and t1.to_date <= '%(to_date)s'
 				%(cond)s 
 		"""
 			%{
 				"from_date": self.from_date,
 				"to_date": self.to_date,
+				"payroll_cost_center": self.payroll_cost_center,
 				'cond':cond
 			},
 			as_dict=True
 		)
 		if not employee_list:
 			error_msg = _(
-				"No employees found for the mentioned criteria:<br>From Date: {0}<br>To Date: {1}"
+				"No employees found for the mentioned criteria:<br>From Date: {0}<br>To Date: {1}<br>Payroll Cost Center: {2}"
 			).format(
 				frappe.bold(self.from_date),
 				frappe.bold(self.to_date),
+				frappe.bold(self.payroll_cost_center),
 			)
 			if self.branch:
 				error_msg += "<br>" + _("Branch: {0}").format(frappe.bold(self.branch))
@@ -183,27 +186,34 @@ def no_of_working_days_employeewise(frm):
 									],
 							order_by = "creation desc"
 							) 
+		# print("monthly_el_allocated===========================",monthly_el_allocated)
 		if monthly_el_allocated:
 			monthly_el_list =  [d['monthly_el_allocated'] for d in monthly_el_allocated if 'monthly_el_allocated' in d]
 			el_allocated = sum(monthly_el_list)
+		# el_allocated = monthly_el_allocated[0]['monthly_el_allocated'] if monthly_el_allocated else 0
+		# get No. of LWP (summation of fraction of LWP on Leave application)
 		no_of_lwp = frappe.db.sql(""" 
-			Select 
-				sum(t2.fraction) as no_of_lwp
-			from `tabLeave Application` t1,`tabELD Fraction Monthly` t2 
-			where 
-				t1.name = t2.parent and
-				t2.from_date>= %s and 
-				t2.to_date<=%s and t1.employee = %s
-				and t1.docstatus = 1""",(frm.get("from_date"),frm.get("to_date"),item["employee_id"]),as_dict=1)[0].no_of_lwp or 0
+			SELECT employee,sum(fraction_of_daily_wage) as no_of_lwp 
+			from `tabLeave Application` 
+			where employee = %s 
+			and docstatus = 1
+			and from_date >= %s
+			and to_date <= %s
+			""",(item["employee_id"],frm.get("from_date"),frm.get("to_date")),as_dict=1)[0].no_of_lwp or 0
+		# print("no_of_lwp=",no_of_lwp)
 
 		no_of_lwp_manual = frappe.db.sql(""" 
-			SELECT employee,count(name) as no_of_lwp
-			from `tabAttendance`
-			where leave_type = "Leave Without Pay"
-			and employee = %s 
-			and docstatus = 1
-			and attendance_date between %s AND %s
+			SELECT la.employee,sum(la.total_leave_days) as no_of_lwp
+			from `tabLeave Application` la , `tabLeave Type` lt 
+			where la.leave_type = lt.name 
+			and la.employee = %s 
+			and la.docstatus = 1
+			and la.from_date >= %s
+			and la.to_date <= %s
+			and la.fraction_of_daily_wage = 0
+			and lt.is_lwp = 1
 			""",(item["employee_id"],frm.get("from_date"),frm.get("to_date")),as_dict=1)[0].no_of_lwp or 0
+		# print("no_of_lwp_manual== ",no_of_lwp_manual)
 
 		if monthly_el_allocated:
 			if holiday_count:

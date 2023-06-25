@@ -40,8 +40,8 @@ frappe.ui.form.on('Payroll Entry', {
 								if (r.message){
 									console.log(r.message)
 									frm.set_value('lwp_updated',1)
+									frappe.msgprint("Records updated successfully")
 									frm.save()
-									frappe.show_alert("Records updated successfully",6)
 								}
 							}
 						})
@@ -76,21 +76,6 @@ frappe.ui.form.on('Payroll Entry', {
 	validate: function(frm) {
 		if(frm.doc.payroll_cost_center != frm.doc.cost_center) {
 			frappe.throw(__("The values selected for Payroll Cost Center and Cost Center should match"))
-		}
-		if(frm.doc.lwp_updated == 1) {
-			frappe.call({
-				method: "al_ansari.al_ansari.customization.leave_application.validate_if_lwp_are_marked",
-				args: {
-					"frm":frm.doc
-				},
-				callback: function(r) {
-					console.log(r.message)
-					if(r.message.length>0){
-						frappe.msgprint(__("Please check note the following records couldn't be updated for LWPs <br>{0}",[r.message.join(",")]))
-						frappe.validated = false
-					}
-				}
-			})
 		}
 	}
 })
