@@ -75,7 +75,7 @@ def update_employee_status(doc,method=None):
 				c+=1
 			doc.fraction_of_daily_wage = c - frac_of_day
 			
-	add_fractional_eld(doc,linked_ppl)
+		add_fractional_eld(doc,linked_ppl)
 
 def add_fractional_eld(doc,linked_ppl):
 	# update the child table
