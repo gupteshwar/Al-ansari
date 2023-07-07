@@ -109,15 +109,23 @@ def calculate_fractional_wage(eld,linked_ppl):
 	return c - frac_of_day
 
 @frappe.whitelist()
-def split_entries_monthly(from_date,to_date):
+def split_entries_monthly(leave_type,from_date,to_date):
 	# split date range for long leaves across the month
-	from_date = datetime.strptime(from_date,'%Y-%m-%d')
-	to_date = datetime.strptime(to_date,'%Y-%m-%d')
+	linked_ppl = frappe.db.get_value("Leave Type",leave_type,"partial_paid_leave")
+	
+	if linked_ppl:
+		from_date = datetime.strptime(from_date,'%Y-%m-%d')
+		to_date = datetime.strptime(to_date,'%Y-%m-%d')
+		
+		s = pd.date_range(start=from_date, end=to_date, freq="MS")
+		e = (s[1:]-pd.to_timedelta(1, unit='D'))
 
-	s = pd.date_range(start=from_date, end=to_date, freq="MS")
-	e = (s[1:]-pd.to_timedelta(1, unit='D'))
-
-	return list(zip(s.strftime('%Y-%m-%d').tolist(), e.strftime('%Y-%m-%d').tolist() + [to_date.strftime('%Y-%m-%d')]))
+		monthly_breakup = list(zip(s.strftime('%Y-%m-%d').tolist(), e.strftime('%Y-%m-%d').tolist() + [to_date.strftime('%Y-%m-%d')]))
+		if monthly_breakup:
+			return monthly_breakup
+		else:
+			return [[from_date.date(),to_date.date()]]
+		
 
 # to be excuted through scheduler crons
 @frappe.whitelist()
