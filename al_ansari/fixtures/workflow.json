@@ -3208,7 +3208,7 @@
   "doctype": "Workflow",
   "document_type": "Leave Application",
   "is_active": 1,
-  "modified": "2023-05-08 09:32:22.714664",
+  "modified": "2023-07-04 16:12:46.177725",
   "name": "Leave Approval 2023 - Final",
   "override_status": 0,
   "parent": "Leave Application",
@@ -3282,7 +3282,7 @@
     "update_value": null
    },
    {
-    "allow_edit": "HR Manager",
+    "allow_edit": "HR User",
     "doc_status": "0",
     "is_optional_state": 0,
     "message": null,
@@ -3308,7 +3308,7 @@
     "update_value": "Annual Leave"
    },
    {
-    "allow_edit": "HR Manager",
+    "allow_edit": "HR User",
     "doc_status": "0",
     "is_optional_state": 0,
     "message": null,
