@@ -5,7 +5,7 @@ from al_ansari.al_ansari.customization.leave_application import split_entries_mo
 def execute():
 	leave_applications = frappe.get_all("Leave Application",
 			filters = [['docstatus','=',1],['leave_type','IN',('Sick Leave')]],
-			fields=["name","leave_type"],limit=2)
+			fields=["name","leave_type"])
 	for l_app in leave_applications:
 		leave_app = frappe.get_doc("Leave Application",l_app)
 		linked_ppl = frappe.db.get_value("Leave Type",l_app.leave_type,"partial_paid_leave")
