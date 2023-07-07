@@ -25,12 +25,14 @@ frappe.ui.form.on('Leave Application', {
 		frappe.call({
 		    method: "al_ansari.al_ansari.customization.leave_application.split_entries_monthly", //dotted path to server method
 		    args:{
+		    	"leave_type":frm.doc.leave_type,
 		    	"from_date": frm.doc.from_date,
 		    	"to_date":frm.doc.to_date
 		    },
 		    callback: function(r) {
 		        // code snippet
 		        frm.clear_table("eld_fraction_monthly")
+		        console.log(r)
 		        var rec = r.message
 		        make_splitted_entries(rec,frm)
 		    }
@@ -42,6 +44,7 @@ frappe.ui.form.on('Leave Application', {
 		frappe.call({
 		    method: "al_ansari.al_ansari.customization.leave_application.split_entries_monthly", //dotted path to server method
 		    args:{
+		    	"leave_type":frm.doc.leave_type,
 		    	"from_date": frm.doc.from_date,
 		    	"to_date":frm.doc.to_date
 		    },
