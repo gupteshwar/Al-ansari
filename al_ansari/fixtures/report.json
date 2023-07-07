@@ -7719,14 +7719,14 @@
   "javascript": null,
   "json": null,
   "letter_head": "Al Ansari New 2023",
-  "modified": "2023-06-11 11:34:48.403648",
+  "modified": "2023-07-04 09:37:00.758211",
   "module": "Al Ansari",
   "name": "List of Employees",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
   "prepared_report": 0,
-  "query": "select * from tabEmployee;",
+  "query": "SELECT *, TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) AS age,\r\nCAST(CASE WHEN TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) >= 60 THEN 1 ELSE 0 END AS INT) AS Above60\r\nFROM tabEmployee\r\nWHERE status = 'active';",
   "ref_doctype": "Employee",
   "reference_report": null,
   "report_name": "List of Employees",
@@ -7864,6 +7864,158 @@
     "parentfield": "roles",
     "parenttype": "Report",
     "role": "Payroll Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-07-04 09:02:22.354214",
+  "module": "Al Ansari",
+  "name": "Visa Expiry in 90 Days",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT tabEmployee.employee,employee_name,designation,payroll_cost_center,company,visa_company,document_type,document_number,issue_date,expiry_date\r\nFROM\r\ntabEmployee,`tabEmployee Documents`\r\nWHERE\r\ntabEmployee.name = `tabEmployee Documents`.parent\r\nAND \r\nexpiry_date <= CURDATE()+ INTERVAL 90 day\r\nAND \r\ntabEmployee.status = 'active'\r\nAND\r\n`tabEmployee Documents`.document_type='Visa'",
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "Visa Expiry in 90 Days",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Visa Expiry in 90 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Visa Expiry in 90 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Visa Expiry in 90 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Al Yusr Admin Department"
+   },
+   {
+    "parent": "Visa Expiry in 90 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Head of Department"
+   },
+   {
+    "parent": "Visa Expiry in 90 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Visa Expiry in 90 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   },
+   {
+    "parent": "Visa Expiry in 90 Days",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[[\"Attendance\",\"attendance_date\",\"Between\",[\"2023-06-01\",\"2023-07-05\"],false],[\"Attendance\",\"employee\",\"=\",\"E72030\"]],\"fields\":[[\"name\",\"Attendance\"],[\"employee\",\"Attendance\"],[\"department\",\"Attendance\"],[\"in_time\",\"Attendance\"],[\"out_time\",\"Attendance\"],[\"working_hours\",\"Attendance\"],[\"attendance_date\",\"Attendance\"],[\"employee_name\",\"Attendance\"],[\"attendance_request\",\"Attendance\"],[\"shift\",\"Attendance\"],[\"status\",\"Attendance\"]],\"order_by\":\"`tabAttendance`.`modified` desc\",\"add_totals_row\":0,\"page_length\":40,\"column_widths\":{\"name\":120,\"employee\":120,\"department\":120,\"in_time\":120,\"out_time\":120,\"working_hours\":120,\"attendance_date\":120,\"employee_name\":120,\"attendance_request\":120,\"shift\":120,\"status\":120},\"group_by\":null}",
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-07-05 16:17:24.039985",
+  "module": "HR",
+  "name": "Time Sheet",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Attendance",
+  "reference_report": null,
+  "report_name": "Time Sheet",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "parent": "Time Sheet",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Time Sheet",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Time Sheet",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Time Sheet",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   },
+   {
+    "parent": "Time Sheet",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee"
+   },
+   {
+    "parent": "Time Sheet",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll Manager"
+   },
+   {
+    "parent": "Time Sheet",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "Time Sheet",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   },
+   {
+    "parent": "Time Sheet",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Attendance Manager"
    }
   ]
  },
@@ -8998,52 +9150,6 @@
   "filters": [],
   "is_standard": "Yes",
   "javascript": null,
-  "json": "{\"add_total_row\": 0, \"sort_by\": \"Serial No.modified\", \"sort_order\": \"desc\", \"sort_by_next\": null, \"filters\": [[\"Serial No\", \"delivery_document_type\", \"in\", [\"Delivery Note\", \"Sales Invoice\"]], [\"Serial No\", \"warehouse\", \"=\", \"\"]], \"sort_order_next\": \"desc\", \"columns\": [[\"name\", \"Serial No\"], [\"item_code\", \"Serial No\"], [\"amc_expiry_date\", \"Serial No\"], [\"maintenance_status\", \"Serial No\"], [\"delivery_document_no\", \"Serial No\"], [\"customer\", \"Serial No\"], [\"customer_name\", \"Serial No\"], [\"item_name\", \"Serial No\"], [\"description\", \"Serial No\"], [\"item_group\", \"Serial No\"], [\"brand\", \"Serial No\"]]}",
-  "letter_head": null,
-  "modified": "2017-02-24 20:02:00.706889",
-  "module": "Stock",
-  "name": "Serial No Service Contract Expiry",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "prepared_report": 0,
-  "query": null,
-  "ref_doctype": "Serial No",
-  "reference_report": null,
-  "report_name": "Serial No Service Contract Expiry",
-  "report_script": null,
-  "report_type": "Report Builder",
-  "roles": [
-   {
-    "parent": "Serial No Service Contract Expiry",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "Item Manager"
-   },
-   {
-    "parent": "Serial No Service Contract Expiry",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "Stock Manager"
-   },
-   {
-    "parent": "Serial No Service Contract Expiry",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "Stock User"
-   }
-  ]
- },
- {
-  "add_total_row": 0,
-  "columns": [],
-  "disable_prepared_report": 0,
-  "disabled": 0,
-  "docstatus": 0,
-  "doctype": "Report",
-  "filters": [],
-  "is_standard": "Yes",
-  "javascript": null,
   "json": "{\"add_total_row\": 0, \"sort_by\": \"Serial No.modified\", \"sort_order\": \"desc\", \"sort_by_next\": null, \"filters\": [[\"Serial No\", \"delivery_document_type\", \"in\", [\"Delivery Note\", \"Sales Invoice\"]], [\"Serial No\", \"warehouse\", \"=\", \"\"]], \"sort_order_next\": \"desc\", \"columns\": [[\"name\", \"Serial No\"], [\"item_code\", \"Serial No\"], [\"warranty_expiry_date\", \"Serial No\"], [\"warranty_period\", \"Serial No\"], [\"maintenance_status\", \"Serial No\"], [\"purchase_document_no\", \"Serial No\"], [\"purchase_date\", \"Serial No\"], [\"supplier\", \"Serial No\"], [\"supplier_name\", \"Serial No\"], [\"delivery_document_no\", \"Serial No\"], [\"delivery_date\", \"Serial No\"], [\"customer\", \"Serial No\"], [\"customer_name\", \"Serial No\"], [\"item_name\", \"Serial No\"], [\"description\", \"Serial No\"], [\"item_group\", \"Serial No\"], [\"brand\", \"Serial No\"]]}",
   "letter_head": null,
   "modified": "2017-02-24 20:01:53.097456",
@@ -9074,6 +9180,52 @@
    },
    {
     "parent": "Serial No Warranty Expiry",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": "{\"add_total_row\": 0, \"sort_by\": \"Serial No.modified\", \"sort_order\": \"desc\", \"sort_by_next\": null, \"filters\": [[\"Serial No\", \"delivery_document_type\", \"in\", [\"Delivery Note\", \"Sales Invoice\"]], [\"Serial No\", \"warehouse\", \"=\", \"\"]], \"sort_order_next\": \"desc\", \"columns\": [[\"name\", \"Serial No\"], [\"item_code\", \"Serial No\"], [\"amc_expiry_date\", \"Serial No\"], [\"maintenance_status\", \"Serial No\"], [\"delivery_document_no\", \"Serial No\"], [\"customer\", \"Serial No\"], [\"customer_name\", \"Serial No\"], [\"item_name\", \"Serial No\"], [\"description\", \"Serial No\"], [\"item_group\", \"Serial No\"], [\"brand\", \"Serial No\"]]}",
+  "letter_head": null,
+  "modified": "2017-02-24 20:02:00.706889",
+  "module": "Stock",
+  "name": "Serial No Service Contract Expiry",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Serial No",
+  "reference_report": null,
+  "report_name": "Serial No Service Contract Expiry",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "parent": "Serial No Service Contract Expiry",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Item Manager"
+   },
+   {
+    "parent": "Serial No Service Contract Expiry",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "Serial No Service Contract Expiry",
     "parentfield": "roles",
     "parenttype": "Report",
     "role": "Stock User"
@@ -9712,33 +9864,6 @@
   "javascript": null,
   "json": null,
   "letter_head": null,
-  "modified": "2020-06-24 17:16:40.251116",
-  "module": "Education",
-  "name": "Absent Student Report",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "prepared_report": 0,
-  "query": null,
-  "ref_doctype": "Student Attendance",
-  "reference_report": null,
-  "report_name": "Absent Student Report",
-  "report_script": null,
-  "report_type": "Script Report",
-  "roles": []
- },
- {
-  "add_total_row": 0,
-  "columns": [],
-  "disable_prepared_report": 0,
-  "disabled": 0,
-  "docstatus": 0,
-  "doctype": "Report",
-  "filters": [],
-  "is_standard": "Yes",
-  "javascript": null,
-  "json": null,
-  "letter_head": null,
   "modified": "2017-02-24 20:16:50.550242",
   "module": "HR",
   "name": "Monthly Attendance Sheet",
@@ -9772,6 +9897,33 @@
     "role": "HR Manager"
    }
   ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2020-06-24 17:16:40.251116",
+  "module": "Education",
+  "name": "Absent Student Report",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Student Attendance",
+  "reference_report": null,
+  "report_name": "Absent Student Report",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": []
  },
  {
   "add_total_row": 0,
