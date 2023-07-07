@@ -15,6 +15,7 @@
  ],
  "fields": [
   {
+   "allow_on_submit": 1,
    "fieldname": "from_date",
    "fieldtype": "Date",
    "in_list_view": 1,
@@ -23,6 +24,7 @@
    "reqd": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "to_date",
    "fieldtype": "Date",
    "in_list_view": 1,
@@ -31,6 +33,7 @@
    "reqd": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "no_of_days",
    "fieldtype": "Int",
    "in_list_view": 1,
@@ -38,6 +41,7 @@
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "fraction",
    "fieldtype": "Float",
    "in_list_view": 1,
@@ -45,10 +49,12 @@
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "column_break_3",
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "start_day",
    "fieldtype": "Int",
    "in_list_view": 1,
@@ -56,6 +62,7 @@
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "end_day",
    "fieldtype": "Int",
    "in_list_view": 1,
@@ -66,7 +73,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-06-20 15:16:40.753254",
+ "modified": "2023-07-06 14:16:38.361923",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "ELD Fraction Monthly",
