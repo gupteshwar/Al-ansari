@@ -166,8 +166,13 @@ doc_events = {
 	},
 	"Sales Order":{
 		"before_save":["al_ansari.al_ansari.customization.sales_order.before_save"],
-		"on_submit":["al_ansari.al_ansari.customization.sales_order.on_submit"]
+		"on_submit":["al_ansari.al_ansari.customization.sales_order.on_submit"],
+        "validate":["al_ansari.al_ansari.customization.utils.validate"]
 	},
+    "Sales Invoice":{
+        "validate":["al_ansari.al_ansari.customization.utils.validate"]
+	},
+
 	"Employee Advance":{
 		"on_submit":["al_ansari.al_ansari.customization.employee.valid_employee_adv"]
 	},
@@ -177,7 +182,14 @@ doc_events = {
 	"Stock Entry":{
 		"before_submit": ["al_ansari.al_ansari.customization.stock_entry.before_submit"],
 		"on_submit": ["al_ansari.al_ansari.customization.stock_entry.on_submit"]
-	}
+	},
+    "Purchase Order":{
+        "validate":["al_ansari.al_ansari.customization.utils.validate"]
+	},
+
+    "Purchase Invoice":{
+        "validate":["al_ansari.al_ansari.customization.utils.validate"]
+	},
 }
 # Scheduled Tasks
 # ---------------
