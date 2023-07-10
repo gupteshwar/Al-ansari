@@ -49,19 +49,21 @@
 			var range4 = report.columns[start+3].label;
 			var range5 = report.columns[start+4].label;
 			var range6 = report.columns[start+5].label;
+			var range7 = report.columns[start+6].label;
 		%}
 		{% if(balance_row) { %}
 		<table class="table table-bordered table-condensed">
 			<caption class="text-right">(Amount in {%= data[0]["currency"] || "" %})</caption>
 				<colgroup>
 					<col style="width: 30mm;">
-					<col style="width: 18mm;">
-					<col style="width: 18mm;">
-					<col style="width: 18mm;">
-					<col style="width: 18mm;">
-					<col style="width: 18mm;">
-					<col style="width: 18mm;">
-					<col style="width: 18mm;">
+					<col style="width: 15mm;">
+					<col style="width: 15mm;">
+					<col style="width: 15mm;">
+					<col style="width: 15mm;">
+					<col style="width: 15mm;">
+					<col style="width: 15mm;">
+					<col style="width: 15mm;">
+					<col style="width: 15mm;">
 				</colgroup>
 
 			<thead>
@@ -73,6 +75,7 @@
 					<th>{%= __(range4) %}</th>
 					<th>{%= __(range5) %}</th>
 					<th>{%= __(range6) %}</th>
+					<th>{%= __(range7) %}</th>
 					<th>{%= __("Total") %}</th>
 				</tr>
 			</thead>
@@ -98,10 +101,14 @@
 						{%= format_currency(balance_row["range5"], data[data.length-1]["currency"]) %}
 					</td>
 					<td class="text-right">
+						{%= format_currency(balance_row["range6"], data[data.length-1]["currency"]) %}
+					</td>
+					<td class="text-right">
 						{%= format_currency(flt(balance_row["outstanding"]), data[data.length-1]["currency"]) %}
 					</td>
 				</tr>
 					<td>{%= __("Future Payments") %}</td>
+					<td></td>
 					<td></td>
 					<td></td>
 					<td></td>
