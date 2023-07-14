@@ -67,3 +67,12 @@ def validation_for_duplicate_PR_in_landed_cost_voucher(doc):
                 if r[0]['parent'] == doc['parent']:
                     valid_pr.append(purchase_receipts[j]['receipt_document'])
     return valid_pr
+
+@frappe.whitelist()
+def validate_print_permissions(doctype, company):
+    print_settings = frappe.db.get_all('Custom Print Settings Details', 
+                    filters={'company': company, 'document': doctype}, fields=
+                    ['draft_print'])
+    
+    if print_settings:
+        return print_settings[0]['draft_print']
