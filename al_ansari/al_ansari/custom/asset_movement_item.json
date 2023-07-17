@@ -129,14 +129,14 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
-   "creation": "2023-06-20 11:23:28.177005",
+   "creation": "2023-07-12 17:36:33.225025",
    "default_value": null,
    "doc_type": "Asset Movement Item",
    "docstatus": 0,
    "doctype_or_field": "DocField",
    "field_name": "from_employee",
    "idx": 0,
-   "modified": "2023-06-20 11:23:28.177005",
+   "modified": "2023-07-12 17:36:33.225025",
    "modified_by": "Administrator",
    "name": "Asset Movement Item-from_employee-fetch_from",
    "owner": "Administrator",
@@ -146,21 +146,21 @@
    "property": "fetch_from",
    "property_type": "Small Text",
    "row_name": null,
-   "value": "asset.custodian"
+   "value": ""
   },
   {
    "_assign": null,
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
-   "creation": "2023-06-20 11:23:27.961562",
+   "creation": "2023-07-12 17:34:03.783228",
    "default_value": null,
    "doc_type": "Asset Movement Item",
    "docstatus": 0,
    "doctype_or_field": "DocField",
    "field_name": "source_location",
    "idx": 0,
-   "modified": "2023-06-20 11:23:27.961562",
+   "modified": "2023-07-12 17:34:03.783228",
    "modified_by": "Administrator",
    "name": "Asset Movement Item-source_location-fetch_from",
    "owner": "Administrator",
@@ -170,7 +170,7 @@
    "property": "fetch_from",
    "property_type": "Small Text",
    "row_name": null,
-   "value": "asset.location"
+   "value": ""
   }
  ],
  "sync_on_migrate": 1
