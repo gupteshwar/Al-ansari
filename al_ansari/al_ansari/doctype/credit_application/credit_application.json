@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:CA-{YY}-{#####}",
  "creation": "2023-07-13 16:52:55.146932",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -32,7 +33,28 @@
   "mobile",
   "fax",
   "section_break_axic0",
-  "nature_of_business"
+  "nature_of_business",
+  "nature_of_proprietor_partners_directors_section",
+  "partner_details",
+  "sponsors_detsils_section",
+  "sponsor_details",
+  "sponsor_fixed_assets",
+  "customers_bank_details_section",
+  "customers_bank_details",
+  "applied_credit_limit_section",
+  "applied_credit_limits",
+  "associate_companies_section",
+  "associate_companies",
+  "business_during_last_three_years_section",
+  "business_during_last_three_years",
+  "credit_enjoyed_from_five_major_vendors_section",
+  "credit_enjoyed_from_five_major_vendors",
+  "authorised_signatories_to_sign_lpos_section",
+  "authorised_signatories_to_sign_lpos",
+  "authorised_signatories_to_sign_cheques_section",
+  "authorised_signatories_to_sign_cheques",
+  "authorised_sign_for_ack_goods",
+  "authorised_signatories_for_acknowledging_receipt_of_goods"
  ],
  "fields": [
   {
@@ -168,12 +190,119 @@
    "fieldname": "nature_of_business",
    "fieldtype": "Data",
    "label": "Nature of Business"
+  },
+  {
+   "fieldname": "nature_of_proprietor_partners_directors_section",
+   "fieldtype": "Section Break",
+   "label": "Nature of Proprietor / Partners / Directors"
+  },
+  {
+   "fieldname": "partner_details",
+   "fieldtype": "Table",
+   "label": "Partner details",
+   "options": "Credit Application Partner Details"
+  },
+  {
+   "fieldname": "sponsors_detsils_section",
+   "fieldtype": "Section Break",
+   "label": "Sponsor's Detsils"
+  },
+  {
+   "fieldname": "sponsor_details",
+   "fieldtype": "Table",
+   "options": "Credit Application Sponsor Details"
+  },
+  {
+   "fieldname": "sponsor_fixed_assets",
+   "fieldtype": "Data",
+   "label": "Sponsor's Fixed Assets"
+  },
+  {
+   "fieldname": "customers_bank_details_section",
+   "fieldtype": "Section Break",
+   "label": "Customer's Bank Details"
+  },
+  {
+   "fieldname": "customers_bank_details",
+   "fieldtype": "Table",
+   "options": "Customer Bank Details"
+  },
+  {
+   "fieldname": "applied_credit_limit_section",
+   "fieldtype": "Section Break",
+   "label": "Applied Credit Limit"
+  },
+  {
+   "fieldname": "applied_credit_limits",
+   "fieldtype": "Table",
+   "options": "Credit Application Credit Details"
+  },
+  {
+   "fieldname": "associate_companies_section",
+   "fieldtype": "Section Break",
+   "label": "Associate Companies"
+  },
+  {
+   "fieldname": "associate_companies",
+   "fieldtype": "Table",
+   "options": "Credit Application Associate Companies Details"
+  },
+  {
+   "fieldname": "business_during_last_three_years_section",
+   "fieldtype": "Section Break",
+   "label": "Business During Last Three Years"
+  },
+  {
+   "fieldname": "business_during_last_three_years",
+   "fieldtype": "Table",
+   "label": "Business During Last Three Years",
+   "options": "Credit Application Business Details"
+  },
+  {
+   "fieldname": "credit_enjoyed_from_five_major_vendors_section",
+   "fieldtype": "Section Break",
+   "label": "Credit Enjoyed From Five Major Vendors"
+  },
+  {
+   "fieldname": "credit_enjoyed_from_five_major_vendors",
+   "fieldtype": "Table",
+   "options": "Credit Application Vendor Credit Details"
+  },
+  {
+   "fieldname": "authorised_signatories_to_sign_lpos_section",
+   "fieldtype": "Section Break",
+   "label": "Authorised Signatories to Sign LPO's"
+  },
+  {
+   "fieldname": "authorised_signatories_to_sign_lpos",
+   "fieldtype": "Table",
+   "options": "Credit Application Authorised Signatures Details"
+  },
+  {
+   "fieldname": "authorised_signatories_to_sign_cheques_section",
+   "fieldtype": "Section Break",
+   "label": "Authorised Signatories to Sign CHEQUES"
+  },
+  {
+   "fieldname": "authorised_signatories_to_sign_cheques",
+   "fieldtype": "Table",
+   "options": "Credit Application Authorised Signatures Details"
+  },
+  {
+   "fieldname": "authorised_sign_for_ack_goods",
+   "fieldtype": "Section Break",
+   "label": "Authorised Signatories for Acknowledging Receipt of Goods / Materials"
+  },
+  {
+   "fieldname": "authorised_signatories_for_acknowledging_receipt_of_goods",
+   "fieldtype": "Table",
+   "options": "Credit Application Authorised Signatures Details"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-07-13 17:29:31.024003",
+ "modified": "2023-07-17 10:56:33.576617",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Credit Application",

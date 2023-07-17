@@ -1,0 +1,44 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-07-15 19:45:38.799860",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "name1",
+  "cr_no",
+  "legal_status"
+ ],
+ "fields": [
+  {
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Name"
+  },
+  {
+   "fieldname": "cr_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "CR No"
+  },
+  {
+   "fieldname": "legal_status",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Legal Status"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-07-15 19:53:52.228112",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Credit Application Associate Companies Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
