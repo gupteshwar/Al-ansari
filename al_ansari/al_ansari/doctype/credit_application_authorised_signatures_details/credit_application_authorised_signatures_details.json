@@ -1,0 +1,68 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-07-17 10:30:57.873542",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "name1",
+  "nationality",
+  "id_lc_pp_no",
+  "limit",
+  "specimen_signature",
+  "authorisation"
+ ],
+ "fields": [
+  {
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Name"
+  },
+  {
+   "fieldname": "nationality",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Nationality"
+  },
+  {
+   "fieldname": "id_lc_pp_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "ID LC PP No"
+  },
+  {
+   "fieldname": "limit",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Limit"
+  },
+  {
+   "columns": 2,
+   "fieldname": "specimen_signature",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Specimen Signature"
+  },
+  {
+   "columns": 1,
+   "default": "Singly / Jointly",
+   "fieldname": "authorisation",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Authorisation"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-07-17 10:35:11.735061",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Credit Application Authorised Signatures Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

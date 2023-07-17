@@ -1,0 +1,55 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-07-15 20:13:46.960421",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "name_of_the_company",
+  "credit_limit",
+  "payment_terms",
+  "annual_business"
+ ],
+ "fields": [
+  {
+   "columns": 4,
+   "fieldname": "name_of_the_company",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Name of the Company"
+  },
+  {
+   "columns": 2,
+   "fieldname": "credit_limit",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Credit Limit"
+  },
+  {
+   "columns": 2,
+   "fieldname": "payment_terms",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Payment Terms"
+  },
+  {
+   "columns": 2,
+   "fieldname": "annual_business",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Annual Business"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-07-15 20:13:46.960421",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Credit Application Vendor Credit Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
