@@ -29,7 +29,8 @@ frappe.ui.form.on('Quotation Item', {
 				args: {
 					item:row.item_code,
 					warehouse: row.warehouse,
-					transaction_date: frm.doc.transaction_date
+					transaction_date: frm.doc.transaction_date,
+					company: frm.doc.company
 				},
 				callback: function(r) {
 					console.log(r)
