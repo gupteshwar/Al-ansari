@@ -19,3 +19,22 @@ frappe.ui.form.on('Quotation', {
 		}
 	}
 });
+
+frappe.ui.form.on('Quotation Item', {
+	item_enquiry: function(frm, cdt, cdn) {
+		let row = locals[cdt][cdn]
+		if(row.item_code) {
+			frappe.call({
+				method: "al_ansari.al_ansari.customization.quotation.get_item_stock_details",
+				args: {
+					item:row.item_code,
+					warehouse: row.warehouse,
+					transaction_date: frm.doc.transaction_date
+				},
+				callback: function(r) {
+					console.log(r)
+				}
+			})
+		}
+	}
+});
