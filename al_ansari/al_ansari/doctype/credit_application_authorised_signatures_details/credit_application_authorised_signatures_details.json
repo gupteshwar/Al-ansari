@@ -30,7 +30,7 @@
    "fieldname": "id_lc_pp_no",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "ID LC PP No"
+   "label": "ID / LC / PP No"
   },
   {
    "fieldname": "limit",
@@ -57,7 +57,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-07-17 10:35:11.735061",
+ "modified": "2023-07-18 17:07:41.277707",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Credit Application Authorised Signatures Details",
