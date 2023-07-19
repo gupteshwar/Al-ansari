@@ -8,6 +8,7 @@
  "field_order": [
   "name_of_the_company",
   "credit_limit",
+  "column_break_o3etz",
   "payment_terms",
   "annual_business"
  ],
@@ -22,7 +23,7 @@
   {
    "columns": 2,
    "fieldname": "credit_limit",
-   "fieldtype": "Data",
+   "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Credit Limit"
   },
@@ -36,15 +37,19 @@
   {
    "columns": 2,
    "fieldname": "annual_business",
-   "fieldtype": "Data",
+   "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Annual Business"
+  },
+  {
+   "fieldname": "column_break_o3etz",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-07-15 20:13:46.960421",
+ "modified": "2023-07-19 11:44:57.447800",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Credit Application Vendor Credit Details",

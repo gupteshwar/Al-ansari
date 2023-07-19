@@ -10,6 +10,20 @@ from erpnext.stock.report.stock_ageing.stock_ageing import FIFOSlots, get_averag
 from erpnext.stock.report.stock_ledger.stock_ledger import get_item_group_condition
 from erpnext.stock.utils import add_additional_uom_columns, is_reposting_item_valuation_in_progress
 
+
+def get_data(data):
+	return {
+		"fieldname": "prevdoc_docname",
+		"non_standard_fieldnames": {
+			"Auto Repeat": "reference_document",
+		},
+		"transactions": [
+			{"label": _("Sales Order"), "items": ["Sales Order"]},
+			{"label": _("Subscription"), "items": ["Auto Repeat"]},
+            {"label": "", "items": ["Credit Application"]},
+		],
+	}
+
 @frappe.whitelist(allow_guest=True)
 def get_item_stock_details(item, warehouse, transaction_date, company):
     query = []

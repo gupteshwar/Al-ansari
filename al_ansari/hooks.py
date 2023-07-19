@@ -240,6 +240,10 @@ override_whitelisted_methods = {
 #	"Task": "al_ansari.task.get_dashboard_data"
 # }
 
+override_doctype_dashboards = {
+	"Quotation": "al_ansari.al_ansari.customization.quotation.get_data"
+}
+
 # exempt linked doctypes from being automatically cancelled
 #
 # auto_cancel_exempted_doctypes = ["Auto Repeat"]
