@@ -24,7 +24,7 @@ frappe.ui.form.on("Sales Invoice",{
                 callback: function(response) {
                     if (response.message) {
 
-                        if(frm.doc.__islocal){
+                        if(frm.doc.__islocal && !frm.doc.cost_center){
                             frm.set_value('cost_center', response.message.payroll_cost_center);
                         }
                         else if(!frm.doc.cost_center){
