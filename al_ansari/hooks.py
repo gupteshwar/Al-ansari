@@ -67,7 +67,8 @@ doctype_js = {
 	"Landed Cost Voucher": "public/js/landed_cost_voucher.js",
 	"Stock Entry": "public/js/stock_entry.js",
     "Asset Movement": "public/js/asset_movement.js",
-	"Payment Entry": "public/js/payment_entry.js"
+	"Payment Entry": "public/js/payment_entry.js",
+    "Delivery Note": "public/js/delivery_note.js",
 	}
 
 # fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
