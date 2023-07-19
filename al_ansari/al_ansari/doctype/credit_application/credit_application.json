@@ -8,6 +8,8 @@
  "engine": "InnoDB",
  "field_order": [
   "name_of_the_company",
+  "quotation",
+  "company",
   "c_r_no",
   "data_fsljd",
   "year_of_establishment",
@@ -69,7 +71,7 @@
   },
   {
    "fieldname": "year_of_establishment",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Year of Establishment"
   },
   {
@@ -97,8 +99,9 @@
   },
   {
    "fieldname": "country",
-   "fieldtype": "Data",
-   "label": "Country"
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
   },
   {
    "fieldname": "column_break_szksy",
@@ -126,7 +129,7 @@
   {
    "fieldname": "bldg_no",
    "fieldtype": "Data",
-   "label": "Bldg No"
+   "label": "Building No"
   },
   {
    "fieldname": "way_no",
@@ -169,17 +172,17 @@
   },
   {
    "fieldname": "tel",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Telephone"
   },
   {
    "fieldname": "mobile",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Mobile"
   },
   {
    "fieldname": "fax",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Fax"
   },
   {
@@ -295,12 +298,25 @@
    "fieldname": "authorised_signatories_for_acknowledging_receipt_of_goods",
    "fieldtype": "Table",
    "options": "Credit Application Authorised Signatures Details"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "quotation",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Quotation",
+   "options": "Quotation"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-07-18 17:12:42.517418",
+ "modified": "2023-07-19 11:59:47.637491",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Credit Application",
