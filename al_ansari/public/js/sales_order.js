@@ -3,6 +3,27 @@ frappe.ui.form.on("Sales Order",{
         item_rate(frm)
         // validate_posting_date(frm)
     },
+
+    refresh: function(frm) {
+        if(!frm.is_new()) {
+            frappe.call({
+                method: "al_ansari.al_ansari.customization.sales_order.validate_print_permissions",
+                args: {
+                    'doctype': frm.doc.doctype,
+                    'company': frm.doc.company
+                },
+                callback: function(r) {
+                    if (!r.exc) {
+                        if (r.message == 0) {
+                            cur_frm.page.menu.find('[data-label="Print"]').parent().parent().remove();
+                            $("[data-original-title='Print']").hide()
+                        }
+                    }
+                }
+            })
+        }
+    },
+
     onload: function(frm) {
         if (frappe.session.user) {
             frappe.call({
@@ -27,8 +48,9 @@ frappe.ui.form.on("Sales Order",{
                     }
                 }
             });
+
         }
-    }
+    },
 })
 
 
