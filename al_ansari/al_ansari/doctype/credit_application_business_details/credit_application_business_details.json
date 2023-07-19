@@ -13,19 +13,19 @@
  "fields": [
   {
    "fieldname": "year",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "in_list_view": 1,
    "label": "Year"
   },
   {
    "fieldname": "overall_business_volume",
-   "fieldtype": "Data",
+   "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Overall Business Volume"
+   "label": "Overall Business Volume "
   },
   {
    "fieldname": "business_with_al_ansari",
-   "fieldtype": "Data",
+   "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Business with AL Ansari"
   }
@@ -33,7 +33,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-07-15 20:03:17.450153",
+ "modified": "2023-07-19 11:42:22.903205",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Credit Application Business Details",
