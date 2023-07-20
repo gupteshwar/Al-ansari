@@ -25,7 +25,8 @@ def get_data(data):
 	}
 
 @frappe.whitelist(allow_guest=True)
-def get_item_stock_details(item, warehouse, transaction_date, company):
+def get_item_stock_details(item, transaction_date, company, warehouse=None):
+    print(warehouse)
     query = []
     warehouse = frappe.db.sql("""
                     select 
@@ -159,7 +160,7 @@ def get_item_stock_details(item, warehouse, transaction_date, company):
                                 and se.docstatus = 0
                                 and se.stock_entry_type = 'Material Transfer'
                             """.format(item=item, warehouse=i.name, company=company))
-        
+       
         if material_transfer_sub_:
             material_transfer_sub = material_transfer_sub_[0][0]
 
@@ -175,7 +176,7 @@ def get_item_stock_details(item, warehouse, transaction_date, company):
         
         data.append(total_materials_qty)
        
-        data.append(actual_qty[0][0]-(po[0][0]+so[0][0]-total_materials_qty))
+        data.append(actual_qty[0][0]-(po[0][0]+so[0][0]+total_materials_qty))
         
         query.append(data)
    
