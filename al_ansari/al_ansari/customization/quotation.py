@@ -46,10 +46,9 @@ def get_item_stock_details(item, warehouse, transaction_date, company):
                             item_code='{item}'
                             and warehouse='{warehouse}'
                             and company = '{company}'
-                            and posting_date = '{date}'
-                            and actual_qty IS NOT NULL;
-                    """.format(item=item, warehouse=i.name, company=company, date=transaction_date))
-        
+                            and posting_date = CURDATE()
+                    """.format(item=item, warehouse=i.name, company=company))
+        print(actual_qty)
         data.append(actual_qty[0][0])
         if actual_qty[0][0] == 0:
             continue
@@ -63,13 +62,13 @@ def get_item_stock_details(item, warehouse, transaction_date, company):
                     po_item.item_code='{item}' 
                     and po_item.warehouse='{warehouse}'
                     and po.company = '{company}'
-                    and po.transaction_date = '{date}'
+                    and po.transaction_date = CURDATE()
                     and po_item.qty > po_item.received_qty 
                     and po_item.parent=po.name
                     and po.status not in ('Closed', 'Delivered') 
                     and po.docstatus=1
                     and po_item.delivered_by_supplier = 0
-                """.format(item=item, warehouse=i.name, company=company, date=transaction_date))
+                """.format(item=item, warehouse=i.name, company=company))
         print('po', po)
         data.append(po[0][0])
         so = frappe.db.sql("""
@@ -82,10 +81,10 @@ def get_item_stock_details(item, warehouse, transaction_date, company):
                     so_item.item_code='{item}' 
                     and so_item.warehouse='{warehouse}'
                     and so.company = '{company}'
-                    and so.transaction_date = '{date}'
+                    and so.transaction_date = CURDATE()
                     and so_item.parent=so.name 
                     and so.docstatus=1
-                """.format(item=item, warehouse=i.name, company=company, date=transaction_date))
+                """.format(item=item, warehouse=i.name, company=company))
         print('so', so)
         data.append(so[0][0])
 

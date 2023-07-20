@@ -8,7 +8,7 @@
  "engine": "InnoDB",
  "field_order": [
   "name_of_the_company",
-  "quotation",
+  "prevdoc_docname",
   "company",
   "c_r_no",
   "data_fsljd",
@@ -306,7 +306,7 @@
    "options": "Company"
   },
   {
-   "fieldname": "quotation",
+   "fieldname": "prevdoc_docname",
    "fieldtype": "Link",
    "hidden": 1,
    "label": "Quotation",
@@ -316,7 +316,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-07-19 11:59:47.637491",
+ "modified": "2023-07-19 15:26:36.595449",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Credit Application",
