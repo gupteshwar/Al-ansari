@@ -46,9 +46,9 @@ def get_item_stock_details(item, warehouse, transaction_date, company):
                             item_code='{item}'
                             and warehouse='{warehouse}'
                             and company = '{company}'
-                            and posting_date = CURDATE()
-                    """.format(item=item, warehouse=i.name, company=company))
-        print(actual_qty)
+                            and posting_date <= CURDATE()
+                    """.format(item=item, warehouse=i.name, company=company, date=transaction_date))
+       
         data.append(actual_qty[0][0])
         if actual_qty[0][0] == 0:
             continue
@@ -62,14 +62,14 @@ def get_item_stock_details(item, warehouse, transaction_date, company):
                     po_item.item_code='{item}' 
                     and po_item.warehouse='{warehouse}'
                     and po.company = '{company}'
-                    and po.transaction_date = CURDATE()
+                    and po.transaction_date <= CURDATE()
                     and po_item.qty > po_item.received_qty 
                     and po_item.parent=po.name
                     and po.status not in ('Closed', 'Delivered') 
                     and po.docstatus=1
                     and po_item.delivered_by_supplier = 0
                 """.format(item=item, warehouse=i.name, company=company))
-        print('po', po)
+        
         data.append(po[0][0])
         so = frappe.db.sql("""
                 select 
@@ -81,14 +81,14 @@ def get_item_stock_details(item, warehouse, transaction_date, company):
                     so_item.item_code='{item}' 
                     and so_item.warehouse='{warehouse}'
                     and so.company = '{company}'
-                    and so.transaction_date = CURDATE()
+                    and so.transaction_date <= CURDATE()
                     and so_item.parent=so.name 
                     and so.docstatus=1
                 """.format(item=item, warehouse=i.name, company=company))
-        print('so', so)
+       
         data.append(so[0][0])
-
-        material_receipt = frappe.db.sql("""
+        material_receipt = 0
+        material_receipt_ = frappe.db.sql("""
                             select
                                 coalesce((sed.qty), 0) as qty
                             from
@@ -102,9 +102,12 @@ def get_item_stock_details(item, warehouse, transaction_date, company):
                                 and se.docstatus = 0
                                 and se.stock_entry_type = 'Material Receipt'
                             """.format(item=item, warehouse=i.name, company=company))
-        print('material receipt', material_receipt)
+        
+        if material_receipt_:
+            material_receipt = material_receipt_[0][0]
 
-        material_issue = frappe.db.sql("""
+        material_issue = 0
+        material_issue_ = frappe.db.sql("""
                             select 
                                 coalesce((sed.qty), 0) as qty
                             from
@@ -118,9 +121,12 @@ def get_item_stock_details(item, warehouse, transaction_date, company):
                                 and se.docstatus = 0
                                 and se.stock_entry_type = 'Material Issue'
                             """.format(item=item, warehouse=i.name, company=company))
-        print('material isssue', material_issue)
+        
+        if material_issue_:
+            material_issue = material_issue_[0][0]
 
-        material_transfer_add = frappe.db.sql("""
+        material_transfer_add = 0
+        material_transfer_add_ = frappe.db.sql("""
                             select 
                                 coalesce((sed.qty), 0) as qty
                             from
@@ -134,9 +140,12 @@ def get_item_stock_details(item, warehouse, transaction_date, company):
                                 and se.docstatus = 0
                                 and se.stock_entry_type = 'Material Transfer'
                             """.format(item=item, warehouse=i.name, company=company))
-        print('material transfer add', material_transfer_add)
+        
+        if material_transfer_add_:
+            material_transfer_add = material_transfer_add_[0][0]
 
-        material_transfer_sub = frappe.db.sql("""
+        material_transfer_sub = 0
+        material_transfer_sub_ = frappe.db.sql("""
                             select 
                                 coalesce((sed.qty), 0) as qty
                             from
@@ -150,17 +159,19 @@ def get_item_stock_details(item, warehouse, transaction_date, company):
                                 and se.docstatus = 0
                                 and se.stock_entry_type = 'Material Transfer'
                             """.format(item=item, warehouse=i.name, company=company))
-        print('material transfer sub', material_transfer_sub)
+        
+        if material_transfer_sub_:
+            material_transfer_sub = material_transfer_sub_[0][0]
 
-        materials_qty = material_receipt[0][0] - material_issue[0][0]
+        materials_qty = material_receipt - material_issue
         
         total_materials_qty = 0
         
         if material_transfer_add:
-            total_materials_qty = materials_qty + material_transfer_add[0][0]
+            total_materials_qty = materials_qty + material_transfer_add
         
         if material_transfer_sub:
-            total_materials_qty = materials_qty - material_transfer_sub[0][0]
+            total_materials_qty = materials_qty - material_transfer_sub
         
         data.append(total_materials_qty)
        
