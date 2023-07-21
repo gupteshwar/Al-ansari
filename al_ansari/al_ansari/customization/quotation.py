@@ -103,7 +103,7 @@ def get_item_stock_details(item, transaction_date, company, warehouse=None):
                                 and se.docstatus = 0
                                 and se.stock_entry_type = 'Material Receipt'
                             """.format(item=item, warehouse=i.name, company=company))
-        
+        print(material_receipt_)
         if material_receipt_:
             material_receipt = material_receipt_[0][0]
 
@@ -122,7 +122,7 @@ def get_item_stock_details(item, transaction_date, company, warehouse=None):
                                 and se.docstatus = 0
                                 and se.stock_entry_type = 'Material Issue'
                             """.format(item=item, warehouse=i.name, company=company))
-        
+        print(material_issue_)
         if material_issue_:
             material_issue = material_issue_[0][0]
 
@@ -166,7 +166,7 @@ def get_item_stock_details(item, transaction_date, company, warehouse=None):
 
         materials_qty = material_receipt - material_issue
         
-        total_materials_qty = 0
+        total_materials_qty = materials_qty
         
         if material_transfer_add:
             total_materials_qty = materials_qty + material_transfer_add
@@ -176,7 +176,7 @@ def get_item_stock_details(item, transaction_date, company, warehouse=None):
         
         data.append(total_materials_qty)
        
-        data.append(actual_qty[0][0]-(po[0][0]+so[0][0]+total_materials_qty))
+        data.append((actual_qty[0][0]+po[0][0]-so[0][0]-total_materials_qty))
         
         query.append(data)
    
