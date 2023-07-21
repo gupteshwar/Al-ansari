@@ -18,7 +18,7 @@
    "docstatus": 0,
    "dt": "Asset Movement Item",
    "fetch_from": "asset.cost_center",
-   "fetch_if_empty": 0,
+   "fetch_if_empty": 1,
    "fieldname": "from_cost_center",
    "fieldtype": "Link",
    "hidden": 0,
