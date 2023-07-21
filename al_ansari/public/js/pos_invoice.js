@@ -11,12 +11,14 @@ validate: function(frm) {
 
 		if(net_total != frm.doc.paid_amount) {
 			for(var p = 0;p<frm.doc.payments.length;p++) {
-				if ((frm.doc.payments[p]["default"]==1) && (frm.doc.payments[p]["amount"] != net_total && frm.doc.payments[p]["amount"] !=0)){
+				if ((frm.doc.payments[p]["default"]==1) && (frm.doc.payments[p]["amount"] != net_total && frm.doc.payments[p]["amount"] !=0) && (frm.doc.paid_amount != net_total)){
 					frm.doc.payments[p]["base_amount"] = net_total
 					frm.doc.payments[p]["amount"] = net_total
-				} else if((frm.doc.payments[p]["default"]!=1) && (frm.doc.payments[p]["amount"] != net_total && frm.doc.payments[p]["amount"] !=0)){
+					frm.set_value('paid_amount',net_total)
+				} else if((frm.doc.payments[p]["default"]!=1) && (frm.doc.payments[p]["amount"] != net_total && frm.doc.payments[p]["amount"] !=0) && (frm.doc.paid_amount != net_total)){
 					frm.doc.payments[p]["amount"] = net_total
 					frm.doc.payments[p]["base_amount"] = net_total
+					frm.set_value('paid_amount',net_total)
 				} else {
 					frm.doc.payments[p]["amount"] = 0
 					frm.doc.payments[p]["base_amount"] = 0
