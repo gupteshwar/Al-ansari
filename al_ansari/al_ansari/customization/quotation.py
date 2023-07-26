@@ -182,16 +182,17 @@ def get_item_stock_details(item, transaction_date, company, warehouse=None):
    
 
     data_to_show = ""
-    header = f'''<div class="wrapper" style="width:100%;">
+    header = f'''<div class="wrapper" style="overflow:scroll;width:100%;">
                 <center><h3>Item Stock Details</h3></center><br>
                 <table class="table table-bordered" style="width:100%">
                 <tr>
                     <th>Warehouse</th>
-                    <th>Total stock</th>
+                    <th>Total Stock In Warehouse</th>
                     <th>Pending PO</th>
+                    <th>Projected Stock After Purchase</th>
                     <th>Pending SO Delivery</th>
                     <th>Pending Transfer</th>
-                    <th>Available Quantity</th>
+                    <th>Available Net Quantity</th>
                 </tr>'''
 
     for row in query:
@@ -199,12 +200,14 @@ def get_item_stock_details(item, transaction_date, company, warehouse=None):
                                             <td>{warehouse}</td>
                                             <td>{total_stock} </td>
                                             <td>{pending_po}</td>
+                                            <td>{project_stock} </td>
                                             <td>{pending_so}</td>
                                             <td>{pending_transfered}</td>
                                             <td>{total_qty}</td>
                                         </tr>'''.format(warehouse = row[0], 
-                                                        total_stock = row[1], 
-                                                        pending_po = row[2], 
+                                                        total_stock = row[1],
+                                                        pending_po = row[2],
+                                                        project_stock = row[1]+row[2],
                                                         pending_so = row[3], 
                                                         pending_transfered = row[4],
                                                         total_qty = row[5]
