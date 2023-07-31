@@ -16,11 +16,13 @@ def get_data(data):
 		"fieldname": "prevdoc_docname",
 		"non_standard_fieldnames": {
 			"Auto Repeat": "reference_document",
+            "Request for Quotation": "quotation"
 		},
 		"transactions": [
 			{"label": _("Sales Order"), "items": ["Sales Order"]},
 			{"label": _("Subscription"), "items": ["Auto Repeat"]},
-            {"label": "", "items": ["Credit Application"]},
+            {"label": _("Credit Application"), "items": ["Credit Application"]},
+            {"label": _("Request for Quotation"), "items": ["Request for Quotation"]},
 		],
 	}
 
