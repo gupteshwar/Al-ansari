@@ -1,5 +1,5 @@
 frappe.ui.form.on("Sales Invoice",{
-    onload:function(frm){
+    refresh:function(frm){
         cur_frm.set_query("accessory_item","items",function(){
             return {
                 filters: [['is_accessory',"=",1]]
