@@ -51,14 +51,23 @@ frappe.ui.form.on("Sales Order",{
 
         }
     },
+    delivery_date: function(frm) {
+        if(frm.is_new() && (frm.doc.items.length>0)) {
+            (frm.doc.items || []).forEach(function(item){
+                if (item.against_blanket_order == 1){
+                    item.rate = item.blanket_order_rate
+                }
+            })
+            frm.refresh_field('items')
+        }
+    }
 })
-
 
 function item_rate(frm){
         let item_rate_issue = [];
         (frm.doc.items || []).forEach(function(item){
 
-            if (item.rate < item.price_list_rate){
+            if (item.rate < item.price_list_rate && (item.against_blanket_order == 0)){
                 item_rate_issue.push(item.idx)
             }
         })

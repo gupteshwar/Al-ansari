@@ -17,10 +17,31 @@ frappe.ui.form.on('Quotation', {
 		        }
 			});
 		}
-	}
+	},
+	before_save : function(frm){
+        // validate_posting_date(frm)
+        item_rate(frm)
+    }
 });
 
+function item_rate(frm){
+        let item_rate_issue = [];
+        (frm.doc.items || []).forEach(function(item){
+
+            if (item.rate < item.price_list_rate){
+                item_rate_issue.push(item.idx)
+            }
+        })
+        if (item_rate_issue.length > 0) {
+            frappe.throw(__("Item Rate is below Item Price List Rate for the following rows <br>{0}",[item_rate_issue.join(',')]))
+        }
+}
+
 frappe.ui.form.on('Quotation Item', {
+	item_code: function(frm,cdt,cdn) {
+		var d = locals[cdt][cdn];
+        d.delivery_date = frm.doc.valid_till;
+	},
 	item_enquiry: function(frm, cdt, cdn) {
 		let row = locals[cdt][cdn]
 		if(row.item_code) {
