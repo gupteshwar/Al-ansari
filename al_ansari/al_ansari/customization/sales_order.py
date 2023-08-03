@@ -8,19 +8,22 @@ def on_submit(doc,method):
     update_sales_details(doc,method)
    
 def validate_item_qty(doc,method):
-    total_qty = 0
-    remaining_qty = 0
+    
     for i in doc.items:
         if i.blanket_order:
+            total_qty = 0
+            remaining_qty = 0
             blank_doc = frappe.get_doc("Blanket Order",i.blanket_order)
             for j in blank_doc.items:
                 if i.item_code == j.item_code:
                     total_qty += i.qty
-                    
-                remaining_qty = j.qty - j.ordered_qty
-                exceeds_qty = i.qty - remaining_qty
-                if total_qty > remaining_qty:
-                    frappe.throw(f"Sales Order exceeds Blanket Order by {exceeds_qty}")
+                    remaining_qty = j.qty - j.ordered_qty
+                    exceeds_qty = remaining_qty-i.qty
+                    if total_qty > remaining_qty:
+                        frappe.throw(f"Sales Order exceeds Blanket Order by {abs(exceeds_qty)} in row {i.idx}")
+                    if i.rate != j.rate:
+                        frappe.throw(f"The item rate in Sales Order should match the item Rate in Blanket Order for row {i.idx}")
+
 
 def update_sales_details(doc,method):
     for i in doc.items:
