@@ -26,15 +26,18 @@ def validate_item_qty(doc,method):
 
 
 def update_sales_details(doc,method):
+    blanket_order_list = []
     for i in doc.items:
-        if i.blanket_order:
-            blank_doc = frappe.get_doc("Blanket Order",i.blanket_order)
-    
-            blank_doc.append('sales_details',{
-                'sales_order':doc.name,
-                'grand_total':doc.grand_total
-            })
-            blank_doc.save()
+        if i.blanket_order and (i.blanket_order not in blanket_order_list):
+            blanket_order_list.append(i.blanket_order) 
+    for blanket_order in blanket_order_list:
+        blank_doc = frappe.get_doc("Blanket Order",blanket_order)
+
+        blank_doc.append('sales_details',{
+            'sales_order':doc.name,
+            'grand_total':doc.grand_total
+        })
+        blank_doc.save()
 
 
 @frappe.whitelist()
