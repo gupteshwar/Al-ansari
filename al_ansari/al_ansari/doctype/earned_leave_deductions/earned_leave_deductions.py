@@ -14,9 +14,13 @@ class EarnedLeaveDeductions(Document):
 		
 	def remove_zero_and_duplicate_entries(self):
 		if self.deduction_ratio:
-			for i, d in enumerate(self.get("deduction_ratio")):
-				if d.to_be_deducted == 0:
-					self.get("deduction_ratio").remove(d)
+			print(self.deduction_ratio)
+			for d in reversed(range(len(self.deduction_ratio))):
+				if self.deduction_ratio[d].to_be_deducted == 0:
+					self.remove(self.deduction_ratio[d])
+					# if self.deduction_ratio[d].idx < len(self.deduction_ratio)-1:
+					# 	self.deduction_ratio[d+1].idx = self.deduction_ratio[d]
+
 				else:
 					existing_rec = frappe.get_list('Leave Allocation',
 					fields= ["name"],
@@ -29,11 +33,12 @@ class EarnedLeaveDeductions(Document):
 						]
 					)
 					if existing_rec:
-						self.get("deduction_ratio").remove(d)
-
+						self.remove(self.deduction_ratio[d])
+					
 	def revise_indexes(self):
 		for i, d in enumerate(self.get("deduction_ratio")):
 			d.idx = i+1
+
 
 	def on_submit(self):
 		allocation_na = []
