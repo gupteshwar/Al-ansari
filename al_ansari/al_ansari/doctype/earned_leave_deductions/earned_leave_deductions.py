@@ -41,9 +41,11 @@ class EarnedLeaveDeductions(Document):
 		for i, d in enumerate(self.get("deduction_ratio")):
 			d.idx = i+1
 
+
 	def revise_indexes(self):
 		for i, d in enumerate(self.get("deduction_ratio")):
 			d.idx = i+1
+
 
 	def on_submit(self):
 		allocation_na = []
