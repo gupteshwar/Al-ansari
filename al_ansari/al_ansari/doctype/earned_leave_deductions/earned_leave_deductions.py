@@ -8,12 +8,35 @@ from frappe import _
 
 class EarnedLeaveDeductions(Document):
 	# pass
+	def validate(self):
+		if self.deduction_ratio:
+			for d in reversed(range(len(self.deduction_ratio))):
+				if self.deduction_ratio[d].to_be_deducted == 0:
+					self.remove(self.deduction_ratio[d])
+				else:
+					existing_rec = frappe.get_list('Leave Allocation',
+					fields= ["name"],
+					filters= [
+							['edl_from_date',"=",frappe.utils.add_months(self.from_date, 1)],
+							['edl_to_date',"=",frappe.utils.add_months(self.to_date, 1)],
+							['employee',"=",self.deduction_ratio[d].employee_id],
+							['leave_type',"=", "Annual Leave"],
+							['docstatus','=',1]
+						]
+					)
+					if existing_rec:
+						self.remove(self.deduction_ratio[d])
+
+
 	def on_submit(self):
 		allocation_na = []
 		if self.deduction_ratio:
 			for d in range(len(self.deduction_ratio)):
 				if not self.deduction_ratio[d].allocation_from_date or not self.deduction_ratio[d].allocation_end_date:
 					allocation_na.append(self.deduction_ratio[d].employee_id)
+		else:
+			frappe.throw(_("There are no entries to be calculated for the selected filters"))
+
 		if allocation_na:
 			frappe.throw(_("Allocation not available for the records {0}").format(allocation_na))
 		self.negative_leave_allocation()
