@@ -218,6 +218,7 @@ def autofill_employees(payroll_entry):
 	oc_doc.to_date = payroll_entry.end_date
 	oc_doc.payroll_date = payroll_entry.posting_date
 	oc_doc.branch = payroll_entry.branch
+	oc_doc.company = payroll_entry.company
 	oc_doc.payroll_cost_center = payroll_entry.cost_center
 	# for emp in payroll_entry.employees:
 	# 	oc_doc.append('overtime_calculator_detail',{"employee":emp.employee,"employee_name":emp.employee_name})
