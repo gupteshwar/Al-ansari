@@ -5,6 +5,7 @@ import frappe
 from frappe.model.document import Document
 from frappe import _
 import json
+from frappe.utils.nestedset import get_descendants_of
 from frappe.utils import cint, cstr, flt, formatdate, getdate, now
 
 class OvertimeCalculator(Document):
@@ -204,7 +205,7 @@ def get_filter_condition(filters):
 		if filters.get(f):
 			cond += " and t1." + f + " = " + frappe.db.escape(filters.get(f))
 	if filters.get("payroll_cost_center"):
-		cost_center_list = get_descendants_of(filters.get("payroll_cost_center"))
+		cost_center_list = get_descendants_of("Cost Center",filters.get("payroll_cost_center"))
 		cost_center_list.append(filters.get("payroll_cost_center"))
 		cond += " and t1.payroll_cost_center in (" + str(cost_center_list)[1:-1] + ")"
 	return cond
@@ -388,6 +389,7 @@ def additional_salary_entry(self):
 				add_sal_doc.salary_component = "Overtime"
 				add_sal_doc.amount = self.overtime_calculator_detail[rec].overtime_amount
 				add_sal_doc.payroll_date = self.payroll_date
+				add_sal_doc.company = self.company
 				add_sal_doc.save()
 				add_sal_doc.submit()
 				created_list.append(self.overtime_calculator_detail[rec].idx)
