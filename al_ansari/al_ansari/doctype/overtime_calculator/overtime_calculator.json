@@ -11,6 +11,7 @@
   "from_date",
   "to_date",
   "payroll_date",
+  "company",
   "column_break_3",
   "branch",
   "reporting_manager",
@@ -85,12 +86,19 @@
    "fieldtype": "Link",
    "label": "Payroll Cost Center",
    "options": "Cost Center"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-05-31 18:01:06.214938",
+ "modified": "2023-09-15 09:24:18.928324",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Overtime Calculator",

@@ -5,6 +5,8 @@ import frappe
 from frappe.model.document import Document
 import json
 from frappe import _
+from frappe.utils.nestedset import get_descendants_of
+from frappe.utils import cint, cstr, flt, formatdate, getdate, now
 
 class EarnedLeaveDeductions(Document):
 	# pass
@@ -151,15 +153,17 @@ class EarnedLeaveDeductions(Document):
 			error_msg = _(
 				"No employees found for the mentioned criteria:<br>From Date: {0}<br>To Date: {1}"
 			).format(
-				frappe.bold(self.from_date),
-				frappe.bold(self.to_date),
+				frappe.bold(formatdate(self.from_date)),
+				frappe.bold(formatdate(self.to_date)),
 			)
+			if self.company:
+				error_msg += "<br>" + _("Company: {0}").format(frappe.bold(self.company))
 			if self.branch:
 				error_msg += "<br>" + _("Branch: {0}").format(frappe.bold(self.branch))
 			if self.reporting_manager:
 				error_msg += "<br>" + _("Reporting Manager: {0}").format(frappe.bold(self.reporting_manager))
 			if self.payroll_cost_center:
-				error_msg += "<br>" + _("Payroll Cost Center: {0}").format(frappe.bold(self.payroll_cost_center))
+				error_msg += "<br>" + _("Payroll Cost Center or its Descendant Cost Centers: {0}").format(frappe.bold(self.payroll_cost_center))
 			frappe.throw(error_msg, title=_("No employees found"))
 
 		return employee_list
@@ -168,6 +172,7 @@ class EarnedLeaveDeductions(Document):
 		filters = frappe._dict()
 		filters["from_date"] = self.from_date
 		filters["to_date"] = self.to_date
+		filters["company"] = self.company 
 		filters["reports_to"] = self.reporting_manager
 		filters["branch"] = self.branch
 		filters["payroll_cost_center"] = self.payroll_cost_center 
@@ -175,9 +180,14 @@ class EarnedLeaveDeductions(Document):
 
 def get_filter_condition(filters):
 	cond = ""
-	for f in ["branch", "reports_to","payroll_cost_center"]: 
+	# cond1 = ""
+	for f in ["branch", "reports_to","company"]: 
 		if filters.get(f):
 			cond += " and t2." + f + " = " + frappe.db.escape(filters.get(f))
+	if filters.get('payroll_cost_center'):
+		cost_center_list = get_descendants_of("Cost Center",filters.get('payroll_cost_center'))
+		cost_center_list.append(filters.get('payroll_cost_center'))
+		cond+= "and t2.payroll_cost_center in (" + str(cost_center_list)[1:-1] +")"
 
 	return cond
 
