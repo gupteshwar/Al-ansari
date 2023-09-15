@@ -10,6 +10,7 @@
   "from_date",
   "to_date",
   "payroll_date",
+  "company",
   "column_break_3",
   "company",
   "branch",
