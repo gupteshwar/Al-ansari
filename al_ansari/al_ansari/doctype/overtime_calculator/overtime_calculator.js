@@ -46,12 +46,14 @@ frappe.ui.form.on('Overtime Calculator', {
 		}
 	},
 	get_employees: function(frm) {
+		frm.clear_table("overtime_calculator_detail")
+        frm.refresh_fields("overtime_calculator_detail");
 		if(frm.doc.branch || frm.doc.reporting_manager) {
 			frappe.call({
 	            doc: frm.doc,
 	            method: 'get_employees_on_oc',
 	        }).then(r => {
-	        	frm.clear_table('overtime_calculator_detail')
+	        	// frm.clear_table('overtime_calculator_detail')
 	            if(r.message)
 	            for(var i=0; i<r.message.length;i++){
 	            	console.log(r.message)
