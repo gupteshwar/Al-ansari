@@ -5,6 +5,7 @@ import frappe
 from frappe.model.document import Document
 from frappe import _
 import json
+from frappe.utils import cint, cstr, flt, formatdate, getdate, now
 
 class OvertimeCalculator(Document):
 	# pass
@@ -45,14 +46,19 @@ class OvertimeCalculator(Document):
 		print("emp_list === ",emp_list)
 		if not emp_list:
 			error_msg = _(
-				"No employees found for the mentioned criteria:"
+				"No employees found for the mentioned criteria:<br>From Date: {0}<br>To Date: {1}"
+			).format(
+				frappe.bold(formatdate(self.from_date)),
+				frappe.bold(formatdate(self.to_date)),
 			)
+			if self.company:
+				error_msg += "<br>" + _("Company: {0}").format(frappe.bold(self.company))
 			if self.branch:
 				error_msg += "<br>" + _("Branch: {0}").format(frappe.bold(self.branch))
 			if self.reporting_manager:
 				error_msg += "<br>" + _("Reporting Manager: {0}").format(frappe.bold(self.reporting_manager))
 			if self.payroll_cost_center:
-				error_msg += "<br>" + _("Payroll Cost Center: {0}").format(frappe.bold(self.payroll_cost_center))
+				error_msg += "<br>" + _("Payroll Cost Center or its Descendant Cost Centers: {0}").format(frappe.bold(self.payroll_cost_center))
 			frappe.throw(error_msg, title=_("No employees found"))
 
 		# return emp_list
@@ -187,15 +193,20 @@ class OvertimeCalculator(Document):
 		filters = frappe._dict()
 		filters["reports_to"] = self.reporting_manager
 		filters["branch"] = self.branch
+		filters["company"] = self.company 
 		filters["payroll_cost_center"] = self.payroll_cost_center 
 
 		return filters
 
 def get_filter_condition(filters):
 	cond = ""
-	for f in ["branch","reports_to","payroll_cost_center"]: 
+	for f in ["branch","reports_to","company"]: 
 		if filters.get(f):
 			cond += " and t1." + f + " = " + frappe.db.escape(filters.get(f))
+	if filters.get("payroll_cost_center"):
+		cost_center_list = get_descendants_of(filters.get("payroll_cost_center"))
+		cost_center_list.append(filters.get("payroll_cost_center"))
+		cond += " and t1.payroll_cost_center in (" + str(cost_center_list)[1:-1] + ")"
 	return cond
 
 @frappe.whitelist()
