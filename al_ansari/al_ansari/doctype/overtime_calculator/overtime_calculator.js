@@ -2,6 +2,20 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Overtime Calculator', {
+	refresh: function(frm) {
+		frm.set_query("payroll_cost_center", function() {
+		    return {
+		        filters: [
+		            ["Company","=", frm.doc.company]
+		        ]
+		    }
+		});
+	},
+	company: function(frm) {
+		
+		frm.set_value("payroll_cost_center","")
+		
+	},
 	from_date: function(frm) {
 	    if(frm.doc.from_date) {
 	        frm.set_value('to_date',moment(frm.doc.from_date).endOf('month').format('YYYY-MM-DD'))
