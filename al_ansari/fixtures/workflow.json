@@ -1682,7 +1682,7 @@
   "doctype": "Workflow",
   "document_type": "Overtime Calculator",
   "is_active": 1,
-  "modified": "2023-06-04 16:34:45.842829",
+  "modified": "2023-09-07 08:47:30.860198",
   "name": "Overtime Calculator",
   "override_status": 0,
   "parent": null,
@@ -1717,6 +1717,19 @@
     "update_value": "Submitted"
    },
    {
+    "allow_edit": "Payroll Manager",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Overtime Calculator",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Reviewed",
+    "update_field": null,
+    "update_value": "Reviewed"
+   },
+   {
     "allow_edit": "Vice President",
     "doc_status": "1",
     "is_optional_state": 0,
@@ -1743,15 +1756,59 @@
     "state": "Draft"
    },
    {
-    "action": "Approve",
+    "action": "Submit",
+    "allow_self_approval": 1,
+    "allowed": "Payroll Manager",
+    "condition": null,
+    "next_state": "Submitted",
+    "parent": "Overtime Calculator",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Draft"
+   },
+   {
+    "action": "Review",
     "allow_self_approval": 1,
     "allowed": "HOD",
+    "condition": null,
+    "next_state": "Reviewed",
+    "parent": "Overtime Calculator",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Submitted"
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "Payroll Manager",
     "condition": null,
     "next_state": "Approved",
     "parent": "Overtime Calculator",
     "parentfield": "transitions",
     "parenttype": "Workflow",
-    "state": "Submitted"
+    "state": "Reviewed"
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "Vice President",
+    "condition": null,
+    "next_state": "Approved",
+    "parent": "Overtime Calculator",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Reviewed"
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "BOD",
+    "condition": null,
+    "next_state": "Approved",
+    "parent": "Overtime Calculator",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Reviewed"
    }
   ],
   "workflow_name": "Overtime Calculator",
@@ -1901,7 +1958,7 @@
   "doctype": "Workflow",
   "document_type": "Employee Separation",
   "is_active": 1,
-  "modified": "2023-05-15 17:36:38.304734",
+  "modified": "2023-07-25 10:25:48.302223",
   "name": "Employee Separation",
   "override_status": 0,
   "parent": null,
@@ -1960,6 +2017,19 @@
     "state": "Approved",
     "update_field": null,
     "update_value": "Approved"
+   },
+   {
+    "allow_edit": "HR User",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Employee Separation",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Approved by HR User",
+    "update_field": null,
+    "update_value": null
    }
   ],
   "transitions": [
@@ -2000,6 +2070,17 @@
     "action": "Approve",
     "allow_self_approval": 1,
     "allowed": "HOD",
+    "condition": null,
+    "next_state": "Approved",
+    "parent": "Employee Separation",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Approved by HR User"
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "HR User",
     "condition": null,
     "next_state": "Approved",
     "parent": "Employee Separation",
