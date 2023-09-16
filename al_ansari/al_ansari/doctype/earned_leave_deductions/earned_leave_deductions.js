@@ -3,6 +3,17 @@
 
 frappe.ui.form.on('Earned Leave Deductions', {
     refresh: function(frm) {
+        frm.set_query("payroll_cost_center", function() {
+            return {
+                filters: [
+                    ["Company","=", frm.doc.company]
+                ]
+            }
+        });
+    },
+    company: function(frm) {
+        
+        frm.set_value("payroll_cost_center","")
         
     },
     from_date: function(frm) {
@@ -19,8 +30,8 @@ frappe.ui.form.on('Earned Leave Deductions', {
         }
     },
 	get_employees: function(frm) {
-        if(!frm.doc.from_date || !frm.doc.to_date) {
-            frappe.throw("From Date and To Date should be selected to fetch Employee Records")
+        if(!frm.doc.from_date || !frm.doc.to_date || !frm.doc.company) {
+            frappe.throw("From Date, To Date and Company should be selected to fetch Employee Records")
         }
         
         frm.clear_table("deduction_ratio")

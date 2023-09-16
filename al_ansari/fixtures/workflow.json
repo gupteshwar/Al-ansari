@@ -169,7 +169,7 @@
   "doctype": "Workflow",
   "document_type": "Appraisal",
   "is_active": 1,
-  "modified": "2023-05-25 14:30:08.629466",
+  "modified": "2023-07-23 14:32:51.151870",
   "name": "Appraisal Workflow",
   "override_status": 0,
   "parent": "Appraisal",
@@ -248,6 +248,17 @@
     "action": "Review",
     "allow_self_approval": 1,
     "allowed": "Employee",
+    "condition": null,
+    "next_state": "Submitted by Staff",
+    "parent": "Appraisal Workflow",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Draft"
+   },
+   {
+    "action": "Review",
+    "allow_self_approval": 1,
+    "allowed": "HR User",
     "condition": null,
     "next_state": "Submitted by Staff",
     "parent": "Appraisal Workflow",
@@ -1903,7 +1914,7 @@
   "doctype": "Workflow",
   "document_type": "Employee Separation",
   "is_active": 1,
-  "modified": "2023-04-27 16:48:59.509889",
+  "modified": "2023-07-23 14:26:37.450259",
   "name": "Employee Separation",
   "override_status": 0,
   "parent": null,
@@ -1975,6 +1986,19 @@
     "state": "Approved",
     "update_field": null,
     "update_value": "Approved"
+   },
+   {
+    "allow_edit": "HR User",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Employee Separation",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Approved",
+    "update_field": null,
+    "update_value": "Approved"
    }
   ],
   "transitions": [
@@ -2021,6 +2045,28 @@
     "parentfield": "transitions",
     "parenttype": "Workflow",
     "state": "Submitted"
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "HR User",
+    "condition": null,
+    "next_state": "Approved",
+    "parent": "Employee Separation",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Approved by HR User"
+   },
+   {
+    "action": "Submit",
+    "allow_self_approval": 1,
+    "allowed": "HR User",
+    "condition": null,
+    "next_state": "Submitted",
+    "parent": "Employee Separation",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Draft"
    }
   ],
   "workflow_name": "Employee Separation",
@@ -2226,7 +2272,7 @@
   "doctype": "Workflow",
   "document_type": "Attendance Request",
   "is_active": 1,
-  "modified": "2023-02-16 18:37:57.563180",
+  "modified": "2023-07-23 14:32:11.334747",
   "name": "Attendance Request",
   "override_status": 0,
   "parent": null,
@@ -2279,6 +2325,17 @@
     "action": "Submit",
     "allow_self_approval": 1,
     "allowed": "Employee",
+    "condition": null,
+    "next_state": "Submitted",
+    "parent": "Attendance Request",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Draft"
+   },
+   {
+    "action": "Submit",
+    "allow_self_approval": 1,
+    "allowed": "HR User",
     "condition": null,
     "next_state": "Submitted",
     "parent": "Attendance Request",
@@ -2789,7 +2846,7 @@
   "doctype": "Workflow",
   "document_type": "Leave Application",
   "is_active": 1,
-  "modified": "2023-04-13 08:56:03.245684",
+  "modified": "2023-07-23 14:31:27.404740",
   "name": "Leave Approval 2023 - Final",
   "override_status": 0,
   "parent": "Leave Application",
@@ -3060,6 +3117,17 @@
     "parentfield": "transitions",
     "parenttype": "Workflow",
     "state": "HR Pending"
+   },
+   {
+    "action": "Submit",
+    "allow_self_approval": 1,
+    "allowed": "HR User",
+    "condition": null,
+    "next_state": "Approval Pending",
+    "parent": "Leave Approval 2023 - Final",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Draft"
    }
   ],
   "workflow_name": "Leave Approval 2023 - Final",
