@@ -7525,14 +7525,14 @@
   "javascript": null,
   "json": null,
   "letter_head": "Al Ansari New 2023",
-  "modified": "2023-06-06 16:14:12.395624",
+  "modified": "2023-09-11 11:48:01.245478",
   "module": "HR",
   "name": "Employees with Current Salary",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
   "prepared_report": 0,
-  "query": "SELECT \r\n    `tabEmployee`.`employee` AS `Employee`,\r\n    `tabEmployee`.`employee_name` AS `Employee Name`,\r\n   `tabEmployee`.`date_of_joining` AS `Joined`,\r\n   `tabEmployee`.`designation` AS `Designation`,\r\n   `tabEmployee`.`grade` AS `Grade`,\r\n   `tabEmployee`.`payroll_cost_center` AS `Cost Center`,\r\n   `tabEmployee`.`bank_name` AS `Bank`,\r\n   `tabEmployee`.`bank_ac_no` AS `Bank Account`,\r\n   `tabEmployee`.`working_status` AS `Working Status`,\r\n    `tabEmployee`.`visa_company` AS `Visa`,\r\n    `tabEmployee`.`salary_hold` AS `Salary Hold`,\r\n   `tabEmployee`.`bank_ac_no` AS `Bank Account`,\r\n    `tabSalary Structure Assignment`.`salary_structure` AS `Salary Structure`,\r\n    `tabSalary Structure Assignment`.`from_date` AS `From Date`,\r\n    `tabSalary Structure Assignment`.`base` AS `Basic`,\r\n    `tabSalary Structure Assignment`.`hra` AS `HRA`,\r\n    `tabSalary Structure Assignment`.`food` AS `Food`,\r\n    `tabSalary Structure Assignment`.`transport` AS `Transport`,\r\n    `tabSalary Structure Assignment`.`others` AS `others`,\r\n    `tabSalary Structure Assignment`.`living` AS `Living`,\r\n    `tabSalary Structure Assignment`.`fixed_overtime` AS `Fixed OT`,\r\n    `tabSalary Structure Assignment`.`utility` AS `Utility`,\r\n    `tabSalary Structure Assignment`.`gsm` AS `GSM`,\r\n    `tabSalary Structure Assignment`.`total_monthly_salary` AS `Total`,\r\n    `tabSalary Structure Assignment`.`monthly_pay` AS `Base for Overtime`,\r\n    `tabSalary Structure Assignment`.`workflow_state` AS `Approval Status`,\r\n   `tabSalary Structure Assignment`.`company` AS `Company`\r\n   \r\nFROM \r\n    `tabEmployee`\r\nINNER JOIN\r\n    `tabSalary Structure Assignment`\r\nON\r\n    `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\nWHERE\r\n\r\n`tabSalary Structure Assignment`.`docstatus` = 1\r\n AND `tabEmployee`.`status` = 'Active'\r\n AND \r\n\r\n    `tabSalary Structure Assignment`.`from_date` = (\r\n        SELECT \r\n            MAX(`from_date`)\r\n        FROM \r\n            `tabSalary Structure Assignment`\r\n        WHERE \r\n            `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\n    );\r\n",
+  "query": "SELECT \r\n    `tabEmployee`.`employee` AS `Employee`,\r\n    `tabEmployee`.`employee_name` AS `Employee Name`,\r\n   `tabEmployee`.`date_of_joining` AS `Joined`,\r\n   `tabEmployee`.`designation` AS `Designation`,\r\n   `tabEmployee`.`grade` AS `Grade`,\r\n   `tabEmployee`.`payroll_cost_center` AS `Cost Center`,\r\n   `tabEmployee`.`bank_name` AS `Bank`,\r\n   `tabEmployee`.`bank_ac_no` AS `Bank Account`,\r\n   `tabEmployee`.`working_status` AS `Working Status`,\r\n    `tabEmployee`.`visa_company` AS `Visa`,\r\n    `tabEmployee`.`salary_hold` AS `Salary Hold`,\r\n   `tabEmployee`.`bank_ac_no` AS `Bank Account`,\r\n      `tabEmployee`.`salary_mode` AS `Salary Mode`,\r\n    `tabSalary Structure Assignment`.`salary_structure` AS `Salary Structure`,\r\n    `tabSalary Structure Assignment`.`from_date` AS `From Date`,\r\n    `tabSalary Structure Assignment`.`base` AS `Basic`,\r\n    `tabSalary Structure Assignment`.`hra` AS `HRA`,\r\n      `tabSalary Structure Assignment`.`food` AS `Food`,\r\n    `tabSalary Structure Assignment`.`transport` AS `Transport`,\r\n    `tabSalary Structure Assignment`.`others` AS `others`,\r\n    `tabSalary Structure Assignment`.`living` AS `Living`,\r\n    `tabSalary Structure Assignment`.`fixed_overtime` AS `Fixed OT`,\r\n    `tabSalary Structure Assignment`.`utility` AS `Utility`,\r\n    `tabSalary Structure Assignment`.`gsm` AS `GSM`,\r\n    `tabSalary Structure Assignment`.`total_monthly_salary` AS `Total`,\r\n    `tabSalary Structure Assignment`.`monthly_pay` AS `Base for Overtime`,\r\n    `tabSalary Structure Assignment`.`workflow_state` AS `Approval Status`,\r\n   `tabSalary Structure Assignment`.`company` AS `Company`\r\n   \r\nFROM \r\n    `tabEmployee`\r\nINNER JOIN\r\n    `tabSalary Structure Assignment`\r\nON\r\n    `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\nWHERE\r\n\r\n`tabSalary Structure Assignment`.`docstatus` = 1\r\n AND `tabEmployee`.`status` = 'Active'\r\n AND \r\n\r\n    `tabSalary Structure Assignment`.`from_date` = (\r\n        SELECT \r\n            MAX(`from_date`)\r\n        FROM \r\n            `tabSalary Structure Assignment`\r\n        WHERE \r\n            `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\n\t\tand `tabSalary Structure Assignment`.`docstatus` = 1\r\n    );",
   "ref_doctype": "Salary Structure Assignment",
   "reference_report": null,
   "report_name": "Employees with Current Salary",
@@ -7618,7 +7618,7 @@
  {
   "add_total_row": 0,
   "columns": [],
-  "disable_prepared_report": 1,
+  "disable_prepared_report": 0,
   "disabled": 0,
   "docstatus": 0,
   "doctype": "Report",
@@ -8016,6 +8016,429 @@
     "parentfield": "roles",
     "parenttype": "Report",
     "role": "Attendance Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[],\"fields\":[[\"name\",\"Opportunity\"],[\"docstatus\",\"Opportunity\"],[\"opportunity_from\",\"Opportunity\"],[\"party_name\",\"Opportunity\"],[\"subject\",\"Opportunity\"],[\"opportunity_type\",\"Opportunity\"],[\"status\",\"Opportunity\"],[\"contact_by\",\"Opportunity\"],[\"customer_name\",\"Opportunity\"],[\"opportunity_amount\",\"Opportunity\"],[\"currency\",\"Opportunity\"]],\"order_by\":\"`tabOpportunity`.`modified` desc\",\"add_totals_row\":0,\"page_length\":500,\"column_widths\":{\"name\":120,\"opportunity_from\":120,\"party_name\":120,\"subject\":120,\"opportunity_type\":120,\"status\":120,\"contact_by\":75,\"customer_name\":120,\"opportunity_amount\":120,\"currency\":120},\"group_by\":null}",
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-08-23 15:59:28.561226",
+  "module": "CRM",
+  "name": "pk",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Opportunity",
+  "reference_report": null,
+  "report_name": "pk",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "parent": "pk",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Manager"
+   },
+   {
+    "parent": "pk",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 1,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-09-10 11:24:31.404089",
+  "module": "HR",
+  "name": "test",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT `tabEmployee`.`employee_id` AS `Employee ID`\r\nFROM `tabEmployee`;\r\n",
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "test",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": []
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[[\"Opportunity\",\"owner\",\"=\",\"jayaram.palissery@alansariglobal.com\",false]],\"fields\":[[\"name\",\"Opportunity\"],[\"docstatus\",\"Opportunity\"],[\"title\",\"Opportunity\"],[\"opportunity_from\",\"Opportunity\"],[\"party_name\",\"Opportunity\"],[\"subject\",\"Opportunity\"],[\"opportunity_type\",\"Opportunity\"],[\"status\",\"Opportunity\"],[\"expected_closing\",\"Opportunity\"],[\"contact_by\",\"Opportunity\"],[\"opportunity_amount\",\"Opportunity\"],[\"currency\",\"Opportunity\"],[\"customer_name\",\"Opportunity\"]],\"order_by\":\"`tabOpportunity`.`modified` desc\",\"page_length\":20,\"column_widths\":{\"name\":120,\"title\":120,\"opportunity_from\":120,\"party_name\":120,\"subject\":120,\"opportunity_type\":120,\"status\":120,\"expected_closing\":120,\"contact_by\":75,\"opportunity_amount\":120,\"currency\":120,\"customer_name\":120},\"group_by\":null}",
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-08-21 09:20:55.378743",
+  "module": "CRM",
+  "name": "jay",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Opportunity",
+  "reference_report": null,
+  "report_name": "jay",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "parent": "jay",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Manager"
+   },
+   {
+    "parent": "jay",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "jay",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[],\"fields\":[[\"name\",\"Lead\"],[\"docstatus\",\"Lead\"],[\"title\",\"Lead\"],[\"image\",\"Lead\"],[\"company_name\",\"Lead\"],[\"lead_owner\",\"Lead\"],[\"status\",\"Lead\"]],\"order_by\":\"`tabLead`.`modified` desc\",\"add_totals_row\":0,\"page_length\":20,\"column_widths\":{\"name\":120,\"title\":120,\"image\":120,\"company_name\":120,\"lead_owner\":120,\"status\":120},\"group_by\":null}",
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-08-23 16:31:09.367877",
+  "module": "CRM",
+  "name": "pradeep",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Lead",
+  "reference_report": null,
+  "report_name": "pradeep",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "parent": "pradeep",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Manager"
+   },
+   {
+    "parent": "pradeep",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "pradeep",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "pradeep",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   },
+   {
+    "parent": "pradeep",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-09-10 11:06:49.986049",
+  "module": "CRM",
+  "name": "Opportunities Lost since January - Current Year",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\ntabOpportunity. profit_center as \"Profit Center\",\r\nCOUNT(tabOpportunity.opportunity_amount) as \"Total\",\r\nSUM(tabOpportunity.opportunity_amount) as \"Amount\"\r\nFROM\r\ntabOpportunity\r\nWHERE\r\ntabOpportunity.modified BETWEEN DATE_SUB(DATE_ADD(LAST_DAY(CURDATE() - INTERVAL 1 MONTH), INTERVAL 1 DAY), INTERVAL 1 YEAR) AND CURDATE()\r\nAND tabOpportunity.status = 'Lost'\r\nGROUP BY\r\ntabOpportunity. profit_center\r\n",
+  "ref_doctype": "Opportunity",
+  "reference_report": null,
+  "report_name": "Opportunities Lost since January - Current Year",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Opportunities Lost since January - Current Year",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   },
+   {
+    "parent": "Opportunities Lost since January - Current Year",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "Opportunities Lost since January - Current Year",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-09-10 11:10:24.057417",
+  "module": "CRM",
+  "name": "Opportunities Lost since April - Current Year",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\ntabOpportunity. profit_center as \"Profit Center\",\r\nCOUNT(tabOpportunity.opportunity_amount) as \"Total\",\r\nSUM(tabOpportunity.opportunity_amount) as \"Amount\"\r\nFROM\r\ntabOpportunity\r\nWHERE\r\nDATE(tabOpportunity.modified) BETWEEN '2023-04-30' AND CURDATE()\r\nAND tabOpportunity.status = 'Lost'\r\nGROUP BY\r\ntabOpportunity. profit_center\r\n",
+  "ref_doctype": "Opportunity",
+  "reference_report": null,
+  "report_name": "Opportunities Lost since April - Current Year",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Opportunities Lost since April - Current Year",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   },
+   {
+    "parent": "Opportunities Lost since April - Current Year",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "Opportunities Lost since April - Current Year",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-09-10 11:13:11.364479",
+  "module": "CRM",
+  "name": "Opportunities Lost  - Current Year",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n    tabOpportunity.profit_center AS \"Profit Center\",\r\n        COUNT(tabOpportunity.opportunity_amount) AS \"Count\",\r\n\r\n    SUM(CASE WHEN MONTH(tabOpportunity.modified) = 1 THEN tabOpportunity.opportunity_amount ELSE 0 END) AS \"January\",\r\n    SUM(CASE WHEN MONTH(tabOpportunity.modified) = 2 THEN tabOpportunity.opportunity_amount ELSE 0 END) AS \"February\",\r\n    SUM(CASE WHEN MONTH(tabOpportunity.modified) = 3 THEN tabOpportunity.opportunity_amount ELSE 0 END) AS \"March\",\r\n    SUM(CASE WHEN MONTH(tabOpportunity.modified) = 4 THEN tabOpportunity.opportunity_amount ELSE 0 END) AS \"April\",\r\n    SUM(CASE WHEN MONTH(tabOpportunity.modified) = 5 THEN tabOpportunity.opportunity_amount ELSE 0 END) AS \"May\",\r\n    SUM(CASE WHEN MONTH(tabOpportunity.modified) = 6 THEN tabOpportunity.opportunity_amount ELSE 0 END) AS \"June\",\r\n    SUM(CASE WHEN MONTH(tabOpportunity.modified) = 7 THEN tabOpportunity.opportunity_amount ELSE 0 END) AS \"July\",\r\n    SUM(CASE WHEN MONTH(tabOpportunity.modified) = 8 THEN tabOpportunity.opportunity_amount ELSE 0 END) AS \"August\",\r\n    SUM(CASE WHEN MONTH(tabOpportunity.modified) = 9 THEN tabOpportunity.opportunity_amount ELSE 0 END) AS \"September\",\r\n    SUM(CASE WHEN MONTH(tabOpportunity.modified) = 10 THEN tabOpportunity.opportunity_amount ELSE 0 END) AS \"October\",\r\n    SUM(CASE WHEN MONTH(tabOpportunity.modified) = 11 THEN tabOpportunity.opportunity_amount ELSE 0 END) AS \"November\",\r\n    SUM(CASE WHEN MONTH(tabOpportunity.modified) = 12 THEN tabOpportunity.opportunity_amount ELSE 0 END) AS \"December\",\r\n    SUM(tabOpportunity.opportunity_amount) AS \"Total Amount\"\r\nFROM\r\n    tabOpportunity\r\nWHERE\r\n    YEAR(tabOpportunity.modified) = YEAR(CURDATE())\r\n    AND tabOpportunity.status = 'Lost'\r\nGROUP BY\r\n    tabOpportunity.profit_center;\r\n",
+  "ref_doctype": "Opportunity",
+  "reference_report": null,
+  "report_name": "Opportunities Lost  - Current Year",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Opportunities Lost  - Current Year",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   },
+   {
+    "parent": "Opportunities Lost  - Current Year",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "Opportunities Lost  - Current Year",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-09-10 11:30:26.236546",
+  "module": "CRM",
+  "name": "Opportunities Lost  - Current Year - Detailed",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n    tabOpportunity.profit_center AS \"Profit Center\",\r\n    tabOpportunity.customer_name as \"Customer\",\r\n     \r\n    tabOpportunity.sales_stage as \"At Stage\",\r\n     tabOpportunity.order_lost_reason as \"Reason\",\r\n     tabOpportunity.modified as \"Updated on\", \r\n     tabOpportunity.modified_by as \"Updated by\",\r\n    tabOpportunity.opportunity_amount AS \"Total Amount\"\r\nFROM\r\n    tabOpportunity\r\nWHERE\r\n    YEAR(tabOpportunity.modified) = YEAR(CURDATE())\r\n    AND tabOpportunity.status = 'Lost'\r\n\r\norder by tabOpportunity.modified desc",
+  "ref_doctype": "Opportunity",
+  "reference_report": null,
+  "report_name": "Opportunities Lost  - Current Year - Detailed",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Opportunities Lost  - Current Year - Detailed",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HOD"
+   },
+   {
+    "parent": "Opportunities Lost  - Current Year - Detailed",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "Opportunities Lost  - Current Year - Detailed",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-09-11 11:57:14.626073",
+  "module": "HR",
+  "name": "WPS - Salary",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    `tabEmployee`.`employee` AS `Employee`,\r\n    `tabEmployee`.`employee_name` AS `Employee Name`,\r\n   `tabEmployee`.`date_of_joining` AS `Joined`,\r\n   `tabEmployee`.`designation` AS `Designation`,\r\n   `tabEmployee`.`grade` AS `Grade`,\r\n   `tabEmployee`.`payroll_cost_center` AS `Cost Center`,\r\n   `tabEmployee`.`bank_name` AS `Bank`,\r\n   `tabEmployee`.`bank_ac_no` AS `Bank Account`,\r\n   `tabEmployee`.`working_status` AS `Working Status`,\r\n    `tabEmployee`.`visa_company` AS `Visa`,\r\n    `tabEmployee`.`salary_hold` AS `Salary Hold`,\r\n   `tabEmployee`.`bank_ac_no` AS `Bank Account`,\r\n      `tabEmployee`.`salary_mode` AS `Salary Mode`,\r\n    `tabSalary Structure Assignment`.`salary_structure` AS `Salary Structure`,\r\n    `tabSalary Structure Assignment`.`from_date` AS `From Date`,\r\n    `tabSalary Structure Assignment`.`base` AS `Basic`,\r\n    `tabSalary Structure Assignment`.`hra` AS `HRA`,\r\n      `tabSalary Structure Assignment`.`food` AS `Food`,\r\n    `tabSalary Structure Assignment`.`transport` AS `Transport`,\r\n    `tabSalary Structure Assignment`.`others` AS `others`,\r\n    `tabSalary Structure Assignment`.`living` AS `Living`,\r\n    `tabSalary Structure Assignment`.`fixed_overtime` AS `Fixed OT`,\r\n    `tabSalary Structure Assignment`.`utility` AS `Utility`,\r\n    `tabSalary Structure Assignment`.`gsm` AS `GSM`,\r\n    `tabSalary Structure Assignment`.`total_monthly_salary` AS `Total`,\r\n    `tabSalary Structure Assignment`.`monthly_pay` AS `Base for Overtime`,\r\n    `tabSalary Structure Assignment`.`workflow_state` AS `Approval Status`,\r\n   `tabSalary Structure Assignment`.`company` AS `Company`\r\n   \r\nFROM \r\n    `tabEmployee`\r\nINNER JOIN\r\n    `tabSalary Structure Assignment`\r\nON\r\n    `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\n    \r\nINNER JOIN\r\n    `tabSalary Slip`\r\nON\r\n  `tabEmployee`.`name` = `tabSalary Slip`.`employee`\r\n\r\nWHERE\r\n\r\n`tabSalary Structure Assignment`.`docstatus` = 1\r\n AND `tabEmployee`.`status` = 'Active'\r\n AND \r\n\r\n    `tabSalary Structure Assignment`.`from_date` = (\r\n        SELECT \r\n            MAX(`from_date`)\r\n        FROM \r\n            `tabSalary Structure Assignment`\r\n        WHERE \r\n            `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\n\t\tand `tabSalary Structure Assignment`.`docstatus` = 1\r\n    );",
+  "ref_doctype": "Payroll Entry",
+  "reference_report": null,
+  "report_name": "WPS - Salary",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "WPS - Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2023-09-11 13:38:54.779629",
+  "module": "HR",
+  "name": "WPS - Salary - Oman",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n   CASE WHEN `tabEmployee`.`nationality` = 'Oman' THEN 'C' ELSE 'P' END AS `Employee ID Type`,\r\n    `tabEmployee`.`passport_number` AS `Employee ID`,   \r\n    `tabEmployee`.`employee_name` AS `Employee Name`,\r\n    `tabEmployee`.`bank_code` AS `Employee BIC Code`,\r\n    `tabEmployee`.`bank_ac_no` AS `Employee Account`,\r\n    'M' AS `Salary Frequency`,\r\n    `tabSalary Slip`.`payment_days` AS `Number Of Working days`, \r\n    `tabSalary Slip`.`net_pay` AS `Net Salary`, \r\n  \r\n(\r\n    SELECT `salary_component`\r\n    FROM `tabSalary Detail`\r\n    WHERE `tabSalary Slip`.`name` = `tabSalary Detail`.`parent`\r\n     LIMIT 1\r\n) AS `Basic Pay`\r\n    ,\r\n  \r\n    `tabSalary Slip`.`total_working_hours` AS `Extra Hours` ,\r\n    (`tabSalary Slip`.`gross_pay`-`tabSalary Slip`.`net_pay`) AS `Extra Extra Income` ,\r\n    `tabSalary Slip`.`total_deduction` AS `Deductions` ,\r\n    `tabSalary Slip`.`net_pay` AS `Social Security Deductions` ,\r\n    `tabSalary Slip`.`mode_of_payment` AS `mode` ,\r\n    `tabEmployee`.`payroll_cost_center` AS `CC/DEPT`,  \r\n    `tabEmployee`.`group` AS `Group`,\r\n    `tabEmployee`.`working_status` AS `Status`,\r\n    `tabEmployee`.`Company` AS `Work Company`,\r\n    `tabEmployee`.`visa_company` AS `Visa Company`,\r\n    'Salary ---' AS `Notes/Comments` \r\n\r\n   \r\n\r\nFROM \r\n    `tabEmployee`\r\nINNER JOIN\r\n    `tabSalary Structure Assignment`\r\nON\r\n    `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\n    \r\nINNER JOIN\r\n    `tabSalary Slip`\r\nON\r\n  `tabEmployee`.`name` = `tabSalary Slip`.`employee`\r\n\r\nWHERE\r\n\r\n`tabSalary Structure Assignment`.`docstatus` = 1\r\n AND `tabEmployee`.`status` = 'Active'\r\n AND \r\n\r\n    `tabSalary Structure Assignment`.`from_date` = (\r\n        SELECT \r\n            MAX(`from_date`)\r\n        FROM \r\n            `tabSalary Structure Assignment`\r\n        WHERE \r\n            `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\n\t\tand `tabSalary Structure Assignment`.`docstatus` = 1\r\n    );",
+  "ref_doctype": "Payroll Entry",
+  "reference_report": null,
+  "report_name": "WPS - Salary - Oman",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "WPS - Salary - Oman",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll Manager"
    }
   ]
  },
@@ -9910,9 +10333,9 @@
   "javascript": null,
   "json": null,
   "letter_head": null,
-  "modified": "2020-06-24 17:16:40.251116",
+  "modified": "2020-06-24 17:16:13.307053",
   "module": "Education",
-  "name": "Absent Student Report",
+  "name": "Student Monthly Attendance Sheet",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
@@ -9920,7 +10343,7 @@
   "query": null,
   "ref_doctype": "Student Attendance",
   "reference_report": null,
-  "report_name": "Absent Student Report",
+  "report_name": "Student Monthly Attendance Sheet",
   "report_script": null,
   "report_type": "Script Report",
   "roles": []
@@ -9937,9 +10360,9 @@
   "javascript": null,
   "json": null,
   "letter_head": null,
-  "modified": "2020-06-24 17:16:13.307053",
+  "modified": "2020-06-24 17:16:40.251116",
   "module": "Education",
-  "name": "Student Monthly Attendance Sheet",
+  "name": "Absent Student Report",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
@@ -9947,7 +10370,7 @@
   "query": null,
   "ref_doctype": "Student Attendance",
   "reference_report": null,
-  "report_name": "Student Monthly Attendance Sheet",
+  "report_name": "Absent Student Report",
   "report_script": null,
   "report_type": "Script Report",
   "roles": []

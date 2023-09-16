@@ -5,15 +5,52 @@ import frappe
 from frappe.model.document import Document
 import json
 from frappe import _
+from frappe.utils.nestedset import get_descendants_of
+from frappe.utils import cint, cstr, flt, formatdate, getdate, now
 
 class EarnedLeaveDeductions(Document):
 	# pass
+	def validate(self):
+		self.remove_zero_and_duplicate_entries()
+		self.revise_indexes()
+		
+	def remove_zero_and_duplicate_entries(self):
+		if self.deduction_ratio:
+			print(self.deduction_ratio)
+			for d in reversed(range(len(self.deduction_ratio))):
+				if self.deduction_ratio[d].to_be_deducted == 0:
+					self.remove(self.deduction_ratio[d])
+					# if self.deduction_ratio[d].idx < len(self.deduction_ratio)-1:
+					# 	self.deduction_ratio[d+1].idx = self.deduction_ratio[d]
+
+				else:
+					existing_rec = frappe.get_list('Leave Allocation',
+					fields= ["name"],
+					filters= [
+							['edl_from_date',"=",frappe.utils.add_months(self.from_date, 1)],
+							['edl_to_date',"=",frappe.utils.add_months(self.to_date, 1)],
+							['employee',"=",self.deduction_ratio[d].employee_id],
+							['leave_type',"=", "Annual Leave"],
+							['docstatus','=',1]
+						]
+					)
+					if existing_rec:
+						self.remove(self.deduction_ratio[d])
+					
+	def revise_indexes(self):
+		for i, d in enumerate(self.get("deduction_ratio")):
+			d.idx = i+1
+
+
 	def on_submit(self):
 		allocation_na = []
 		if self.deduction_ratio:
 			for d in range(len(self.deduction_ratio)):
 				if not self.deduction_ratio[d].allocation_from_date or not self.deduction_ratio[d].allocation_end_date:
 					allocation_na.append(self.deduction_ratio[d].employee_id)
+		else:
+			frappe.throw(_("There are no entries to be calculated for the selected filters"))
+
 		if allocation_na:
 			frappe.throw(_("Allocation not available for the records {0}").format(allocation_na))
 		self.negative_leave_allocation()
@@ -33,7 +70,8 @@ class EarnedLeaveDeductions(Document):
 							['edl_to_date',"=",frappe.utils.add_months(self.to_date, 1)],
 							['employee',"=",i.employee_id],
 							['leave_type',"=", "Annual Leave"],
-							['docstatus','=',1]
+							['docstatus','=',1],
+							['company',"=",self.company]
 						]
 					)
 				if existing_rec:
@@ -44,6 +82,7 @@ class EarnedLeaveDeductions(Document):
 						leave_alloc.employee = i.employee_id
 						leave_alloc.employee_name = i.employee_name
 						leave_alloc.leave_type= "Annual Leave"
+						leave_alloc.company = self.company
 						leave_alloc.new_leaves_allocated = -(i.to_be_deducted)
 						leave_alloc.edl_from_date = frappe.utils.add_months(self.from_date, 1) # frm.get("from_date")
 						leave_alloc.edl_to_date =  frappe.utils.add_months(self.to_date, 1) # frm.get("to_date")
@@ -73,7 +112,8 @@ class EarnedLeaveDeductions(Document):
 							['edl_from_date',"=",frappe.utils.add_months(self.from_date, 1)],
 							['edl_to_date',"=",frappe.utils.add_months(self.to_date, 1)],
 							['leave_type',"=", "Annual Leave"],
-							['docstatus',"=",1]
+							['docstatus',"=",1],
+							['company',"=",self.company]
 						])
 		
 		issue_to_cancel = []
@@ -116,15 +156,17 @@ class EarnedLeaveDeductions(Document):
 			error_msg = _(
 				"No employees found for the mentioned criteria:<br>From Date: {0}<br>To Date: {1}"
 			).format(
-				frappe.bold(self.from_date),
-				frappe.bold(self.to_date),
+				frappe.bold(formatdate(self.from_date)),
+				frappe.bold(formatdate(self.to_date)),
 			)
+			if self.company:
+				error_msg += "<br>" + _("Company: {0}").format(frappe.bold(self.company))
 			if self.branch:
 				error_msg += "<br>" + _("Branch: {0}").format(frappe.bold(self.branch))
 			if self.reporting_manager:
 				error_msg += "<br>" + _("Reporting Manager: {0}").format(frappe.bold(self.reporting_manager))
 			if self.payroll_cost_center:
-				error_msg += "<br>" + _("Payroll Cost Center: {0}").format(frappe.bold(self.payroll_cost_center))
+				error_msg += "<br>" + _("Payroll Cost Center or its Descendant Cost Centers: {0}").format(frappe.bold(self.payroll_cost_center))
 			frappe.throw(error_msg, title=_("No employees found"))
 
 		return employee_list
@@ -133,6 +175,7 @@ class EarnedLeaveDeductions(Document):
 		filters = frappe._dict()
 		filters["from_date"] = self.from_date
 		filters["to_date"] = self.to_date
+		filters["company"] = self.company 
 		filters["reports_to"] = self.reporting_manager
 		filters["branch"] = self.branch
 		filters["payroll_cost_center"] = self.payroll_cost_center 
@@ -140,9 +183,14 @@ class EarnedLeaveDeductions(Document):
 
 def get_filter_condition(filters):
 	cond = ""
-	for f in ["branch", "reports_to","payroll_cost_center"]: 
+	# cond1 = ""
+	for f in ["branch", "reports_to","company"]: 
 		if filters.get(f):
 			cond += " and t2." + f + " = " + frappe.db.escape(filters.get(f))
+	if filters.get('payroll_cost_center'):
+		cost_center_list = get_descendants_of("Cost Center",filters.get('payroll_cost_center'))
+		cost_center_list.append(filters.get('payroll_cost_center'))
+		cond+= "and t2.payroll_cost_center in (" + str(cost_center_list)[1:-1] +")"
 
 	return cond
 

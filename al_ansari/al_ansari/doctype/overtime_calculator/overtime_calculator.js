@@ -2,6 +2,20 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Overtime Calculator', {
+	refresh: function(frm) {
+		frm.set_query("payroll_cost_center", function() {
+		    return {
+		        filters: [
+		            ["Company","=", frm.doc.company]
+		        ]
+		    }
+		});
+	},
+	company: function(frm) {
+		
+		frm.set_value("payroll_cost_center","")
+		
+	},
 	from_date: function(frm) {
 	    if(frm.doc.from_date) {
 	        frm.set_value('to_date',moment(frm.doc.from_date).endOf('month').format('YYYY-MM-DD'))
@@ -46,12 +60,14 @@ frappe.ui.form.on('Overtime Calculator', {
 		}
 	},
 	get_employees: function(frm) {
+		frm.clear_table("overtime_calculator_detail")
+        frm.refresh_fields("overtime_calculator_detail");
 		if(frm.doc.branch || frm.doc.reporting_manager) {
 			frappe.call({
 	            doc: frm.doc,
 	            method: 'get_employees_on_oc',
 	        }).then(r => {
-	        	frm.clear_table('overtime_calculator_detail')
+	        	// frm.clear_table('overtime_calculator_detail')
 	            if(r.message)
 	            for(var i=0; i<r.message.length;i++){
 	            	console.log(r.message)
