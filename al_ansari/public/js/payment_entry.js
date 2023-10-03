@@ -64,7 +64,56 @@ frappe.ui.form.on("Payment Entry", {
                 d.show();
         }     
     },
+    refresh:function(frm) {
+        frm.add_custom_button(__('Get Detailed Entries'), function(){ 
+            fetch_detailed_entries(frm)
+            
+                
+        })
+        if (cur_frm.doc.bifurcate_cost_center == 1 && frm.doc.references_details.length>0) {
+            frm.add_custom_button(__('Split Deductions'), function(){
+                if(frm.doc.deductions.length > 0){
+                    // var splitted_records_deductions = split_entries_as_per_cc(frm,frm.doc.deductions,frm.doc.references_details)
+                    // console.log("splitted_records_deductions>>>>>",splitted_records_deductions)
+                    // frappe.call({
+                    //     method: "al_ansari.al_ansari.customization.payment_entry.get_general_ledger_data",
+                    //     args: {
+                    //         filters: data
+                    //     },
+                    //     callback: function (r) {
+                    //         console.log(r.message)
+                    //         // d.fields_dict.msg_wrapper.$wrapper.append(r.message);
+                    //     },
+                    // });
 
+                } else {
+                    frappe.throw(__("No Deductions found"))
+                }  
+            }, __("Split"));
+            
+            frm.add_custom_button(__('Split Taxes'), function(){
+                if(frm.doc.taxes.length > 0){
+                    var splitted_records_taxes = split_entries_as_per_cc(frm,frm.doc.taxes,frm.doc.references_details)
+                    // console.log("splitted_records_taxes>>>>>",JSON.stringify(splitted_records_taxes))
+                    // frm.doc.taxes = splitted_records_taxes
+                    // frm.refresh_field('taxes')
+                    // frappe.call({
+                    //     method: "al_ansari.al_ansari.customization.payment_entry.split_entries_as_per_cc",
+                    //     args: {
+                    //         doc: frm.doc
+                    //     },
+                    //     callback: function (r) {
+                    //         console.log(r.message.taxes)
+                    //         // d.fields_dict.msg_wrapper.$wrapper.append(r.message);
+                    //     },
+                    // });
+                    console.log("Doneksaaa")
+                } else {
+                    frappe.throw(__("No taxes found"))
+                }         
+            }, __("Split"));   
+        }
+    },
     onload: function(frm) {
         if (frappe.session.user) {
             frappe.call({
@@ -90,5 +139,96 @@ frappe.ui.form.on("Payment Entry", {
                 }
             });
         }
+    },
+    paid_amount: function(frm) {
+        frm.trigger('fetch_detailed_entries')
+    },
+    validate: function(frm) {
+        if (cur_frm.doc.references_details && cur_frm.doc.references_details.length >0 && frm.doc.bifurcate_cost_center ==1){
+            var total_amt = 0
+            cur_frm.doc.references_details.forEach(function (rd) {
+                total_amt += rd.allocated_amount 
+            })
+            // if (total_amt>frm.doc.paid_amount) {
+            //     frappe.throw(__("The sum total of amount in Payment Entry Reference Items table should not exceed the paid amount"))
+            // }
+            frm.set_value('paid_amount',total_amt)
+        }
     }
 });
+
+function split_entries_as_per_cc(frm,taxes,references_details) {
+    var splitted_records = []
+    var counter = 0
+    // taxes.forEach(function (row) {
+    //     references_details.forEach(function(ref_row){
+    //         counter += counter
+    //         // var cost_center = ref_row.custom_cost_center
+    //         // // var entered_amt = row.tax_amount
+    //         // row['cost_center'] = cost_center
+    //         // row['tax_amount'] = ref_row.amount //(((ref_row.amount/frm.doc.paid_amount)*100) *entered_amt)/100
+    //         row.cost_center = ref_row.custom_cost_center
+    //         row.cost_center = ref_row.amount
+    //         row.idx = counter
+    //         splitted_records.push(row)            
+    //     })
+    // })
+    var original_taxes = taxes
+    frm.clear_table('taxes')
+    frm.refresh_field('taxes')
+    for(var i=0;i<original_taxes.length;i++){
+        for(var j=0; j<references_details.length; j++) {
+
+            var childTable = cur_frm.add_child("taxes");
+            childTable.charge_type = original_taxes[i]['charge_type']
+            childTable.tax_amount=references_details[j]['amount']
+            childTable.cost_center=references_details[j]['custom_cost_center']
+            childTable.rate=original_taxes[i]['rate']
+            childTable.account_head=original_taxes[i]['account_head']
+
+            cur_frm.refresh_fields("taxes");
+
+        }
+
+    }
+}
+
+
+function fetch_detailed_entries(frm) {
+    if(frm.doc.references) {
+        frm.doc.references.forEach(function (ref) {
+            frappe.call({
+                method: "al_ansari.al_ansari.customization.payment_entry.fetch_detailed_entries",
+                args: {
+                    doc: frm.doc
+                },
+                callback: function (r) {
+                    frm.clear_table('references_details')
+                    if(r.message[0]) {
+                        console.log(r.message[0])
+                        r.message[0].forEach(function(row){
+                            row.forEach(function(r) {
+                                console.log(r, '===========')
+                                var childTable = cur_frm.add_child("references_details");
+                                childTable.custom_cost_center = r.custom_cost_center
+                                childTable.amount = r.amount
+                                childTable.reference_doctype = r.reference_doctype
+                                childTable.reference_name = r.reference_name
+                                childTable.allocated_amount = r.allocated_amount || 0
+                            })
+                            // var childTable = cur_frm.add_child("references_details");
+                            // childTable.custom_cost_center = row.custom_cost_center
+                            // childTable.amount = row.amount
+                            // childTable.reference_doctype = row.reference_doctype
+                            // childTable.reference_name = row.reference_name
+                            // childTable.allocated_amount = row.allocated_amount || 0
+                        })
+                        cur_frm.refresh_fields("references_details");
+                    }
+                   
+                    frm.set_value('bifurcate_cost_center',r.message[1])
+                },
+            });
+        })
+    }
+}

@@ -16,12 +16,19 @@ from erpnext.accounts.utils import get_account_currency
 
 
 def validate_paid_amt_greater_than_outstanding_amt(doc,method):
-    if doc.references:
-        total_outstanding = 0
-        for i in doc.references:
-            total_outstanding = total_outstanding + i.outstanding_amount
-        if  total_outstanding < doc.paid_amount :
-                frappe.throw(title="Amount Exceeded!", msg="Paid amount is greater than the Outstanding amount")
+	if doc.references:
+		total_outstanding = 0
+		for i in doc.references:
+			total_outstanding = total_outstanding + i.outstanding_amount
+		if  total_outstanding < doc.paid_amount :
+				frappe.throw(title="Amount Exceeded!", msg="Paid amount is greater than the Outstanding amount")
+
+	if doc.references_details:
+		total_outstanding = 0
+		for i in doc.references_details:
+			total_outstanding = total_outstanding + i.allocated_amount
+		if total_outstanding > doc.paid_amount:
+			frappe.throw(title="Amount Exceeded!", msg="Allocated amount is less or equal to the Paid Amount")
 
 TRANSLATIONS = frappe._dict()
 
@@ -578,3 +585,69 @@ def get_balance(row, balance, debit_field, credit_field):
 	balance += row.get(debit_field, 0) - row.get(credit_field, 0)
 
 	return balance
+
+# custom method to split tax entries
+@frappe.whitelist()
+def split_entries_as_per_cc(doc):
+	doc = json.loads(doc)
+	references_details = doc['references_details']
+	taxes = doc['taxes']
+	splitted_rows = []
+	for rd in references_details:
+		for t in taxes:
+			entered_amt = t['tax_amount']
+			t['cost_center'] = rd['custom_cost_center']
+			t['tax_amount'] = (((rd['amount']/doc['paid_amount'])*100) * entered_amt)/100
+			splitted_rows.append(t)
+	doc['taxes'] = splitted_rows
+	return doc
+
+# custom method to fetch reference item details cc wise and separately ref document wise
+@frappe.whitelist()
+def fetch_detailed_entries(doc):
+	ref_details = []
+	bifurcated_cost_center = []
+	std_cost_center = []
+	from erpnext.accounts.doctype.payment_entry.payment_entry import get_item_reference_details
+	doc = json.loads(doc)
+	references_details = doc['references_details']
+	references = doc['references']
+	for ref in references:
+		data, bifurcate_cost_center = get_item_reference_details(ref.get('reference_doctype'),ref.get('reference_name'))
+		ref_details.append(data)
+		if bifurcate_cost_center == 1:
+			bifurcated_cost_center.append(bifurcate_cost_center)
+		else:
+			std_cost_center.append(bifurcate_cost_center)
+	
+	if len(bifurcated_cost_center)>0 and len(std_cost_center)>0:
+		frappe.throw(_("Standard and bifurcated_cost_center invoices payment entry cannot be clubbed together"))
+	elif len(bifurcated_cost_center)>0 and len(std_cost_center)==0:
+		bifurcated_cc = 1
+	elif len(bifurcated_cost_center)==0 and len(std_cost_center)>0:	
+		bifurcated_cc = 0
+	ref_details = allocate_paid_amount(doc,ref_details)
+	return ref_details,bifurcated_cc
+
+
+# custom method for allocating paid amount on payment entry
+@frappe.whitelist()
+def allocate_paid_amount(doc,ref_details):
+	paid_amount = doc.get('paid_amount')
+	references = doc.get('references')
+	for ref in ref_details:
+		for i in ref:
+			if paid_amount > i['amount']:
+				i['allocated_amount'] = i['amount']
+				paid_amount -= i['amount']
+			else:
+				i['allocated_amount'] = paid_amount
+
+		# if paid_amount > ref_details[ref]['amount']:
+		# 	ref_details[0][ref]['allocated_amount'] = ref_details[0][ref]['amount']
+		# 	paid_amount -= ref_details[ref]['amount']
+		# else:
+		# 	ref_details[ref]['allocated_amount'] = paid_amount
+		# 	break
+	
+	return ref_details
