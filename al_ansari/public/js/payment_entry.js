@@ -65,54 +65,54 @@ frappe.ui.form.on("Payment Entry", {
         }     
     },
     refresh:function(frm) {
-        frm.add_custom_button(__('Get Detailed Entries'), function(){ 
-            fetch_detailed_entries(frm)
-            
-                
-        })
-        if (cur_frm.doc.bifurcate_cost_center == 1 && frm.doc.references_details.length>0) {
-            frm.add_custom_button(__('Split Deductions'), function(){
-                if(frm.doc.deductions.length > 0){
-                    // var splitted_records_deductions = split_entries_as_per_cc(frm,frm.doc.deductions,frm.doc.references_details)
-                    // console.log("splitted_records_deductions>>>>>",splitted_records_deductions)
-                    // frappe.call({
-                    //     method: "al_ansari.al_ansari.customization.payment_entry.get_general_ledger_data",
-                    //     args: {
-                    //         filters: data
-                    //     },
-                    //     callback: function (r) {
-                    //         console.log(r.message)
-                    //         // d.fields_dict.msg_wrapper.$wrapper.append(r.message);
-                    //     },
-                    // });
-
-                } else {
-                    frappe.throw(__("No Deductions found"))
-                }  
-            }, __("Split"));
-            
-            frm.add_custom_button(__('Split Taxes'), function(){
-                if(frm.doc.taxes.length > 0){
-                    var splitted_records_taxes = split_entries_as_per_cc(frm,frm.doc.taxes,frm.doc.references_details)
-                    // console.log("splitted_records_taxes>>>>>",JSON.stringify(splitted_records_taxes))
-                    // frm.doc.taxes = splitted_records_taxes
-                    // frm.refresh_field('taxes')
-                    // frappe.call({
-                    //     method: "al_ansari.al_ansari.customization.payment_entry.split_entries_as_per_cc",
-                    //     args: {
-                    //         doc: frm.doc
-                    //     },
-                    //     callback: function (r) {
-                    //         console.log(r.message.taxes)
-                    //         // d.fields_dict.msg_wrapper.$wrapper.append(r.message);
-                    //     },
-                    // });
-                    console.log("Doneksaaa")
-                } else {
-                    frappe.throw(__("No taxes found"))
-                }         
-            }, __("Split"));   
+        if(frm.doc.docstatus == 0) {
+            frm.add_custom_button(__('Get Detailed Entries'), function(){ 
+                fetch_detailed_entries(frm)     
+            })
         }
+        // if (cur_frm.doc.bifurcate_cost_center == 1 && frm.doc.references_details.length>0) {
+        //     frm.add_custom_button(__('Split Deductions'), function(){
+        //         if(frm.doc.deductions.length > 0){
+        //             // var splitted_records_deductions = split_entries_as_per_cc(frm,frm.doc.deductions,frm.doc.references_details)
+        //             // console.log("splitted_records_deductions>>>>>",splitted_records_deductions)
+        //             // frappe.call({
+        //             //     method: "al_ansari.al_ansari.customization.payment_entry.get_general_ledger_data",
+        //             //     args: {
+        //             //         filters: data
+        //             //     },
+        //             //     callback: function (r) {
+        //             //         console.log(r.message)
+        //             //         // d.fields_dict.msg_wrapper.$wrapper.append(r.message);
+        //             //     },
+        //             // });
+
+        //         } else {
+        //             frappe.throw(__("No Deductions found"))
+        //         }  
+        //     }, __("Split"));
+            
+        //     frm.add_custom_button(__('Split Taxes'), function(){
+        //         if(frm.doc.taxes.length > 0){
+        //             var splitted_records_taxes = split_entries_as_per_cc(frm,frm.doc.taxes,frm.doc.references_details)
+        //             // console.log("splitted_records_taxes>>>>>",JSON.stringify(splitted_records_taxes))
+        //             // frm.doc.taxes = splitted_records_taxes
+        //             // frm.refresh_field('taxes')
+        //             // frappe.call({
+        //             //     method: "al_ansari.al_ansari.customization.payment_entry.split_entries_as_per_cc",
+        //             //     args: {
+        //             //         doc: frm.doc
+        //             //     },
+        //             //     callback: function (r) {
+        //             //         console.log(r.message.taxes)
+        //             //         // d.fields_dict.msg_wrapper.$wrapper.append(r.message);
+        //             //     },
+        //             // });
+        //             console.log("Doneksaaa")
+        //         } else {
+        //             frappe.throw(__("No taxes found"))
+        //         }         
+        //     }, __("Split"));   
+        // }
     },
     onload: function(frm) {
         if (frappe.session.user) {
@@ -208,7 +208,6 @@ function fetch_detailed_entries(frm) {
                         console.log(r.message[0])
                         r.message[0].forEach(function(row){
                             row.forEach(function(r) {
-                                console.log(r, '===========')
                                 var childTable = cur_frm.add_child("references_details");
                                 childTable.custom_cost_center = r.custom_cost_center
                                 childTable.amount = r.amount
