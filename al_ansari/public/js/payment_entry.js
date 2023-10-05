@@ -65,11 +65,11 @@ frappe.ui.form.on("Payment Entry", {
         }     
     },
     refresh:function(frm) {
-        frm.add_custom_button(__('Get Detailed Entries'), function(){ 
-            fetch_detailed_entries(frm)
-            
-                
-        })
+        if(frm.doc.docstatus == 0) {
+            frm.add_custom_button(__('Get Detailed Entries'), function(){ 
+                fetch_detailed_entries(frm)     
+            })
+        }
         if (cur_frm.doc.bifurcate_cost_center == 1 && frm.doc.references_details.length>0) {
             frm.add_custom_button(__('Split Deductions'), function(){
                 if(frm.doc.deductions.length > 0){
@@ -208,7 +208,6 @@ function fetch_detailed_entries(frm) {
                         console.log(r.message[0])
                         r.message[0].forEach(function(row){
                             row.forEach(function(r) {
-                                console.log(r, '===========')
                                 var childTable = cur_frm.add_child("references_details");
                                 childTable.custom_cost_center = r.custom_cost_center
                                 childTable.amount = r.amount

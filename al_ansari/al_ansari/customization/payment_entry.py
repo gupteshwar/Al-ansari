@@ -642,6 +642,7 @@ def allocate_paid_amount(doc,ref_details):
 				paid_amount -= i['amount']
 			else:
 				i['allocated_amount'] = paid_amount
+				paid_amount -= i['allocated_amount']
 
 		# if paid_amount > ref_details[ref]['amount']:
 		# 	ref_details[0][ref]['allocated_amount'] = ref_details[0][ref]['amount']
@@ -651,3 +652,24 @@ def allocate_paid_amount(doc,ref_details):
 		# 	break
 	
 	return ref_details
+
+@frappe.whitelist()
+def get_cc_deductions(doc):
+	doc = json.loads(doc)
+	account = frappe.db.get_value("Company", doc.get('company'), 'exchange_gain_loss_account')
+	
+	cost_center_ = []
+	for i in doc.get('references_details'):
+		cost_center_.append({i.get('custom_cost_center'): i.get('allocated_amount')})
+	
+	max_value_cost_center = max(cost_center_[0], key=cost_center_[0].get)
+	
+	payment_deductions_dict = []
+	amount = doc.get('difference_amount')
+	diff_amount = 0
+	for i in doc.get('references_details'):
+		if i.get('custom_cost_center') ==  max_value_cost_center:
+			payment_deductions_dict.append({'account': account, 'cost_center': i.get('custom_cost_center'), 'amount': amount})
+		else:
+			payment_deductions_dict.append({'account': account, 'cost_center': i.get('custom_cost_center'), 'amount': diff_amount})
+	return payment_deductions_dict
