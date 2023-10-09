@@ -140,9 +140,9 @@ frappe.ui.form.on("Payment Entry", {
             });
         }
     },
-    paid_amount: function(frm) {
-        frm.trigger('fetch_detailed_entries')
-    },
+    // paid_amount: function(frm) {
+    //     frm.trigger('fetch_detailed_entries')
+    // },
     validate: function(frm) {
         if (cur_frm.doc.references_details && cur_frm.doc.references_details.length >0 && frm.doc.bifurcate_cost_center ==1){
             var total_amt = 0
@@ -211,6 +211,7 @@ function fetch_detailed_entries(frm) {
                                 var childTable = cur_frm.add_child("references_details");
                                 childTable.custom_cost_center = r.custom_cost_center
                                 childTable.amount = r.amount
+                                childTable.outstanding = r.outstanding
                                 childTable.reference_doctype = r.reference_doctype
                                 childTable.reference_name = r.reference_name
                                 childTable.allocated_amount = r.allocated_amount || 0
