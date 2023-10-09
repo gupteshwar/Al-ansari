@@ -639,9 +639,11 @@ def allocate_paid_amount(doc,ref_details):
 		for i in ref:
 			if paid_amount > i['amount']:
 				i['allocated_amount'] = i['amount']
+				i['outstanding'] = i['amount'] - i['allocated_amount']
 				paid_amount -= i['amount']
 			else:
 				i['allocated_amount'] = paid_amount
+				i['outstanding'] = i['amount'] - i['allocated_amount']
 				paid_amount -= i['allocated_amount']
 
 		# if paid_amount > ref_details[ref]['amount']:
