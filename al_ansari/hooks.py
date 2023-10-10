@@ -164,7 +164,8 @@ doc_events = {
 		"validate": ["al_ansari.al_ansari.customization.employee_checkin.validate"]
 	},
 	"Payment Entry":{
-		"before_save":["al_ansari.al_ansari.customization.payment_entry.validate_paid_amt_greater_than_outstanding_amt"]
+		"before_save":["al_ansari.al_ansari.customization.payment_entry.validate_paid_amt_greater_than_outstanding_amt"],
+		"before_submit": "al_ansari.al_ansari.customization.payment_entry.validate_outstanding_amount"
 	},
 	"Sales Order":{
 		"before_save":["al_ansari.al_ansari.customization.sales_order.before_save"],
