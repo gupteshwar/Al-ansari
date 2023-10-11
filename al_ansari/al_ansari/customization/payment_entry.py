@@ -637,14 +637,37 @@ def allocate_paid_amount(doc,ref_details):
 	references = doc.get('references')
 	for ref in ref_details:
 		for i in ref:
-			if paid_amount > i['amount']:
-				i['allocated_amount'] = i['amount']
-				i['outstanding'] = i['amount'] - i['allocated_amount']
-				paid_amount -= i['amount']
+			part_payments = frappe.db.sql("""
+							select
+								sum(per.allocated_amount)
+							from
+								`tabPayment Entry Reference Item` per
+							join
+								`tabPayment Entry` pe
+							on
+								pe.name = per.parent
+							where
+								per.reference_name = '{}'
+								and per.custom_cost_center = '{}'
+								and pe.docstatus = 1
+							""".format(i['reference_name'], i['custom_cost_center']))
+	
+			if part_payments and part_payments[0][0] != None:
+				if i['amount'] == part_payments[0][0]:
+					i['allocated_amount'] = 0
+					paid_amount -= 0
+				else:
+					i['allocated_amount'] = paid_amount
+					paid_amount -= i['allocated_amount']
 			else:
-				i['allocated_amount'] = paid_amount
-				i['outstanding'] = i['amount'] - i['allocated_amount']
-				paid_amount -= i['allocated_amount']
+				if paid_amount > i['amount']:
+					i['allocated_amount'] = i['amount']
+					i['outstanding'] = i['amount'] - i['allocated_amount']
+					paid_amount -= i['amount']
+				else:
+					i['allocated_amount'] = paid_amount
+					i['outstanding'] = i['amount'] - i['allocated_amount']
+					paid_amount -= i['allocated_amount']
 
 		# if paid_amount > ref_details[ref]['amount']:
 		# 	ref_details[0][ref]['allocated_amount'] = ref_details[0][ref]['amount']
@@ -675,3 +698,24 @@ def get_cc_deductions(doc):
 		else:
 			payment_deductions_dict.append({'account': account, 'cost_center': i.get('custom_cost_center'), 'amount': diff_amount})
 	return payment_deductions_dict
+
+def validate_outstanding_amount(doc, method):
+	for i in doc.references_details:
+		outstanding_amount = frappe.db.sql("""
+								select
+									per.amount, sum(per.allocated_amount)
+								from
+									`tabPayment Entry Reference Item` per
+								join
+									`tabPayment Entry` pe
+								on
+									pe.name = per.parent
+								where
+									per.reference_name = '{}'
+									and per.custom_cost_center = '{}'
+									and pe.party = '{}'
+									and pe.docstatus != 2
+							""".format(i.reference_name, i.custom_cost_center, doc.party))
+		if outstanding_amount:
+			i.outstanding = outstanding_amount[0][0] - outstanding_amount[0][1]
+		
