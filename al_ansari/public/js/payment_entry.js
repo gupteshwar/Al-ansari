@@ -1,5 +1,5 @@
 frappe.ui.form.on("Payment Entry", {
-    party: function (frm) {
+    get_ledger: function (frm) {
         if (frm.doc.party_type == 'Supplier' && frm.doc.party) {
             var d = new frappe.ui.Dialog({
                 title: __('Get Ledger based on filters'),
@@ -7,7 +7,8 @@ frappe.ui.form.on("Payment Entry", {
                     {
                         "label": "From Date",
                         "fieldname": "from_date",
-                        "fieldtype": "Date"
+                        "fieldtype": "Date",
+                        "default": frappe.datetime.get_today()
                     },
                     {
                         "fieldname":"party_type",
@@ -26,7 +27,8 @@ frappe.ui.form.on("Payment Entry", {
                     {
                         "label": "To Date",
                         "fieldname": "to_date",
-                        "fieldtype": "Date"
+                        "fieldtype": "Date",
+                        "default": frappe.datetime.get_today()
                     },
                     {
                         "fieldname":"party",
@@ -145,6 +147,7 @@ frappe.ui.form.on("Payment Entry", {
     // },
     validate: function(frm) {
         if (cur_frm.doc.references_details && cur_frm.doc.references_details.length >0 && frm.doc.bifurcate_cost_center ==1){
+           console.log('++++++++++++')
             var total_amt = 0
             cur_frm.doc.references_details.forEach(function (rd) {
                 total_amt += rd.allocated_amount 
