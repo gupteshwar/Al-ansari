@@ -1,0 +1,56 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-10-18 17:52:43.577673",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "cost_center",
+  "debit",
+  "credit",
+  "total_difference"
+ ],
+ "fields": [
+  {
+   "columns": 3,
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Cost Center",
+   "options": "Cost Center"
+  },
+  {
+   "columns": 2,
+   "fieldname": "debit",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Total Debit"
+  },
+  {
+   "columns": 2,
+   "fieldname": "credit",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Total Credit"
+  },
+  {
+   "columns": 3,
+   "fieldname": "total_difference",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Total Difference (Dr - Cr)"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-10-18 18:19:15.877886",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Journal Entry CC Accounting Entries",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
