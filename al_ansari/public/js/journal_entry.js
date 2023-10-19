@@ -1,6 +1,7 @@
 frappe.ui.form.on('Journal Entry', {
     before_save:function(frm){
         // validate_posting_date(frm)
+        split_cost_center_wise_account_entries(frm)
     },
     onload: function(frm) {
         if (frappe.session.user) {
@@ -57,4 +58,29 @@ function validate_posting_date(frm) {
         }
     }
     
+}
+
+function split_cost_center_wise_account_entries(frm) {
+    if (frm.doc.accounts) {
+        frm.clear_table("cc_accounting_entries")
+        frappe.call({
+            method: "al_ansari.al_ansari.customization.utils.fetch_cr_dr_details",
+            args: {
+                doc: frm.doc
+            },
+            callback(r) {
+                console.log(r)
+                if (r.message) {
+                    r.message.forEach(function(r){
+                        var childTable = cur_frm.add_child("cc_accounting_entries");
+                        childTable.cost_center = r.cost_center
+                        childTable.debit = r.debit
+                        childTable.credit = r.credit
+                        childTable.total_difference = r.debit - r.credit
+                    })
+                    cur_frm.refresh_fields("cc_accounting_entries");    
+                }
+            }
+        })
+    }
 }
