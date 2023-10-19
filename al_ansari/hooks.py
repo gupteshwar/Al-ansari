@@ -187,10 +187,12 @@ doc_events = {
     "Purchase Order":{
         "validate":["al_ansari.al_ansari.customization.utils.validate"]
 	},
-
     "Purchase Invoice":{
         "validate":["al_ansari.al_ansari.customization.utils.validate"]
 	},
+	"Journal Entry": {
+		"validate": "al_ansari.al_ansari.customization.utils.validate_total_debit_and_credit_against_cc"
+	}
 }
 # Scheduled Tasks
 # ---------------
