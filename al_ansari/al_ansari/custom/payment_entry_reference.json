@@ -1,0 +1,32 @@
+{
+ "custom_fields": [],
+ "custom_perms": [],
+ "doctype": "Payment Entry Reference",
+ "property_setters": [
+  {
+   "_assign": null,
+   "_comments": null,
+   "_liked_by": null,
+   "_user_tags": null,
+   "creation": "2023-10-18 14:41:38.690205",
+   "default_value": null,
+   "doc_type": "Payment Entry Reference",
+   "docstatus": 0,
+   "doctype_or_field": "DocField",
+   "field_name": "outstanding_amount",
+   "idx": 0,
+   "modified": "2023-10-18 14:41:38.690205",
+   "modified_by": "Administrator",
+   "name": "Payment Entry Reference-outstanding_amount-label",
+   "owner": "Administrator",
+   "parent": null,
+   "parentfield": null,
+   "parenttype": null,
+   "property": "label",
+   "property_type": "Data",
+   "row_name": null,
+   "value": "Control Amount"
+  }
+ ],
+ "sync_on_migrate": 1
+}
