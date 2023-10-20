@@ -1,5 +1,6 @@
 import frappe
 import json
+from frappe import _
 from erpnext.setup.utils import get_exchange_rate
 
 
