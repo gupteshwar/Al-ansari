@@ -168,11 +168,13 @@ doc_events = {
 		"before_submit": "al_ansari.al_ansari.customization.payment_entry.validate_outstanding_amount"
 	},
 	"Sales Order":{
+		"before_insert": "al_ansari.al_ansari.customization.sales_order.validate_cost_center",
 		"before_save":["al_ansari.al_ansari.customization.sales_order.before_save"],
 		"on_submit":["al_ansari.al_ansari.customization.sales_order.on_submit"],
         "validate":["al_ansari.al_ansari.customization.utils.validate"]
 	},
     "Sales Invoice":{
+		"before_insert": "al_ansari.al_ansari.customization.sales_invoice.validate_cost_center",
         "validate":["al_ansari.al_ansari.customization.utils.validate"]
 	},
 
@@ -187,9 +189,11 @@ doc_events = {
 		"on_submit": ["al_ansari.al_ansari.customization.stock_entry.on_submit"]
 	},
     "Purchase Order":{
+		"before_insert": "al_ansari.al_ansari.customization.purchase_order.validate_cost_center",
         "validate":["al_ansari.al_ansari.customization.utils.validate"]
 	},
     "Purchase Invoice":{
+		"before_insert": "al_ansari.al_ansari.customization.purchase_invoice.validate_cost_center",
         "validate":["al_ansari.al_ansari.customization.utils.validate"]
 	},
 	"Journal Entry": {
