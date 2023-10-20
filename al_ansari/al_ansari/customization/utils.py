@@ -54,8 +54,8 @@ def fetch_cr_dr_details(doc):
         credit = 0
         for i in doc.get('accounts'):
             if i.get('cost_center') == cc:
-                debit += i.get('debit')
-                credit += i.get('credit')
+                debit += i.get('debit') if i.get('debit') else 0
+                credit += i.get('credit') if i.get('credit') else 0
         cc_accounting_entries.append({'cost_center': cc, 'debit': debit, 'credit': credit})
     
     return cc_accounting_entries
