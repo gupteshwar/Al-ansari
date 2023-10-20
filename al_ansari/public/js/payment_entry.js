@@ -28,7 +28,7 @@ frappe.ui.form.on("Payment Entry", {
                         "label": "To Date",
                         "fieldname": "to_date",
                         "fieldtype": "Date",
-                        "default": frappe.datetime.get_today()
+                        "default": frappe.datetime.add_days(frappe.datetime.get_today(), 1)
                     },
                     {
                         "fieldname":"party",
