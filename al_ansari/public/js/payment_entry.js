@@ -46,7 +46,7 @@ frappe.ui.form.on("Payment Entry", {
                         'fieldtype': 'HTML'
                     }
                 ],
-                primary_action_label: __('Get Ledger'),
+                primary_action_label: __('Fetch Entries'),
 			    primary_action: () => {
                         var data = d.get_values();
                         data.company = frm.doc.company
