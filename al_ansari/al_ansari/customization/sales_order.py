@@ -84,6 +84,6 @@ def validate_print_permissions(doctype, company):
         return print_settings[0]['draft_print']
 
 def validate_cost_center(doc, method):
-    for i in doc.items:
-        if doc.cost_center != i.cost_center:
-            frappe.throw('Payroll cost center and items cost center should be same... ')
+    if doc.cost_center:
+        for i in doc.items:
+            i.cost_center = doc.cost_center
