@@ -175,7 +175,9 @@ doc_events = {
 		"before_insert": "al_ansari.al_ansari.customization.sales_invoice.validate_cost_center",
         "validate":["al_ansari.al_ansari.customization.utils.validate"]
 	},
-
+	"Delivery Note": {
+		"before_insert": "al_ansari.al_ansari.customization.delivery_note.validate_cost_center"
+	},
 	"Employee Advance":{
 		"on_submit":["al_ansari.al_ansari.customization.employee.valid_employee_adv"]
 	},
@@ -196,6 +198,9 @@ doc_events = {
 	},
 	"Journal Entry": {
 		"validate": "al_ansari.al_ansari.customization.utils.validate_total_debit_and_credit_against_cc"
+	},
+	"Purchase Receipt": {
+		"before_insert": "al_ansari.al_ansari.customization.purchase_receipt.validate_cost_center",
 	}
 }
 # Scheduled Tasks
