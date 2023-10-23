@@ -12,11 +12,11 @@ def validate_cost_center(doc, method):
                         i.cost_center = so.cost_center
             elif not i.sales_order and i.delivery_note:
                 delivery_note = frappe.get_doc('Delivery Note', i.delivery_note)
-                for dn in sales_order.items:
+                for dn in delivery_note.items:
                     if i.item_code == dn.item_code and i.idx == dn.idx:
                         i.cost_center = dn.cost_center
             elif i.sales_order and i.delivery_note:
                 delivery_note = frappe.get_doc('Delivery Note', i.delivery_note)
-                for dn in sales_order.items:
+                for dn in delivery_note.items:
                     if i.item_code == dn.item_code and i.idx == dn.idx:
                         i.cost_center = dn.cost_center
