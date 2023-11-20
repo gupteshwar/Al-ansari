@@ -3,6 +3,20 @@ frappe.ui.form.on("Purchase Order",{
         // validate_posting_date(frm)
         item_rate(frm)
     },
+    cost_center: function(frm) {
+        frm.doc.items.forEach(function(item){
+            item.cost_center = frm.doc.cost_center
+            item.branches = frm.doc.branch
+        });
+        frm.refresh_field('items')
+    },
+    branch: function(frm) {
+        frm.doc.items.forEach(function(item){
+            item.cost_center = frm.doc.cost_center
+            item.branches = frm.doc.branch
+        });
+        frm.refresh_field('items')
+    },
     onload_post_render:function(frm) {
         if(frm.is_new() && frm.doc.supplier) {
             frappe.call({
