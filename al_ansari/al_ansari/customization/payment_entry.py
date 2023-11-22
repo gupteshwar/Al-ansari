@@ -15,6 +15,11 @@ from erpnext.accounts.report.utils import convert_to_presentation_currency, get_
 from erpnext.accounts.utils import get_account_currency
 
 
+
+def validate_reference_details(doc,method):
+	if len(doc.references)>0 and len(doc.references_details)==0 and doc.is_new !=1:
+		frappe.throw("Please click the Get Detailed Entries button to proceed")
+
 def validate_paid_amt_greater_than_outstanding_amt(doc,method):
 	if doc.references:
 		total_outstanding = 0
