@@ -660,9 +660,11 @@ def allocate_paid_amount(doc,ref_details):
 			if part_payments and part_payments[0][0] != None:
 				if i['amount'] == part_payments[0][0]:
 					i['allocated_amount'] = 0
+					i['outstanding'] = i['amount'] - i['allocated_amount']
 					paid_amount -= 0
 				else:
 					i['allocated_amount'] = paid_amount
+					i['outstanding'] = i['amount'] - i['allocated_amount']
 					paid_amount -= i['allocated_amount']
 			else:
 				if paid_amount > i['amount']:
