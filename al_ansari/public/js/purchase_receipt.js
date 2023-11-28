@@ -22,7 +22,7 @@ frappe.ui.form.on('Purchase Receipt',{
         // df.read_only = 1;
         var event =""
 
-        hide_child_table_buttons(frm)
+        hide_child_table_buttons(event,frm)
     },
 
     onload: function(frm) {
@@ -52,13 +52,13 @@ frappe.ui.form.on('Purchase Receipt',{
         }
         var event =""
 
-        hide_child_table_buttons(frm)
+        // hide_child_table_buttons(event,frm)
     },
 
     refresh: function(frm) {
         var event =""
         hide_child_table_buttons(event,frm)
-        frm.get_field('items').grid.cannot_add_rows = true;
+        frm.refresh_field('items')
     }
 })
 
@@ -101,19 +101,15 @@ function hide_child_table_buttons(event,frm) {
             }
 
             $('*[data-fieldname="items"]').find('.grid-remove-rows').hide();
-            console.log("1")
             $('*[data-fieldname="items"]').find('.grid-add-multiple-rows').hide();
-            console.log("2")
             $('*[data-fieldname="items"]').find('.grid-add-row').hide();
-            console.log("3")
             $('*[data-fieldname="items"]').find('.grid-download').hide();
-            console.log("4")
             $('*[data-fieldname="items"]').find('.grid-upload').hide();
-            console.log("5")
+            $('*[data-fieldname="items"]').find('.grid-buttons').hide()
             
-            console.log("6")
         }
         // frm.get_field('items').grid.cannot_add_rows = true;
         // frm.get_field('items').grid.cannot_add_rows = true;
+
     }
 }
