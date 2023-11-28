@@ -18,6 +18,11 @@ frappe.ui.form.on('Purchase Receipt',{
                     }
             })
         }
+        // var df = frappe.meta.get_docfield("Purchase Order Item","rate", cur_frm.doc.name);
+        // df.read_only = 1;
+        var event =""
+
+        hide_child_table_buttons(event,frm)
     },
 
     onload: function(frm) {
@@ -45,6 +50,66 @@ frappe.ui.form.on('Purchase Receipt',{
                 }
             });
         }
-    }
+        var event =""
 
+        // hide_child_table_buttons(event,frm)
+    },
+
+    refresh: function(frm) {
+        var event =""
+        hide_child_table_buttons(event,frm)
+        frm.refresh_field('items')
+    }
 })
+
+frappe.ui.form.on('Purchase Receipt Item', {
+    form_render(frm, cdt, cdn){
+        var row = locals[cdt][cdn]
+        if (row.purchase_order || row.purchase_invoice){
+            frm.fields_dict.items.grid.wrapper.find('.grid-delete-row').hide();
+            frm.fields_dict.items.grid.wrapper.find('.grid-duplicate-row').hide();
+            frm.fields_dict.items.grid.wrapper.find('.grid-move-row').hide();
+            frm.fields_dict.items.grid.wrapper.find('.grid-append-row').hide();
+            frm.fields_dict.items.grid.wrapper.find('.grid-insert-row-below').hide();
+            frm.fields_dict.items.grid.wrapper.find('.grid-insert-row').hide();
+            // frm.fields_dict.items.grid.wrapper.find('.clear-fix').prop('disabled','true')
+        }    
+    },
+
+    rate(frm,cdt,cdn) {
+        var row = locals[cdt][cdn]
+        if (row.purchase_order || row.purchase_invoice){
+            var event = 'rate'
+            hide_child_table_buttons(event,frm)
+            frm.fields_dict.items.grid.wrapper.find('.grid-delete-row').hide();
+            frm.fields_dict.items.grid.wrapper.find('.grid-duplicate-row').hide();
+            frm.fields_dict.items.grid.wrapper.find('.grid-move-row').hide();
+            frm.fields_dict.items.grid.wrapper.find('.grid-append-row').hide();
+            frm.fields_dict.items.grid.wrapper.find('.grid-insert-row-below').hide();
+            frm.fields_dict.items.grid.wrapper.find('.grid-insert-row').hide();
+        }  
+    }
+});
+
+function hide_child_table_buttons(event,frm) {
+    if(frm.doc.items) {
+
+        if(frm.doc.items[0].purchase_order || frm.doc.items[0].purchase_invoice){
+            if (event != 'rate'){
+                frm.fields_dict.items.grid.update_docfield_property("rate", "read_only", 1);
+
+            }
+
+            $('*[data-fieldname="items"]').find('.grid-remove-rows').hide();
+            $('*[data-fieldname="items"]').find('.grid-add-multiple-rows').hide();
+            $('*[data-fieldname="items"]').find('.grid-add-row').hide();
+            $('*[data-fieldname="items"]').find('.grid-download').hide();
+            $('*[data-fieldname="items"]').find('.grid-upload').hide();
+            $('*[data-fieldname="items"]').find('.grid-buttons').hide()
+            
+        }
+        // frm.get_field('items').grid.cannot_add_rows = true;
+        // frm.get_field('items').grid.cannot_add_rows = true;
+
+    }
+}
