@@ -615,7 +615,10 @@ def fetch_detailed_entries(doc):
 	std_cost_center = []
 	from erpnext.accounts.doctype.payment_entry.payment_entry import get_item_reference_details
 	doc = json.loads(doc)
-	references_details = doc['references_details']
+	try:
+		references_details = doc['references_details']
+	except:
+		references_details = []
 	references = doc['references']
 	for ref in references:
 		data, bifurcate_cost_center = get_item_reference_details(ref.get('reference_doctype'),ref.get('reference_name'))
