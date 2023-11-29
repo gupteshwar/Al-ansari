@@ -615,7 +615,10 @@ def fetch_detailed_entries(doc):
 	std_cost_center = []
 	from erpnext.accounts.doctype.payment_entry.payment_entry import get_item_reference_details
 	doc = json.loads(doc)
-	references_details = doc['references_details']
+	try:
+		references_details = doc['references_details']
+	except:
+		references_details = []
 	references = doc['references']
 	for ref in references:
 		data, bifurcate_cost_center = get_item_reference_details(ref.get('reference_doctype'),ref.get('reference_name'))
@@ -660,9 +663,11 @@ def allocate_paid_amount(doc,ref_details):
 			if part_payments and part_payments[0][0] != None:
 				if i['amount'] == part_payments[0][0]:
 					i['allocated_amount'] = 0
+					i['outstanding'] = i['amount'] - i['allocated_amount']
 					paid_amount -= 0
 				else:
 					i['allocated_amount'] = paid_amount
+					i['outstanding'] = i['amount'] - i['allocated_amount']
 					paid_amount -= i['allocated_amount']
 			else:
 				if paid_amount > i['amount']:
