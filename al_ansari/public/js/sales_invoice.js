@@ -11,6 +11,17 @@ frappe.ui.form.on("Sales Invoice",{
     },
 
     onload: function(frm) {
+
+        var hasLinkedSalesOrder = false;
+        $.each(frm.doc.items || [], function (i, item) {
+            if (item.sales_order) {
+                hasLinkedSalesOrder = true;
+                return false;
+            }
+        });
+
+        frm.get_field('items').grid.cannot_add_rows = hasLinkedSalesOrder;
+
         if (frappe.session.user) {
             frappe.call({
                 method: 'frappe.client.get_value',
@@ -49,6 +60,11 @@ function validate_posting_date(frm) {
 }
 
 
+frappe.ui.form.on("Sales Invoice", "is_return", function (frm, cdt, cdn) {
+   if(frm.doc.is_return == 1){
+            frm.set_value('update_stock', 1);
+   }
+});
 
 
 

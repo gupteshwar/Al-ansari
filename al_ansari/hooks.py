@@ -204,6 +204,9 @@ doc_events = {
 	},
 	"Purchase Receipt": {
 		"before_insert": "al_ansari.al_ansari.customization.purchase_receipt.validate_cost_center",
+	},
+"Asset Repair": {
+		"validate": "al_ansari.al_ansari.customization.asset_repair.validate_asset_repair",
 	}
 }
 # Scheduled Tasks
