@@ -1,5 +1,14 @@
 frappe.ui.form.on('Delivery Note',{
     onload: function(frm) {
+        var hasLinkedSalesOrder = false;
+        $.each(frm.doc.items || [], function (i, item) {
+            if (item.against_sales_order) {
+                hasLinkedSalesOrder = true;
+                return false;
+            }
+        });
+
+        frm.get_field('items').grid.cannot_add_rows = hasLinkedSalesOrder;
         if (frappe.session.user) {
             frappe.call({
                 method: 'frappe.client.get_value',
