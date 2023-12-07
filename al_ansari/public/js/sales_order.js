@@ -60,6 +60,14 @@ frappe.ui.form.on("Sales Order",{
             })
             frm.refresh_field('items')
         }
+    },
+
+    validate: function (frm) {
+        $.each(frm.doc.items || [], function (i,item) {
+            if (item.rate < item.price_list_rate) {
+                frappe.throw(__("The item Rate cannot exceed the item Price List Rate for Row {0}",[item.idx]))
+            }
+        })
     }
 })
 
