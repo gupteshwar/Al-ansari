@@ -7,7 +7,7 @@ frappe.ui.form.on('Delivery Note',{
                 return false;
             }
         });
-        if(hasLinkedSalesOrder = true;) {
+        if(hasLinkedSalesOrder = true) {
             $('*[data-fieldname="items"]').find('.grid-download').hide();
             $('*[data-fieldname="items"]').find('.grid-upload').hide(); 
         } else {
