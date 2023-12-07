@@ -21,6 +21,10 @@ frappe.ui.form.on('Purchase Invoice',{
                     }
             })
         }
+
+        var event =""
+
+        hide_child_table_buttons(event,frm)
     },
     onload: function(frm) {
         if (frappe.session.user) {
@@ -47,9 +51,37 @@ frappe.ui.form.on('Purchase Invoice',{
                 }
             });
         }
+
+        var event =""
+
+        // hide_child_table_buttons(event,frm
+    },
+
+     refresh: function(frm) {
+        var event =""
+        hide_child_table_buttons(event,frm)
+        frm.refresh_field('items')
     }
 
 })
+
+frappe.ui.form.on('Purchase Invoice Item', {
+    form_render(frm, cdt, cdn){
+        var row = locals[cdt][cdn]
+        if (row.purchase_order || row.purchase_receipt){
+            frm.fields_dict.items.grid.wrapper.find('.grid-move-row').hide();
+        }    
+    },
+
+    rate(frm,cdt,cdn) {
+        var row = locals[cdt][cdn]
+        if (row.purchase_order || row.purchase_receipt){
+            var event = 'rate'
+            hide_child_table_buttons(event,frm)
+            frm.fields_dict.items.grid.wrapper.find('.grid-move-row').hide();
+        }  
+    }
+});
 
 function validate_posting_date(frm) {
     if(frm.posting_date){
@@ -59,4 +91,25 @@ function validate_posting_date(frm) {
         }
     }
     
+}
+
+function hide_child_table_buttons(event,frm) {
+    if(frm.doc.items) {
+        var hasLinkedReferenceOrder = false
+        $.each(frm.doc.items || [], function (i, item) {
+            if(item.purchase_order || item.purchase_receipt){
+                hasLinkedReferenceOrder = true
+            }
+        });
+        if(hasLinkedReferenceOrder == true) {
+            if (event != 'rate'){
+                frm.fields_dict.items.grid.update_docfield_property("rate", "read_only", 1);
+            }
+
+            $('*[data-fieldname="items"]').find('.grid-download').hide();
+            $('*[data-fieldname="items"]').find('.grid-upload').hide();
+            frm.get_field('items').grid.cannot_add_rows = true
+            
+        }
+    }
 }

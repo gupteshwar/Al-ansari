@@ -19,7 +19,14 @@ frappe.ui.form.on("Sales Invoice",{
                 return false;
             }
         });
-
+        if(hasLinkedSalesOrder = true;) {
+            $('*[data-fieldname="items"]').find('.grid-download').hide();
+            $('*[data-fieldname="items"]').find('.grid-upload').hide(); 
+        } else {
+            $('*[data-fieldname="items"]').find('.grid-download').show();
+            $('*[data-fieldname="items"]').find('.grid-upload').show();
+        }
+        
         frm.get_field('items').grid.cannot_add_rows = hasLinkedSalesOrder;
 
         if (frappe.session.user) {
