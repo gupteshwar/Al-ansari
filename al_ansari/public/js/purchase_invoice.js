@@ -61,6 +61,40 @@ frappe.ui.form.on('Purchase Invoice',{
         var event =""
         hide_child_table_buttons(event,frm)
         frm.refresh_field('items')
+
+        if(frm.doc.is_linked_to_asset == 1 && frm.doc.asset) {
+            frm.set_query("asset_repair", function() {
+                return {
+                    "filters": {
+                        "company": frm.doc.company,
+                        "asset": frm.doc.asset,
+                        "docstatus": 0
+                    }
+                };
+            });
+        }
+    },
+
+    is_linked_to_asset: function (frm) {
+        if(frm.doc.is_linked_to_asset == 0){
+            frm.set_value('asset','')
+            frm.set_value('asset_repair','')
+            frm.set_value('asset_cost_center','')
+        }
+    },
+
+    asset: function(frm) {
+        if(frm.doc.is_linked_to_asset == 1 && frm.doc.asset){
+            frm.set_query("asset_repair", function() {
+                return {
+                    "filters": {
+                        "company": frm.doc.company,
+                        "asset": frm.doc.asset,
+                        "docstatus":0
+                    }
+                };
+            });
+        }
     }
 
 })
