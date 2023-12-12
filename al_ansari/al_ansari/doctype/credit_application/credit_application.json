@@ -7,11 +7,12 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "customer",
   "name_of_the_company",
   "prevdoc_docname",
-  "company",
   "c_r_no",
   "data_fsljd",
+  "company",
   "year_of_establishment",
   "legal_status",
   "amended_from",
@@ -302,8 +303,10 @@
   {
    "fieldname": "company",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Company",
-   "options": "Company"
+   "options": "Company",
+   "reqd": 1
   },
   {
    "fieldname": "prevdoc_docname",
@@ -311,12 +314,20 @@
    "hidden": 1,
    "label": "Quotation",
    "options": "Quotation"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-07-31 11:13:54.046996",
+ "modified": "2023-12-12 15:14:22.418133",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Credit Application",
