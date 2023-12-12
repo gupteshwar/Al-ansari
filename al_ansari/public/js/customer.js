@@ -1,5 +1,13 @@
 frappe.ui.form.on("Customer",{
     refresh:function(frm){
+
+        if(!frm.is_new()) {
+            frm.add_custom_button(__("Credit Application"), function() {
+                doc = frappe.new_doc("Credit Application",{"customer": frm.doc.name})
+                frappe.set_route("Form","Credit Application",doc)
+            }, __("Create"))
+        }
+
         cur_frm.set_query("cost_center","credit_limits",function(){
                 return {
                     filters: [["company","=",frm.doc.credit_limits[0].company],
