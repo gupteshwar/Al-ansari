@@ -41,6 +41,25 @@ def validate_paid_amt_greater_than_outstanding_amt(doc,method):
 		if doc.party_balance < doc.paid_amount and not doc.is_advance_pay:
 			frappe.throw(title="Amount Exceeded!",msg="Paid Amount exceeds Party Balance. Please check the Is Advance checkbox to proceed.")
 
+	if doc.references:
+		grand_total=0
+		for r in doc.references:
+			grand_total += r.total_amount
+		doc.grand_total = grand_total
+
+	if doc.references_details:
+		total_outstanding = 0
+		total_allocated = 0
+		total_amount = 0
+		for i in doc.references_details:
+			total_amount += i.amount
+			total_outstanding +=i.outstanding
+			total_allocated +=i.allocated_amount
+
+		doc.total_outstanding = total_outstanding
+		doc.total_amount = total_amount
+		doc.total_allocated = total_allocated
+
 TRANSLATIONS = frappe._dict()
 
 @frappe.whitelist()
