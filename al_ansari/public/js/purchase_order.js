@@ -68,14 +68,6 @@ frappe.ui.form.on("Purchase Order",{
                 }
             });
         }
-    },
-
-    validate: function (frm) {
-        $.each(frm.doc.items || [], function (i,item) {
-            if (item.rate > item.price_list_rate) {
-                frappe.throw(__("The item Rate cannot exceed the item Price List Rate for Row {0}",[item.idx]))
-            }
-        })
     }
 })
 
@@ -93,7 +85,7 @@ function item_rate(frm){
         let item_rate_issue = [];
         (frm.doc.items || []).forEach(function(item){
 
-            if (item.rate < item.price_list_rate){
+            if (item.rate > item.price_list_rate){
                 item_rate_issue.push(item.idx)
             }
         })
