@@ -28,12 +28,12 @@ function item_rate(frm){
         let item_rate_issue = [];
         (frm.doc.items || []).forEach(function(item){
 
-            if (item.rate < item.price_list_rate){
+            if (item.rate < item.limiting_rate){
                 item_rate_issue.push(item.idx)
             }
         })
         if (item_rate_issue.length > 0) {
-            frappe.throw(__("Item Rate is below Item Price List Rate for the following rows <br>{0}",[item_rate_issue.join(',')]))
+            frappe.throw(__("Item Rate is below Limiting Rate for the following rows <br>{0}",[item_rate_issue.join(',')]))
         }
 }
 
