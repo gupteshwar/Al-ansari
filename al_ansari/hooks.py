@@ -73,7 +73,7 @@ doctype_js = {
     "Delivery Note": "public/js/delivery_note.js",
     "POS Invoice":"public/js/pos_invoice.js",
     "Asset Repair":"public/js/asset_repair.js",
-
+    "Item Price List": "public/js/item_price_list.js",
 }
 
 # fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
@@ -207,8 +207,11 @@ doc_events = {
 	"Purchase Receipt": {
 		"before_insert": "al_ansari.al_ansari.customization.purchase_receipt.validate_cost_center",
 	},
-"Asset Repair": {
+	"Asset Repair": {
 		"validate": "al_ansari.al_ansari.customization.asset_repair.validate_asset_repair",
+	},
+	"Quotation": {
+		"validate":["al_ansari.al_ansari.customization.quotation.before_save"]
 	}
 }
 # Scheduled Tasks
