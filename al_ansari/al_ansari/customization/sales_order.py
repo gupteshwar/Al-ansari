@@ -1,8 +1,15 @@
 import frappe
 import json
+from frappe import _
 
 def before_save(doc,method):
     validate_item_qty(doc,method)
+    issue_item = []
+    for item in doc.items:
+        if item.rate < item.limiting_rate:
+            issue_item.append(item.idx)
+    if issue_item:
+        frappe.throw(_("Item Rate cannot be below the Limiting Rate for the following rows <br>{0}").format(issue_item))
 
 def on_submit(doc,method):
     update_sales_details(doc,method)

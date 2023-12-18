@@ -9,7 +9,15 @@ import erpnext
 from erpnext.stock.report.stock_ageing.stock_ageing import FIFOSlots, get_average_age
 from erpnext.stock.report.stock_ledger.stock_ledger import get_item_group_condition
 from erpnext.stock.utils import add_additional_uom_columns, is_reposting_item_valuation_in_progress
+from frappe import _
 
+def before_save(doc,method):
+    issue_item = []
+    for item in doc.items:
+        if item.rate < item.limiting_rate:
+            issue_item.append(item.idx)
+    if len(issue_item)>0:
+        frappe.throw(_("Item Rate cannot be below the Limiting Rate for the following rows <br>{0}").format(issue_item))
 
 def get_data(data):
 	return {
