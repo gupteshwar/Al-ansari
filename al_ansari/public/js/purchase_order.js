@@ -42,33 +42,35 @@ frappe.ui.form.on("Purchase Order",{
     //     // payroll_cost_center
 
     // },
+        
+    // Commented the auto fill of payroll cost center
 
-    onload: function(frm) {
-        if (frappe.session.user) {
-            frappe.call({
-                method: 'frappe.client.get_value',
-                args: {
-                    doctype: 'Employee',
-                    filters: {
-                        user_id: frappe.session.user
-                    },
-                    fieldname: 'payroll_cost_center'
-                },
-                callback: function(response) {
-                    if (response.message) {
+    // onload: function(frm) {
+    //     if (frappe.session.user) {
+    //         frappe.call({
+    //             method: 'frappe.client.get_value',
+    //             args: {
+    //                 doctype: 'Employee',
+    //                 filters: {
+    //                     user_id: frappe.session.user
+    //                 },
+    //                 fieldname: 'payroll_cost_center'
+    //             },
+    //             callback: function(response) {
+    //                 if (response.message) {
 
-                        if(frm.doc.__islocal && !frm.doc.cost_center){
-                            frm.set_value('cost_center', response.message.payroll_cost_center);
-                        }
-                        else if(!frm.doc.cost_center){
-                            frm.set_value('cost_center', response.message.payroll_cost_center);
-                            // frm.save()
-                        }
-                    }
-                }
-            });
-        }
-    }
+    //                     if(frm.doc.__islocal && !frm.doc.cost_center){
+    //                         frm.set_value('cost_center', response.message.payroll_cost_center);
+    //                     }
+    //                     else if(!frm.doc.cost_center){
+    //                         frm.set_value('cost_center', response.message.payroll_cost_center);
+    //                         // frm.save()
+    //                     }
+    //                 }
+    //             }
+    //         });
+    //     }
+    // }
 })
 
 function validate_posting_date(frm) {
@@ -85,12 +87,12 @@ function item_rate(frm){
         let item_rate_issue = [];
         (frm.doc.items || []).forEach(function(item){
 
-            if (item.rate > item.price_list_rate){
+            if (item.rate > item.limiting_rate){
                 item_rate_issue.push(item.idx)
             }
         })
         if (item_rate_issue.length > 0) {
-            frappe.throw(__("Item Rate is below Item Price List Rate for the following rows <br>{0}",[item_rate_issue.join(',')]))
+            frappe.throw(__("Item Rate should not exceed Limiting List Rate for the following rows <br>{0}",[item_rate_issue.join(',')]))
         }
 }
 

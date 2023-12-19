@@ -9,7 +9,7 @@ def before_save(doc,method):
         if item.rate < item.limiting_rate:
             issue_item.append(item.idx)
     if issue_item:
-        frappe.throw(_("Item Rate cannot be below the Limiting Rate for the following rows <br>{0}").format(issue_item))
+        frappe.throw(_("IItem Rate cannot be below the Limiting Rate for the following rows <br>{0}").format(issue_item))
 
 def on_submit(doc,method):
     update_sales_details(doc,method)
