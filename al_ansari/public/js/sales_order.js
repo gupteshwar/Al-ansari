@@ -24,32 +24,47 @@ frappe.ui.form.on("Sales Order",{
         }
     },
 
-    onload: function(frm) {
-        if (frappe.session.user) {
-            frappe.call({
-                method: 'frappe.client.get_value',
-                args: {
-                    doctype: 'Employee',
-                    filters: {
-                        user_id: frappe.session.user
-                    },
-                    fieldname: 'payroll_cost_center'
-                },
-                callback: function(response) {
-                    if (response.message) {
+    // onload: function(frm) {
+    //     if (frappe.session.user) {
+    //         frappe.call({
+    //             method: 'frappe.client.get_value',
+    //             args: {
+    //                 doctype: 'Employee',
+    //                 filters: {
+    //                     user_id: frappe.session.user
+    //                 },
+    //                 fieldname: 'payroll_cost_center'
+    //             },
+    //             callback: function(response) {
+    //                 if (response.message) {
 
-                        if(frm.doc.__islocal && !frm.doc.cost_center){
-                            frm.set_value('cost_center', response.message.payroll_cost_center);
-                        }
-                        else if(!frm.doc.cost_center){
-                            frm.set_value('cost_center', response.message.payroll_cost_center);
-                            // frm.save()
-                        }
-                    }
-                }
-            });
+    //                     if(frm.doc.__islocal && !frm.doc.cost_center){
+    //                         frm.set_value('cost_center', response.message.payroll_cost_center);
+    //                     }
+    //                     else if(!frm.doc.cost_center){
+    //                         frm.set_value('cost_center', response.message.payroll_cost_center);
+    //                         // frm.save()
+    //                     }
+    //                 }
+    //             }
+    //         });
 
-        }
+    //     }
+    // },
+
+    cost_center: function(frm) {
+        frm.doc.items.forEach(function(item){
+            item.cost_center = frm.doc.cost_center
+            item.branches = frm.doc.branch
+        });
+        frm.refresh_field('items')
+    },
+    branch: function(frm) {
+        frm.doc.items.forEach(function(item){
+            item.cost_center = frm.doc.cost_center
+            item.branches = frm.doc.branch
+        });
+        frm.refresh_field('items')
     },
     delivery_date: function(frm) {
         if(frm.is_new() && (frm.doc.items.length>0)) {
@@ -60,20 +75,20 @@ frappe.ui.form.on("Sales Order",{
             })
             frm.refresh_field('items')
         }
-    }
+    },
 })
 
 function item_rate(frm){
-        let item_rate_issue = [];
-        (frm.doc.items || []).forEach(function(item){
+    let item_rate_issue = [];
+    (frm.doc.items || []).forEach(function(item){
 
-            if (item.rate < item.price_list_rate && (item.against_blanket_order == 0)){
-                item_rate_issue.push(item.idx)
-            }
-        })
-        if (item_rate_issue.length > 0) {
-            frappe.throw(__("Item Rate is below Item Price List Rate for the following rows <br>{0}",[item_rate_issue.join(',')]))
+        if (item.rate < item.limiting_rate && (item.against_blanket_order == 0)){
+            item_rate_issue.push(item.idx)
         }
+    })
+    if (item_rate_issue.length > 0) {
+        frappe.throw(__("Item Rate is below the Limiting Rate for the following rows <br>{0}",[item_rate_issue.join(',')]))
+    }
 
 }
 
@@ -121,5 +136,27 @@ frappe.ui.form.on("Sales Order Item",{
                 }
             }
         });
+    },
+
+    rate: function (frm,cdt,cdn) {
+    //     let row = locals[cdt][cdn]
+    //     frappe.call({
+    //         method: 'frappe.client.get_value',
+    //         args: {
+    //             'doctype': 'Item Price',
+    //             'filters': {'item_code': row.item_code, 'selling':1},
+    //             'fieldname': [
+    //                 'limiting_rate'
+    //             ]
+    //         },
+    //         callback: function(r) {
+    //             if (!r.exc) {
+    //                 // code snippet
+    //                 row.limiting_rate = r.message.limiting_rate
+    //             }
+    //         }
+    //     });
+        // let row = locals[cdt][cdn]
+        // item_rate(frm)
     }
 })

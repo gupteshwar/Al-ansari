@@ -25,16 +25,16 @@ frappe.ui.form.on('Quotation', {
 });
 
 function item_rate(frm){
-        let item_rate_issue = [];
-        (frm.doc.items || []).forEach(function(item){
+    let item_rate_issue = [];
+    (frm.doc.items || []).forEach(function(item){
 
-            if (item.rate < item.limiting_rate){
-                item_rate_issue.push(item.idx)
-            }
-        })
-        if (item_rate_issue.length > 0) {
-            frappe.throw(__("Item Rate is below Limiting Rate for the following rows <br>{0}",[item_rate_issue.join(',')]))
+        if (item.rate < item.limiting_rate){
+            item_rate_issue.push(item.idx)
         }
+    })
+    if (item_rate_issue.length > 0) {
+        frappe.throw(__("Item Rate is below Limiting Rate for the following rows <br>{0}",[item_rate_issue.join(',')]))
+    }
 }
 
 frappe.ui.form.on('Quotation Item', {
@@ -58,5 +58,9 @@ frappe.ui.form.on('Quotation Item', {
 				}
 			})
 		}
+	},
+	rate: function(frm,cdt,cdn) {
+		var d = locals[cdt][cdn]
+		item_rate(frm)
 	}
 });
