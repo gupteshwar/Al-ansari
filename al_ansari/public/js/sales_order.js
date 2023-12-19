@@ -25,16 +25,16 @@ frappe.ui.form.on("Sales Order",{
 })
 
 function item_rate(frm){
-        let item_rate_issue = [];
-        (frm.doc.items || []).forEach(function(item){
+    let item_rate_issue = [];
+    (frm.doc.items || []).forEach(function(item){
 
-            if (item.rate < item.price_list_rate && (item.against_blanket_order == 0)){
-                item_rate_issue.push(item.idx)
-            }
-        })
-        if (item_rate_issue.length > 0) {
-            frappe.throw(__("Item Rate is below Item Price List Rate for the following rows <br>{0}",[item_rate_issue.join(',')]))
+        if (item.rate < item.limiting_rate && (item.against_blanket_order == 0)){
+            item_rate_issue.push(item.idx)
         }
+    })
+    if (item_rate_issue.length > 0) {
+        frappe.throw(__("Item Rate is below the Limiting Rate for the following rows <br>{0}",[item_rate_issue.join(',')]))
+    }
 
 }
 
@@ -82,5 +82,27 @@ frappe.ui.form.on("Sales Order Item",{
                 }
             }
         });
+    },
+
+    rate: function (frm,cdt,cdn) {
+    //     let row = locals[cdt][cdn]
+    //     frappe.call({
+    //         method: 'frappe.client.get_value',
+    //         args: {
+    //             'doctype': 'Item Price',
+    //             'filters': {'item_code': row.item_code, 'selling':1},
+    //             'fieldname': [
+    //                 'limiting_rate'
+    //             ]
+    //         },
+    //         callback: function(r) {
+    //             if (!r.exc) {
+    //                 // code snippet
+    //                 row.limiting_rate = r.message.limiting_rate
+    //             }
+    //         }
+    //     });
+        // let row = locals[cdt][cdn]
+        // item_rate(frm)
     }
 })
