@@ -99,78 +99,85 @@ function item_rate(frm){
 
 frappe.ui.form.on("Purchase Order", "refresh", function(frm) {
     if (frm.doc.docstatus == 1){
-    frappe.call({
-        method: "al_ansari.al_ansari.doctype.consignment_tracking.consignment_tracking.get_consign_name",
-        args: {
-                "docname":frm.doc.name
-        },
-        callback: function(r){
-        if (r.message){
-            var po_name = (r.message['purchase_order'])
-    
-            if (po_name) {
-                frm.remove_custom_button(__("Consignment Tracking Details"), function() {
-                    frm.set_df_property("custom_button", "hidden", true);
-                })
-            }
-        } 
-        else {
-            frm.add_custom_button(__("Consignment Tracking Details"), function() {
-            frm.set_df_property("custom_button", "hidden", true);
-
-                frappe.prompt([
+        frm.add_custom_button(__("Consignment Tracking Details"), function() {
+            
+            let d = new frappe.ui.Dialog({
+                title: 'Consignment Entry',
+                fields: [
                     {
                         label: 'Purchase Order',
-                        fieldname: 'purchase_order',
+                        fieldname: 'purchase_order_reference',
                         fieldtype: 'Data',
-                        default : frm.doc.name
+                        default : frm.doc.name,
+                        read_only:1
                     },
                     {
-                        label: 'Consignment',
-                        fieldname: 'consignment',
-                        fieldtype: 'Data'
-
+                        label: 'Shipper',
+                        fieldname: 'shipper',
+                        fieldtype: 'Link',
+                        default: frm.doc.supplier,
+                        read_only:1
                     },
                     {
-                        label: 'Shipment Details',
-                        fieldname: 'shipment_details',
-                        fieldtype: 'Data'
+                        label: 'Shipper Name',
+                        fieldname: 'shipper_name',
+                        fieldtype: 'Data',
+                        default: frm.doc.supplier_name,
+                        read_only:1
+                    },
+                    {
+                        label: 'Type of Shipment',
+                        fieldname: 'type_of_shipment',
+                        fieldtype: 'Link',
+                        options: "Type of Shipment",
+                        reqd:1
+                    },
+                    {
+                        label: '',
+                        fieldname: 'col_break_1',
+                        fieldtype: 'Column Break'
 
                     },
                     {
                         label: 'Container Number',
                         fieldname: 'container_number',
-                        fieldtype: 'Data'
+                        fieldtype: 'Data',
+                        reqd:1
                     },
                     {
-                        label: 'Tracking Number',
-                        fieldname: 'tracking_number',
-                        fieldtype: 'Data'
-
-                    },
-                    {
-                        label: 'Tracking Link',
-                        fieldname: 'tracking_link',
-                        fieldtype: 'Data'
+                        label:'Actual Date of Shipment',
+                        fieldname: 'actual_date_of_shipment',
+                        fieldtype: 'Date',
+                        reqd:1
                     },
                     {
                         label: 'Expected Arrival Date',
                         fieldname: 'expected_arrival_date',
-                        fieldtype: "Date"
+                        fieldtype: "Date",
+                        reqd:1
                     },
-                ],  (values) => {
-                        
+                ],
+                size: 'large', // small, large, extra-large 
+                primary_action_label: 'Submit',
+                primary_action(values) {
+                    // console.log(values);
                     frappe.call({
                         method:"al_ansari.al_ansari.doctype.consignment_tracking.consignment_tracking.submit_consign_tracking",
                         args : {
                             'doc':values
+                        },
+                        callback: function(r) {
+                            if(r.message){
+                                frappe.msgprint(__("Consignment created {0}",[r.message.name]))
+                            }
                         }
                     })
-                })
-                }, __("Create"));
+                    d.hide();
+                }
+            });
+
+        d.show();
+        }, __("Create"));
                 
-            }    
-        }
-        })
     }
 });

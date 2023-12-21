@@ -1,38 +1,34 @@
 {
  "actions": [],
  "allow_import": 1,
- "autoname": "field:consignment",
+ "autoname": "naming_series:",
  "creation": "2023-01-04 11:23:56.444264",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "purchase_order",
-  "consignment",
-  "shipment_details",
+  "naming_series",
+  "purchase_order_reference",
+  "shipper",
+  "shipper_name",
+  "type_of_shipment",
+  "actual_date_of_shipment",
+  "bill_of_lading",
   "container_number",
+  "column_break_5",
+  "shipment_status",
   "tracking_number",
   "tracking_link",
   "expected_arrival_date",
-  "shipment_status"
+  "port_of_landing",
+  "declaration_number",
+  "shipment_arrived",
+  "arrival_date",
+  "section_break_18",
+  "shipment_details",
+  "remarks"
  ],
  "fields": [
-  {
-   "fieldname": "purchase_order",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Purchase Order",
-   "options": "Purchase Order",
-   "reqd": 1
-  },
-  {
-   "fieldname": "consignment",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Consignment",
-   "reqd": 1,
-   "unique": 1
-  },
   {
    "fieldname": "shipment_details",
    "fieldtype": "Data",
@@ -45,7 +41,7 @@
   },
   {
    "fieldname": "tracking_number",
-   "fieldtype": "Int",
+   "fieldtype": "Data",
    "label": "Tracking Number"
   },
   {
@@ -59,16 +55,103 @@
    "label": "Expected Arrival Date"
   },
   {
-   "fetch_from": "purchase_order.status",
+   "default": "In Process",
    "fieldname": "shipment_status",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Shipment Status",
+   "options": "Shipment Status"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "port_of_landing",
+   "fieldtype": "Link",
+   "label": "Port of Landing",
+   "options": "Port"
+  },
+  {
+   "fieldname": "type_of_shipment",
+   "fieldtype": "Link",
+   "label": "Type of Shipment",
+   "options": "Type of Shipment"
+  },
+  {
+   "fieldname": "shipper",
+   "fieldtype": "Link",
+   "label": "Shipper",
+   "options": "Supplier"
+  },
+  {
+   "fieldname": "declaration_number",
+   "fieldtype": "Data",
+   "label": "Declaration Number"
+  },
+  {
+   "fieldname": "actual_date_of_shipment",
+   "fieldtype": "Date",
+   "label": "Actual Date of Shipment"
+  },
+  {
+   "fieldname": "bill_of_lading",
+   "fieldtype": "Data",
+   "label": "Bill of Lading"
+  },
+  {
+   "default": "0",
+   "fieldname": "shipment_arrived",
+   "fieldtype": "Check",
+   "label": "Shipment Arrived"
+  },
+  {
+   "depends_on": "eval:doc.shipment_arrived == 1",
+   "fieldname": "arrival_date",
+   "fieldtype": "Date",
+   "label": "Arrival Date",
+   "mandatory_depends_on": "eval:doc.shipment_arrived == 1"
+  },
+  {
+   "fieldname": "section_break_18",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Long Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "CT-.YYYY.-.#######",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "shipper_name",
+   "fieldtype": "Data",
+   "label": "Shipper Name",
    "read_only": 1
+  },
+  {
+   "fieldname": "purchase_order_reference",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Purchase Order",
+   "options": "Purchase Order",
+   "read_only": 1,
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2023-01-17 16:41:50.520486",
+ "links": [
+  {
+   "link_doctype": "Purchase Receipt",
+   "link_fieldname": "consignment_reference"
+  }
+ ],
+ "modified": "2023-12-21 15:27:39.722917",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Consignment Tracking",
