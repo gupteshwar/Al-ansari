@@ -11,18 +11,18 @@ class ConsignmentTracking(Document):
 @frappe.whitelist()
 def submit_consign_tracking(doc):
 	doc = json.loads(doc)
-	print(doc['shipment_details'])
 	consign_doc = frappe.get_doc({
 				"doctype":"Consignment Tracking",
-				"purchase_order":doc['purchase_order'],
-				'consignment': doc['consignment'],
-				"shipment_details":doc['shipment_details'],
+				"purchase_order_reference":doc['purchase_order_reference'],
+				"shipper":doc['shipper'],
+				"shipper_name":doc['shipper_name'],
+				"type_of_shipment":doc['type_of_shipment'],
 				"container_number":doc['container_number'],
-				"tracking_number":doc['tracking_number'],
-				"tracking_link":doc['tracking_link'],
+				"actual_date_of_shipment":doc['actual_date_of_shipment'],
 				"expected_arrival_date":doc['expected_arrival_date']
 			})
 	consign_doc.save(ignore_permissions=True)
+	return consign_doc
 
 @frappe.whitelist()
 def get_consign_name(docname):
