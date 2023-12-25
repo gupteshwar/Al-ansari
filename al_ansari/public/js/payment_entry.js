@@ -72,6 +72,11 @@ frappe.ui.form.on("Payment Entry", {
                 fetch_detailed_entries(frm)     
             })
         }
+        frm.set_df_property('references_details','cannot_add_rows',true)
+        frm.set_df_property('references_details','cannot_delete_rows',true)
+
+        cur_frm.refresh_field('references_details')
+
         // if (cur_frm.doc.bifurcate_cost_center == 1 && frm.doc.references_details.length>0) {
         //     frm.add_custom_button(__('Split Deductions'), function(){
         //         if(frm.doc.deductions.length > 0){
@@ -147,18 +152,36 @@ frappe.ui.form.on("Payment Entry", {
     // paid_amount: function(frm) {
     //     frm.trigger('fetch_detailed_entries')
     // },
-    validate: function(frm) {
-        if (cur_frm.doc.references_details && cur_frm.doc.references_details.length >0 && frm.doc.bifurcate_cost_center ==1){
-           console.log('++++++++++++')
-            var total_amt = 0
-            cur_frm.doc.references_details.forEach(function (rd) {
-                total_amt += rd.allocated_amount 
-            })
-            // if (total_amt>frm.doc.paid_amount) {
-            //     frappe.throw(__("The sum total of amount in Payment Entry Reference Items table should not exceed the paid amount"))
-            // }
-            frm.set_value('paid_amount',total_amt)
+    onload: function(frm) {
+        frm.set_df_property('references_details','cannot_add_rows',true)
+        frm.set_df_property('references_details','cannot_delete_rows',true)
+        cur_frm.refresh_field('references_details')
+    },
+    paid_amount: function(frm) {
+        if (cur_frm.doc.references && cur_frm.doc.references.length >0 && frm.doc.bifurcate_cost_center ==1){
+            frm.clear_table('references_details')
+            frm.refresh_field('references_details')
+            fetch_detailed_entries(frm)
         }
+    },
+    validate: function(frm) {
+        if (cur_frm.doc.references && cur_frm.doc.references.length >0 && frm.doc.bifurcate_cost_center ==1){
+            var r_total_amt = 0
+            cur_frm.doc.references.forEach(function (r) {
+                if(r.allocated_amount == 0) {
+                    frappe.throw("Please allocate some amount in the references table as allocated amount cannot be zero")
+                }
+                r_total_amt += r.allocated_amount 
+            })
+            frm.set_value('paid_amount',r_total_amt)
+        }
+        // if (cur_frm.doc.references_details && cur_frm.doc.references_details.length >0 && frm.doc.bifurcate_cost_center ==1){
+        //     var total_amt = 0
+        //     cur_frm.doc.references_details.forEach(function (rd) {
+        //         total_amt += rd.allocated_amount 
+        //     })
+        //     frm.set_value('paid_amount',total_amt)
+        // }
     }
 });
 
@@ -201,6 +224,7 @@ function split_entries_as_per_cc(frm,taxes,references_details) {
 
 function fetch_detailed_entries(frm) {
     if(frm.doc.references) {
+        // calculate_and_set_paid_amount(frm)
         frm.doc.references.forEach(function (ref) {
             frappe.call({
                 method: "al_ansari.al_ansari.customization.payment_entry.fetch_detailed_entries",
@@ -237,3 +261,34 @@ function fetch_detailed_entries(frm) {
         })
     }
 }
+
+
+frappe.ui.form.on("Payment Entry Reference", {
+    references_remove: function(frm,cdt,cdn) {
+        frm.clear_table('references_details')
+        frm.refresh_field('references_details')
+    },
+    allocated_amount: function(frm,cdt,cdn){
+        let row = locals[cdt][cdn]
+        if (row.allocated_amount>row.outstanding_amount){
+            row.allocated_amount = 0
+            // frappe.throw("Allocated Amount should not exceed outstanding amount in References table")
+        }
+        calculate_and_set_paid_amount(frm)
+    },
+    reference_name: function (frm,cdt,cdn) {
+        fetch_detailed_entries(frm)
+    }
+})
+
+            
+function calculate_and_set_paid_amount(frm){
+    var paid_amount = 0
+    frm.doc.references.forEach(function(r){
+        paid_amount += r.allocated_amount
+    })
+
+    frm.set_value('paid_amount',paid_amount)
+    fetch_detailed_entries(frm)
+
+} 

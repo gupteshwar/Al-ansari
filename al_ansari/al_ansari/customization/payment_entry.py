@@ -19,6 +19,37 @@ from erpnext.accounts.utils import get_account_currency
 def validate_reference_details(doc,method):
 	if len(doc.references)>0 and len(doc.references_details)==0 and doc.is_new !=1:
 		frappe.throw("Please click the Get Detailed Entries button to proceed")
+	# else:
+		# check_and_allocate_amount(doc)
+	if doc.references:
+		grand_total=0
+		outstanding = 0
+		for r in doc.references:
+			grand_total += r.total_amount
+			outstanding += r.outstanding_amount
+		doc.grand_total = grand_total
+		doc.total_outstanding = outstanding 
+
+	if doc.references_details :
+		# t_outstanding = 0
+		t_allocated = 0
+		t_amount = 0
+		for i in doc.references_details:
+			t_amount += i.amount
+			# t_outstanding +=i.outstanding
+			t_allocated +=i.allocated_amount
+
+		# doc.total_outstanding = t_outstanding
+		doc.total_amount = t_amount
+		doc.total_allocated = t_allocated
+
+# def check_and_allocate_amount(doc):
+# 	for ref in doc.references:
+# 		ref_allocation = 0
+# 		for ref_d in doc.references_details:
+# 			if ref['reference_name'] == ref_d['reference_name']:
+# 				ref_allocation += ref_d['allocated_amount']
+# 		ref['allocated_amount'] = ref_allocation
 
 def validate_paid_amt_greater_than_outstanding_amt(doc,method):
 	if doc.references:
@@ -37,28 +68,11 @@ def validate_paid_amt_greater_than_outstanding_amt(doc,method):
 
 	if not doc.references and not doc.references_details:
 		if not doc.cost_center:
-			frappe.throw(title="Mandatory", msg="No value found for Cost Center")
+			frappe.throw(title="Mandatory", msg="Please click the Get Detailed Entries button to proceed")
 		if doc.party_balance < doc.paid_amount and not doc.is_advance_pay:
 			frappe.throw(title="Amount Exceeded!",msg="Paid Amount exceeds Party Balance. Please check the Is Advance checkbox to proceed.")
 
-	if doc.references:
-		grand_total=0
-		for r in doc.references:
-			grand_total += r.total_amount
-		doc.grand_total = grand_total
-
-	if doc.references_details:
-		total_outstanding = 0
-		total_allocated = 0
-		total_amount = 0
-		for i in doc.references_details:
-			total_amount += i.amount
-			total_outstanding +=i.outstanding
-			total_allocated +=i.allocated_amount
-
-		doc.total_outstanding = total_outstanding
-		doc.total_amount = total_amount
-		doc.total_allocated = total_allocated
+	
 
 TRANSLATIONS = frappe._dict()
 
@@ -670,6 +684,7 @@ def allocate_paid_amount(doc,ref_details):
 	references = doc.get('references')
 	for ref in ref_details:
 		for i in ref:
+			i['outstanding'] = i['amount'] or 0
 			part_payments = frappe.db.sql("""
 							select
 								sum(per.allocated_amount)
@@ -683,26 +698,42 @@ def allocate_paid_amount(doc,ref_details):
 								per.reference_name = '{}'
 								and per.custom_cost_center = '{}'
 								and pe.docstatus = 1
-							""".format(i['reference_name'], i['custom_cost_center']))
-	
+								and pe.name != '{}'
+							""".format(i['reference_name'], i['custom_cost_center'],doc['name']))
+			# if part_payments and part_payments[0][0] != None:
+			# 	if i['amount'] == part_payments[0][0]:
+			# 		i['allocated_amount'] = 0
+			# 		i['outstanding'] = i['amount'] - i['allocated_amount']
+			# 		paid_amount -= 0
+			# 	else:
+			# 		i['allocated_amount'] = paid_amount
+			# 		i['outstanding'] = i['amount'] - i['allocated_amount']
+			# 		paid_amount -= i['allocated_amount']
+			# else:
+			# 	if paid_amount > i['amount']:
+			# 		i['allocated_amount'] = i['amount']
+			# 		i['outstanding'] = i['amount'] - i['allocated_amount']
+			# 		paid_amount -= i['amount']
+			# 	else:
+			# 		i['allocated_amount'] = paid_amount
+			# 		i['outstanding'] = i['amount'] - i['allocated_amount']
+			# 		paid_amount -= i['allocated_amount']
 			if part_payments and part_payments[0][0] != None:
-				if i['amount'] == part_payments[0][0]:
-					i['allocated_amount'] = 0
-					i['outstanding'] = i['amount'] - i['allocated_amount']
-					paid_amount -= 0
-				else:
-					i['allocated_amount'] = paid_amount
-					i['outstanding'] = i['amount'] - i['allocated_amount']
-					paid_amount -= i['allocated_amount']
+				i['outstanding'] = i['amount'] - part_payments[0][0]
+			elif part_payments and part_payments[0][0] == None:
+				i['outstanding'] = i['amount']
 			else:
-				if paid_amount > i['amount']:
-					i['allocated_amount'] = i['amount']
-					i['outstanding'] = i['amount'] - i['allocated_amount']
-					paid_amount -= i['amount']
+				i['outstanding'] = i['amount'] or 0
+
+	for re in references:
+		for update_i in ref:
+			if update_i['reference_name'] == re['reference_name'] and update_i['custom_cost_center']:
+				if paid_amount > update_i['outstanding']:
+					update_i['allocated_amount'] = update_i['outstanding']
+					paid_amount = paid_amount - update_i['outstanding']
 				else:
-					i['allocated_amount'] = paid_amount
-					i['outstanding'] = i['amount'] - i['allocated_amount']
-					paid_amount -= i['allocated_amount']
+					update_i['allocated_amount'] = paid_amount
+					paid_amount = 0
 
 		# if paid_amount > ref_details[ref]['amount']:
 		# 	ref_details[0][ref]['allocated_amount'] = ref_details[0][ref]['amount']
