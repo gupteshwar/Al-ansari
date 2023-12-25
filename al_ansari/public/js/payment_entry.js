@@ -161,7 +161,9 @@ frappe.ui.form.on("Payment Entry", {
         if (cur_frm.doc.references && cur_frm.doc.references.length >0 && frm.doc.bifurcate_cost_center ==1){
             frm.clear_table('references_details')
             frm.refresh_field('references_details')
-            fetch_detailed_entries(frm)
+            if (references.length > 0 && references_details.length>0){
+                fetch_detailed_entries(frm)
+            }
         }
     },
     validate: function(frm) {
@@ -175,13 +177,32 @@ frappe.ui.form.on("Payment Entry", {
             })
             frm.set_value('paid_amount',r_total_amt)
         }
-        // if (cur_frm.doc.references_details && cur_frm.doc.references_details.length >0 && frm.doc.bifurcate_cost_center ==1){
-        //     var total_amt = 0
-        //     cur_frm.doc.references_details.forEach(function (rd) {
-        //         total_amt += rd.allocated_amount 
-        //     })
-        //     frm.set_value('paid_amount',total_amt)
-        // }
+        
+        if (cur_frm.doc.references && cur_frm.doc.references.length >0 && frm.doc.bifurcate_cost_center ==1){
+            var rs_issue =[]
+            cur_frm.doc.references.forEach(function (rs) {
+                if ((rs.allocated_amount > rs.outstanding_amount) || (rs.allocated_amount<0) ){
+                    rs_issue.push(rs.idx)
+                }
+            })
+            if (rs_issue.length >0){
+                    frappe.throw(__("The following records in reference table has issue with allocated amount {0}",[rs_issue]))
+                }
+        }
+
+
+        if (cur_frm.doc.references_details && cur_frm.doc.references_details.length >0 && frm.doc.bifurcate_cost_center ==1){
+            var rd_issue =[]
+            cur_frm.doc.references_details.forEach(function (rd) {
+                if ((rd.allocated_amount > rd.outstanding) || (rd.allocated_amount<0) ){
+                    rd_issue.push(rd.idx)
+                }
+            })
+            if (rd_issue.length >0){
+                    frappe.throw(__("The following records in reference details table has issue with allocated amount {0}",[rd_issue]))
+                }
+        }
+
     }
 });
 
@@ -271,8 +292,8 @@ frappe.ui.form.on("Payment Entry Reference", {
     allocated_amount: function(frm,cdt,cdn){
         let row = locals[cdt][cdn]
         if (row.allocated_amount>row.outstanding_amount){
-            row.allocated_amount = 0
-            // frappe.throw("Allocated Amount should not exceed outstanding amount in References table")
+            // row.allocated_amount = 0
+            frappe.throw("Allocated Amount should not exceed outstanding amount in References table")
         }
         calculate_and_set_paid_amount(frm)
     },
@@ -292,3 +313,19 @@ function calculate_and_set_paid_amount(frm){
     fetch_detailed_entries(frm)
 
 } 
+
+frappe.ui.form.on("Payment Entry Reference Item", {
+    
+    allocated_amount: function(frm,cdt,cdn){
+        let row = locals[cdt][cdn]
+        if (row.allocated_amount>row.outstanding){
+            // row.allocated_amount = 0
+            frappe.throw("Allocated Amount should not exceed outstanding amount in the References Details table")
+        }
+        if (row.allocated_amount<0){
+            // row.allocated_amount = 0
+            frappe.throw("Allocated Amount should not be negative in the References Details table")
+        }
+        // calculate_and_set_paid_amount(frm)
+    }
+})

@@ -21,28 +21,33 @@ def validate_reference_details(doc,method):
 		frappe.throw("Please click the Get Detailed Entries button to proceed")
 	# else:
 		# check_and_allocate_amount(doc)
-	if doc.references:
-		grand_total=0
-		outstanding = 0
-		for r in doc.references:
-			grand_total += r.total_amount
-			outstanding += r.outstanding_amount
-		doc.grand_total = grand_total
-		doc.total_outstanding = outstanding 
+	if len(doc.references)>0 and len(doc.references_details) > 0 :
+		if doc.references:
+			grand_total=0
+			outstanding = 0
+			allocated_amount_r = 0
+			for r in doc.references:
+				grand_total += r.total_amount
+				outstanding += r.outstanding_amount
+				allocated_amount_r += r.allocated_amount
+			doc.grand_total = grand_total
+			doc.total_outstanding = outstanding 
 
-	if doc.references_details :
-		# t_outstanding = 0
-		t_allocated = 0
-		t_amount = 0
-		for i in doc.references_details:
-			t_amount += i.amount
-			# t_outstanding +=i.outstanding
-			t_allocated +=i.allocated_amount
+		if doc.references_details :
+			# t_outstanding = 0
+			t_allocated = 0
+			t_amount = 0
+			for i in doc.references_details:
+				t_amount += i.amount
+				# t_outstanding +=i.outstanding
+				t_allocated +=i.allocated_amount
 
-		# doc.total_outstanding = t_outstanding
-		doc.total_amount = t_amount
-		doc.total_allocated = t_allocated
-
+			# doc.total_outstanding = t_outstanding
+			doc.total_amount = t_amount
+			doc.total_allocated = t_allocated
+		print("====================",t_allocated,allocated_amount_r)
+		if t_allocated != allocated_amount_r:
+			frappe.throw("The total allocated amount should be same in both the table and also as paid amount")
 # def check_and_allocate_amount(doc):
 # 	for ref in doc.references:
 # 		ref_allocation = 0
@@ -68,7 +73,7 @@ def validate_paid_amt_greater_than_outstanding_amt(doc,method):
 
 	if not doc.references and not doc.references_details:
 		if not doc.cost_center:
-			frappe.throw(title="Mandatory", msg="Please click the Get Detailed Entries button to proceed")
+			frappe.throw(title="Mandatory", msg="Please select the cost center to proceeds")
 		if doc.party_balance < doc.paid_amount and not doc.is_advance_pay:
 			frappe.throw(title="Amount Exceeded!",msg="Paid Amount exceeds Party Balance. Please check the Is Advance checkbox to proceed.")
 
@@ -660,21 +665,30 @@ def fetch_detailed_entries(doc):
 		references_details = []
 	references = doc['references']
 	for ref in references:
-		data, bifurcate_cost_center = get_item_reference_details(ref.get('reference_doctype'),ref.get('reference_name'))
-		ref_details.append(data)
-		if bifurcate_cost_center == 1:
-			bifurcated_cost_center.append(bifurcate_cost_center)
-		else:
-			std_cost_center.append(bifurcate_cost_center)
+		if ref.get('reference_doctype') !='Employee Advance':
+			data, bifurcate_cost_center = get_item_reference_details(ref.get('reference_doctype'),ref.get('reference_name'))
+			ref_details.append(data)
+			if bifurcate_cost_center == 1:
+				bifurcated_cost_center.append(bifurcate_cost_center)
+			else:
+				std_cost_center.append(bifurcate_cost_center)
 	
-	if len(bifurcated_cost_center)>0 and len(std_cost_center)>0:
-		frappe.throw(_("Standard and bifurcated_cost_center invoices payment entry cannot be clubbed together"))
-	elif len(bifurcated_cost_center)>0 and len(std_cost_center)==0:
-		bifurcated_cc = 1
-	elif len(bifurcated_cost_center)==0 and len(std_cost_center)>0:	
-		bifurcated_cc = 0
-	ref_details = allocate_paid_amount(doc,ref_details)
-	return ref_details,bifurcated_cc
+			if len(bifurcated_cost_center)>0 and len(std_cost_center)>0:
+				frappe.throw(_("Standard and bifurcated_cost_center invoices payment entry cannot be clubbed together"))
+			elif len(bifurcated_cost_center)>0 and len(std_cost_center)==0:
+				bifurcated_cc = 1
+			elif len(bifurcated_cost_center)==0 and len(std_cost_center)>0:	
+				bifurcated_cc = 0
+			ref_details = allocate_paid_amount(doc,ref_details)
+			# print('\n\n\n\n\n\n>>>>>>>>>>ref_details',ref_details,bifurcated_cc)
+			return ref_details,bifurcated_cc
+		elif ref.get('reference_doctype') == 'Employee Advance':
+			cc = frappe.get_value('Employee',doc.get('party'),['payroll_cost_center'])
+			bifurcated_cc = 1
+			ref_details.append([{'reference_doctype':ref.get('reference_doctype'),'reference_name':ref.get('reference_name'),'custom_cost_center':cc,'amount':ref.get('total_amount'),'outstanding':ref.get('outstanding_amount'),'allocated_amount':ref.get('allocated_amount')}])
+			# print('\n\n\n\n\n\n>>>>>>>>>>qqqref_details',ref_details,bifurcated_cc)
+
+			return ref_details,bifurcated_cc
 
 
 # custom method for allocating paid amount on payment entry
