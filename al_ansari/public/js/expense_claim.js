@@ -2,6 +2,12 @@ frappe.ui.form.on('Expense Claim', {
 	refresh: function(frm) {
 		
 	},
+    validate: function(frm) {
+        (frm.doc.expenses || []).forEach(function(d) { 
+            d.cost_center = cur_frm.doc.cost_center
+        })
+        frm.refresh_field('expenses')
+    }
     // Commented the auto fill of payroll cost center
 
 	// onload: function(frm) {

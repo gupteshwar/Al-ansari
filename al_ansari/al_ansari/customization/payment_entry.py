@@ -665,7 +665,24 @@ def fetch_detailed_entries(doc):
 		references_details = []
 	references = doc['references']
 	for ref in references:
-		if ref.get('reference_doctype') !='Employee Advance':
+		if ref.get('reference_doctype') == 'Employee Advance':
+			cc = doc.get('cost_center')
+			bifurcated_cc = 1
+			ref_details.append([{'reference_doctype':ref.get('reference_doctype'),'reference_name':ref.get('reference_name'),'custom_cost_center':cc,'amount':ref.get('total_amount'),'outstanding':ref.get('outstanding_amount'),'allocated_amount':ref.get('allocated_amount')}])
+			# print('\n\n\n\n\n\n>>>>>>>>>>qqqref_details',ref_details,bifurcated_cc)
+
+			return ref_details,bifurcated_cc
+
+		elif ref.get('reference_doctype') == 'Expense Claim':
+			cc = doc.get('cost_center')
+			bifurcated_cc = 1
+			ref_details.append([{'reference_doctype':ref.get('reference_doctype'),'reference_name':ref.get('reference_name'),'custom_cost_center':cc,'amount':ref.get('total_amount'),'outstanding':ref.get('outstanding_amount'),'allocated_amount':ref.get('allocated_amount')}])
+			# print('\n\n\n\n\n\n>>>>>>>>>>qqqref_details',ref_details,bifurcated_cc)
+
+			return ref_details,bifurcated_cc
+
+
+		else:
 			data, bifurcate_cost_center = get_item_reference_details(ref.get('reference_doctype'),ref.get('reference_name'))
 			ref_details.append(data)
 			if bifurcate_cost_center == 1:
@@ -682,13 +699,7 @@ def fetch_detailed_entries(doc):
 			ref_details = allocate_paid_amount(doc,ref_details)
 			# print('\n\n\n\n\n\n>>>>>>>>>>ref_details',ref_details,bifurcated_cc)
 			return ref_details,bifurcated_cc
-		elif ref.get('reference_doctype') == 'Employee Advance':
-			cc = frappe.get_value('Employee',doc.get('party'),['payroll_cost_center'])
-			bifurcated_cc = 1
-			ref_details.append([{'reference_doctype':ref.get('reference_doctype'),'reference_name':ref.get('reference_name'),'custom_cost_center':cc,'amount':ref.get('total_amount'),'outstanding':ref.get('outstanding_amount'),'allocated_amount':ref.get('allocated_amount')}])
-			# print('\n\n\n\n\n\n>>>>>>>>>>qqqref_details',ref_details,bifurcated_cc)
-
-			return ref_details,bifurcated_cc
+		
 
 
 # custom method for allocating paid amount on payment entry
