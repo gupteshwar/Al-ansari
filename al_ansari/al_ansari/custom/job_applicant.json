@@ -1472,13 +1472,8 @@
    "in_list_view": 0,
    "in_preview": 0,
    "in_standard_filter": 0,
-<<<<<<< HEAD
    "insert_after": "total_service",
    "label": "Average (%)",
-=======
-   "insert_after": "upper_range",
-   "label": "Auto Repeat",
->>>>>>> 78b5130... update_print_format_change_phase_1
    "length": 0,
    "mandatory_depends_on": null,
    "modified": "2023-02-16 16:26:04.695574",
