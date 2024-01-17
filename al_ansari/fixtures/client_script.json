@@ -24,5 +24,70 @@
   "parenttype": null,
   "script": "frappe.ui.form.on('HelpTicket', {\r\n    onload: function(frm) {\r\n        // execute this code only when the form is being created\r\n        if (frm.is_new()) {\r\n            // get current user's email and employee id\r\n            frappe.call({\r\n                method: \"frappe.client.get\",\r\n                args: {\r\n                    doctype: \"User\",\r\n                    name: frappe.session.user\r\n                },\r\n                callback: function(data) {\r\n                    var user = data.message;\r\n                    // get employee linked to user\r\n                    frappe.call({\r\n                        method: \"frappe.client.get_value\",\r\n                        args: {\r\n                            doctype: \"Employee\",\r\n                            filters: {\"user_id\": user.name},\r\n                            fieldname: [\"employee\"],\r\n                        },\r\n                        callback: function(e_data) {\r\n                            var employee = e_data.message;\r\n                            // set email_id field\r\n                            frm.set_value(\"email_id\", user.email);\r\n                            // set created_on field to current datetime\r\n                            frm.set_value(\"created_on\", frappe.datetime.get_datetime_as_string());\r\n                        }\r\n                    });\r\n                }\r\n            });\r\n        }\r\n    },\r\n});\r\n",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Earned Leave Deductions",
+  "enabled": 1,
+  "modified": "2023-09-05 12:03:03.991694",
+  "name": "Earned Leave Deductions-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Earned Leave Deductions', {\n    get_employees(frm) {\n        frm.set_value('eliminate_zero_deductions',0)\n    },\n    after_save(frm) {\n        if(frm.doc.eliminate_zero_deductions === 0) {\n            eliminate_zero_deduction(frm)\n            frm.set_value('eliminate_zero_deductions',1)\n            frm.save()\n        } \n    }\n})\n\nfunction eliminate_zero_deduction(frm) {\n    console.log(\"eliminate_zero_deduction\")\n    if(frm.doc.deduction_ratio.length>0){\n\t    for(var i=frm.doc.deduction_ratio.length-1;i>=0;i--){\n\t        if(frm.doc.deduction_ratio[i].to_be_deducted === 0) {\n\t             cur_frm.get_field(\"deduction_ratio\").grid.grid_rows[i].remove();\n\t        }\n\t    }\n\t}\n}",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Task",
+  "enabled": 1,
+  "modified": "2023-10-19 10:32:40.036226",
+  "name": "Task-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Task', {\r\n    onload: function(frm) {\r\n        // Check if the \"planned_start\" field has data\r\n        if (frm.doc.planned_start) {\r\n            // If the field has data, set it to read-only\r\n            frm.set_df_property('planned_start', 'read_only', 1);\r\n        } else {\r\n            // If the field is empty, make it editable\r\n            frm.set_df_property('planned_start', 'read_only', 0);\r\n        }\r\n\r\n        // Check if the \"planned_end\" field has data\r\n        if (frm.doc.planned_end) {\r\n            // If the field has data, set it to read-only\r\n            frm.set_df_property('planned_end', 'read_only', 1);\r\n        } else {\r\n            // If the field is empty, make it editable\r\n            frm.set_df_property('planned_end', 'read_only', 0);\r\n        }\r\n    }\r\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Employee",
+  "enabled": 1,
+  "modified": "2023-11-05 19:00:20.336919",
+  "name": "Employee-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on(\"Employee\", {\r\n  work_permit_number: function(frm, cdt, cdn) {\r\n    frm.fields_dict['work_permit_occupation'].get_query = function(doc, cdt, cdn) {\r\n      return {\r\n        filters: {\r\n                  'parent': frm.doc.work_permit_number\r\n        }\r\n      };\r\n    };\r\n  }\r\n});\r\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Payroll Entry",
+  "enabled": 1,
+  "modified": "2024-01-07 15:38:37.738605",
+  "name": "Payroll Entry-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Payroll Entry', \"before_save\",\n\tfunction (frm) {\n\t    console.log(\"I Run\");\n\t}\n)\n\n            frappe.ui.form.on(\"Salary Slip\", \"before_submit\", function (frm) {\n            console.log(\"I Run 2\");\n              const deductions = frm.doc.deductions;\n              const earnings = frm.doc.earnings;\n            \n              deductions.forEach((item) => {\n                // console.log(item.additional_salary);\n            \n                if (item.additional_salary && item.remarks !== \" \" ) {\n                  frappe.db.get_value(\n                    \"Additional Salary\",\n                    { name: item.additional_salary },\n                    \"remarks\",\n                    function (value) {\n                      item.remarks = value.remarks;\n                      frappe.model.set_value(\"remarks\", value.remarks);\n                      frm.toggle_display(\"remarks\", true);\n                      frm.refresh_field(\"remarks\");\n                      frm.refresh_field(\"deductions\");\n                    }\n                  );\n                } else {\n                  frm.toggle_display(\"remarks\", false);\n                  frm.refresh_field(\"remarks\");\n                  frm.refresh_field(\"deductions\");\n                }\n              });\n            \n              earnings.forEach((item) => {\n            \n                if (item.additional_salary && item.remarks !== \" \" ) {\n                  frappe.db.get_value(\n                    \"Additional Salary\",\n                    { name: item.additional_salary },\n                    \"remarks\",\n                    function (value) {\n                      item.remarks = value.remarks;\n                      frappe.model.set_value(\"remarks\", value.remarks);\n                      frm.toggle_display(\"remarks\", true);\n                      frm.refresh_field(\"remarks\");\n                      frm.refresh_field(\"earnings\");\n                    }\n                  );\n                } else {\n                  frm.toggle_display(\"remarks\", false);\n                  frm.refresh_field(\"remarks\");\n                  frm.refresh_field(\"earnings\");\n                }\n              });\n            \n              frm.refresh_field(\"earnings\");\n              frm.refresh_field(\"deductions\");\n            });",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Salary Slip",
+  "enabled": 1,
+  "modified": "2024-01-07 15:43:40.300744",
+  "name": "Salary Slip-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on(\"Salary Slip\", \"before_submit\", function (frm) {\r\n  console.log(\"Parent Doc Script is Running Good\");\r\n  const deductions = frm.doc.deductions;\r\n  const earnings = frm.doc.earnings;\r\n\r\n  deductions.forEach((item) => {\r\n    // console.log(item.additional_salary);\r\n\r\n    if (item.additional_salary && item.remarks !== \" \" ) {\r\n      frappe.db.get_value(\r\n        \"Additional Salary\",\r\n        { name: item.additional_salary },\r\n        \"remarks\",\r\n        function (value) {\r\n          item.remarks = value.remarks;\r\n          frappe.model.set_value(\"remarks\", value.remarks);\r\n          frm.toggle_display(\"remarks\", true);\r\n          frm.refresh_field(\"remarks\");\r\n          frm.refresh_field(\"deductions\");\r\n        }\r\n      );\r\n    } else {\r\n      frm.toggle_display(\"remarks\", false);\r\n      frm.refresh_field(\"remarks\");\r\n      frm.refresh_field(\"deductions\");\r\n    }\r\n  });\r\n\r\n  earnings.forEach((item) => {\r\n    // console.log(item.additional_salary);\r\n\r\n    if (item.additional_salary && item.remarks !== \" \" ) {\r\n      frappe.db.get_value(\r\n        \"Additional Salary\",\r\n        { name: item.additional_salary },\r\n        \"remarks\",\r\n        function (value) {\r\n          item.remarks = value.remarks;\r\n          frappe.model.set_value(\"remarks\", value.remarks);\r\n          frm.toggle_display(\"remarks\", true);\r\n          frm.refresh_field(\"remarks\");\r\n          frm.refresh_field(\"earnings\");\r\n        }\r\n      );\r\n    } else {\r\n      frm.toggle_display(\"remarks\", false);\r\n      frm.refresh_field(\"remarks\");\r\n      frm.refresh_field(\"earnings\");\r\n    }\r\n  });\r\n\r\n  frm.refresh_field(\"earnings\");\r\n  frm.refresh_field(\"deductions\");\r\n});\r\n",
+  "view": "Form"
  }
 ]

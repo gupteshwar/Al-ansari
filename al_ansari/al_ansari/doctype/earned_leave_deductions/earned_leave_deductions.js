@@ -29,7 +29,7 @@ frappe.ui.form.on('Earned Leave Deductions', {
             frappe.throw(" 'From date' cannot be greater than 'To Date' ")
         }
     },
-	get_employees: function(frm) {
+    get_employees: function(frm) {
         if(!frm.doc.from_date || !frm.doc.to_date || !frm.doc.company) {
             frappe.throw("From Date, To Date and Company should be selected to fetch Employee Records")
         }
@@ -48,7 +48,7 @@ frappe.ui.form.on('Earned Leave Deductions', {
                  cur_frm.refresh_fields("deduction_ratio");
             }
         });
-	},
+    },
     validate: function(frm) {
         if(!frm.doc.from_date || !frm.doc.to_date) {
             frappe.throw("From Date and To Date should be selected to fetch Employee Records")

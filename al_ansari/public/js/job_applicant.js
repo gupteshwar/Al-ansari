@@ -47,7 +47,7 @@ function auto_populate_child_table(frm) {
 }
 
 function auto_populate_description(frm) {
-    frm.doc.documentations = []
+
     $.each(description,function (i,r) {
         var x = frm.add_child("documentations");
         x.description = r
@@ -56,6 +56,7 @@ function auto_populate_description(frm) {
     })
     frm.get_field("documentations").grid.cannot_add_rows = true;
     refresh_field("documentations")
+
 }
 
 function validate_employment_date(frm) {
@@ -67,9 +68,9 @@ function validate_employment_date(frm) {
 
 }
 
+
 function validate_education_date(frm) {
     (frm.doc.education || []).forEach(function(date){
-        console.log(date)
         if(date.from_date >= date.to_date){
             frappe.throw(__("'To' date should be greater than 'From' date"))
         }
