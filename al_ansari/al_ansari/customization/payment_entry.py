@@ -4,6 +4,7 @@ import json
 from frappe import _, _dict
 from frappe.utils import cstr, getdate
 from six import iteritems
+from math import ceil
 
 from erpnext import get_company_currency, get_default_company
 from erpnext.accounts.doctype.accounting_dimension.accounting_dimension import (
@@ -29,7 +30,7 @@ def validate_reference_details(doc,method):
 			for r in doc.references:
 				grand_total += r.total_amount
 				outstanding += r.outstanding_amount
-				allocated_amount_r += r.allocated_amount
+				allocated_amount_r += round(r.allocated_amount,2)
 			doc.grand_total = grand_total
 			doc.total_outstanding = outstanding 
 
@@ -37,16 +38,31 @@ def validate_reference_details(doc,method):
 			# t_outstanding = 0
 			t_allocated = 0
 			t_amount = 0
-			for i in doc.references_details:
-				t_amount += i.amount
-				# t_outstanding +=i.outstanding
-				t_allocated +=i.allocated_amount
+			default_currency = frappe.db.get_value("Company", doc.company, 'default_currency')
+			if doc.paid_from_account_currency == default_currency:
+				for i in doc.references_details:
+					t_amount += i.amount
+					# t_outstanding +=i.outstanding
+					t_allocated +=round(i.allocated_amount,2)
+				print("t_amount........", t_amount)
+				print("t_allocated........", t_allocated)
+				# doc.total_outstanding = t_outstanding
 
-			# doc.total_outstanding = t_outstanding
-			doc.total_amount = t_amount
-			doc.total_allocated = t_allocated
+				doc.total_amount = t_amount
+				doc.total_allocated = t_allocated
+			else:
+				for i in doc.references_details:
+					t_amount += i.amount / doc.source_exchange_rate
+					# t_outstanding +=i.outstanding
+					t_allocated +=round(i.allocated_amount / doc.source_exchange_rate, 2)
+				print("t_amount........", t_amount)
+				print("t_allocated........", t_allocated)
+				# doc.total_outstanding = t_outstanding
+
+				doc.total_amount = t_amount
+				doc.total_allocated = t_allocated
 		print("====================",t_allocated,allocated_amount_r)
-		if t_allocated != allocated_amount_r:
+		if round(t_allocated, 2) != round(allocated_amount_r,2):
 			frappe.throw("The total allocated amount should be same in both the table and also as paid amount")
 # def check_and_allocate_amount(doc):
 # 	for ref in doc.references:
@@ -654,6 +670,9 @@ def split_entries_as_per_cc(doc):
 # custom method to fetch reference item details cc wise and separately ref document wise
 @frappe.whitelist()
 def fetch_detailed_entries(doc):
+	print("///////////////////")
+	print(doc)
+	print("///////////////////")
 	ref_details = []
 	bifurcated_cost_center = []
 	std_cost_center = []
@@ -663,9 +682,13 @@ def fetch_detailed_entries(doc):
 		references_details = doc['references_details']
 	except:
 		references_details = []
+	print(doc['references'])
 	references = doc['references']
 	for ref in references:
+		print(">>>>>>>>>>>>>>> ref  ",ref)
 		if ref.get('reference_doctype') == 'Employee Advance':
+			print("111111111111111111")
+			print(ref.get('total_amount'))
 			cc = doc.get('cost_center')
 			bifurcated_cc = 1
 			ref_details.append([{'reference_doctype':ref.get('reference_doctype'),'reference_name':ref.get('reference_name'),'custom_cost_center':cc,'amount':ref.get('total_amount'),'outstanding':ref.get('outstanding_amount'),'allocated_amount':ref.get('allocated_amount')}])
@@ -674,16 +697,20 @@ def fetch_detailed_entries(doc):
 			return ref_details,bifurcated_cc
 
 		elif ref.get('reference_doctype') == 'Expense Claim':
+			print("22222222222222222222222222")
+			print(ref.get('total_amount'))
 			cc = doc.get('cost_center')
 			bifurcated_cc = 1
 			ref_details.append([{'reference_doctype':ref.get('reference_doctype'),'reference_name':ref.get('reference_name'),'custom_cost_center':cc,'amount':ref.get('total_amount'),'outstanding':ref.get('outstanding_amount'),'allocated_amount':ref.get('allocated_amount')}])
-			# print('\n\n\n\n\n\n>>>>>>>>>>qqqref_details',ref_details,bifurcated_cc)
+			print('\n\n\n\n\n\n>>>>>>>>>>qqqref_details',ref_details,bifurcated_cc)
 
 			return ref_details,bifurcated_cc
 
 
 		else:
+			print("3333333333333333333")
 			data, bifurcate_cost_center = get_item_reference_details(ref.get('reference_doctype'),ref.get('reference_name'))
+			print(data)
 			ref_details.append(data)
 			if bifurcate_cost_center == 1:
 				bifurcated_cost_center.append(bifurcate_cost_center)
@@ -697,7 +724,7 @@ def fetch_detailed_entries(doc):
 			elif len(bifurcated_cost_center)==0 and len(std_cost_center)>0:	
 				bifurcated_cc = 0
 			ref_details = allocate_paid_amount(doc,ref_details)
-			# print('\n\n\n\n\n\n>>>>>>>>>>ref_details',ref_details,bifurcated_cc)
+			print('\n\n\n\n\n\n>>>>>>>>>>ref_details',ref_details,bifurcated_cc)
 			return ref_details,bifurcated_cc
 		
 
@@ -709,6 +736,8 @@ def allocate_paid_amount(doc,ref_details):
 	references = doc.get('references')
 	for ref in ref_details:
 		for i in ref:
+			print("-*-*-*-*-*-*-*-*-*-*")
+			print(ref_details)
 			i['outstanding'] = i['amount'] or 0
 			part_payments = frappe.db.sql("""
 							select
@@ -743,6 +772,7 @@ def allocate_paid_amount(doc,ref_details):
 			# 		i['allocated_amount'] = paid_amount
 			# 		i['outstanding'] = i['amount'] - i['allocated_amount']
 			# 		paid_amount -= i['allocated_amount']
+			print(part_payments)
 			if part_payments and part_payments[0][0] != None:
 				i['outstanding'] = i['amount'] - part_payments[0][0]
 			elif part_payments and part_payments[0][0] == None:
@@ -766,7 +796,8 @@ def allocate_paid_amount(doc,ref_details):
 		# else:
 		# 	ref_details[ref]['allocated_amount'] = paid_amount
 		# 	break
-	
+	print("-------------------")
+	print(ref_details)
 	return ref_details
 
 @frappe.whitelist()
