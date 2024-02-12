@@ -1,3 +1,6 @@
+
+
+
 from . import __version__ as app_version
 
 app_name = "al_ansari"
@@ -296,6 +299,9 @@ user_data_fields = [
 		"doctype": "{doctype_4}"
 	}
 ]
+
+
+
 
 # Authentication and authorization
 # --------------------------------
