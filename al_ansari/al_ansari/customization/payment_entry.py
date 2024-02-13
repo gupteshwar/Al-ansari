@@ -44,8 +44,6 @@ def validate_reference_details(doc,method):
 					t_amount += i.amount
 					# t_outstanding +=i.outstanding
 					t_allocated +=round(i.allocated_amount,2)
-				print("t_amount........", t_amount)
-				print("t_allocated........", t_allocated)
 				# doc.total_outstanding = t_outstanding
 
 				doc.total_amount = t_amount
@@ -55,8 +53,6 @@ def validate_reference_details(doc,method):
 					t_amount += i.amount / doc.source_exchange_rate
 					# t_outstanding +=i.outstanding
 					t_allocated +=round(i.allocated_amount / doc.source_exchange_rate, 2)
-				print("t_amount........", t_amount)
-				print("t_allocated........", t_allocated)
 				# doc.total_outstanding = t_outstanding
 
 				doc.total_amount = t_amount
