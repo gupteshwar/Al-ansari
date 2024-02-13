@@ -161,7 +161,7 @@ frappe.ui.form.on("Payment Entry", {
         if (cur_frm.doc.references && cur_frm.doc.references.length >0 && frm.doc.bifurcate_cost_center ==1){
             frm.clear_table('references_details')
             frm.refresh_field('references_details')
-            if (references.length > 0 && references_details.length>0){
+            if (cur_frm.doc.references.length > 0 && cur_frm.doc.references_details.length>0){
                 fetch_detailed_entries(frm)
             }
         }
