@@ -62,8 +62,9 @@ def validate_reference_details(doc,method):
 				doc.total_amount = t_amount
 				doc.total_allocated = t_allocated
 		print("====================",t_allocated,allocated_amount_r)
-		if round(t_allocated, 2) != round(allocated_amount_r,2):
-			frappe.throw("The total allocated amount should be same in both the table and also as paid amount")
+		# if round(t_allocated, 2) != round(allocated_amount_r,2):
+		# 	frappe.throw("The total allocated amount should be same in both the table and also as paid amount")
+		
 # def check_and_allocate_amount(doc):
 # 	for ref in doc.references:
 # 		ref_allocation = 0
