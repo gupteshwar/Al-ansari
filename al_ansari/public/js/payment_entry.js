@@ -295,7 +295,7 @@ frappe.ui.form.on("Payment Entry Reference", {
             // row.allocated_amount = 0
             frappe.throw("Allocated Amount should not exceed outstanding amount in References table")
         }
-        calculate_and_set_paid_amount(frm)
+        // calculate_and_set_paid_amount(frm)
     },
     reference_name: function (frm,cdt,cdn) {
         fetch_detailed_entries(frm)
