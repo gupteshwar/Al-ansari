@@ -175,7 +175,7 @@ frappe.ui.form.on("Payment Entry", {
                 }
                 r_total_amt += r.allocated_amount 
             })
-            frm.set_value('paid_amount',r_total_amt)
+            // frm.set_value('paid_amount',r_total_amt)
         }
         
         if (cur_frm.doc.references && cur_frm.doc.references.length >0 && frm.doc.bifurcate_cost_center ==1){
