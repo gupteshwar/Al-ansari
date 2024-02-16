@@ -72,19 +72,19 @@ def validate_reference_details(doc,method):
 def validate_paid_amt_greater_than_outstanding_amt(doc,method):
 	default_currency = frappe.db.get_value("Company", doc.company, 'default_currency')
 	if doc.paid_from_account_currency == default_currency:
-		if doc.references:
-			total_outstanding = 0
-			for i in doc.references:
-				total_outstanding = total_outstanding + i.outstanding_amount
-			if  total_outstanding < doc.paid_amount :
-					frappe.throw(title="Amount Exceeded!", msg="Paid amount is greater than the Outstanding amount")
+		# if doc.references:
+		# 	total_outstanding = 0
+		# 	for i in doc.references:
+		# 		total_outstanding = total_outstanding + i.outstanding_amount
+		# 	if  total_outstanding < doc.paid_amount :
+		# 			frappe.throw(title="Amount Exceeded!", msg="Paid amount is greater than the Outstanding amount")
 
-		if doc.references_details:
-			total_outstanding = 0
-			for i in doc.references_details:
-				total_outstanding = total_outstanding + i.allocated_amount
-			if total_outstanding > doc.paid_amount:
-				frappe.throw(title="Amount Exceeded!", msg="Allocated amount is less or equal to the Paid Amount")
+		# if doc.references_details:
+		# 	total_outstanding = 0
+		# 	for i in doc.references_details:
+		# 		total_outstanding = total_outstanding + i.allocated_amount
+		# 	if total_outstanding > doc.paid_amount:
+		# 		frappe.throw(title="Amount Exceeded!", msg="Allocated amount is less or equal to the Paid Amount")
 
 		if not doc.references and not doc.references_details:
 			if not doc.cost_center:
