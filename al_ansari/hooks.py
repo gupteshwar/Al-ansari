@@ -78,7 +78,7 @@ doctype_js = {
     "Material Request": "public/js/material_request.js",
 }
 
-# fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
+fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
 
 # Home Pages
 # ----------
