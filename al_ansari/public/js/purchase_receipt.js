@@ -103,3 +103,21 @@ function hide_child_table_buttons(event,frm) {
         
     }
 }
+
+frappe.ui.form.on('Purchase Receipt Item', {
+    form_render(frm, cdt, cdn){
+        var row = locals[cdt][cdn]
+        if (row.purchase_order || row.purchase_invoice){
+            frm.fields_dict.items.grid.wrapper.find('.grid-move-row').hide();
+        }    
+    },
+
+    rate(frm,cdt,cdn) {
+        var row = locals[cdt][cdn]
+        if (row.purchase_order || row.purchase_invoice){
+            var event = 'rate'
+            hide_child_table_buttons(event,frm)
+            frm.fields_dict.items.grid.wrapper.find('.grid-move-row').hide();
+        }  
+    }
+});
