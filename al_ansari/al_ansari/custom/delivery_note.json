@@ -720,6 +720,7 @@
    "unique": 0,
    "width": null
   },
+
   {
    "_assign": null,
    "_comments": null,
@@ -1620,6 +1621,7 @@
    "unique": 0,
    "width": null
   },
+
   {
    "_assign": null,
    "_comments": null,
@@ -1680,6 +1682,7 @@
    "unique": 0,
    "width": null
   }
+  
  ],
  "custom_perms": [],
  "doctype": "Delivery Note",
