@@ -43,14 +43,9 @@ def get_consign_name(docname):
 
 @frappe.whitelist()
 def make_purchase_receipt(source_name, target_doc=None):
-	print("source_name", source_name)
 	consignment_doc = frappe.get_doc("Consignment Tracking", source_name)
-	print("target_doc", target_doc)
 	def update_item(obj, target, source_parent):
 		po_doc = frappe.get_doc("Purchase Order", consignment_doc.purchase_order_reference)
-		print("obj", obj)
-		print("target", target)
-		print("source_parent", source_parent)
 		target.qty = flt(obj.qty) - flt(obj.received_qty)
 		target.stock_qty = (flt(obj.qty) - flt(obj.received_qty)) * flt(obj.conversion_factor)
 		target.amount = (flt(obj.qty) - flt(obj.received_qty)) * flt(obj.rate)
