@@ -149,7 +149,8 @@
   },
   {
    "fieldname": "section_break_vydoz",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "hidden": 1
   },
   {
    "fieldname": "items",
@@ -165,7 +166,7 @@
    "link_fieldname": "consignment_reference"
   }
  ],
- "modified": "2024-02-21 11:31:34.625848",
+ "modified": "2024-02-22 16:55:51.270894",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Consignment Tracking",
