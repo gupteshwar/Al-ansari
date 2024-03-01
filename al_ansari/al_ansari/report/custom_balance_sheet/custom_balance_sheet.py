@@ -74,6 +74,7 @@ def execute(filters=None):
 	data.extend(liability or [])
 	data.extend(equity or [])
 	if opening_balance and round(opening_balance, 2) != 0:
+		
 		unclosed = {
 			"account_name": "'" + _("Unclosed Fiscal Years Profit / Loss (Credit)") + "'",
 			"account": "'" + _("Unclosed Fiscal Years Profit / Loss (Credit)") + "'",
@@ -85,7 +86,11 @@ def execute(filters=None):
 			if provisional_profit_loss:
 				provisional_profit_loss[period.key] = provisional_profit_loss[period.key] - opening_balance
 
-		unclosed["total"] = opening_balance
+		unclosed["total"] = opening_balance	
+		print("//////////// start //////////////////")
+		print(unclosed)
+		print("//////////// end ////////////////////")
+		
 		data.append(unclosed)
 
 	if provisional_profit_loss:

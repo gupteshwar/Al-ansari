@@ -266,6 +266,7 @@ def prepare_data(accounts, balance_must_be, period_list, company_currency):
 	year_start_date = period_list[0]["year_start_date"].strftime("%Y-%m-%d")
 	year_end_date = period_list[-1]["year_end_date"].strftime("%Y-%m-%d")
 
+
 	for d in accounts:
 		# add to output
 		has_value = False
@@ -572,7 +573,7 @@ def get_columns(periodicity, period_list, accumulated_values=1, company=None):
 			"width": 300,
 		},
 		{
-			"fieldname": "cosy_center",
+			"fieldname": "cost_center",
 			"label": _("Cost Center"),
 			"fieldtype": "Link",
 			"options": "Cost Center",
