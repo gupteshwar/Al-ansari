@@ -17,6 +17,7 @@ from al_ansari.al_ansari.report.financial_statements import (
 
 
 def execute(filters=None):
+	print(filters)
 	period_list = get_period_list(
 		filters.from_fiscal_year,
 		filters.to_fiscal_year,

@@ -5,7 +5,8 @@
 import functools
 import math
 import re
-
+# from apps.erpnext.erpnext.accounts.doctype import cost_center
+from erpnext.accounts.utils import get_balance_on
 import frappe
 from frappe import _
 from frappe.utils import add_days, add_months, cint, cstr, flt, formatdate, get_first_day, getdate
@@ -269,42 +270,98 @@ def prepare_data(accounts, balance_must_be, period_list, company_currency):
 
 	for d in accounts:
 		# add to output
-		has_value = False
-		total = 0
-		row = frappe._dict(
-			{
-				"account": _(d.name),
-				"parent_account": _(d.parent_account) if d.parent_account else "",
-				"indent": flt(d.indent),
-				"year_start_date": year_start_date,
-				"year_end_date": year_end_date,
-				"currency": company_currency,
-				"include_in_gross": d.include_in_gross,
-				"account_type": d.account_type,
-				"is_group": d.is_group,
-				"opening_balance": d.get("opening_balance", 0.0) * (1 if balance_must_be == "Debit" else -1),
-				"account_name": (
-					"%s - %s" % (_(d.account_number), _(d.account_name))
-					if d.account_number
-					else _(d.account_name)
-				),
-			}
-		)
-		for period in period_list:
-			if d.get(period.key) and balance_must_be == "Credit":
-				# change sign based on Debit or Credit, since calculation is done using (debit - credit)
-				d[period.key] *= -1
 
-			row[period.key] = flt(d.get(period.key, 0.0), 3)
+		if d.is_group != 0:
+			has_value = False
+			total = 0
+			row = frappe._dict(
+				{
+					"account": _(d.name),
+					"parent_account": _(d.parent_account) if d.parent_account else "",
+					"indent": flt(d.indent),
+					"year_start_date": year_start_date,
+					"year_end_date": year_end_date,
+					"currency": company_currency,
+					"include_in_gross": d.include_in_gross,
+					"account_type": d.account_type,
+					"is_group": d.is_group,
+					"opening_balance": d.get("opening_balance", 0.0) * (1 if balance_must_be == "Debit" else -1),
+					"account_name": (
+						"%s - %s" % (_(d.account_number), _(d.account_name))
+						if d.account_number
+						else _(d.account_name)
+					),
+				}
+			)
+			for period in period_list:
+				if d.get(period.key) and balance_must_be == "Credit":
+					# change sign based on Debit or Credit, since calculation is done using (debit - credit)
+					d[period.key] *= -1
 
-			if abs(row[period.key]) >= 0.005:
-				# ignore zero values
-				has_value = True
-				total += flt(row[period.key])
+				row[period.key] = flt(d.get(period.key, 0.0), 3)
 
-		row["has_value"] = has_value
-		row["total"] = total
-		data.append(row)
+				if abs(row[period.key]) >= 0.005:
+					# ignore zero values
+					has_value = True
+					total += flt(row[period.key])
+
+			row["has_value"] = has_value
+			row["total"] = total
+			data.append(row)
+		else:
+			compnay_name = frappe.get_value("Account", d.name, "company")
+			has_value = False
+			total = 0
+			cost_center_list = frappe.get_all("Cost Center", filters={"company": compnay_name, "is_group": 0} )
+			for cc in cost_center_list:
+				row = frappe._dict(
+					{
+						"account": _(d.name),
+						"parent_account": _(d.parent_account) if d.parent_account else "",
+						"indent": flt(d.indent),
+						"year_start_date": year_start_date,
+						"year_end_date": year_end_date,
+						"currency": company_currency,
+						"include_in_gross": d.include_in_gross,
+						"account_type": d.account_type,
+						"is_group": d.is_group,
+						"opening_balance": d.get("opening_balance", 0.0) * (1 if balance_must_be == "Debit" else -1),
+						"account_name": (
+							"%s - %s" % (_(d.account_number), _(d.account_name))
+							if d.account_number
+							else _(d.account_name)
+						),
+					}
+				)
+				row["cost_center"] = cc.name
+				query = """
+						SELECT sum(debit_in_account_currency) - sum(credit_in_account_currency)
+						FROM `tabGL Entry` gle
+						WHERE is_cancelled=0 and gle.account = "{0}" and gle.cost_center = "{1}" 
+				""".format(d.name, cc.name)
+				bal = frappe.db.sql(query)[0][0]
+				# x = get_balance_on(account=d.name, cost_center=cc.name)
+				print("-----------------")
+				print(d.name)
+				print(cc)
+				print(bal)
+				print("----------------")
+				for period in period_list:
+					if d.get(period.key) and balance_must_be == "Credit":
+						# change sign based on Debit or Credit, since calculation is done using (debit - credit)
+						d[period.key] *= -1
+
+					row[period.key] = flt(bal, 3)
+					# row[period.key] = flt(d.get(period.key, 0.0), 3)
+
+					if abs(row[period.key]) >= 0.005:
+						# ignore zero values
+						has_value = True
+						total += flt(row[period.key])
+
+				row["has_value"] = has_value
+				row["total"] = total
+				data.append(row)
 
 	return data
 
