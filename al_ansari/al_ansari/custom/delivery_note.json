@@ -317,7 +317,7 @@
    "description": null,
    "docstatus": 0,
    "dt": "Delivery Note",
-   "fetch_from": "customer_address.gstin",
+   "fetch_from": "",
    "fetch_if_empty": 0,
    "fieldname": "billing_address_gstin",
    "fieldtype": "Data",
@@ -377,7 +377,7 @@
    "description": null,
    "docstatus": 0,
    "dt": "Delivery Note",
-   "fetch_from": "shipping_address_name.gstin",
+   "fetch_from": "",
    "fetch_if_empty": 0,
    "fieldname": "customer_gstin",
    "fieldtype": "Data",
@@ -497,7 +497,7 @@
    "description": null,
    "docstatus": 0,
    "dt": "Delivery Note",
-   "fetch_from": "company_address.gstin",
+   "fetch_from": "",
    "fetch_if_empty": 0,
    "fieldname": "company_gstin",
    "fieldtype": "Data",
@@ -720,7 +720,6 @@
    "unique": 0,
    "width": null
   },
-
   {
    "_assign": null,
    "_comments": null,
@@ -1038,7 +1037,7 @@
    "description": null,
    "docstatus": 0,
    "dt": "Delivery Note",
-   "fetch_from": "customer.gst_category",
+   "fetch_from": "",
    "fetch_if_empty": 1,
    "fieldname": "gst_category",
    "fieldtype": "Select",
@@ -1621,7 +1620,6 @@
    "unique": 0,
    "width": null
   },
-
   {
    "_assign": null,
    "_comments": null,
@@ -1682,7 +1680,6 @@
    "unique": 0,
    "width": null
   }
-  
  ],
  "custom_perms": [],
  "doctype": "Delivery Note",
