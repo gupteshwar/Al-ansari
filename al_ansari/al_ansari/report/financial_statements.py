@@ -206,9 +206,6 @@ def get_data(
 
 	if out and total:
 		add_total_row(out, root_type, balance_must_be, period_list, company_currency)
-	print("--------------out---------------------")
-	print(out)
-	print("--------------out---------------------")
 	return out
 
 
@@ -267,7 +264,6 @@ def prepare_data(accounts, balance_must_be, period_list, company_currency):
 	year_start_date = period_list[0]["year_start_date"].strftime("%Y-%m-%d")
 	year_end_date = period_list[-1]["year_end_date"].strftime("%Y-%m-%d")
 
-
 	for d in accounts:
 		# add to output
 
@@ -312,13 +308,47 @@ def prepare_data(accounts, balance_must_be, period_list, company_currency):
 			compnay_name = frappe.get_value("Account", d.name, "company")
 			has_value = False
 			total = 0
+			row = frappe._dict(
+					{
+						"account": _(d.name),
+						"parent_account": _(d.parent_account) if d.parent_account else "",
+						"indent": flt(d.indent)+1,
+						"year_start_date": year_start_date,
+						"year_end_date": year_end_date,
+						"currency": company_currency,
+						"include_in_gross": d.include_in_gross,
+						"account_type": d.account_type,
+						"is_group": 1,
+						"opening_balance": d.get("opening_balance", 0.0) * (1 if balance_must_be == "Debit" else -1),
+						"account_name": (
+							"%s - %s" % (_(d.account_number), _(d.account_name))
+							if d.account_number
+							else _(d.account_name)
+						),
+					}
+				)
+			for period in period_list:
+				if d.get(period.key) and balance_must_be == "Credit":
+					# change sign based on Debit or Credit, since calculation is done using (debit - credit)
+					d[period.key] *= -1
+
+				row[period.key] = flt(d.get(period.key, 0.0), 3)
+
+				if abs(row[period.key]) >= 0.005:
+					# ignore zero values
+					has_value = True
+					total += flt(row[period.key])
+
+			row["has_value"] = has_value
+			row["total"] = total
+			data.append(row)
 			cost_center_list = frappe.get_all("Cost Center", filters={"company": compnay_name, "is_group": 0} )
 			for cc in cost_center_list:
 				row = frappe._dict(
 					{
-						"account": _(d.name),
+						"account": "",
 						"parent_account": _(d.parent_account) if d.parent_account else "",
-						"indent": flt(d.indent),
+						"indent": flt(d.indent)+2,
 						"year_start_date": year_start_date,
 						"year_end_date": year_end_date,
 						"currency": company_currency,
@@ -341,11 +371,6 @@ def prepare_data(accounts, balance_must_be, period_list, company_currency):
 				""".format(d.name, cc.name)
 				bal = frappe.db.sql(query)[0][0]
 				# x = get_balance_on(account=d.name, cost_center=cc.name)
-				print("-----------------")
-				print(d.name)
-				print(cc)
-				print(bal)
-				print("----------------")
 				for period in period_list:
 					if d.get(period.key) and balance_must_be == "Credit":
 						# change sign based on Debit or Credit, since calculation is done using (debit - credit)
@@ -362,7 +387,6 @@ def prepare_data(accounts, balance_must_be, period_list, company_currency):
 				row["has_value"] = has_value
 				row["total"] = total
 				data.append(row)
-
 	return data
 
 
