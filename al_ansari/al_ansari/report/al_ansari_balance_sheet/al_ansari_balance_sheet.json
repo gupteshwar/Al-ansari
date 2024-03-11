@@ -13,11 +13,11 @@
  "modified": "2024-02-29 16:04:59.797297",
  "modified_by": "Administrator",
  "module": "Al Ansari",
- "name": "Custom Balance Sheet",
+ "name": "Al Ansari Balance Sheet",
  "owner": "Administrator",
  "prepared_report": 0,
  "ref_doctype": "GL Entry",
- "report_name": "Custom Balance Sheet",
+ "report_name": "Al Ansari Balance Sheet",
  "report_type": "Script Report",
  "roles": [
   {
