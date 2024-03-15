@@ -5688,85 +5688,6 @@
   "filters": [],
   "is_standard": "Yes",
   "javascript": null,
-  "json": "{}",
-  "letter_head": "Al Yusr International LLC",
-  "modified": "2022-05-29 17:11:46.081110",
-  "module": "HR",
-  "name": "Document Expiring",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "prepared_report": 0,
-  "query": null,
-  "ref_doctype": "Employee Documents",
-  "reference_report": null,
-  "report_name": "Document Expiring",
-  "report_script": null,
-  "report_type": "Report Builder",
-  "roles": []
- },
- {
-  "add_total_row": 0,
-  "columns": [],
-  "disable_prepared_report": 0,
-  "disabled": 0,
-  "docstatus": 0,
-  "doctype": "Report",
-  "filters": [],
-  "is_standard": "Yes",
-  "javascript": null,
-  "json": "{\"filters\":[[\"Employee Documents\",\"document_type\",\"=\",\"Visa\",false]],\"fields\":[[\"name\",\"Employee\"],[\"employee_name\",\"Employee\"],[\"status\",\"Employee\"],[\"document_type\",\"Employee Documents\"],[\"document_number\",\"Employee Documents\"],[\"expiry_date\",\"Employee Documents\"]],\"order_by\":\"`tabEmployee`.`modified` desc\",\"add_totals_row\":0,\"page_length\":500,\"column_widths\":{\"name\":120,\"employee_name\":120,\"status\":120,\"Employee Documents:document_type\":120,\"Employee Documents:document_number\":120,\"Employee Documents:expiry_date\":120},\"group_by\":null}",
-  "letter_head": "Al Yusr International LLC",
-  "modified": "2022-05-29 19:54:33.442978",
-  "module": "HR",
-  "name": "Visas Expired",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "prepared_report": 0,
-  "query": null,
-  "ref_doctype": "Employee",
-  "reference_report": null,
-  "report_name": "Visas Expired",
-  "report_script": null,
-  "report_type": "Report Builder",
-  "roles": [
-   {
-    "parent": "Visas Expired",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "HR Manager"
-   },
-   {
-    "parent": "Visas Expired",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "Employee"
-   },
-   {
-    "parent": "Visas Expired",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "HR User"
-   },
-   {
-    "parent": "Visas Expired",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "Employee Self Service"
-   }
-  ]
- },
- {
-  "add_total_row": 0,
-  "columns": [],
-  "disable_prepared_report": 0,
-  "disabled": 0,
-  "docstatus": 0,
-  "doctype": "Report",
-  "filters": [],
-  "is_standard": "Yes",
-  "javascript": null,
   "json": null,
   "letter_head": "Al Yusr International LLC",
   "modified": "2022-10-18 13:58:37.375082",
@@ -6213,6 +6134,1069 @@
     "parentfield": "roles",
     "parenttype": "Report",
     "role": "Head of Department"
+   }
+  ]
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": "abc",
+  "modified": "2022-10-19 02:59:00.365307",
+  "module": "Core",
+  "name": "Database Storage Usage By Tables",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "",
+  "ref_doctype": "Error Log",
+  "reference_report": null,
+  "report_name": "Database Storage Usage By Tables",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Database Storage Usage By Tables",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": "",
+  "modified": "2023-01-31 14:53:37.778576",
+  "module": "Custom",
+  "name": "Audit System Hooks",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "",
+  "ref_doctype": "Property Setter",
+  "reference_report": null,
+  "report_name": "Audit System Hooks",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Audit System Hooks",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": "{}",
+  "letter_head": "Al Yusr International LLC",
+  "modified": "2022-05-29 17:11:46.081110",
+  "module": "HR",
+  "name": "Document Expiring",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Employee Documents",
+  "reference_report": null,
+  "report_name": "Document Expiring",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": []
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": "{\"filters\":[[\"Employee Documents\",\"document_type\",\"=\",\"Visa\",false]],\"fields\":[[\"name\",\"Employee\"],[\"employee_name\",\"Employee\"],[\"status\",\"Employee\"],[\"document_type\",\"Employee Documents\"],[\"document_number\",\"Employee Documents\"],[\"expiry_date\",\"Employee Documents\"]],\"order_by\":\"`tabEmployee`.`modified` desc\",\"add_totals_row\":0,\"page_length\":500,\"column_widths\":{\"name\":120,\"employee_name\":120,\"status\":120,\"Employee Documents:document_type\":120,\"Employee Documents:document_number\":120,\"Employee Documents:expiry_date\":120},\"group_by\":null}",
+  "letter_head": "Al Yusr International LLC",
+  "modified": "2022-05-29 19:54:33.442978",
+  "module": "HR",
+  "name": "Visas Expired",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "Visas Expired",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "parent": "Visas Expired",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Visas Expired",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee"
+   },
+   {
+    "parent": "Visas Expired",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Visas Expired",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee Self Service"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Yusr Letter Head",
+  "modified": "2023-04-27 16:58:25.839477",
+  "module": "HR",
+  "name": "Daily Time card",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\ntabEmployee.employee,tabEmployee.employee_name,payroll_cost_center as \"Cost Center\", date(time) as \"CDate\",min(time(time)) as \"ChecIn\",max(time(time)) as \"ChecOut\"\r\n,TIMEDIFF(max(time),min(time)) as \"Hours\"\r\nFROM\r\ntabEmployee,`tabEmployee Checkin`\r\nWHERE\r\ntabEmployee.name = `tabEmployee Checkin`.employee\r\nAND\r\ntabEmployee.status = 'active'\r\nGROUP BY\r\ntabEmployee.employee,tabEmployee.employee_name,payroll_cost_center, date(time)",
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "Daily Time card",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Daily Time card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Daily Time card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee"
+   },
+   {
+    "parent": "Daily Time card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Daily Time card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Al Yusr Admin Department"
+   },
+   {
+    "parent": "Daily Time card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee Self Service"
+   },
+   {
+    "parent": "Daily Time card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Admin Assistant"
+   },
+   {
+    "parent": "Daily Time card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Seperation Admin"
+   },
+   {
+    "parent": "Daily Time card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Employee Onboarding"
+   },
+   {
+    "parent": "Daily Time card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Interviewer"
+   },
+   {
+    "parent": "Daily Time card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Recruiter"
+   },
+   {
+    "parent": "Daily Time card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Leave Approver"
+   },
+   {
+    "parent": "Daily Time card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Head of Department"
+   },
+   {
+    "parent": "Daily Time card",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"columns\":[{\"fieldtype\":\"Link\",\"options\":\"Salary Slip\",\"width\":150,\"label\":\"Salary Slip ID\",\"fieldname\":\"salary_slip_id\",\"id\":\"salary_slip_id\",\"name\":\"Salary Slip ID\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Link\",\"options\":\"Employee\",\"width\":120,\"label\":\"Employee\",\"fieldname\":\"employee\",\"id\":\"employee\",\"name\":\"Employee\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"\",\"width\":140,\"label\":\"Employee Name\",\"fieldname\":\"employee_name\",\"id\":\"employee_name\",\"name\":\"Employee Name\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"\",\"width\":80,\"label\":\"Date of Joining\",\"fieldname\":\"date_of_joining\",\"id\":\"date_of_joining\",\"name\":\"Date of Joining\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Link\",\"options\":\"Branch\",\"width\":120,\"label\":\"Branch\",\"fieldname\":\"branch\",\"id\":\"branch\",\"name\":\"Branch\",\"editable\":false,\"compareValue\":null},{\"fieldname\":\"payroll_cost_center\",\"field\":\"payroll_cost_center\",\"fieldtype\":\"Link\",\"label\":\"Payroll Cost Center\",\"insert_after_index\":4,\"link_field\":\"employee\",\"doctype\":\"Employee\",\"options\":\"Cost Center\",\"width\":100,\"id\":\"payroll_cost_center\",\"name\":\"Payroll Cost Center\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Link\",\"options\":\"Department\",\"width\":-1,\"label\":\"Department\",\"fieldname\":\"department\",\"id\":\"department\",\"name\":\"Department\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Link\",\"options\":\"Designation\",\"width\":120,\"label\":\"Designation\",\"fieldname\":\"designation\",\"id\":\"designation\",\"name\":\"Designation\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Link\",\"options\":\"Company\",\"width\":120,\"label\":\"Company\",\"fieldname\":\"company\",\"id\":\"company\",\"name\":\"Company\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"\",\"width\":80,\"label\":\"Start Date\",\"fieldname\":\"start_date\",\"id\":\"start_date\",\"name\":\"Start Date\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"\",\"width\":80,\"label\":\"End Date\",\"fieldname\":\"end_date\",\"id\":\"end_date\",\"name\":\"End Date\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Float\",\"width\":50,\"label\":\"Leave Without Pay\",\"fieldname\":\"leave_without_pay\",\"id\":\"leave_without_pay\",\"name\":\"Leave Without Pay\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Float\",\"width\":120,\"label\":\"Payment Days\",\"fieldname\":\"payment_days\",\"id\":\"payment_days\",\"name\":\"Payment Days\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"BASIC SALARY\",\"fieldname\":\"basic_salary\",\"id\":\"basic_salary\",\"name\":\"BASIC SALARY\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"HRA - Reimb\",\"fieldname\":\"hra___reimb\",\"id\":\"hra___reimb\",\"name\":\"HRA - Reimb\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"D_FOOD ALLOWANCE\",\"fieldname\":\"d_food_allowance\",\"id\":\"d_food_allowance\",\"name\":\"D_FOOD ALLOWANCE\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"HOUSE RENT ALLOWANCE\",\"fieldname\":\"house_rent_allowance\",\"id\":\"house_rent_allowance\",\"name\":\"HOUSE RENT ALLOWANCE\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"E_OTHER ALLOWANCE\",\"fieldname\":\"e_other_allowance\",\"id\":\"e_other_allowance\",\"name\":\"E_OTHER ALLOWANCE\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"Living Allowance\",\"fieldname\":\"living_allowance\",\"id\":\"living_allowance\",\"name\":\"Living Allowance\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"Medical Allowance\",\"fieldname\":\"medical_allowance\",\"id\":\"medical_allowance\",\"name\":\"Medical Allowance\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"FOOD ALLOW WRK\",\"fieldname\":\"food_allow_wrk\",\"id\":\"food_allow_wrk\",\"name\":\"FOOD ALLOW WRK\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"BASIC SALARY WRK\",\"fieldname\":\"basic_salary_wrk\",\"id\":\"basic_salary_wrk\",\"name\":\"BASIC SALARY WRK\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"TRANSPORT ALLOWANCE\",\"fieldname\":\"transport_allowance\",\"id\":\"transport_allowance\",\"name\":\"TRANSPORT ALLOWANCE\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"E_JOINING TKT\",\"fieldname\":\"e_joining_tkt\",\"id\":\"e_joining_tkt\",\"name\":\"E_JOINING TKT\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"OTHER ALLOW WRK\",\"fieldname\":\"other_allow_wrk\",\"id\":\"other_allow_wrk\",\"name\":\"OTHER ALLOW WRK\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"OVERTIME\",\"fieldname\":\"overtime\",\"id\":\"overtime\",\"name\":\"OVERTIME\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"Gross Pay\",\"fieldname\":\"gross_pay\",\"id\":\"gross_pay\",\"name\":\"Gross Pay\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"PASI STAFF (Employer)\",\"fieldname\":\"pasi_staff_(employer)\",\"id\":\"pasi_staff_(employer)\",\"name\":\"PASI STAFF (Employer)\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"PASI STAFF (Employee)\",\"fieldname\":\"pasi_staff_(employee)\",\"id\":\"pasi_staff_(employee)\",\"name\":\"PASI STAFF (Employee)\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"Ooredoo Oct'2022\",\"fieldname\":\"ooredoo_oct'2022\",\"id\":\"ooredoo_oct'2022\",\"name\":\"Ooredoo Oct'2022\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"R_OTHER ADVANCE RECOVERIES\",\"fieldname\":\"r_other_advance_recoveries\",\"id\":\"r_other_advance_recoveries\",\"name\":\"R_OTHER ADVANCE RECOVERIES\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"Loan Repayment\",\"fieldname\":\"loan_repayment\",\"id\":\"loan_repayment\",\"name\":\"Loan Repayment\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"Total Deduction\",\"fieldname\":\"total_deduction\",\"id\":\"total_deduction\",\"name\":\"Total Deduction\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"Net Pay\",\"fieldname\":\"net_pay\",\"id\":\"net_pay\",\"name\":\"Net Pay\",\"editable\":false,\"compareValue\":null}]}",
+  "letter_head": null,
+  "modified": "2023-03-28 16:57:46.149982",
+  "module": "Payroll",
+  "name": "Salary register with Cost Center",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Salary Slip",
+  "reference_report": "Salary Register",
+  "report_name": "Salary register with Cost Center",
+  "report_script": null,
+  "report_type": "Custom Report",
+  "roles": [
+   {
+    "parent": "Salary register with Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Salary register with Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee"
+   },
+   {
+    "parent": "Salary register with Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Salary register with Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee Self Service"
+   },
+   {
+    "parent": "Salary register with Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"columns\":[{\"fieldtype\":\"Link\",\"options\":\"Salary Slip\",\"width\":150,\"label\":\"Salary Slip ID\",\"fieldname\":\"salary_slip_id\",\"id\":\"salary_slip_id\",\"name\":\"Salary Slip ID\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Link\",\"options\":\"Employee\",\"width\":120,\"label\":\"Employee\",\"fieldname\":\"employee\",\"id\":\"employee\",\"name\":\"Employee\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"\",\"width\":140,\"label\":\"Employee Name\",\"fieldname\":\"employee_name\",\"id\":\"employee_name\",\"name\":\"Employee Name\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"\",\"width\":80,\"label\":\"Date of Joining\",\"fieldname\":\"date_of_joining\",\"id\":\"date_of_joining\",\"name\":\"Date of Joining\",\"editable\":false,\"compareValue\":null},{\"fieldname\":\"payroll_cost_center\",\"field\":\"payroll_cost_center\",\"fieldtype\":\"Link\",\"label\":\"Payroll Cost Center\",\"insert_after_index\":4,\"link_field\":\"employee\",\"doctype\":\"Employee\",\"options\":\"Cost Center\",\"width\":100,\"id\":\"payroll_cost_center\",\"name\":\"Payroll Cost Center\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Float\",\"width\":50,\"label\":\"Leave Without Pay\",\"fieldname\":\"leave_without_pay\",\"id\":\"leave_without_pay\",\"name\":\"Leave Without Pay\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Float\",\"width\":120,\"label\":\"Payment Days\",\"fieldname\":\"payment_days\",\"id\":\"payment_days\",\"name\":\"Payment Days\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"Loan Repayment\",\"fieldname\":\"loan_repayment\",\"id\":\"loan_repayment\",\"name\":\"Loan Repayment\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"Total Deduction\",\"fieldname\":\"total_deduction\",\"id\":\"total_deduction\",\"name\":\"Total Deduction\",\"editable\":false,\"compareValue\":null},{\"fieldtype\":\"Currency\",\"width\":120,\"label\":\"Net Pay\",\"fieldname\":\"net_pay\",\"id\":\"net_pay\",\"name\":\"Net Pay\",\"editable\":false,\"compareValue\":null},{\"fieldname\":\"visa_company\",\"field\":\"visa_company\",\"fieldtype\":\"Link\",\"label\":\"Visa Company / Contract\",\"insert_after_index\":33,\"link_field\":\"employee\",\"doctype\":\"Employee\",\"options\":\"Visa Company\",\"width\":100,\"id\":\"visa_company\",\"name\":\"Visa Company / Contract\",\"editable\":false,\"compareValue\":null}]}",
+  "letter_head": null,
+  "modified": "2023-03-29 17:09:02.945078",
+  "module": "Payroll",
+  "name": "Salary register with Pre-payroll",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Salary Slip",
+  "reference_report": "Salary register with Cost Center",
+  "report_name": "Salary register with Pre-payroll",
+  "report_script": null,
+  "report_type": "Custom Report",
+  "roles": [
+   {
+    "parent": "Salary register with Pre-payroll",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Salary register with Pre-payroll",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee"
+   },
+   {
+    "parent": "Salary register with Pre-payroll",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Salary register with Pre-payroll",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee Self Service"
+   },
+   {
+    "parent": "Salary register with Pre-payroll",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Yusr Letter Head",
+  "modified": "2023-05-04 11:23:33.045584",
+  "module": "HR",
+  "name": "Employee with Current Salary",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    `tabEmployee`.`employee` AS `Employee`,\r\n    `tabEmployee`.`employee_name` AS `Employee Name`,\r\n   `tabEmployee`.`date_of_joining` AS `Joined`,\r\n   `tabEmployee`.`designation` AS `Designation`,\r\n   `tabEmployee`.`grade` AS `Grade`,\r\n   `tabEmployee`.`payroll_cost_center` AS `Cost Center`,\r\n   `tabEmployee`.`bank_name` AS `Bank`,\r\n   `tabEmployee`.`bank_ac_no` AS `Bank Account`,\r\n   `tabEmployee`.`working_status` AS `Working Status`,\r\n    `tabEmployee`.`visa_company` AS `Visa`,\r\n    `tabEmployee`.`salary_hold` AS `Salary Hold`,\r\n   `tabEmployee`.`bank_ac_no` AS `Bank Account`,\r\n    `tabSalary Structure Assignment`.`salary_structure` AS `Salary Structure`,\r\n    `tabSalary Structure Assignment`.`from_date` AS `From Date`,\r\n    `tabSalary Structure Assignment`.`base` AS `Basic`,\r\n    `tabSalary Structure Assignment`.`hra` AS `HRA`,\r\n    `tabSalary Structure Assignment`.`food` AS `Food`,\r\n    `tabSalary Structure Assignment`.`transport` AS `Transport`,\r\n    `tabSalary Structure Assignment`.`others` AS `others`,\r\n    `tabSalary Structure Assignment`.`living` AS `Living`,\r\n    `tabSalary Structure Assignment`.`fixed_overtime` AS `Fixed OT`,\r\n    `tabSalary Structure Assignment`.`utility` AS `Utility`,\r\n    `tabSalary Structure Assignment`.`gsm` AS `GSM`,\r\n    `tabSalary Structure Assignment`.`transport` AS `Transport`,\r\n    `tabSalary Structure Assignment`.`total_monthly_salary` AS `Total`,\r\n    `tabSalary Structure Assignment`.`monthly_pay` AS `Base for Overtime`,\r\n    `tabSalary Structure Assignment`.`workflow_state` AS `Approval Status`,\r\n   `tabSalary Structure Assignment`.`company` AS `Company`\r\n   \r\nFROM \r\n    `tabEmployee`\r\nINNER JOIN\r\n    `tabSalary Structure Assignment`\r\nON\r\n    `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\nWHERE\r\n    `tabSalary Structure Assignment`.`from_date` = (\r\n        SELECT \r\n            MAX(`from_date`)\r\n        FROM \r\n            `tabSalary Structure Assignment`\r\n        WHERE \r\n            `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\n    )\r\nAND     `tabSalary Structure Assignment`.`docstatus` = 1\r\n",
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "Employee with Current Salary",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Employee with Current Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Employee with Current Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee"
+   },
+   {
+    "parent": "Employee with Current Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Employee with Current Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Al Yusr Admin Department"
+   },
+   {
+    "parent": "Employee with Current Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee Self Service"
+   },
+   {
+    "parent": "Employee with Current Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Admin Assistant"
+   },
+   {
+    "parent": "Employee with Current Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Seperation Admin"
+   },
+   {
+    "parent": "Employee with Current Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Employee Onboarding"
+   },
+   {
+    "parent": "Employee with Current Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Interviewer"
+   },
+   {
+    "parent": "Employee with Current Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Recruiter"
+   },
+   {
+    "parent": "Employee with Current Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Leave Approver"
+   },
+   {
+    "parent": "Employee with Current Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Head of Department"
+   },
+   {
+    "parent": "Employee with Current Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Employee with Current Salary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Fleet Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 1,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2023-05-31 14:17:18.861950",
+  "module": "HR",
+  "name": "Employee Leave Balance",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 1,
+  "query": null,
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "Employee Leave Balance",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Employee Leave Balance",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Employee Leave Balance",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2023-07-05 11:08:27.258390",
+  "module": "Al Ansari",
+  "name": "Stock Ageing - Al Ansari",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Item",
+  "reference_report": null,
+  "report_name": "Stock Ageing - Al Ansari",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Stock Ageing - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Item Manager"
+   },
+   {
+    "parent": "Stock Ageing - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "Stock Ageing - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
+   },
+   {
+    "parent": "Stock Ageing - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "Stock Ageing - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase User"
+   },
+   {
+    "parent": "Stock Ageing - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Maintenance User"
+   },
+   {
+    "parent": "Stock Ageing - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Stock Ageing - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Manufacturing User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2023-07-06 09:26:20.164641",
+  "module": "Al Ansari",
+  "name": "Accounts Receivable - Al Ansari",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Sales Invoice",
+  "reference_report": null,
+  "report_name": "Accounts Receivable - Al Ansari",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Accounts Receivable - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Accounts Receivable - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2023-07-06 09:35:02.611631",
+  "module": "Al Ansari",
+  "name": "Accounts Payable - Al Ansari",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Purchase Invoice",
+  "reference_report": null,
+  "report_name": "Accounts Payable - Al Ansari",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Accounts Payable - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Accounts Payable - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase User"
+   },
+   {
+    "parent": "Accounts Payable - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Accounts Payable - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   }
+  ]
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2023-07-06 09:50:07.444202",
+  "module": "Al Ansari",
+  "name": "Accounts Payable Summary - Al Ansari",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Purchase Invoice",
+  "reference_report": null,
+  "report_name": "Accounts Payable Summary - Al Ansari",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Accounts Payable Summary - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Accounts Payable Summary - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase User"
+   },
+   {
+    "parent": "Accounts Payable Summary - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Accounts Payable Summary - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   }
+  ]
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2023-07-06 09:50:41.403944",
+  "module": "Al Ansari",
+  "name": "Accounts Receivable Summary - Al Ansari",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Sales Invoice",
+  "reference_report": null,
+  "report_name": "Accounts Receivable Summary - Al Ansari",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Accounts Receivable Summary - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Accounts Receivable Summary - Al Ansari",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Yusr Letter Head",
+  "modified": "2023-10-19 12:56:50.702453",
+  "module": "Payroll",
+  "name": "Salary Disbursement(SIF)",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\nCONCAT(\r\n        CASE \r\n            WHEN MONTH(`tabSalary Slip`.`posting_date`) < 10 THEN CONCAT('0', MONTH(`tabSalary Slip`.`posting_date`))\r\n            ELSE MONTH(`tabSalary Slip`.`posting_date`)\r\n        END,\r\n        YEAR(`tabSalary Slip`.`posting_date`)\r\n    ) AS 'Salary Period',\r\n    CASE \r\n            WHEN `tabEmployee`.`group` = 'Expat' THEN 'P'\r\n            ELSE 'C'\r\n        END AS `Employee ID Type`,\r\n    CASE \r\n            WHEN `tabEmployee`.`group` = 'Expat' THEN `tabEmployee`.`passport_number_`\r\n            ELSE `tabEmployee`.`provident_fund_account`\r\n        END AS `Employee ID`,\r\n    `tabSalary Slip`.`employee` AS `Employee Reference`,\r\n    `tabSalary Slip`.`employee_name` AS `Employee Name`,\r\n\t`tabEmployee`.`bank_code` AS `BANK MIC`,\r\n\t`tabEmployee`.`bank_account` AS `Employee Account`,\r\n    'M' AS `Salary Frequency`,\r\n    `tabSalary Slip`.`total_working_days` AS `Number of Working Days`,\r\n    `tabSalary Slip`.`net_pay` AS `Net Salary`,\r\n    (SELECT sum(`amount`) FROM `tabSalary Detail` WHERE \r\n         `parent` = `tabSalary Slip`.`name` AND `salary_component` LIKE '%%BASIC SALARY%%') AS `Basic Salary`,\r\n   '0'  AS `Extra Hours`,\r\n    (SELECT sum(amount) FROM `tabSalary Detail` WHERE \r\n         `parent` = `tabSalary Slip`.`name` AND `salary_component` not LIKE '%%BASIC SALARY%%') AS `Extra Income`,\r\n    (SELECT sum(amount) FROM `tabSalary Detail` WHERE \r\n         `parent` = `tabSalary Slip`.`name` AND `salary_component` not LIKE '%%PASI%%') AS `Deductions`,\r\n    (SELECT sum(amount) FROM `tabSalary Detail` WHERE \r\n         `parent` = `tabSalary Slip`.`name` AND `salary_component` LIKE '%%PASI%%Employee%%') AS `Social Security Deductions`\r\nFROM \r\n    `tabEmployee`\r\nINNER JOIN\r\n    `tabSalary Slip`\r\nON\r\n    `tabEmployee`.`name` = `tabSalary Slip`.`employee`\r\n    where `tabSalary Slip`.`docstatus` IN (1, 0)\r\n",
+  "ref_doctype": "Salary Slip",
+  "reference_report": null,
+  "report_name": "Salary Disbursement(SIF)",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Salary Disbursement(SIF)",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Yusr Letter Head",
+  "modified": "2023-09-10 11:54:44.682149",
+  "module": "HR",
+  "name": "test",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "test",
+  "report_script": "SELECT * FROM 'tabEmployee'\r\n",
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "test",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "fieldname": "company",
+    "fieldtype": "Link",
+    "label": "Company",
+    "mandatory": 1,
+    "options": "Company",
+    "parent": "Leave Application Report New",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{}",
+  "letter_head": "Al Yusr Letter Head",
+  "modified": "2023-12-06 22:05:59.767956",
+  "module": "HR",
+  "name": "Leave Application Report New",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n    la.name AS \"Leave Application\",\r\n    la.employee AS \"Employee\",\r\n    emp.employee_name AS \"Employee Name\",\r\n    la.leave_type AS \"Leave Type\",\r\n    la.from_date AS \"From Date\",\r\n    la.to_date AS \"To Date\",\r\n    la.total_leave_days \"Total Leave Days\",\r\n    la.leave_approver \"Leave Approver\",\r\n    la.company \"Company\",\r\n    emp.department \"Department\",\r\n    la.status \"Status\",\r\n    emp.payroll_cost_center AS \"Payroll Cost Center\",\r\n    emp.grade AS \"Grade\",\r\n    emp.reports_to AS \"Reports To\"\r\nFROM\r\n    `tabLeave Application` la\r\nJOIN\r\n    `tabEmployee` emp ON la.employee = emp.name\r\nWHERE\r\n    la.status != 'Cancelled'\r\n    and la.company = %(company)s\r\nORDER BY\r\n    la.from_date DESC;\r\n",
+  "ref_doctype": "Leave Application",
+  "reference_report": null,
+  "report_name": "Leave Application Report New",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Leave Application Report New",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Leave Application Report New",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Leave Approver"
+   },
+   {
+    "parent": "Leave Application Report New",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee"
+   },
+   {
+    "parent": "Leave Application Report New",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Leave Application Report New",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee Self Service"
+   },
+   {
+    "parent": "Leave Application Report New",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Al Yusr Admin Department"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2024-02-29 16:04:59.797297",
+  "module": "Al Ansari",
+  "name": "Al Ansari Balance Sheet",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "GL Entry",
+  "reference_report": null,
+  "report_name": "Al Ansari Balance Sheet",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Al Ansari Balance Sheet",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Al Ansari Balance Sheet",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Al Ansari Balance Sheet",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2024-03-11 12:39:37.506641",
+  "module": "Al Ansari",
+  "name": "Al Ansari Profit and Loss Statement",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "GL Entry",
+  "reference_report": null,
+  "report_name": "Al Ansari Profit and Loss Statement",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Al Ansari Profit and Loss Statement",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Al Ansari Profit and Loss Statement",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Al Ansari Profit and Loss Statement",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari New 2023",
+  "modified": "2024-03-11 16:57:05.875117",
+  "module": "Al Ansari",
+  "name": "Al Ansari Trial Balance",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "GL Entry",
+  "reference_report": null,
+  "report_name": "Al Ansari Trial Balance",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Al Ansari Trial Balance",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Al Ansari Trial Balance",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Al Ansari Trial Balance",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
    }
   ]
  },
@@ -7426,46 +8410,6 @@
     "parentfield": "roles",
     "parenttype": "Report",
     "role": "Stock User"
-   }
-  ]
- },
- {
-  "add_total_row": 0,
-  "columns": [],
-  "disable_prepared_report": 0,
-  "disabled": 0,
-  "docstatus": 0,
-  "doctype": "Report",
-  "filters": [],
-  "is_standard": "Yes",
-  "javascript": null,
-  "json": null,
-  "letter_head": null,
-  "modified": "2022-11-04 12:32:35.340197",
-  "module": "HR",
-  "name": "Employee Leave Balance",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "prepared_report": 1,
-  "query": null,
-  "ref_doctype": "Employee",
-  "reference_report": null,
-  "report_name": "Employee Leave Balance",
-  "report_script": null,
-  "report_type": "Script Report",
-  "roles": [
-   {
-    "parent": "Employee Leave Balance",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "HR User"
-   },
-   {
-    "parent": "Employee Leave Balance",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "HR Manager"
    }
   ]
  },
