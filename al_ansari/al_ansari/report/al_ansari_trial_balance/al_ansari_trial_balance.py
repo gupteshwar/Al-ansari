@@ -104,6 +104,7 @@ def get_data(filters):
 
 	opening_balances = get_opening_balances(filters)
 
+
 	# add filter inside list so that the query in financial_statements.py doesn't break
 	if filters.project:
 		filters.project = [filters.project]
