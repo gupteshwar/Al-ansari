@@ -1,3 +1,6 @@
+
+
+
 from . import __version__ as app_version
 
 app_name = "al_ansari"
@@ -48,9 +51,36 @@ doctype_js = {
 	"Additional Salary": "public/js/additional_salary.js",
 	"Salary Slip": "public/js/salary_slip.js",
 	"Appraisal": "public/js/appraisal.js",
+
+	"Customer": "public/js/customer.js",
+	"Journal Entry": "public/js/journal_entry.js",
+	"Purchase Invoice": "public/js/purchase_invoice.js",
+	"Sales Invoice": "public/js/sales_invoice.js",
+	"Sales Order": "public/js/sales_order.js",
+	"Purchase Order": "public/js/purchase_order.js",
+	"Blanket Order": "public/js/blanket_order.js",
+	"Request for Quotation": "public/js/request_for_quotation.js",
+	"Supplier Quotation": "public/js/supplier_quotation.js",
+	"POS Closing Entry" : "public/js/pos_closing_entry.js",
+	"POS Opening Entry" : "public/js/pos_opening_entry.js",
 	"Job Applicant": "public/js/job_applicant.js",
+	"Employee Advance": "public/js/employee_advance.js",
+	"Quotation": "public/js/quotation.js",
+	"Purchase Receipt": "public/js/purchase_receipt.js",
+	"Purchase Invoice": "public/js/purchase_invoice.js",
+	"Landed Cost Voucher": "public/js/landed_cost_voucher.js",
+	"Stock Entry": "public/js/stock_entry.js",
+    "Asset Movement": "public/js/asset_movement.js",
+	"Payment Entry": "public/js/payment_entry.js",
+    "Delivery Note": "public/js/delivery_note.js",
+    "POS Invoice":"public/js/pos_invoice.js",
+    "Asset Repair":"public/js/asset_repair.js",
+    "Item Price List": "public/js/item_price_list.js",
+    "Material Request": "public/js/material_request.js",
+
 	"Interview Feedback": "public/js/interview_feedback.js"
 	}
+
 
 fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
 
@@ -141,8 +171,55 @@ doc_events = {
 		"after_insert": ["al_ansari.al_ansari.customization.employee_checkin.after_insert"],
 		"validate": ["al_ansari.al_ansari.customization.employee_checkin.validate"]
 	},
+	"Payment Entry":{
+		"before_save":["al_ansari.al_ansari.customization.payment_entry.validate_paid_amt_greater_than_outstanding_amt"],
+		"before_submit": ["al_ansari.al_ansari.customization.payment_entry.validate_outstanding_amount"],
+		"validate": ["al_ansari.al_ansari.customization.payment_entry.validate_reference_details"]
+	},
+	"Sales Order":{
+		"before_insert": "al_ansari.al_ansari.customization.sales_order.validate_cost_center",
+		"before_save":["al_ansari.al_ansari.customization.sales_order.before_save"],
+		"on_submit":["al_ansari.al_ansari.customization.sales_order.on_submit"],
+        "validate":["al_ansari.al_ansari.customization.utils.validate"]
+	},
+    "Sales Invoice":{
+		"before_insert": "al_ansari.al_ansari.customization.sales_invoice.validate_cost_center",
+        "validate":["al_ansari.al_ansari.customization.utils.validate"]
+	},
+	"Delivery Note": {
+		"before_insert": "al_ansari.al_ansari.customization.delivery_note.validate_cost_center"
+	},
+	"Employee Advance":{
+		"on_submit":["al_ansari.al_ansari.customization.employee.valid_employee_adv"]
+	},
+	"Payment Request": {
+		"validate": ["al_ansari.al_ansari.customization.payment_request.payment_request_validate"]
+	},
+	"Stock Entry":{
+		"before_submit": ["al_ansari.al_ansari.customization.stock_entry.before_submit"],
+		"on_submit": ["al_ansari.al_ansari.customization.stock_entry.on_submit"]
+	},
+    "Purchase Order":{
+		"before_insert": "al_ansari.al_ansari.customization.purchase_order.validate_cost_center",
+        "validate":["al_ansari.al_ansari.customization.utils.validate"]
+	},
+    "Purchase Invoice":{
+		"before_insert": "al_ansari.al_ansari.customization.purchase_invoice.validate_cost_center",
+        "validate":["al_ansari.al_ansari.customization.utils.validate"]
+	},
+	"Journal Entry": {
+		"validate": "al_ansari.al_ansari.customization.utils.validate_total_debit_and_credit_against_cc"
+	},
+	"Purchase Receipt": {
+		"before_insert": "al_ansari.al_ansari.customization.purchase_receipt.validate_cost_center",
+	},
+	"Asset Repair": {
+		"validate": "al_ansari.al_ansari.customization.asset_repair.validate_asset_repair",
+	},
+	"Quotation": {
+		"validate":["al_ansari.al_ansari.customization.quotation.before_save"]
+	}
 }
-
 # Scheduled Tasks
 # ---------------
 
@@ -184,7 +261,7 @@ scheduler_events = {
 #
 override_whitelisted_methods = {
 	# "frappe.desk.doctype.event.event.get_events": "al_ansari.event.get_events"
-	"erpnext.hr.utils.get_employee_fields_label": "al_ansari.al_ansari.customization.leave_application.get_employee_fields_label"
+	"erpnext.hr.utils.get_employee_fields_label": "al_ansari.al_ansari.customization.leave_application.get_employee_fields_label",
 }
 #
 # each overriding function accepts a `data` argument;
@@ -193,6 +270,10 @@ override_whitelisted_methods = {
 # override_doctype_dashboards = {
 #	"Task": "al_ansari.task.get_dashboard_data"
 # }
+
+override_doctype_dashboards = {
+	"Quotation": "al_ansari.al_ansari.customization.quotation.get_data"
+}
 
 # exempt linked doctypes from being automatically cancelled
 #
@@ -222,6 +303,9 @@ user_data_fields = [
 		"doctype": "{doctype_4}"
 	}
 ]
+
+
+
 
 # Authentication and authorization
 # --------------------------------

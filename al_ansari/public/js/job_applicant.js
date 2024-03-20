@@ -60,19 +60,19 @@ function auto_populate_description(frm) {
 }
 
 function validate_employment_date(frm) {
-    (frm.doc.records || []).forEach(function(date) {
-        if(date.from >= date.to){
-            frappe.throw(__("'To' date should be greater than 'From' date"))
-        }
-    })
 
-}
+        (frm.doc.records || []).forEach(function(date) {
+            if(date.from >= date.to){
+                frappe.throw(__("'To' date should be greater than 'From' date"))
+            }
+        })
+    }
 
 function validate_education_date(frm) {
-    (frm.doc.education || []).forEach(function(date){
-        console.log(date)
-        if(date.from_date >= date.to_date){
-            frappe.throw(__("'To' date should be greater than 'From' date"))
-        }
-    })
-}
+        (frm.doc.education || []).forEach(function(date){
+            if(date.from_date >= date.to_date){
+                frappe.throw(__("'To' date should be greater than 'From' date"))
+            }
+        })
+    }
+

@@ -1,0 +1,122 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{helptopic}-{subject}-{employee}",
+ "creation": "2023-04-06 16:42:38.240982",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee",
+  "required_on",
+  "email",
+  "column_break_5",
+  "helptopic",
+  "status",
+  "section_break_7",
+  "subject",
+  "description_of_problem",
+  "attachment",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Employee",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "required_on",
+   "fieldtype": "Date",
+   "label": "Required On",
+   "reqd": 1
+  },
+  {
+   "default": "`frappe.session.user.email`",
+   "description": "You will get emails on this email id",
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "helptopic",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "HelpTopic",
+   "options": "HelpTopics",
+   "reqd": 1
+  },
+  {
+   "default": "New Request",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "New Request\nNeed Clarification\nPending for Approval\nApproved\nResolved\nClosed"
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "subject",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Subject",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description_of_problem",
+   "fieldtype": "Text",
+   "in_list_view": 1,
+   "label": "Description of Problem",
+   "reqd": 1
+  },
+  {
+   "fieldname": "attachment",
+   "fieldtype": "Attach",
+   "label": "Attachment"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Employee Helpdesk",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2023-04-13 17:30:04.775298",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Employee Helpdesk",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
