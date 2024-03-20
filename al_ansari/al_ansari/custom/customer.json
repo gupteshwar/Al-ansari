@@ -85,7 +85,9 @@
    "hide_border": 0,
    "hide_days": 0,
    "hide_seconds": 0,
+
    "idx": 35,
+
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,
@@ -101,7 +103,9 @@
    "name": "Customer-vat_registration",
    "no_copy": 0,
    "non_negative": 0,
+
    "options": "\nUnregistered\nOman Registered\nGCC Registered\nOther",
+
    "owner": "Administrator",
    "parent": null,
    "parentfield": null,
@@ -133,7 +137,9 @@
    "columns": 0,
    "creation": "2023-01-19 11:37:47.527019",
    "default": null,
+
    "depends_on": "eval:doc.vat_registration == \"Oman Registered\" || doc.vat_registration == \"GCC Registered\" || doc.vat_registration == \"Other\"",
+
    "description": null,
    "docstatus": 0,
    "dt": "Customer",
@@ -145,7 +151,9 @@
    "hide_border": 0,
    "hide_days": 0,
    "hide_seconds": 0,
+
    "idx": 36,
+
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,
@@ -205,7 +213,9 @@
    "hide_border": 0,
    "hide_days": 0,
    "hide_seconds": 0,
+
    "idx": 33,
+
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,
@@ -313,6 +323,7 @@
    "columns": 0,
    "creation": "2023-02-03 15:47:50.690188",
    "default": "Cash",
+
    "depends_on": null,
    "description": null,
    "docstatus": 0,
@@ -325,7 +336,9 @@
    "hide_border": 0,
    "hide_days": 0,
    "hide_seconds": 0,
+
    "idx": 24,
+
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,
@@ -341,7 +354,9 @@
    "name": "Customer-type_of_customer",
    "no_copy": 0,
    "non_negative": 0,
+
    "options": "\nCash\nCredit",
+
    "owner": "Administrator",
    "parent": null,
    "parentfield": null,
@@ -479,6 +494,7 @@
    "translatable": 1,
    "unique": 1,
    "width": null
+
   },
   {
    "_assign": null,
@@ -719,6 +735,7 @@
    "translatable": 0,
    "unique": 0,
    "width": null
+
   }
  ],
  "custom_perms": [
@@ -1070,14 +1087,18 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+
    "creation": "2023-12-19 15:40:05.521883",
+
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
    "doctype_or_field": "DocType",
    "field_name": null,
    "idx": 0,
+
    "modified": "2023-12-19 15:40:05.521883",
+
    "modified_by": "Administrator",
    "name": "Customer-main-links_order",
    "owner": "Administrator",

@@ -18,6 +18,7 @@ frappe.ui.form.on("Job Applicant",{
         validate_employment_date(frm);
         validate_education_date(frm);
     },
+
 })
 
 var arr = ["Are you currently employed?","Why do you want to leave your current job? & Relocate?","If you are appointed, how long you need to join us?",
@@ -32,6 +33,7 @@ var arr = ["Are you currently employed?","Why do you want to leave your current 
 
 var description = ["Attested University Degree","Valid contact number in Oman","Valid Passport more than 6 months",
 "Experience certificates to support your experience","Valid Oman Driving license"]
+
 
 function auto_populate_child_table(frm) {
     var job_applic = frappe.model.get_doc("Job Applicant", frm.doc.name)
@@ -58,6 +60,7 @@ function auto_populate_description(frm) {
 }
 
 function validate_employment_date(frm) {
+
         (frm.doc.records || []).forEach(function(date) {
             if(date.from >= date.to){
                 frappe.throw(__("'To' date should be greater than 'From' date"))
@@ -72,3 +75,4 @@ function validate_education_date(frm) {
             }
         })
     }
+

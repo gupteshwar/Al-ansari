@@ -51,6 +51,7 @@ doctype_js = {
 	"Additional Salary": "public/js/additional_salary.js",
 	"Salary Slip": "public/js/salary_slip.js",
 	"Appraisal": "public/js/appraisal.js",
+
 	"Customer": "public/js/customer.js",
 	"Journal Entry": "public/js/journal_entry.js",
 	"Purchase Invoice": "public/js/purchase_invoice.js",
@@ -76,7 +77,10 @@ doctype_js = {
     "Asset Repair":"public/js/asset_repair.js",
     "Item Price List": "public/js/item_price_list.js",
     "Material Request": "public/js/material_request.js",
-}
+
+	"Interview Feedback": "public/js/interview_feedback.js"
+	}
+
 
 fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
 
@@ -243,9 +247,9 @@ scheduler_events = {
 				"al_ansari.al_ansari.customization.leave_application.check_update_working_status_for_leave"
 			]
 		},
-	# "daily": [
-	# 	"al_ansari.al_ansari.customization.leave_application.check_update_working_status_for_leave"
-	# ]
+	"daily": [
+		"al_ansari.al_ansari.customization.leave_application.check_update_working_status_for_leave"
+	]
 }
 # Testing
 # -------
