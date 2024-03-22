@@ -145,6 +145,7 @@
    "in_list_view": 1,
    "label": "Purchase Order",
    "options": "Purchase Order",
+
    "reqd": 1
   },
   {
@@ -189,4 +190,6 @@
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
+
 }
+

@@ -94,4 +94,6 @@ def validate_cost_center(doc, method):
     if doc.cost_center:
         for i in doc.items:
             if not i.cost_center:
+
                 i.cost_center = doc.cost_center
+

@@ -43,6 +43,7 @@ function set_position_field(frm) {
         },
         callback: function(r) {
             console.log(r.message['designation'])
+
             frm.set_value('position',r.message['designation'])
         }
     })

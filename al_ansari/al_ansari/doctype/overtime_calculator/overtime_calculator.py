@@ -6,6 +6,7 @@ from frappe.model.document import Document
 from frappe import _
 import json
 from frappe.utils.nestedset import get_descendants_of
+
 from frappe.utils import cint, cstr, flt, formatdate, getdate, now
 
 class OvertimeCalculator(Document):

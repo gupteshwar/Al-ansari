@@ -20,4 +20,6 @@ def validate_cost_center(doc, method):
                 delivery_note = frappe.get_doc('Delivery Note', i.delivery_note)
                 for dn in delivery_note.items:
                     if i.item_code == dn.item_code and i.idx == dn.idx:
+
                         i.cost_center = dn.cost_center
+
