@@ -26,7 +26,9 @@
   "arrival_date",
   "section_break_18",
   "shipment_details",
-  "remarks"
+  "remarks",
+  "section_break_vydoz",
+  "items"
  ],
  "fields": [
   {
@@ -78,6 +80,8 @@
    "options": "Type of Shipment"
   },
   {
+   "fetch_from": "purchase_order_reference.supplier",
+   "fetch_if_empty": 1,
    "fieldname": "shipper",
    "fieldtype": "Link",
    "label": "Shipper",
@@ -129,6 +133,7 @@
    "reqd": 1
   },
   {
+   "fetch_from": "shipper.supplier_name",
    "fieldname": "shipper_name",
    "fieldtype": "Data",
    "label": "Shipper Name",
@@ -142,6 +147,17 @@
    "options": "Purchase Order",
    "read_only": 1,
    "reqd": 1
+  },
+  {
+   "fieldname": "section_break_vydoz",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "items",
+   "options": "Purchase Order Item"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -151,7 +167,7 @@
    "link_fieldname": "consignment_reference"
   }
  ],
- "modified": "2023-12-21 15:27:39.722917",
+ "modified": "2024-02-22 16:55:51.270894",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Consignment Tracking",

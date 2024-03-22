@@ -4,7 +4,8 @@ def validate_cost_center(doc, method):
     if doc.cost_center:
         for i in doc.items:
             if not i.sales_order and not i.delivery_note:
-                i.cost_center = doc.cost_center
+                if not i.cost_center:
+                    i.cost_center = doc.cost_center
             elif i.sales_order and not i.delivery_note:
                 sales_order = frappe.get_doc('Sales Order', i.sales_order)
                 for so in sales_order.items:
