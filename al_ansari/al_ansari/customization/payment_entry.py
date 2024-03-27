@@ -39,7 +39,7 @@ def validate_reference_details(doc,method):
 			doc.total_outstanding = outstanding 
 
 		if doc.references_details :
-			# t_outstanding = 0
+			t_outstanding = 0
 			t_allocated = 0
 			t_amount = 0
 
@@ -47,18 +47,18 @@ def validate_reference_details(doc,method):
 			if doc.paid_from_account_currency == default_currency:
 				for i in doc.references_details:
 					t_amount += i.amount
-					# t_outstanding +=i.outstanding
+					t_outstanding +=i.outstanding
 					t_allocated +=round(i.allocated_amount,2)
-				# doc.total_outstanding = t_outstanding
+				doc.total_outstanding = t_outstanding
 
 				doc.total_amount = t_amount
 				doc.total_allocated = t_allocated
 			else:
 				for i in doc.references_details:
-					t_amount += i.amount / doc.source_exchange_rate
-					# t_outstanding +=i.outstanding
-					t_allocated +=round(i.allocated_amount / doc.source_exchange_rate, 2)
-				# doc.total_outstanding = t_outstanding
+					t_amount += i.amount 
+					t_outstanding +=i.outstanding
+					t_allocated +=round(i.allocated_amount, 2)
+				doc.total_outstanding = t_outstanding
 
 				doc.total_amount = t_amount
 				doc.total_allocated = t_allocated
