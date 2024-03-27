@@ -161,7 +161,9 @@ frappe.ui.form.on("Payment Entry", {
         if (cur_frm.doc.references && cur_frm.doc.references.length >0 && frm.doc.bifurcate_cost_center ==1){
             frm.clear_table('references_details')
             frm.refresh_field('references_details')
-            if (references.length > 0 && references_details.length>0){
+
+            if (cur_frm.doc.references.length > 0){
+
                 fetch_detailed_entries(frm)
             }
         }
@@ -175,7 +177,9 @@ frappe.ui.form.on("Payment Entry", {
                 }
                 r_total_amt += r.allocated_amount 
             })
-            frm.set_value('paid_amount',r_total_amt)
+
+            // frm.set_value('paid_amount',r_total_amt)
+
         }
         
         if (cur_frm.doc.references && cur_frm.doc.references.length >0 && frm.doc.bifurcate_cost_center ==1){
@@ -295,7 +299,9 @@ frappe.ui.form.on("Payment Entry Reference", {
             // row.allocated_amount = 0
             frappe.throw("Allocated Amount should not exceed outstanding amount in References table")
         }
-        calculate_and_set_paid_amount(frm)
+
+        // calculate_and_set_paid_amount(frm)
+
     },
     reference_name: function (frm,cdt,cdn) {
         fetch_detailed_entries(frm)

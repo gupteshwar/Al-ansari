@@ -5,6 +5,9 @@ from frappe import _, _dict
 from frappe.utils import cstr, getdate
 from six import iteritems
 
+from math import ceil
+
+
 from erpnext import get_company_currency, get_default_company
 from erpnext.accounts.doctype.accounting_dimension.accounting_dimension import (
 	get_accounting_dimensions,
@@ -29,25 +32,41 @@ def validate_reference_details(doc,method):
 			for r in doc.references:
 				grand_total += r.total_amount
 				outstanding += r.outstanding_amount
-				allocated_amount_r += r.allocated_amount
+
+				allocated_amount_r += round(r.allocated_amount,2)
+
 			doc.grand_total = grand_total
 			doc.total_outstanding = outstanding 
 
 		if doc.references_details :
-			# t_outstanding = 0
+			t_outstanding = 0
 			t_allocated = 0
 			t_amount = 0
-			for i in doc.references_details:
-				t_amount += i.amount
-				# t_outstanding +=i.outstanding
-				t_allocated +=i.allocated_amount
 
-			# doc.total_outstanding = t_outstanding
-			doc.total_amount = t_amount
-			doc.total_allocated = t_allocated
+			default_currency = frappe.db.get_value("Company", doc.company, 'default_currency')
+			if doc.paid_from_account_currency == default_currency:
+				for i in doc.references_details:
+					t_amount += i.amount
+					t_outstanding +=i.outstanding
+					t_allocated +=round(i.allocated_amount,2)
+				doc.total_outstanding = t_outstanding
+
+				doc.total_amount = t_amount
+				doc.total_allocated = t_allocated
+			else:
+				for i in doc.references_details:
+					t_amount += i.amount 
+					t_outstanding +=i.outstanding
+					t_allocated +=round(i.allocated_amount, 2)
+				doc.total_outstanding = t_outstanding
+
+				doc.total_amount = t_amount
+				doc.total_allocated = t_allocated
 		print("====================",t_allocated,allocated_amount_r)
-		if t_allocated != allocated_amount_r:
-			frappe.throw("The total allocated amount should be same in both the table and also as paid amount")
+		# if round(t_allocated, 2) != round(allocated_amount_r,2):
+		# 	frappe.throw("The total allocated amount should be same in both the table and also as paid amount")
+		
+
 # def check_and_allocate_amount(doc):
 # 	for ref in doc.references:
 # 		ref_allocation = 0
@@ -57,25 +76,29 @@ def validate_reference_details(doc,method):
 # 		ref['allocated_amount'] = ref_allocation
 
 def validate_paid_amt_greater_than_outstanding_amt(doc,method):
-	if doc.references:
-		total_outstanding = 0
-		for i in doc.references:
-			total_outstanding = total_outstanding + i.outstanding_amount
-		if  total_outstanding < doc.paid_amount :
-				frappe.throw(title="Amount Exceeded!", msg="Paid amount is greater than the Outstanding amount")
 
-	if doc.references_details:
-		total_outstanding = 0
-		for i in doc.references_details:
-			total_outstanding = total_outstanding + i.allocated_amount
-		if total_outstanding > doc.paid_amount:
-			frappe.throw(title="Amount Exceeded!", msg="Allocated amount is less or equal to the Paid Amount")
+	default_currency = frappe.db.get_value("Company", doc.company, 'default_currency')
+	if doc.paid_from_account_currency == default_currency:
+		# if doc.references:
+		# 	total_outstanding = 0
+		# 	for i in doc.references:
+		# 		total_outstanding = total_outstanding + i.outstanding_amount
+		# 	if  total_outstanding < doc.paid_amount :
+		# 			frappe.throw(title="Amount Exceeded!", msg="Paid amount is greater than the Outstanding amount")
 
-	if not doc.references and not doc.references_details:
-		if not doc.cost_center:
-			frappe.throw(title="Mandatory", msg="Please select the cost center to proceeds")
-		if doc.party_balance < doc.paid_amount and not doc.is_advance_pay:
-			frappe.throw(title="Amount Exceeded!",msg="Paid Amount exceeds Party Balance. Please check the Is Advance checkbox to proceed.")
+		# if doc.references_details:
+		# 	total_outstanding = 0
+		# 	for i in doc.references_details:
+		# 		total_outstanding = total_outstanding + i.allocated_amount
+		# 	if total_outstanding > doc.paid_amount:
+		# 		frappe.throw(title="Amount Exceeded!", msg="Allocated amount is less or equal to the Paid Amount")
+
+		if not doc.references and not doc.references_details:
+			if not doc.cost_center:
+				frappe.throw(title="Mandatory", msg="Please select the cost center to proceeds")
+			if doc.party_balance < doc.paid_amount and not doc.is_advance_pay:
+				frappe.throw(title="Amount Exceeded!",msg="Paid Amount exceeds Party Balance. Please check the Is Advance checkbox to proceed.")
+
 
 	
 
@@ -654,6 +677,7 @@ def split_entries_as_per_cc(doc):
 # custom method to fetch reference item details cc wise and separately ref document wise
 @frappe.whitelist()
 def fetch_detailed_entries(doc):
+
 	ref_details = []
 	bifurcated_cost_center = []
 	std_cost_center = []
@@ -663,9 +687,15 @@ def fetch_detailed_entries(doc):
 		references_details = doc['references_details']
 	except:
 		references_details = []
+
+	print(doc['references'])
 	references = doc['references']
 	for ref in references:
+		print(">>>>>>>>>>>>>>> ref  ",ref)
 		if ref.get('reference_doctype') == 'Employee Advance':
+			print("111111111111111111")
+			print(ref.get('total_amount'))
+
 			cc = doc.get('cost_center')
 			bifurcated_cc = 1
 			ref_details.append([{'reference_doctype':ref.get('reference_doctype'),'reference_name':ref.get('reference_name'),'custom_cost_center':cc,'amount':ref.get('total_amount'),'outstanding':ref.get('outstanding_amount'),'allocated_amount':ref.get('allocated_amount')}])
@@ -674,16 +704,24 @@ def fetch_detailed_entries(doc):
 			return ref_details,bifurcated_cc
 
 		elif ref.get('reference_doctype') == 'Expense Claim':
+
+			print("22222222222222222222222222")
+			print(ref.get('total_amount'))
 			cc = doc.get('cost_center')
 			bifurcated_cc = 1
 			ref_details.append([{'reference_doctype':ref.get('reference_doctype'),'reference_name':ref.get('reference_name'),'custom_cost_center':cc,'amount':ref.get('total_amount'),'outstanding':ref.get('outstanding_amount'),'allocated_amount':ref.get('allocated_amount')}])
-			# print('\n\n\n\n\n\n>>>>>>>>>>qqqref_details',ref_details,bifurcated_cc)
+			print('\n\n\n\n\n\n>>>>>>>>>>qqqref_details',ref_details,bifurcated_cc)
+
 
 			return ref_details,bifurcated_cc
 
 
 		else:
+
+			print("3333333333333333333")
 			data, bifurcate_cost_center = get_item_reference_details(ref.get('reference_doctype'),ref.get('reference_name'))
+			print(data)
+
 			ref_details.append(data)
 			if bifurcate_cost_center == 1:
 				bifurcated_cost_center.append(bifurcate_cost_center)
@@ -697,7 +735,7 @@ def fetch_detailed_entries(doc):
 			elif len(bifurcated_cost_center)==0 and len(std_cost_center)>0:	
 				bifurcated_cc = 0
 			ref_details = allocate_paid_amount(doc,ref_details)
-			# print('\n\n\n\n\n\n>>>>>>>>>>ref_details',ref_details,bifurcated_cc)
+
 			return ref_details,bifurcated_cc
 		
 
@@ -709,6 +747,7 @@ def allocate_paid_amount(doc,ref_details):
 	references = doc.get('references')
 	for ref in ref_details:
 		for i in ref:
+
 			i['outstanding'] = i['amount'] or 0
 			part_payments = frappe.db.sql("""
 							select
@@ -743,6 +782,7 @@ def allocate_paid_amount(doc,ref_details):
 			# 		i['allocated_amount'] = paid_amount
 			# 		i['outstanding'] = i['amount'] - i['allocated_amount']
 			# 		paid_amount -= i['allocated_amount']
+
 			if part_payments and part_payments[0][0] != None:
 				i['outstanding'] = i['amount'] - part_payments[0][0]
 			elif part_payments and part_payments[0][0] == None:
@@ -766,7 +806,7 @@ def allocate_paid_amount(doc,ref_details):
 		# else:
 		# 	ref_details[ref]['allocated_amount'] = paid_amount
 		# 	break
-	
+
 	return ref_details
 
 @frappe.whitelist()
@@ -809,4 +849,4 @@ def validate_outstanding_amount(doc, method):
 							""".format(i.reference_name, i.custom_cost_center, doc.party))
 		if outstanding_amount and (outstanding_amount[0][0] != None and outstanding_amount[0][1] != None):
 			i.outstanding = outstanding_amount[0][0] - outstanding_amount[0][1]
-		
+

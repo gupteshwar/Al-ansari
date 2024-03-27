@@ -1,3 +1,6 @@
+
+
+
 from . import __version__ as app_version
 
 app_name = "al_ansari"
@@ -48,7 +51,20 @@ doctype_js = {
 	"Additional Salary": "public/js/additional_salary.js",
 	"Salary Slip": "public/js/salary_slip.js",
 	"Appraisal": "public/js/appraisal.js",
+
+	"Customer": "public/js/customer.js",
+	"Journal Entry": "public/js/journal_entry.js",
+	"Purchase Invoice": "public/js/purchase_invoice.js",
+	"Sales Invoice": "public/js/sales_invoice.js",
+	"Sales Order": "public/js/sales_order.js",
+	"Purchase Order": "public/js/purchase_order.js",
+	"Blanket Order": "public/js/blanket_order.js",
+	"Request for Quotation": "public/js/request_for_quotation.js",
+	"Supplier Quotation": "public/js/supplier_quotation.js",
+	"POS Closing Entry" : "public/js/pos_closing_entry.js",
+	"POS Opening Entry" : "public/js/pos_opening_entry.js",
 	"Job Applicant": "public/js/job_applicant.js",
+
 	"Interview Feedback": "public/js/interview_feedback.js",
 	"Customer": "public/js/customer.js",
 	"Journal Entry": "public/js/journal_entry.js",
@@ -62,6 +78,7 @@ doctype_js = {
 	"POS Closing Entry" : "public/js/pos_closing_entry.js",
 	"POS Opening Entry" : "public/js/pos_opening_entry.js",
 	"Job Applicant": "public/js/job_applicant.js",
+
 	"Employee Advance": "public/js/employee_advance.js",
 	"Quotation": "public/js/quotation.js",
 	"Purchase Receipt": "public/js/purchase_receipt.js",
@@ -75,9 +92,11 @@ doctype_js = {
     "Asset Repair":"public/js/asset_repair.js",
     "Item Price List": "public/js/item_price_list.js",
     "Material Request": "public/js/material_request.js",
+
 }
 
 # fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
+
 
 # Home Pages
 # ----------
@@ -298,6 +317,9 @@ user_data_fields = [
 		"doctype": "{doctype_4}"
 	}
 ]
+
+
+
 
 # Authentication and authorization
 # --------------------------------
