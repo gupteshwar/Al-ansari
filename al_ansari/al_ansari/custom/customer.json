@@ -85,7 +85,10 @@
    "hide_border": 0,
    "hide_days": 0,
    "hide_seconds": 0,
+
    "idx": 35,
+
+
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,
@@ -101,6 +104,7 @@
    "name": "Customer-vat_registration",
    "no_copy": 0,
    "non_negative": 0,
+
    "options": "\nUnregistered\nOman Registered\nGCC Registered\nOther",
    "owner": "Administrator",
    "parent": null,
@@ -205,7 +209,9 @@
    "hide_border": 0,
    "hide_days": 0,
    "hide_seconds": 0,
+
    "idx": 33,
+
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,
@@ -251,7 +257,9 @@
    "collapsible": 0,
    "collapsible_depends_on": null,
    "columns": 0,
+
    "creation": "2023-01-19 13:27:04.481374",
+
    "default": null,
    "depends_on": null,
    "description": null,
@@ -259,19 +267,24 @@
    "dt": "Customer",
    "fetch_from": null,
    "fetch_if_empty": 0,
+
    "fieldname": "customer_group_company",
    "fieldtype": "Link",
+
    "hidden": 0,
    "hide_border": 0,
    "hide_days": 0,
    "hide_seconds": 0,
+
    "idx": 11,
+
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,
    "in_list_view": 0,
    "in_preview": 0,
    "in_standard_filter": 0,
+
    "insert_after": "export_type",
    "label": "Customer Group Company",
    "length": 0,
@@ -282,6 +295,7 @@
    "no_copy": 0,
    "non_negative": 0,
    "options": "Customer Group Company",
+
    "owner": "Administrator",
    "parent": null,
    "parentfield": null,
@@ -296,7 +310,9 @@
    "report_hide": 0,
    "reqd": 0,
    "search_index": 0,
+
    "translatable": 0,
+
    "unique": 0,
    "width": null
   },
@@ -311,27 +327,33 @@
    "collapsible": 0,
    "collapsible_depends_on": null,
    "columns": 0,
+
    "creation": "2023-02-03 15:47:50.690188",
    "default": "Cash",
+
    "depends_on": null,
    "description": null,
    "docstatus": 0,
    "dt": "Customer",
    "fetch_from": null,
    "fetch_if_empty": 0,
+
    "fieldname": "type_of_customer",
    "fieldtype": "Select",
+
    "hidden": 0,
    "hide_border": 0,
    "hide_days": 0,
    "hide_seconds": 0,
    "idx": 24,
+
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,
    "in_list_view": 0,
    "in_preview": 0,
    "in_standard_filter": 0,
+
    "insert_after": "tax_category",
    "label": "Type Of Customer",
    "length": 0,
@@ -341,7 +363,9 @@
    "name": "Customer-type_of_customer",
    "no_copy": 0,
    "non_negative": 0,
+
    "options": "\nCash\nCredit",
+
    "owner": "Administrator",
    "parent": null,
    "parentfield": null,
@@ -357,6 +381,7 @@
    "reqd": 0,
    "search_index": 0,
    "translatable": 1,
+
    "unique": 0,
    "width": null
   },
@@ -479,6 +504,7 @@
    "translatable": 1,
    "unique": 1,
    "width": null
+
   },
   {
    "_assign": null,
@@ -1070,14 +1096,19 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+
    "creation": "2023-12-19 15:40:05.521883",
+
+
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
    "doctype_or_field": "DocType",
    "field_name": null,
    "idx": 0,
+
    "modified": "2023-12-19 15:40:05.521883",
+
    "modified_by": "Administrator",
    "name": "Customer-main-links_order",
    "owner": "Administrator",

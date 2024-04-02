@@ -93,6 +93,7 @@ frappe.ui.form.on('Payroll Entry', {
 				}
 			})
 		}
+
 	},
     // Commented the auto fill of payroll cost center
 	
@@ -122,4 +123,5 @@ frappe.ui.form.on('Payroll Entry', {
     //         });
     //     }
     // }
+
 })
