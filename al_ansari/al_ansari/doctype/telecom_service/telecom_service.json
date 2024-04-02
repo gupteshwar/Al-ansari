@@ -1,0 +1,149 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:linenumber",
+ "creation": "2023-03-29 09:36:04.236544",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "linenumber",
+  "telecom_company",
+  "servicetype",
+  "short_code",
+  "accountnumber",
+  "userid",
+  "branch",
+  "data_12",
+  "employee",
+  "monthly_rental",
+  "credit_limit",
+  "employee_limit",
+  "packagename",
+  "data_14",
+  "section_break_15",
+  "telecom_bill"
+ ],
+ "fields": [
+  {
+   "description": "This is mandatory field (Mobile Number in case of GSM, Landline Number in case this belongs to the company)",
+   "fieldname": "linenumber",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "label": "LineNumber",
+   "unique": 1
+  },
+  {
+   "fieldname": "telecom_company",
+   "fieldtype": "Select",
+   "label": "Telecom Company",
+   "options": "Omantel\nOoredoo\nVodafone\nAirtel\nJio\nEtisalat\nDu"
+  },
+  {
+   "fieldname": "servicetype",
+   "fieldtype": "Select",
+   "label": "ServiceType",
+   "options": "Landline\nInternet\nMobile\nWireless"
+  },
+  {
+   "fieldname": "short_code",
+   "fieldtype": "Data",
+   "label": "Short Code"
+  },
+  {
+   "fieldname": "accountnumber",
+   "fieldtype": "Data",
+   "label": "AccountNumber"
+  },
+  {
+   "fieldname": "userid",
+   "fieldtype": "Data",
+   "label": "UserID"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "data_12",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Employee",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "monthly_rental",
+   "fieldtype": "Data",
+   "label": "Monthly Rental"
+  },
+  {
+   "fieldname": "credit_limit",
+   "fieldtype": "Data",
+   "label": "Credit Limit"
+  },
+  {
+   "fieldname": "employee_limit",
+   "fieldtype": "Data",
+   "label": "Employee Limit"
+  },
+  {
+   "fieldname": "packagename",
+   "fieldtype": "Data",
+   "label": "PackageName"
+  },
+  {
+   "fieldname": "data_14",
+   "fieldtype": "Data"
+  },
+  {
+   "description": "Below Data will be linked from Monthly Telecom Bill and the latest data will be updated here.",
+   "fieldname": "section_break_15",
+   "fieldtype": "Section Break",
+   "label": "Monthly Bills"
+  },
+  {
+   "fieldname": "telecom_bill",
+   "fieldtype": "Table",
+   "options": "Telecom Bill"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [
+  {
+   "link_doctype": "Employee",
+   "link_fieldname": "official_phone",
+   "table_fieldname": "official_phone"
+  }
+ ],
+ "modified": "2024-04-02 17:26:25.556308",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Telecom Service",
+ "name_case": "UPPER CASE",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
