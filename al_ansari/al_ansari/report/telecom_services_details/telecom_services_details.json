@@ -1,0 +1,37 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2024-01-03 08:43:30.140928",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Al Ansari Oman",
+ "modified": "2024-04-02 13:15:39.317453",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Telecom Services Details",
+ "owner": "shibin.das@alansariglobal.com",
+ "prepared_report": 0,
+ "query": "SELECT\r\n  `tabTelecom Service`.linenumber,\r\n  `tabTelecom Service`.employee,\r\n  tabEmployee.employee_name,\r\n   tabEmployee.payroll_cost_center\r\nFROM\r\n  `tabTelecom Service`\r\nINNER JOIN\r\n  `tabEmployee` ON `tabTelecom Service`.employee = `tabEmployee`.name;\r\n",
+ "ref_doctype": "Telecom Service",
+ "report_name": "Telecom Services Details",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "HR Manager"
+  },
+  {
+   "role": "Vice President"
+  },
+  {
+   "role": "Telecom Admin"
+  }
+ ]
+}
