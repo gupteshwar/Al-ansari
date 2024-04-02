@@ -1,0 +1,37 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2023-10-17 08:49:37.030353",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Al Ansari Oman",
+ "modified": "2024-04-02 13:16:30.560525",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Daily Visit Report",
+ "owner": "amjid.ali@alansariglobal.com",
+ "prepared_report": 0,
+ "query": "SELECT\r\n  e.employee_name as \"Employee Name\",\r\n  v.user as \"Employee Email\",\r\n  v.date as \"Date\",\r\n  v.time as \"Time\",\r\n  v.name as \"Visit Number\",\r\n  CASE WHEN v.customer IS NULL THEN 'No' ELSE 'Yes' END as \"Existing Customer\",\r\n   v.customer_name as \"Party Name\",\r\n  v.visit_type as \"Visit Type\",\r\n  v.description as \"Visit Detail\",\r\n  v.document_type as \"Linked to\",\r\n  v.document_reference as \"Reference\"\r\n  FROM tabVisit v\r\nINNER JOIN tabEmployee e ON v.employee = e.employee\r\nWHERE v.date = CURRENT_DATE\r\nORDER BY e.employee_name ASC, v.time ASC;\r\n",
+ "ref_doctype": "Visit",
+ "report_name": "Daily Visit Report",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Vice President"
+  },
+  {
+   "role": "Sales User"
+  },
+  {
+   "role": "Sales Manager"
+  }
+ ]
+}

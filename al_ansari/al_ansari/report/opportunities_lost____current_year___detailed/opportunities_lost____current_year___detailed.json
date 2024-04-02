@@ -1,0 +1,34 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2023-09-10 11:15:55.088734",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Al Ansari Oman",
+ "modified": "2024-04-02 14:16:55.508676",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Opportunities Lost  - Current Year - Detailed",
+ "owner": "amjid.ali@alansariglobal.com",
+ "prepared_report": 0,
+ "query": "SELECT\r\n    tabOpportunity.profit_center AS \"Profit Center\",\r\n    tabOpportunity.customer_name as \"Customer\",\r\n    tabOpportunity.territory as \"Territory\",\r\n     tabOpportunity.subject as \"Opportunity\",\r\n    tabOpportunity.sales_stage as \"At Stage\",\r\n     tabOpportunity.order_lost_reason as \"Reason\",\r\n      tabOpportunity.owner as \"Owner\",\r\n     tabOpportunity.modified as \"Updated on\", \r\n     tabOpportunity.modified_by as \"Updated by\",\r\n     tabOpportunity.currency AS \"Currency\",\r\n    tabOpportunity.opportunity_amount AS \"Total Amount\"\r\nFROM\r\n    tabOpportunity\r\nWHERE\r\n    YEAR(tabOpportunity.modified) = YEAR(CURDATE())\r\n    AND tabOpportunity.status = 'Lost'\r\n\r\norder by tabOpportunity.modified desc",
+ "ref_doctype": "Opportunity",
+ "report_name": "Opportunities Lost  - Current Year - Detailed",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "HOD"
+  },
+  {
+   "role": "Vice President"
+  },
+  {
+   "role": "BOD"
+  }
+ ]
+}

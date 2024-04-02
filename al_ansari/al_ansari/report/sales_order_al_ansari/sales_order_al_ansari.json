@@ -1,0 +1,29 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2023-11-29 12:45:26.616541",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "json": "{}",
+ "letter_head": "Al Ansari Oman",
+ "modified": "2024-04-02 13:15:58.852200",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Sales Order Al Ansari",
+ "owner": "amjid.ali@alansariglobal.com",
+ "prepared_report": 0,
+ "query": "SELECT\r\n  so.cost_center,\r\n  CAST(COALESCE(SUM(so.base_grand_total), 0) AS DECIMAL(10, 0)) AS total_amount\r\nFROM\r\n  `tabSales Order` so\r\nWHERE\r\n  YEAR(so.transaction_date) = YEAR(CURDATE())\r\n  AND so.docstatus != 2  -- Exclude closed orders\r\nGROUP BY\r\n  so.cost_center;\r\n",
+ "ref_doctype": "Sales Order",
+ "report_name": "Sales Order Al Ansari",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Sales Manager"
+  }
+ ]
+}
