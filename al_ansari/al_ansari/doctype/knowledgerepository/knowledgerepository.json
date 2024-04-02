@@ -1,0 +1,76 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:knowledge_title",
+ "creation": "2023-11-20 12:57:02.049761",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "knowledge_title",
+  "knowledge_type",
+  "knowledge_category",
+  "knowledge_description",
+  "knowledge_attachment",
+  "inactive"
+ ],
+ "fields": [
+  {
+   "fieldname": "knowledge_title",
+   "fieldtype": "Data",
+   "label": "Knowledge Title",
+   "unique": 1
+  },
+  {
+   "fieldname": "knowledge_type",
+   "fieldtype": "Select",
+   "label": "Knowledge Type",
+   "options": "Policy\nSOP\nGuideline"
+  },
+  {
+   "fieldname": "knowledge_category",
+   "fieldtype": "Select",
+   "label": "Knowledge  Category",
+   "options": "Human Resource\nInformation Technology\nSelling\nBuying"
+  },
+  {
+   "fieldname": "knowledge_description",
+   "fieldtype": "Text Editor",
+   "label": "Knowledge Description"
+  },
+  {
+   "fieldname": "knowledge_attachment",
+   "fieldtype": "Attach",
+   "label": "Knowledge Attachment"
+  },
+  {
+   "default": "0",
+   "fieldname": "inactive",
+   "fieldtype": "Check",
+   "label": "inactive"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-04-02 12:37:04.195544",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "KnowledgeRepository",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
