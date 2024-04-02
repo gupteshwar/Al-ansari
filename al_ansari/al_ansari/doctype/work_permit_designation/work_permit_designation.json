@@ -1,0 +1,149 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "format:{occupation_code}-{occupation_name}",
+ "creation": "2023-11-06 09:47:36.814274",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "occupation_code",
+  "occupation_name",
+  "occupation_ar",
+  "allowed_gender",
+  "category",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "occupation_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Occupation Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "occupation_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Occupation Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "occupation_ar",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Occupation AR",
+   "reqd": 1
+  },
+  {
+   "fieldname": "allowed_gender",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Allowed Gender",
+   "reqd": 1
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Link",
+   "label": "Category",
+   "options": "Work Permit Designation Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-04-02 12:38:39.136184",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Work Permit Designation",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Employee",
+   "share": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR User",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Vice President",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "BOD",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HOD",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Board",
+   "share": 1
+  }
+ ],
+ "search_fields": "occupation_code,occupation_name,occupation_ar,category",
+ "sort_field": "occupation_name",
+ "sort_order": "ASC",
+ "title_field": "occupation_code"
+}
