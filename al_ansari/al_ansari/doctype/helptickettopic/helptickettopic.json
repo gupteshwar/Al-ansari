@@ -1,0 +1,105 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:helptopic",
+ "creation": "2023-04-27 11:40:40.152493",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "helptopic",
+  "lft",
+  "rgt",
+  "is_group",
+  "old_parent",
+  "parent_helpdesktopic",
+  "defaultuser",
+  "active",
+  "default_role"
+ ],
+ "fields": [
+  {
+   "fieldname": "helptopic",
+   "fieldtype": "Data",
+   "label": "HelpTopic",
+   "unique": 1
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Left",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Right",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "label": "Is Group"
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Link",
+   "label": "Old Parent",
+   "options": "HelpTicketTopic"
+  },
+  {
+   "fieldname": "parent_helpdesktopic",
+   "fieldtype": "Link",
+   "label": "Parent HelpdeskTopic",
+   "options": "HelpTicketTopic"
+  },
+  {
+   "fieldname": "defaultuser",
+   "fieldtype": "Link",
+   "label": "Default Assigned User",
+   "options": "User"
+  },
+  {
+   "default": "0",
+   "fieldname": "active",
+   "fieldtype": "Check",
+   "label": "Active"
+  },
+  {
+   "fieldname": "default_role",
+   "fieldtype": "Link",
+   "label": "Default Role",
+   "options": "Role"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_tree": 1,
+ "links": [],
+ "modified": "2024-04-02 12:39:20.724355",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "HelpTicketTopic",
+ "nsm_parent_field": "parent_helpdesktopic",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

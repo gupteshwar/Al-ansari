@@ -1,0 +1,114 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{bill_date}-{parent}",
+ "creation": "2023-12-21 16:11:12.064826",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "bill_date",
+  "bill_number",
+  "month",
+  "year",
+  "monthly_charges",
+  "local_charges",
+  "data_charges",
+  "international_charges",
+  "roaming_charges",
+  "other_charges",
+  "taxable_charges",
+  "vat",
+  "non_taxable_charges",
+  "total_charges_including_vat"
+ ],
+ "fields": [
+  {
+   "fieldname": "bill_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Bill Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bill_number",
+   "fieldtype": "Data",
+   "label": "Bill Number"
+  },
+  {
+   "fieldname": "month",
+   "fieldtype": "Data",
+   "label": "Month"
+  },
+  {
+   "fieldname": "year",
+   "fieldtype": "Data",
+   "label": "Year"
+  },
+  {
+   "fieldname": "monthly_charges",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Monthly Charges",
+   "reqd": 1
+  },
+  {
+   "fieldname": "local_charges",
+   "fieldtype": "Currency",
+   "label": "Local Charges"
+  },
+  {
+   "fieldname": "data_charges",
+   "fieldtype": "Currency",
+   "label": "Data Charges"
+  },
+  {
+   "fieldname": "international_charges",
+   "fieldtype": "Currency",
+   "label": "International Charges"
+  },
+  {
+   "fieldname": "roaming_charges",
+   "fieldtype": "Currency",
+   "label": "Roaming Charges"
+  },
+  {
+   "fieldname": "other_charges",
+   "fieldtype": "Currency",
+   "label": "Other Charges"
+  },
+  {
+   "fieldname": "taxable_charges",
+   "fieldtype": "Currency",
+   "label": "Taxable Charges"
+  },
+  {
+   "fieldname": "vat",
+   "fieldtype": "Currency",
+   "label": "VAT"
+  },
+  {
+   "fieldname": "non_taxable_charges",
+   "fieldtype": "Currency",
+   "label": "Non Taxable Charges"
+  },
+  {
+   "fieldname": "total_charges_including_vat",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Total Charges including VAT",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-04-02 12:35:48.872221",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Telecom Bill",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

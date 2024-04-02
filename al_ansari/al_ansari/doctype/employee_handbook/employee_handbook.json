@@ -1,0 +1,106 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-11-20 13:11:16.097094",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee",
+  "employee_name",
+  "employee_email",
+  "employee_designation",
+  "employee_department",
+  "section_break_4",
+  "knowledge_repository",
+  "agree",
+  "signature"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "employee",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "employee.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "Employee Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.user_id",
+   "fieldname": "employee_email",
+   "fieldtype": "Data",
+   "label": "Employee Email",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.designation",
+   "fieldname": "employee_designation",
+   "fieldtype": "Data",
+   "label": "Employee Designation",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.department",
+   "fieldname": "employee_department",
+   "fieldtype": "Data",
+   "label": "Employee Department",
+   "read_only": 1
+  },
+  {
+   "description": "Please Select the Policies and Procedures related to the Employee Role",
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "knowledge_repository",
+   "fieldtype": "Table",
+   "label": "Knowledge Repository",
+   "options": "Employee Handbook Policy List"
+  },
+  {
+   "default": "0",
+   "description": "I have received a copy of the employee handbook and have read and understood the policies in the handbook. I agree to comply with these policies throughout my employment with Al Ansari Trading Enterprises LLC. I understand that I shall be subject to disciplinary action in the event of any violation on my part.\n\nFurthermore, I understand that these policies are subject to change, and it is my responsibility to stay updated on any amendments or additions that may be communicated to me.",
+   "fieldname": "agree",
+   "fieldtype": "Check",
+   "label": "Agree"
+  },
+  {
+   "fieldname": "signature",
+   "fieldtype": "Signature",
+   "label": "Signature"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [
+  {
+   "link_doctype": "Employee",
+   "link_fieldname": "employee"
+  }
+ ],
+ "modified": "2024-04-02 12:36:06.636906",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Employee Handbook",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
