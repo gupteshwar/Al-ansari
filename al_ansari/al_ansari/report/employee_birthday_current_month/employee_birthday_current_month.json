@@ -1,0 +1,44 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2023-04-25 08:54:05.643129",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Al Ansari Oman",
+ "modified": "2024-04-02 14:16:00.835313",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Employee Birthday Current Month",
+ "owner": "amjid.ali@alansariglobal.com",
+ "prepared_report": 0,
+ "query": "SELECT e.name, e.employee, e.employee_name, e.employment_type, e.company, e.gender, e.date_of_birth, e.date_of_joining, e.employee_number, e.designation, \r\n       CONCAT(s.employee_name, ' (', s.employee, ')') AS reports_to, e.grade, e.branch, e.cell_number, e.personal_email, e.nationality, e.place_of_birth, \r\n       e.job_category, e.visa_company, e.payroll_cost_center, e.religion\r\nFROM tabEmployee e\r\nLEFT JOIN tabEmployee s ON e.reports_to = s.employee\r\nWHERE MONTH(e.date_of_birth) = MONTH(CURDATE()) AND e.status = 'active';",
+ "ref_doctype": "Employee",
+ "report_name": "Employee Birthday Current Month",
+ "report_script": "",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "HR Manager"
+  },
+  {
+   "role": "HR User"
+  },
+  {
+   "role": "Head of Department"
+  },
+  {
+   "role": "BOD"
+  },
+  {
+   "role": "Vice President"
+  },
+  {
+   "role": "System Manager"
+  }
+ ]
+}

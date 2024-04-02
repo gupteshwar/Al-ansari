@@ -2624,9 +2624,7 @@
    "name": "Employee-official_phone",
    "no_copy": 0,
    "non_negative": 0,
-
-   "options": "Telecom Services",
-
+   "options": "Telecom Service",
    "owner": "Administrator",
    "parent": null,
    "parentfield": null,

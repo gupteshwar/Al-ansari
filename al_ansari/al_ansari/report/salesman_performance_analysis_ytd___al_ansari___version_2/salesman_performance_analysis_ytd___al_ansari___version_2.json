@@ -1,0 +1,38 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2023-12-07 14:47:06.570635",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [
+  {
+   "fieldname": "Company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "mandatory": 1,
+   "options": "Company",
+   "wildcard_filter": 0
+  }
+ ],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Al Ansari Oman",
+ "modified": "2024-04-02 14:09:24.411658",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Salesman Performance Analysis YTD - Al Ansari - Version 2",
+ "owner": "amjid.ali@alansariglobal.com",
+ "prepared_report": 0,
+ "query": "SELECT\r\n  `tabEmployee`.`employee` AS \"EMPID\",\r\n  `tabEmployee`.`employee_name` AS \"Employee Name\",\r\n  `tabSales Person`.`sales_person_name` AS \"Sales Person\",\r\n  `tabEmployee`.`user_id` AS \"Email\",\r\n  `tabEmployee`.`department`,\r\n  (select count(*) from `tabVisit` WHERE `tabEmployee`.`user_id` = `tabVisit`.`user` and YEAR(`tabVisit`.`creation`) = YEAR(CURDATE())) AS \"Total Visits\",\r\n  (select COUNT(*) FROM `tabLead`  WHERE `tabEmployee`.`user_id` = `tabLead`.`lead_owner` and YEAR(`tabLead`.`creation`) = YEAR(CURDATE())) AS \"Total Leads\",\r\n  (select COUNT(*) FROM `tabOpportunity` WHERE  `tabEmployee`.`user_id` = COALESCE(`tabOpportunity`.`converted_by`, `tabOpportunity`.`owner`) and YEAR(`tabOpportunity`.`creation`) = YEAR(CURDATE())) AS \"Total Opportunity\",\r\n  (select SUM(`tabOpportunity`.`opportunity_amount`) FROM `tabOpportunity` WHERE  `tabEmployee`.`user_id` = COALESCE(`tabOpportunity`.`converted_by`, `tabOpportunity`.`owner`) and YEAR(`tabOpportunity`.`creation`) = YEAR(CURDATE())) AS \"Total Opportunity Amount\",\r\n  (select COUNT(*) FROM `tabOpportunity` WHERE  `tabEmployee`.`user_id` = COALESCE(`tabOpportunity`.`converted_by`, `tabOpportunity`.`owner`) and `tabOpportunity`.`status` = 'Converted' and YEAR(`tabOpportunity`.`creation`) = YEAR(CURDATE())) AS \"Total Converted Opportunity\",\r\n  (select SUM(`tabOpportunity`.`opportunity_amount`) FROM `tabOpportunity` WHERE  `tabEmployee`.`user_id` = COALESCE(`tabOpportunity`.`converted_by`, `tabOpportunity`.`owner`) and `tabOpportunity`.`status` = 'Converted' and YEAR(`tabOpportunity`.`creation`) = YEAR(CURDATE())) AS \"Total Converted Opportunity Amount\",\r\n  (select COUNT(*) FROM `tabQuotation` WHERE  `tabEmployee`.`user_id` = `tabQuotation`.`owner` and YEAR(`tabQuotation`.`creation`) = YEAR(CURDATE())) AS \"Total Quotation\",\r\n  (select SUM(`tabQuotation`.`grand_total`) FROM `tabQuotation` WHERE  `tabEmployee`.`user_id` = `tabQuotation`.`owner` and YEAR(`tabQuotation`.`creation`) = YEAR(CURDATE())) AS \"Total Quotation Amount\",\r\n  (select COUNT(*) FROM `tabSales Order` WHERE  `tabEmployee`.`user_id` = `tabSales Order`.`owner` and YEAR(`tabSales Order`.`creation`) = YEAR(CURDATE())) AS \"Total Sales Order\",\r\n  (select SUM(`tabSales Order`.`grand_total`) FROM `tabSales Order` WHERE  `tabEmployee`.`user_id` = `tabSales Order`.`owner` and YEAR(`tabSales Order`.`creation`) = YEAR(CURDATE())) AS \"Total Sales Order Amount\"\r\n FROM\r\n  `tabEmployee`\r\n  INNER JOIN `tabSales Person` ON  `tabEmployee`.`employee` = `tabSales Person`.`employee`\r\n  where `tabEmployee`.`company` = %(Company)s",
+ "ref_doctype": "Employee",
+ "report_name": "Salesman Performance Analysis YTD - Al Ansari - Version 2",
+ "report_script": "",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Vice President"
+  }
+ ]
+}
