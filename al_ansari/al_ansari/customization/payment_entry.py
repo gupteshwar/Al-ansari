@@ -677,7 +677,6 @@ def split_entries_as_per_cc(doc):
 # custom method to fetch reference item details cc wise and separately ref document wise
 @frappe.whitelist()
 def fetch_detailed_entries(doc):
-
 	ref_details = []
 	bifurcated_cost_center = []
 	std_cost_center = []
@@ -701,7 +700,7 @@ def fetch_detailed_entries(doc):
 			ref_details.append([{'reference_doctype':ref.get('reference_doctype'),'reference_name':ref.get('reference_name'),'custom_cost_center':cc,'amount':ref.get('total_amount'),'outstanding':ref.get('outstanding_amount'),'allocated_amount':ref.get('allocated_amount')}])
 			# print('\n\n\n\n\n\n>>>>>>>>>>qqqref_details',ref_details,bifurcated_cc)
 
-			return ref_details,bifurcated_cc
+			# return ref_details,bifurcated_cc
 
 		elif ref.get('reference_doctype') == 'Expense Claim':
 
@@ -713,7 +712,7 @@ def fetch_detailed_entries(doc):
 			print('\n\n\n\n\n\n>>>>>>>>>>qqqref_details',ref_details,bifurcated_cc)
 
 
-			return ref_details,bifurcated_cc
+			# return ref_details,bifurcated_cc
 
 
 		else:
@@ -736,7 +735,7 @@ def fetch_detailed_entries(doc):
 				bifurcated_cc = 0
 			ref_details = allocate_paid_amount(doc,ref_details)
 
-			return ref_details,bifurcated_cc
+	return ref_details,bifurcated_cc
 		
 
 
