@@ -25,7 +25,14 @@ refresh:function(frm) {
 		var toggle_header_items = ['project','branch','cost_center']
 		frm.toggle_enable(toggle_header_items,true)
 	}
-}
+},
+cost_center: function(frm) {
+	frm.doc.items.forEach(function(item){
+		item.cost_center = frm.doc.cost_center
+		// item.branches = frm.doc.branch
+	});
+	frm.refresh_field('items')
+},
 })
 
 
