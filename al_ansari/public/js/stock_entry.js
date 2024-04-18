@@ -29,3 +29,9 @@ refresh:function(frm) {
 })
 
 
+frappe.ui.form.on('Stock Entry', 'stock_entry_type', function(frm){
+	if(frm.doc.stock_entry_type == "Material Transfer"){
+		frm.doc.add_to_transit = true
+		frm.refresh_fields("add_to_transit")
+	}
+})
