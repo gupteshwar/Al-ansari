@@ -1,0 +1,38 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2023-11-02 08:36:04.723719",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "json": "{}",
+ "letter_head": "Al Ansari Oman",
+ "modified": "2024-04-02 14:14:44.330699",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Projects Portfolio - Progress Report",
+ "owner": "amjid.ali@alansariglobal.com",
+ "prepared_report": 0,
+ "query": "select \n\nname as \"Code\",\nproject_name \"Project Name\",\ncost_center as \"Profit Center\",\npercent_complete as \"Percent Complete\",\nexpected_start_date as \"Expected Start\",\nexpected_end_date as \"Expected End\",\nactual_start_date as \"Actual Start\",\nactual_end_date as \"Last Activity Logged\",\nsales_order as \"Order Reference\",\ntotal_sales_amount as \"Order Value\",\nestimated_costing as \"Estimated Cost\",\nactual_time as \"Hours Spent\",\nstatus as \"Status\"\n\n\n\n\n\n from tabProject\n \n where project_type = 'External' and is_active = 'Yes'",
+ "ref_doctype": "Project",
+ "report_name": "Projects Portfolio - Progress Report",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Projects Manager"
+  },
+  {
+   "role": "Vice President"
+  },
+  {
+   "role": "Board"
+  },
+  {
+   "role": "BOD"
+  }
+ ]
+}

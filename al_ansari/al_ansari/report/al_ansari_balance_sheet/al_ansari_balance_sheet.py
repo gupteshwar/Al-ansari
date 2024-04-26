@@ -232,9 +232,7 @@ def get_report_summary(
 
 def get_chart_data(filters, columns, asset, liability, equity):
 	labels = [d.get("label") for d in columns[2:]]
-
 	asset_data, liability_data, equity_data = [], [], []
-
 	for p in columns[2:]:
 		if asset:
 			asset_data.append(asset[-2].get(p.get("fieldname")))

@@ -1,0 +1,232 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2023-04-27 11:32:56.237108",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "amended_from",
+  "email_id",
+  "column_break_column",
+  "status",
+  "progress",
+  "section_break_section",
+  "parent_topic",
+  "related_to",
+  "related_reference",
+  "column_break_14",
+  "created_on",
+  "required_from",
+  "required_to",
+  "section_break_18",
+  "subject",
+  "description",
+  "attachment",
+  "signature",
+  "agree"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Data",
+   "label": "HelpdeskTicketID",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "HelpTicket",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "email_id",
+   "fieldtype": "Data",
+   "label": "Requester Email",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Open",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "State",
+   "options": "Open\nAssigned\nWaiting Approval\nApproved\nResolved\nClosed"
+  },
+  {
+   "default": "Not Started",
+   "fieldname": "progress",
+   "fieldtype": "Select",
+   "label": "Progress",
+   "options": "Not Started\nWorking\nWaiting Approval\nHanded Over\nOrder Placed\nCompleted"
+  },
+  {
+   "fieldname": "section_break_section",
+   "fieldtype": "Section Break",
+   "label": "Request Details"
+  },
+  {
+   "fieldname": "parent_topic",
+   "fieldtype": "Link",
+   "label": "Parent Topic",
+   "options": "HelpTicketTopic",
+   "reqd": 1
+  },
+  {
+   "fieldname": "related_to",
+   "fieldtype": "Link",
+   "label": "Related To",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "related_reference",
+   "fieldtype": "Dynamic Link",
+   "label": "Related Reference",
+   "options": "related_to"
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "created_on",
+   "fieldtype": "Datetime",
+   "label": "CreatedOn",
+   "read_only": 1
+  },
+  {
+   "fieldname": "required_from",
+   "fieldtype": "Date",
+   "label": "Required From Date"
+  },
+  {
+   "fieldname": "required_to",
+   "fieldtype": "Date",
+   "label": "Required To Date"
+  },
+  {
+   "fieldname": "section_break_18",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "subject",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Subject",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "in_list_view": 1,
+   "label": "Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "attachment",
+   "fieldtype": "Attach",
+   "label": "Attachment"
+  },
+  {
+   "fieldname": "signature",
+   "fieldtype": "Signature",
+   "label": "Signature",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "description": "I agree to the Terms and Conditions Mentioned against this Request.",
+   "fieldname": "agree",
+   "fieldtype": "Check",
+   "label": "Agree",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [
+  {
+   "link_doctype": "Task",
+   "link_fieldname": "subject"
+  }
+ ],
+ "modified": "2024-04-02 12:37:39.993182",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "HelpTicket",
+ "nsm_parent_field": "parent_helpdesk",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HOD",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Vice President",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "BOD",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Helpdesk Agent",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

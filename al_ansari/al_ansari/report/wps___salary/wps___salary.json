@@ -1,0 +1,28 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2023-09-11 11:41:11.763707",
+ "disable_prepared_report": 0,
+ "disabled": 1,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Al Ansari Oman",
+ "modified": "2024-04-02 14:08:00.242488",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "WPS - Salary",
+ "owner": "amjid.ali@alansariglobal.com",
+ "prepared_report": 0,
+ "query": "SELECT \r\n    `tabEmployee`.`employee` AS `Employee`,\r\n    `tabEmployee`.`employee_name` AS `Employee Name`,\r\n   `tabEmployee`.`date_of_joining` AS `Joined`,\r\n   `tabEmployee`.`designation` AS `Designation`,\r\n   `tabEmployee`.`grade` AS `Grade`,\r\n   `tabEmployee`.`payroll_cost_center` AS `Cost Center`,\r\n   `tabEmployee`.`bank_name` AS `Bank`,\r\n   `tabEmployee`.`bank_ac_no` AS `Bank Account`,\r\n   `tabEmployee`.`working_status` AS `Working Status`,\r\n    `tabEmployee`.`visa_company` AS `Visa`,\r\n    `tabEmployee`.`salary_hold` AS `Salary Hold`,\r\n   `tabEmployee`.`bank_ac_no` AS `Bank Account`,\r\n      `tabEmployee`.`salary_mode` AS `Salary Mode`,\r\n    `tabSalary Structure Assignment`.`salary_structure` AS `Salary Structure`,\r\n    `tabSalary Structure Assignment`.`from_date` AS `From Date`,\r\n    `tabSalary Structure Assignment`.`base` AS `Basic`,\r\n    `tabSalary Structure Assignment`.`hra` AS `HRA`,\r\n      `tabSalary Structure Assignment`.`food` AS `Food`,\r\n    `tabSalary Structure Assignment`.`transport` AS `Transport`,\r\n    `tabSalary Structure Assignment`.`others` AS `others`,\r\n    `tabSalary Structure Assignment`.`living` AS `Living`,\r\n    `tabSalary Structure Assignment`.`fixed_overtime` AS `Fixed OT`,\r\n    `tabSalary Structure Assignment`.`utility` AS `Utility`,\r\n    `tabSalary Structure Assignment`.`gsm` AS `GSM`,\r\n    `tabSalary Structure Assignment`.`total_monthly_salary` AS `Total`,\r\n    `tabSalary Structure Assignment`.`monthly_pay` AS `Base for Overtime`,\r\n    `tabSalary Structure Assignment`.`workflow_state` AS `Approval Status`,\r\n   `tabSalary Structure Assignment`.`company` AS `Company`\r\n   \r\nFROM \r\n    `tabEmployee`\r\nINNER JOIN\r\n    `tabSalary Structure Assignment`\r\nON\r\n    `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\n    \r\nINNER JOIN\r\n    `tabSalary Slip`\r\nON\r\n  `tabEmployee`.`name` = `tabSalary Slip`.`employee`\r\n\r\nWHERE\r\n\r\n`tabSalary Structure Assignment`.`docstatus` = 1\r\n AND `tabEmployee`.`status` = 'Active'\r\n AND \r\n\r\n    `tabSalary Structure Assignment`.`from_date` = (\r\n        SELECT \r\n            MAX(`from_date`)\r\n        FROM \r\n            `tabSalary Structure Assignment`\r\n        WHERE \r\n            `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\n\t\tand `tabSalary Structure Assignment`.`docstatus` = 1\r\n    );",
+ "ref_doctype": "Payroll Entry",
+ "report_name": "WPS - Salary",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Payroll Manager"
+  }
+ ]
+}

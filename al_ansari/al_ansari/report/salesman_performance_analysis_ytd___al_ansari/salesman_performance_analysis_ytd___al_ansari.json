@@ -1,0 +1,38 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2023-11-21 09:43:47.172323",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [
+  {
+   "fieldname": "Company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "mandatory": 1,
+   "options": "Company",
+   "wildcard_filter": 0
+  }
+ ],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Al Ansari Oman",
+ "modified": "2024-04-02 14:09:49.034848",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Salesman Performance Analysis YTD - Al Ansari",
+ "owner": "amjid.ali@alansariglobal.com",
+ "prepared_report": 0,
+ "query": "SELECT\r\n  `tabEmployee`.`employee` AS \"EMPID\",\r\n  `tabEmployee`.`employee_name` AS \"Employee Name\",\r\n  `tabSales Person`.`sales_person_name` AS \"Sales Person\",\r\n  `tabEmployee`.`user_id` AS \"Email\",\r\n  `tabEmployee`.`department`,\r\n  COALESCE(`VisitCounts`.`Visit Count`, 0) AS \"Visit Count\",\r\n  COALESCE(`LeadCounts`.`Lead Count`, 0) AS \"Total Leads\",\r\n  COALESCE(`OpportunityCounts`.`Opportunity Count`, 0) AS \"Total Opportunities\",\r\n    COALESCE(SUM(`tabOpportunity`.`opportunity_amount`), 0) AS \"Total Opportunity Amount\",\r\n  COALESCE(`ConvertedOpportunityCounts`.`Converted Opportunity Count`, 0) AS \"Converted Opportunities\",\r\n  COALESCE(`ConvertedOpportunityCounts`.`Total Converted Opportunity Amount`, 0) AS \"Total Converted Opportunity Amount\",\r\n  COALESCE(`QuotationCounts`.`Quotation Count`, 0) AS \"Total Quotations\",\r\n  COALESCE(`SalesOrderCounts`.`Sales Order Count`, 0) AS \"Total Sales Orders\"\r\nFROM\r\n  `tabEmployee`\r\nLEFT JOIN\r\n  `tabVisit` ON `tabEmployee`.`user_id` = `tabVisit`.`user`\r\nLEFT JOIN\r\n  (\r\n    SELECT\r\n      `lead_owner` AS `user`,\r\n      COUNT(*) AS \"Lead Count\"\r\n    FROM\r\n      `tabLead`\r\n    WHERE\r\n      YEAR(`creation`) = YEAR(CURDATE())\r\n    GROUP BY\r\n      `lead_owner`\r\n  ) AS `LeadCounts` ON `tabEmployee`.`user_id` = `LeadCounts`.`user`\r\nLEFT JOIN\r\n  (\r\n    SELECT\r\n      COALESCE(`converted_by`, `owner`) AS `user`,\r\n      COUNT(*) AS \"Opportunity Count\"\r\n    FROM\r\n      `tabOpportunity`\r\n    WHERE\r\n      YEAR(`creation`) = YEAR(CURDATE())\r\n    GROUP BY\r\n      `user`\r\n  ) AS `OpportunityCounts` ON `tabEmployee`.`user_id` = `OpportunityCounts`.`user`\r\nLEFT JOIN\r\n  (\r\n    SELECT\r\n      `converted_by` AS `user`,\r\n      COUNT(*) AS \"Converted Opportunity Count\",\r\n      SUM(`opportunity_amount`) AS \"Total Converted Opportunity Amount\"\r\n    FROM\r\n      `tabOpportunity`\r\n    WHERE\r\n      YEAR(`creation`) = YEAR(CURDATE()) AND `status` = 'Converted'\r\n    GROUP BY\r\n      `user`\r\n  ) AS `ConvertedOpportunityCounts` ON `tabEmployee`.`user_id` = `ConvertedOpportunityCounts`.`user`\r\nLEFT JOIN\r\n  (\r\n    SELECT\r\n      `owner` AS `user`,\r\n      COUNT(*) AS \"Quotation Count\"\r\n    FROM\r\n      `tabQuotation`\r\n    WHERE\r\n      YEAR(`creation`) = YEAR(CURDATE())\r\n    GROUP BY\r\n      `owner`\r\n  ) AS `QuotationCounts` ON `tabEmployee`.`user_id` = `QuotationCounts`.`user`\r\nLEFT JOIN\r\n  (\r\n    SELECT\r\n      `owner` AS `user`,\r\n      COUNT(*) AS \"Sales Order Count\"\r\n    FROM\r\n      `tabSales Order`\r\n    WHERE\r\n      YEAR(`creation`) = YEAR(CURDATE())\r\n    GROUP BY\r\n      `owner`\r\n  ) AS `SalesOrderCounts` ON `tabEmployee`.`user_id` = `SalesOrderCounts`.`user`\r\nLEFT JOIN\r\n  `tabOpportunity` ON `tabEmployee`.`user_id` = COALESCE(`tabOpportunity`.`converted_by`, `tabOpportunity`.`owner`)\r\nLEFT JOIN\r\n  `tabSales Person` ON `tabEmployee`.`employee` = `tabSales Person`.`employee`\r\nLEFT JOIN (\r\n  SELECT\r\n    `user`,\r\n    COUNT(*) AS \"Visit Count\"\r\n  FROM\r\n    `tabVisit`\r\n  GROUP BY\r\n    `user`\r\n) AS `VisitCounts` ON `tabEmployee`.`user_id` = `VisitCounts`.`user`\r\nWHERE\r\n  `tabEmployee`.`company` = 'Al Ansari Trading Enterprise LLC' AND `tabSales Person`.`sales_person_name` is not null\r\nGROUP BY\r\n  `tabEmployee`.`employee`, `tabEmployee`.`employee_name`, `tabEmployee`.`user_id`, `tabEmployee`.`department`, `VisitCounts`.`Visit Count`, `LeadCounts`.`Lead Count`, `OpportunityCounts`.`Opportunity Count`, `ConvertedOpportunityCounts`.`Converted Opportunity Count`, `QuotationCounts`.`Quotation Count`, `SalesOrderCounts`.`Sales Order Count`, `tabSales Person`.`sales_person_name`;\r\n",
+ "ref_doctype": "Employee",
+ "report_name": "Salesman Performance Analysis YTD - Al Ansari",
+ "report_script": "",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Vice President"
+  }
+ ]
+}

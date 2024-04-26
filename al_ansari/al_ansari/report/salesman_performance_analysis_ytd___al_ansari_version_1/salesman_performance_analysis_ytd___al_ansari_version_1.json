@@ -1,0 +1,28 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2023-11-21 13:05:18.218131",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Al Ansari Oman",
+ "modified": "2024-04-02 14:13:54.710143",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Salesman Performance Analysis YTD - Al Ansari Version 1",
+ "owner": "amjid.ali@alansariglobal.com",
+ "prepared_report": 0,
+ "query": "SELECT\r\n  `tabEmployee`.`employee` AS \"EMPID\",\r\n  `tabEmployee`.`employee_name` AS \"Salesman Name\",\r\n  `tabEmployee`.`user_id` AS \"Email\",\r\n  `tabEmployee`.`department`,\r\n  COALESCE(`VisitCounts`.`Visit Count`, 0) AS \"Visit Count\",\r\n  COALESCE(COUNT(DISTINCT CASE WHEN YEAR(`tabLead`.`creation`) = YEAR(CURDATE()) THEN `tabLead`.`name` END), 0) AS \"Total Leads\",\r\n  COALESCE(COUNT(DISTINCT CASE WHEN YEAR(`tabOpportunity`.`creation`) = YEAR(CURDATE()) THEN `tabOpportunity`.`name` END), 0) AS \"Total Opportunities\",\r\n  COALESCE(SUM(CASE WHEN YEAR(`tabOpportunity`.`creation`) = YEAR(CURDATE()) AND `tabOpportunity`.`status` = 'Converted' THEN 1 ELSE 0 END), 0) AS \"Converted Opportunities\",\r\n  COALESCE(COUNT(DISTINCT CASE WHEN YEAR(`tabQuotation`.`creation`) = YEAR(CURDATE()) THEN `tabQuotation`.`name` END), 0) AS \"Total Quotations\",\r\n  COALESCE(COUNT(DISTINCT CASE WHEN YEAR(`tabSales Order`.`creation`) = YEAR(CURDATE()) THEN `tabSales Order`.`name` END), 0) AS \"Total Sales Orders\"\r\nFROM\r\n  `tabEmployee`\r\nLEFT JOIN\r\n  `tabVisit` ON `tabEmployee`.`user_id` = `tabVisit`.`user`\r\nLEFT JOIN\r\n  `tabLead` ON `tabEmployee`.`user_id` = `tabLead`.`lead_owner`\r\nLEFT JOIN\r\n  `tabOpportunity` ON `tabEmployee`.`user_id` = `tabOpportunity`.`owner`\r\nLEFT JOIN\r\n  `tabQuotation` ON `tabEmployee`.`user_id` = `tabQuotation`.`owner`\r\nLEFT JOIN\r\n  `tabSales Order` ON `tabEmployee`.`user_id` = `tabSales Order`.`owner`\r\nLEFT JOIN (\r\n  SELECT\r\n    `user`,\r\n    COUNT(*) AS \"Visit Count\"\r\n  FROM\r\n    `tabVisit`\r\n  GROUP BY\r\n    `user`\r\n) AS `VisitCounts` ON `tabEmployee`.`user_id` = `VisitCounts`.`user`\r\nWHERE\r\n  `tabEmployee`.`department` = 'General Sales - AATE'\r\n  AND `tabEmployee`.`company` = 'Al Ansari Trading Enterprise LLC'\r\nGROUP BY\r\n  `tabEmployee`.`employee`, `tabEmployee`.`employee_name`, `tabEmployee`.`user_id`, `tabEmployee`.`department`, `VisitCounts`.`Visit Count`;\r\n",
+ "ref_doctype": "Employee",
+ "report_name": "Salesman Performance Analysis YTD - Al Ansari Version 1",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Vice President"
+  }
+ ]
+}

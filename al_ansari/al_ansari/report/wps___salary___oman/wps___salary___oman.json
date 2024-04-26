@@ -1,0 +1,28 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2023-09-11 12:01:09.514173",
+ "disable_prepared_report": 0,
+ "disabled": 1,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Al Ansari Oman",
+ "modified": "2024-04-02 14:19:01.950359",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "WPS - Salary - Oman",
+ "owner": "amjid.ali@alansariglobal.com",
+ "prepared_report": 0,
+ "query": "SELECT \r\n   CASE WHEN `tabEmployee`.`nationality` = 'Oman' THEN 'C' ELSE 'P' END AS `Employee ID Type`,\r\n    `tabEmployee`.`passport_number` AS `Employee ID`,   \r\n    `tabEmployee`.`employee_name` AS `Employee Name`,\r\n    `tabEmployee`.`bank_code` AS `Employee BIC Code`,\r\n    `tabEmployee`.`bank_ac_no` AS `Employee Account`,\r\n    'M' AS `Salary Frequency`,\r\n    `tabSalary Slip`.`payment_days` AS `Number Of Working days`, \r\n    `tabSalary Slip`.`net_pay` AS `Net Salary`, \r\n  \r\n(\r\n    SELECT `salary_component`\r\n    FROM `tabSalary Detail`\r\n    WHERE `tabSalary Slip`.`name` = `tabSalary Detail`.`parent`\r\n     LIMIT 1\r\n) AS `Basic Pay`\r\n    ,\r\n  \r\n    `tabSalary Slip`.`total_working_hours` AS `Extra Hours` ,\r\n    (`tabSalary Slip`.`gross_pay`-`tabSalary Slip`.`net_pay`) AS `Extra Extra Income` ,\r\n    `tabSalary Slip`.`total_deduction` AS `Deductions` ,\r\n    `tabSalary Slip`.`net_pay` AS `Social Security Deductions` ,\r\n    `tabSalary Slip`.`mode_of_payment` AS `mode` ,\r\n    `tabEmployee`.`payroll_cost_center` AS `CC/DEPT`,  \r\n    `tabEmployee`.`group` AS `Group`,\r\n    `tabEmployee`.`working_status` AS `Status`,\r\n    `tabEmployee`.`Company` AS `Work Company`,\r\n    `tabEmployee`.`visa_company` AS `Visa Company`,\r\n    'Salary ---' AS `Notes/Comments` \r\n\r\n   \r\n\r\nFROM \r\n    `tabEmployee`\r\nINNER JOIN\r\n    `tabSalary Structure Assignment`\r\nON\r\n    `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\n    \r\nINNER JOIN\r\n    `tabSalary Slip`\r\nON\r\n  `tabEmployee`.`name` = `tabSalary Slip`.`employee`\r\n\r\nWHERE\r\n\r\n`tabSalary Structure Assignment`.`docstatus` = 1\r\n AND `tabEmployee`.`status` = 'Active'\r\n AND \r\n\r\n    `tabSalary Structure Assignment`.`from_date` = (\r\n        SELECT \r\n            MAX(`from_date`)\r\n        FROM \r\n            `tabSalary Structure Assignment`\r\n        WHERE \r\n            `tabEmployee`.`name` = `tabSalary Structure Assignment`.`employee`\r\n\t\tand `tabSalary Structure Assignment`.`docstatus` = 1\r\n    );",
+ "ref_doctype": "Payroll Entry",
+ "report_name": "WPS - Salary - Oman",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Payroll Manager"
+  }
+ ]
+}

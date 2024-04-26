@@ -1,0 +1,148 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:number",
+ "creation": "2023-11-05 12:55:38.225271",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "number",
+  "pa_number",
+  "issue_date",
+  "expiry_date",
+  "office",
+  "column_break_5",
+  "permit_duration",
+  "visa_company",
+  "amount",
+  "payment_reference",
+  "section_break_11",
+  "table_11",
+  "expired",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Number",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "pa_number",
+   "fieldtype": "Data",
+   "label": "PA Number"
+  },
+  {
+   "fieldname": "issue_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Issue Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "expiry_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Expiry Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "office",
+   "fieldtype": "Data",
+   "label": "Office"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "24",
+   "description": "Enter Number of Months",
+   "fieldname": "permit_duration",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Permit Duration",
+   "reqd": 1
+  },
+  {
+   "description": "Select the Company for which the permit has been approved.",
+   "fieldname": "visa_company",
+   "fieldtype": "Link",
+   "label": "Visa Company",
+   "options": "Visa Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Data",
+   "label": "Amount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "payment_reference",
+   "fieldtype": "Data",
+   "label": "Payment Reference"
+  },
+  {
+   "description": "Please Provide Occupation Details as per the Work Permit Approved by the Ministry",
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "table_11",
+   "fieldtype": "Table",
+   "options": "Work Permit Detail",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "expired",
+   "fieldtype": "Check",
+   "label": "Expired"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Text",
+   "label": "Remarks"
+  }
+ ],
+ "icon": "fa-fa-user",
+ "index_web_pages_for_search": 1,
+ "links": [
+  {
+   "group": "Employee",
+   "link_doctype": "Employee",
+   "link_fieldname": "work_permit_number"
+  }
+ ],
+ "modified": "2024-04-02 12:37:51.172584",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Work Permit",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "number,visa_company,expiry_date,remarks",
+ "show_name_in_global_search": 1,
+ "sort_field": "expiry_date",
+ "sort_order": "ASC",
+ "title_field": "number",
+ "track_changes": 1
+}
