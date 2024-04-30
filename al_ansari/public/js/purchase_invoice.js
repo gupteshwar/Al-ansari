@@ -27,6 +27,11 @@ frappe.ui.form.on('Purchase Invoice',{
         hide_child_table_buttons(event,frm)
     },
     onload: function(frm) {
+        if(frappe.user.has_role("Accounts Manager") || frappe.user.has_role("System Manager")){
+            frm.set_df_property('set_posting_time', 'read_only', 0)
+        }else{
+            frm.set_df_property('set_posting_time', 'read_only', 1)
+        }
         // Commented the auto fill of payroll cost center
 
         // if (frappe.session.user) {
