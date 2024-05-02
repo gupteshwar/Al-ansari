@@ -95,6 +95,7 @@ doctype_js = {
 
 }
 
+fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State']
 # fixtures = ['Role','Custom Field','Property Setter','Print Format','Client Script','Report','Workflow','Workflow State','Workflow Action']
 
 
