@@ -54,10 +54,9 @@ def fetch_cr_dr_details(doc):
         credit = 0
         for i in doc.get('accounts'):
             if i.get('cost_center') == cc:
-                debit += i.get('debit') if i.get('debit') else 0
-                credit += i.get('credit') if i.get('credit') else 0
-        cc_accounting_entries.append({'cost_center': cc, 'debit': debit, 'credit': credit})
-    
+                debit += round(i.get('debit'),4) if i.get('debit') else 0
+                credit += round(i.get('credit'), 4) if i.get('credit') else 0
+        cc_accounting_entries.append({'cost_center': cc, 'debit': round(debit, 4), 'credit': round(credit,4)})
     return cc_accounting_entries
 
 def validate_total_debit_and_credit_against_cc(doc, method):
