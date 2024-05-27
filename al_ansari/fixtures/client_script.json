@@ -15,6 +15,19 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
+  "dt": "Earned Leave Deductions",
+  "enabled": 1,
+  "modified": "2023-09-05 12:07:26.031973",
+  "name": "Earned Leave Deductions-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Earned Leave Deductions', {\n    get_employees(frm) {\n        frm.set_value('eliminate_zero_deductions',0)\n    },\n    after_save(frm) {\n        if(frm.doc.eliminate_zero_deductions === 0) {\n            eliminate_zero_deduction(frm)\n            frm.set_value('eliminate_zero_deductions',1)\n            frm.save()\n        } \n    }\n})\n\nfunction eliminate_zero_deduction(frm) {\n    console.log(\"eliminate_zero_deduction\")\n    if(frm.doc.deduction_ratio.length>0){\n\t    for(var i=frm.doc.deduction_ratio.length-1;i>=0;i--){\n\t        if(frm.doc.deduction_ratio[i].to_be_deducted === 0) {\n\t             cur_frm.get_field(\"deduction_ratio\").grid.grid_rows[i].remove();\n\t        }\n\t    }\n\t}\n}",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
   "dt": "HelpTicket",
   "enabled": 1,
   "modified": "2023-06-01 10:02:37.160050",
@@ -23,19 +36,6 @@
   "parentfield": null,
   "parenttype": null,
   "script": "frappe.ui.form.on('HelpTicket', {\r\n    onload: function(frm) {\r\n        // execute this code only when the form is being created\r\n        if (frm.is_new()) {\r\n            // get current user's email and employee id\r\n            frappe.call({\r\n                method: \"frappe.client.get\",\r\n                args: {\r\n                    doctype: \"User\",\r\n                    name: frappe.session.user\r\n                },\r\n                callback: function(data) {\r\n                    var user = data.message;\r\n                    // get employee linked to user\r\n                    frappe.call({\r\n                        method: \"frappe.client.get_value\",\r\n                        args: {\r\n                            doctype: \"Employee\",\r\n                            filters: {\"user_id\": user.name},\r\n                            fieldname: [\"employee\"],\r\n                        },\r\n                        callback: function(e_data) {\r\n                            var employee = e_data.message;\r\n                            // set email_id field\r\n                            frm.set_value(\"email_id\", user.email);\r\n                            // set created_on field to current datetime\r\n                            frm.set_value(\"created_on\", frappe.datetime.get_datetime_as_string());\r\n                        }\r\n                    });\r\n                }\r\n            });\r\n        }\r\n    },\r\n});\r\n",
-  "view": "Form"
- },
- {
-  "docstatus": 0,
-  "doctype": "Client Script",
-  "dt": "Earned Leave Deductions",
-  "enabled": 1,
-  "modified": "2023-09-05 12:03:03.991694",
-  "name": "Earned Leave Deductions-Form",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "script": "frappe.ui.form.on('Earned Leave Deductions', {\n    get_employees(frm) {\n        frm.set_value('eliminate_zero_deductions',0)\n    },\n    after_save(frm) {\n        if(frm.doc.eliminate_zero_deductions === 0) {\n            eliminate_zero_deduction(frm)\n            frm.set_value('eliminate_zero_deductions',1)\n            frm.save()\n        } \n    }\n})\n\nfunction eliminate_zero_deduction(frm) {\n    console.log(\"eliminate_zero_deduction\")\n    if(frm.doc.deduction_ratio.length>0){\n\t    for(var i=frm.doc.deduction_ratio.length-1;i>=0;i--){\n\t        if(frm.doc.deduction_ratio[i].to_be_deducted === 0) {\n\t             cur_frm.get_field(\"deduction_ratio\").grid.grid_rows[i].remove();\n\t        }\n\t    }\n\t}\n}",
   "view": "Form"
  },
  {
