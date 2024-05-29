@@ -743,7 +743,7 @@ def fetch_detailed_entries(doc):
 				bifurcated_cc = 1
 			elif len(bifurcated_cost_center)==0 and len(std_cost_center)>0:	
 				bifurcated_cc = 0
-			ref_details = allocate_paid_amount(doc,ref_details)
+	ref_details = allocate_paid_amount(doc,ref_details)
 
 	return ref_details,bifurcated_cc
 		
@@ -754,9 +754,11 @@ def fetch_detailed_entries(doc):
 def allocate_paid_amount(doc,ref_details):
 	paid_amount = doc.get('paid_amount')
 	references = doc.get('references')
+	print(ref_details)
+	print("ref_details")
 	for ref in ref_details:
 		for i in ref:
-
+			print(i)
 			i['outstanding'] = i['amount'] or 0
 			part_payments = frappe.db.sql("""
 							select
@@ -799,15 +801,16 @@ def allocate_paid_amount(doc,ref_details):
 			else:
 				i['outstanding'] = i['amount'] or 0
 
-	for re in references:
-		for update_i in ref:
-			if update_i['reference_name'] == re['reference_name'] and update_i['custom_cost_center']:
-				if paid_amount > update_i['outstanding']:
-					update_i['allocated_amount'] = update_i['outstanding']
-					paid_amount = paid_amount - update_i['outstanding']
-				else:
-					update_i['allocated_amount'] = paid_amount
-					paid_amount = 0
+			for re in references:
+				print(re)
+				for update_i in ref:
+					if update_i['reference_name'] == re['reference_name'] and update_i['custom_cost_center']:
+						if paid_amount > update_i['outstanding']:
+							update_i['allocated_amount'] = update_i['outstanding']
+							paid_amount = paid_amount - update_i['outstanding']
+						else:
+							update_i['allocated_amount'] = paid_amount
+							paid_amount = 0
 
 		# if paid_amount > ref_details[ref]['amount']:
 		# 	ref_details[0][ref]['allocated_amount'] = ref_details[0][ref]['amount']
@@ -815,7 +818,7 @@ def allocate_paid_amount(doc,ref_details):
 		# else:
 		# 	ref_details[ref]['allocated_amount'] = paid_amount
 		# 	break
-
+	print(ref_details)
 	return ref_details
 
 @frappe.whitelist()

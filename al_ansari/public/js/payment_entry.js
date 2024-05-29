@@ -250,7 +250,7 @@ function split_entries_as_per_cc(frm,taxes,references_details) {
 function fetch_detailed_entries(frm) {
     if(frm.doc.references) {
         // calculate_and_set_paid_amount(frm)
-        frm.doc.references.forEach(function (ref) {
+        // frm.doc.references.forEach(function (ref) {
             frappe.call({
                 method: "al_ansari.al_ansari.customization.payment_entry.fetch_detailed_entries",
                 args: {
@@ -285,7 +285,7 @@ function fetch_detailed_entries(frm) {
                     frm.set_value('bifurcate_cost_center',r.message[1])
                 },
             });
-        })
+        // })
     }
 }
 
