@@ -257,11 +257,13 @@ function fetch_detailed_entries(frm) {
                     doc: frm.doc
                 },
                 callback: function (r) {
-                    frm.clear_table('references_details')
+                    // frm.clear_table('references_details')
                     if(r.message[0]) {
                         console.log(r.message[0])
+                        frm.doc.references_details = []
                         r.message[0].forEach(function(row){
                             row.forEach(function(r) {
+                                console.log(r)
                                 var childTable = cur_frm.add_child("references_details");
                                 childTable.custom_cost_center = r.custom_cost_center
                                 childTable.amount = r.amount
