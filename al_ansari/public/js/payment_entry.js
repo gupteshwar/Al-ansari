@@ -250,18 +250,20 @@ function split_entries_as_per_cc(frm,taxes,references_details) {
 function fetch_detailed_entries(frm) {
     if(frm.doc.references) {
         // calculate_and_set_paid_amount(frm)
-        frm.doc.references.forEach(function (ref) {
+        // frm.doc.references.forEach(function (ref) {
             frappe.call({
                 method: "al_ansari.al_ansari.customization.payment_entry.fetch_detailed_entries",
                 args: {
                     doc: frm.doc
                 },
                 callback: function (r) {
-                    frm.clear_table('references_details')
+                    // frm.clear_table('references_details')
                     if(r.message[0]) {
                         console.log(r.message[0])
+                        frm.doc.references_details = []
                         r.message[0].forEach(function(row){
                             row.forEach(function(r) {
+                                console.log(r)
                                 var childTable = cur_frm.add_child("references_details");
                                 childTable.custom_cost_center = r.custom_cost_center
                                 childTable.amount = r.amount
@@ -283,7 +285,7 @@ function fetch_detailed_entries(frm) {
                     frm.set_value('bifurcate_cost_center',r.message[1])
                 },
             });
-        })
+        // })
     }
 }
 
