@@ -89,5 +89,18 @@
   "parenttype": null,
   "script": "frappe.ui.form.on(\"Salary Slip\", \"before_submit\", function (frm) {\r\n  console.log(\"Parent Doc Script is Running Good\");\r\n  const deductions = frm.doc.deductions;\r\n  const earnings = frm.doc.earnings;\r\n\r\n  deductions.forEach((item) => {\r\n    // console.log(item.additional_salary);\r\n\r\n    if (item.additional_salary && item.remarks !== \" \" ) {\r\n      frappe.db.get_value(\r\n        \"Additional Salary\",\r\n        { name: item.additional_salary },\r\n        \"remarks\",\r\n        function (value) {\r\n          item.remarks = value.remarks;\r\n          frappe.model.set_value(\"remarks\", value.remarks);\r\n          frm.toggle_display(\"remarks\", true);\r\n          frm.refresh_field(\"remarks\");\r\n          frm.refresh_field(\"deductions\");\r\n        }\r\n      );\r\n    } else {\r\n      frm.toggle_display(\"remarks\", false);\r\n      frm.refresh_field(\"remarks\");\r\n      frm.refresh_field(\"deductions\");\r\n    }\r\n  });\r\n\r\n  earnings.forEach((item) => {\r\n    // console.log(item.additional_salary);\r\n\r\n    if (item.additional_salary && item.remarks !== \" \" ) {\r\n      frappe.db.get_value(\r\n        \"Additional Salary\",\r\n        { name: item.additional_salary },\r\n        \"remarks\",\r\n        function (value) {\r\n          item.remarks = value.remarks;\r\n          frappe.model.set_value(\"remarks\", value.remarks);\r\n          frm.toggle_display(\"remarks\", true);\r\n          frm.refresh_field(\"remarks\");\r\n          frm.refresh_field(\"earnings\");\r\n        }\r\n      );\r\n    } else {\r\n      frm.toggle_display(\"remarks\", false);\r\n      frm.refresh_field(\"remarks\");\r\n      frm.refresh_field(\"earnings\");\r\n    }\r\n  });\r\n\r\n  frm.refresh_field(\"earnings\");\r\n  frm.refresh_field(\"deductions\");\r\n});\r\n",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Stock Entry",
+  "enabled": 1,
+  "modified": "2024-05-20 14:37:21.019783",
+  "name": "Stock Entry-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on(\"Stock Entry\", {\r\n  validate: function(frm) {\r\n    console.log(\"Stock Entry Script is Running\");\r\n\r\n    // Check if stock_entry_type is \"Material Issue\"\r\n    if (frm.doc.stock_entry_type === \"Material Issue\") {\r\n\r\n      // Iterate over the child table `items` (which is Stock Entry Detail)\r\n      frm.doc.items.forEach((item) => {\r\n        // Set the `expense_account` field value\r\n        item.expense_account = \"E1101 - PURCHASES - PROJECTS - AATE\";\r\n      });\r\n\r\n        console.log(\"Accounts Changed\");\r\n      // Refresh the field to show updated values\r\n      frm.refresh_field(\"items\");\r\n    }\r\n  }\r\n});\r\n",
+  "view": "Form"
  }
 ]

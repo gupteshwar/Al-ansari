@@ -24,6 +24,24 @@ def validate_reference_details(doc,method):
 		frappe.throw("Please click the Get Detailed Entries button to proceed")
 	# else:
 		# check_and_allocate_amount(doc)
+	total_reference_amount = 0
+	total_detail_reference_amount = 0
+
+	for rec in doc.references:
+		total_reference_amount += rec.allocated_amount
+
+	for rec1 in doc.references_details:
+		total_detail_reference_amount += rec1.allocated_amount
+
+	print("total_reference_amount", total_reference_amount)
+	print("total_detail_reference_amount", total_detail_reference_amount)
+
+	if total_reference_amount > doc.paid_amount: 
+		frappe.throw("Cannot Allocate More amount from Paid Amount")
+
+	if total_detail_reference_amount > doc.paid_amount:
+		frappe.throw("Cannot Allocate More amount from Paid Amount")
+
 	if len(doc.references)>0 and len(doc.references_details) > 0 :
 		if doc.references:
 			grand_total=0
@@ -690,10 +708,7 @@ def fetch_detailed_entries(doc):
 	print(doc['references'])
 	references = doc['references']
 	for ref in references:
-		print(">>>>>>>>>>>>>>> ref  ",ref)
 		if ref.get('reference_doctype') == 'Employee Advance':
-			print("111111111111111111")
-			print(ref.get('total_amount'))
 
 			cc = doc.get('cost_center')
 			bifurcated_cc = 1
@@ -704,12 +719,9 @@ def fetch_detailed_entries(doc):
 
 		elif ref.get('reference_doctype') == 'Expense Claim':
 
-			print("22222222222222222222222222")
-			print(ref.get('total_amount'))
 			cc = doc.get('cost_center')
 			bifurcated_cc = 1
 			ref_details.append([{'reference_doctype':ref.get('reference_doctype'),'reference_name':ref.get('reference_name'),'custom_cost_center':cc,'amount':ref.get('total_amount'),'outstanding':ref.get('outstanding_amount'),'allocated_amount':ref.get('allocated_amount')}])
-			print('\n\n\n\n\n\n>>>>>>>>>>qqqref_details',ref_details,bifurcated_cc)
 
 
 			# return ref_details,bifurcated_cc
@@ -717,9 +729,7 @@ def fetch_detailed_entries(doc):
 
 		else:
 
-			print("3333333333333333333")
 			data, bifurcate_cost_center = get_item_reference_details(ref.get('reference_doctype'),ref.get('reference_name'))
-			print(data)
 
 			ref_details.append(data)
 			if bifurcate_cost_center == 1:
@@ -733,7 +743,7 @@ def fetch_detailed_entries(doc):
 				bifurcated_cc = 1
 			elif len(bifurcated_cost_center)==0 and len(std_cost_center)>0:	
 				bifurcated_cc = 0
-			ref_details = allocate_paid_amount(doc,ref_details)
+	ref_details = allocate_paid_amount(doc,ref_details)
 
 	return ref_details,bifurcated_cc
 		
@@ -744,9 +754,11 @@ def fetch_detailed_entries(doc):
 def allocate_paid_amount(doc,ref_details):
 	paid_amount = doc.get('paid_amount')
 	references = doc.get('references')
+	print(ref_details)
+	print("ref_details")
 	for ref in ref_details:
 		for i in ref:
-
+			print(i)
 			i['outstanding'] = i['amount'] or 0
 			part_payments = frappe.db.sql("""
 							select
@@ -758,10 +770,10 @@ def allocate_paid_amount(doc,ref_details):
 							on
 								pe.name = per.parent
 							where
-								per.reference_name = '{}'
-								and per.custom_cost_center = '{}'
+								per.reference_name = '{0}'
+								and per.custom_cost_center = '{1}'
 								and pe.docstatus = 1
-								and pe.name != '{}'
+								and pe.name != '{2}'
 							""".format(i['reference_name'], i['custom_cost_center'],doc['name']))
 			# if part_payments and part_payments[0][0] != None:
 			# 	if i['amount'] == part_payments[0][0]:
@@ -789,15 +801,16 @@ def allocate_paid_amount(doc,ref_details):
 			else:
 				i['outstanding'] = i['amount'] or 0
 
-	for re in references:
-		for update_i in ref:
-			if update_i['reference_name'] == re['reference_name'] and update_i['custom_cost_center']:
-				if paid_amount > update_i['outstanding']:
-					update_i['allocated_amount'] = update_i['outstanding']
-					paid_amount = paid_amount - update_i['outstanding']
-				else:
-					update_i['allocated_amount'] = paid_amount
-					paid_amount = 0
+			for re in references:
+				print(re)
+				for update_i in ref:
+					if update_i['reference_name'] == re['reference_name'] and update_i['custom_cost_center']:
+						if paid_amount > update_i['outstanding']:
+							update_i['allocated_amount'] = update_i['outstanding']
+							paid_amount = paid_amount - update_i['outstanding']
+						else:
+							update_i['allocated_amount'] = paid_amount
+							paid_amount = 0
 
 		# if paid_amount > ref_details[ref]['amount']:
 		# 	ref_details[0][ref]['allocated_amount'] = ref_details[0][ref]['amount']
@@ -805,7 +818,7 @@ def allocate_paid_amount(doc,ref_details):
 		# else:
 		# 	ref_details[ref]['allocated_amount'] = paid_amount
 		# 	break
-
+	print(ref_details)
 	return ref_details
 
 @frappe.whitelist()

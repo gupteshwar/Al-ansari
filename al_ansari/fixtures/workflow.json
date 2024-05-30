@@ -1819,7 +1819,7 @@
   "doctype": "Workflow",
   "document_type": "Expense Claim",
   "is_active": 1,
-  "modified": "2023-02-07 14:44:58.508782",
+  "modified": "2024-05-27 10:49:54.418804",
   "name": "Expense Claim",
   "override_status": 0,
   "parent": null,
@@ -1828,7 +1828,7 @@
   "send_email_alert": 0,
   "states": [
    {
-    "allow_edit": "Applicant",
+    "allow_edit": "Employee",
     "doc_status": "0",
     "is_optional_state": 0,
     "message": null,
@@ -1849,12 +1849,12 @@
     "parent": "Expense Claim",
     "parentfield": "states",
     "parenttype": "Workflow",
-    "state": "Submitted",
+    "state": "Requested",
     "update_field": null,
-    "update_value": "Submitted"
+    "update_value": "Requested"
    },
    {
-    "allow_edit": "HOD",
+    "allow_edit": "Expense Approver",
     "doc_status": "0",
     "is_optional_state": 0,
     "message": null,
@@ -1876,7 +1876,7 @@
     "parentfield": "states",
     "parenttype": "Workflow",
     "state": "Approved",
-    "update_field": null,
+    "update_field": "approval_status",
     "update_value": "Approved"
    },
    {
@@ -1891,15 +1891,28 @@
     "state": "Submitted to VP",
     "update_field": null,
     "update_value": "Submitted to VP"
+   },
+   {
+    "allow_edit": "Accounts Manager",
+    "doc_status": "1",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Expense Claim",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Submitted",
+    "update_field": null,
+    "update_value": null
    }
   ],
   "transitions": [
    {
-    "action": "Submit",
+    "action": "Request for Approval",
     "allow_self_approval": 1,
-    "allowed": "Applicant",
+    "allowed": "Employee",
     "condition": null,
-    "next_state": "Submitted",
+    "next_state": "Requested",
     "parent": "Expense Claim",
     "parentfield": "transitions",
     "parenttype": "Workflow",
@@ -1914,12 +1927,12 @@
     "parent": "Expense Claim",
     "parentfield": "transitions",
     "parenttype": "Workflow",
-    "state": "Submitted"
+    "state": "Requested"
    },
    {
     "action": "Approve",
     "allow_self_approval": 1,
-    "allowed": "HOD",
+    "allowed": "Expense Approver",
     "condition": "doc.total_claimed_amount < 100",
     "next_state": "Approved",
     "parent": "Expense Claim",
@@ -1930,7 +1943,7 @@
    {
     "action": "Submit",
     "allow_self_approval": 1,
-    "allowed": "HOD",
+    "allowed": "Expense Approver",
     "condition": "doc.total_claimed_amount >= 100",
     "next_state": "Submitted to VP",
     "parent": "Expense Claim",
@@ -1948,6 +1961,17 @@
     "parentfield": "transitions",
     "parenttype": "Workflow",
     "state": "Submitted to VP"
+   },
+   {
+    "action": "Submit",
+    "allow_self_approval": 1,
+    "allowed": "Accounts Manager",
+    "condition": null,
+    "next_state": "Submitted",
+    "parent": "Expense Claim",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Approved"
    }
   ],
   "workflow_name": "Expense Claim",
@@ -3890,8 +3914,8 @@
   "docstatus": 0,
   "doctype": "Workflow",
   "document_type": "Customer",
-  "is_active": 1,
-  "modified": "2023-03-28 10:25:25.418325",
+  "is_active": 0,
+  "modified": "2024-05-01 12:44:27.723386",
   "name": "Customer Approval",
   "override_status": 0,
   "parent": null,
@@ -4942,8 +4966,8 @@
   "docstatus": 0,
   "doctype": "Workflow",
   "document_type": "Quotation",
-  "is_active": 1,
-  "modified": "2024-02-13 15:32:26.715250",
+  "is_active": 0,
+  "modified": "2024-05-02 08:33:57.666427",
   "name": "Quotation Workflow 2024",
   "override_status": 0,
   "parent": null,
@@ -5716,6 +5740,250 @@
    }
   ],
   "workflow_name": "Payment Entry",
+  "workflow_state_field": "workflow_state"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow",
+  "document_type": "Purchase Order",
+  "is_active": 0,
+  "modified": "2024-05-27 12:14:55.452763",
+  "name": "Purchase Order 2024",
+  "override_status": 0,
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "send_email_alert": 0,
+  "states": [
+   {
+    "allow_edit": "Purchase User",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Purchase Order 2024",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Draft",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "BU Cordinators",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Purchase Order 2024",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Draft",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "Purchase User",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Purchase Order 2024",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Revision Needed",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "BU Cordinators",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Purchase Order 2024",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Revision Needed",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "HOD",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Purchase Order 2024",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Requested",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "Vice President",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Purchase Order 2024",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Requested",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "System Manager",
+    "doc_status": "1",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Purchase Order 2024",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Approved",
+    "update_field": "",
+    "update_value": null
+   },
+   {
+    "allow_edit": "System Manager",
+    "doc_status": "1",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Purchase Order 2024",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Cancelled",
+    "update_field": "status",
+    "update_value": "Cancelled"
+   }
+  ],
+  "transitions": [
+   {
+    "action": "Request for Approval",
+    "allow_self_approval": 1,
+    "allowed": "Purchase User",
+    "condition": null,
+    "next_state": "Requested",
+    "parent": "Purchase Order 2024",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Draft"
+   },
+   {
+    "action": "Request for Approval",
+    "allow_self_approval": 1,
+    "allowed": "BU Cordinators",
+    "condition": null,
+    "next_state": "Requested",
+    "parent": "Purchase Order 2024",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Draft"
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "HOD",
+    "condition": "doc.base_net_total < 10001",
+    "next_state": "Approved",
+    "parent": "Purchase Order 2024",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Requested"
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "Purchase Approver",
+    "condition": "doc.base_net_total < 10001",
+    "next_state": "Approved",
+    "parent": "Purchase Order 2024",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Requested"
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "Vice President",
+    "condition": "",
+    "next_state": "Approved",
+    "parent": "Purchase Order 2024",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Requested"
+   },
+   {
+    "action": "Revision Needed",
+    "allow_self_approval": 1,
+    "allowed": "HOD",
+    "condition": "",
+    "next_state": "Revision Needed",
+    "parent": "Purchase Order 2024",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Requested"
+   },
+   {
+    "action": "Revision Needed",
+    "allow_self_approval": 1,
+    "allowed": "Vice President",
+    "condition": "",
+    "next_state": "Revision Needed",
+    "parent": "Purchase Order 2024",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Requested"
+   },
+   {
+    "action": "Revision Needed",
+    "allow_self_approval": 1,
+    "allowed": "Vice President",
+    "condition": "",
+    "next_state": "Revision Needed",
+    "parent": "Purchase Order 2024",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Requested"
+   },
+   {
+    "action": "Request for Approval",
+    "allow_self_approval": 1,
+    "allowed": "BU Cordinators",
+    "condition": "",
+    "next_state": "Requested",
+    "parent": "Purchase Order 2024",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Revision Needed"
+   },
+   {
+    "action": "Request for Approval",
+    "allow_self_approval": 1,
+    "allowed": "Purchase User",
+    "condition": "",
+    "next_state": "Requested",
+    "parent": "Purchase Order 2024",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Revision Needed"
+   },
+   {
+    "action": "Cancel",
+    "allow_self_approval": 1,
+    "allowed": "Purchase User",
+    "condition": null,
+    "next_state": "Cancelled",
+    "parent": "Purchase Order 2024",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Approved"
+   }
+  ],
+  "workflow_name": "Purchase Order 2024",
   "workflow_state_field": "workflow_state"
  }
 ]

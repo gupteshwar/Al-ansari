@@ -7907,12 +7907,12 @@
   "docstatus": 0,
   "doctype": "Report",
   "filters": [],
-  "is_standard": "Yes",
+  "is_standard": "No",
   "javascript": null,
   "json": "{}",
   "letter_head": "Al Ansari Oman",
-  "modified": "2024-04-02 14:16:36.021406",
-  "module": "Al Ansari",
+  "modified": "2024-05-01 09:55:42.093624",
+  "module": "Payroll",
   "name": "Salary by Cost Center",
   "parent": null,
   "parentfield": null,
@@ -11202,6 +11202,562 @@
   "docstatus": 0,
   "doctype": "Report",
   "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-05-02 12:05:22.863187",
+  "module": "Stock",
+  "name": "Check Delivery Note",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "select * from `tabSales Order Item`",
+  "ref_doctype": "Delivery Note",
+  "reference_report": null,
+  "report_name": "Check Delivery Note",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Check Delivery Note",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "Check Delivery Note",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
+   },
+   {
+    "parent": "Check Delivery Note",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Check Delivery Note",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "Check Delivery Note",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Check Delivery Note",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "DeliveryNote User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-05-07 18:30:06.310313",
+  "module": "Accounts",
+  "name": "chat of account",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "select * from tabAccount",
+  "ref_doctype": "Account",
+  "reference_report": null,
+  "report_name": "chat of account",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "chat of account",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   },
+   {
+    "parent": "chat of account",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "chat of account",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase User"
+   },
+   {
+    "parent": "chat of account",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "chat of account",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "chat of account",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee Self Service"
+   },
+   {
+    "parent": "chat of account",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll User"
+   },
+   {
+    "parent": "chat of account",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll Second Power"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[[\"Sales Order\",\"per_delivered\",\"<\",100,false],[\"Sales Order\",\"docstatus\",\"=\",\"1\",false],[\"Sales Order\",\"company\",\"=\",\"Al Ansari Trading Enterprise LLC\"]],\"fields\":[[\"name\",\"Sales Order\"],[\"customer_name\",\"Sales Order\"],[\"customer\",\"Sales Order\"],[\"company\",\"Sales Order\"],[\"transaction_date\",\"Sales Order\"],[\"delivery_date\",\"Sales Order\"],[\"grand_total\",\"Sales Order\"],[\"status\",\"Sales Order\"],[\"per_delivered\",\"Sales Order\"],[\"per_billed\",\"Sales Order\"],[\"currency\",\"Sales Order\"],[\"base_grand_total\",\"Sales Order\"],[\"order_type\",\"Sales Order\"]],\"order_by\":\"`tabSales Order`.`modified` desc\",\"add_totals_row\":0,\"page_length\":20,\"column_widths\":{\"name\":120,\"customer_name\":120,\"customer\":120,\"company\":150,\"transaction_date\":160,\"delivery_date\":120,\"grand_total\":150,\"status\":100,\"per_delivered\":100,\"per_billed\":100,\"currency\":100,\"base_grand_total\":150,\"order_type\":120},\"group_by\":null}",
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-05-19 10:37:09.768449",
+  "module": "Selling",
+  "name": "Partial Deliveries for Sales Orders",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Sales Order",
+  "reference_report": null,
+  "report_name": "Partial Deliveries for Sales Orders",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "parent": "Partial Deliveries for Sales Orders",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Maintenance User"
+   },
+   {
+    "parent": "Partial Deliveries for Sales Orders",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Manager"
+   },
+   {
+    "parent": "Partial Deliveries for Sales Orders",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Partial Deliveries for Sales Orders",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
+   },
+   {
+    "parent": "Partial Deliveries for Sales Orders",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "Partial Deliveries for Sales Orders",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-05-22 10:53:34.389657",
+  "module": "HR",
+  "name": "Admin Documents Expring",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    `tabEmployee Documents`.name_on_document AS \"Document Name\", \r\n    `tabEmployee Documents`.document_number AS \"Document Number\",\r\n    `tabEmployee Documents`.remarks AS \"Document Description\",\r\n    `tabEmployee Documents`.issue_date AS \"Issue Date\",\r\n    `tabEmployee Documents`.expiry_date AS \"Expiry Date\"\r\nFROM\r\n    `tabEmployee`\r\nJOIN\r\n    `tabEmployee Documents` ON `tabEmployee`.name = `tabEmployee Documents`.parent\r\nWHERE\r\n    `tabEmployee`.employee = 'E10002'\r\n    AND `tabEmployee Documents`.document_type = 'ID Card'\r\n    AND `tabEmployee Documents`.expiry_date <= CURDATE() + INTERVAL 30 DAY\r\n    AND `tabEmployee`.status = 'active';\r\n",
+  "ref_doctype": "Employee",
+  "reference_report": null,
+  "report_name": "Admin Documents Expring",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Admin Documents Expring",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Admin Documents Expring",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{}",
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-05-28 17:01:56.926211",
+  "module": "Accounts",
+  "name": "GL Entry Validation",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT *\r\nFROM\r\n    `tabGL Entry`\r\nWHERE\r\n    `cost_center` IS NULL AND\r\n    is_cancelled =0;",
+  "ref_doctype": "GL Entry",
+  "reference_report": null,
+  "report_name": "GL Entry Validation",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "GL Entry Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   },
+   {
+    "parent": "GL Entry Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[[\"Sales Invoice\",\"cost_center\",\"=\",\"HM-HEATING & MECHANICAL PRODUCTS - AATE\",false],[\"Sales Invoice\",\"status\",\"!=\",\"Draft\",false],[\"Sales Invoice\",\"company\",\"=\",\"Al Ansari Trading Enterprise LLC\"]],\"fields\":[[\"name\",\"Sales Invoice\"],[\"delivery_note\",\"Sales Invoice Item\"],[\"company\",\"Sales Invoice\"],[\"grand_total\",\"Sales Invoice\"],[\"status\",\"Sales Invoice\"],[\"currency\",\"Sales Invoice\"],[\"customer\",\"Sales Invoice\"],[\"base_grand_total\",\"Sales Invoice\"],[\"outstanding_amount\",\"Sales Invoice\"],[\"due_date\",\"Sales Invoice\"],[\"is_return\",\"Sales Invoice\"],[\"item_code\",\"Sales Invoice Item\"],[\"item_name\",\"Sales Invoice Item\"],[\"party_account_currency\",\"Sales Invoice\"],[\"customer_name\",\"Sales Invoice\"],[\"delivery_date\",\"Sales Invoice Item\"]],\"order_by\":\"`tabSales Invoice`.`modified` desc\",\"add_totals_row\":0,\"page_length\":500,\"column_widths\":{\"name\":120,\"Sales Invoice Item:delivery_note\":120,\"company\":120,\"grand_total\":120,\"status\":120,\"currency\":120,\"customer\":120,\"base_grand_total\":120,\"outstanding_amount\":120,\"due_date\":120,\"is_return\":120,\"Sales Invoice Item:item_code\":120,\"Sales Invoice Item:item_name\":120,\"party_account_currency\":120,\"customer_name\":120,\"Sales Invoice Item:delivery_date\":120},\"group_by\":null}",
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-05-28 17:20:42.703881",
+  "module": "Accounts",
+  "name": "sales analysis",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Sales Invoice",
+  "reference_report": null,
+  "report_name": "sales analysis",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "parent": "sales analysis",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "sales analysis",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "sales analysis",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee Self Service"
+   },
+   {
+    "parent": "sales analysis",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "sales analysis",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "sales analysis",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Counter Sales"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{}",
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-05-29 09:56:15.029699",
+  "module": "Accounts",
+  "name": "Sales Analysis from GL",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    gl_entry.*, \r\n    account.account_name, \r\n    account.account_type,\r\n    (gl_entry.debit - gl_entry.credit) AS debit_minus_credit,\r\n    (gl_entry.credit - gl_entry.debit) AS credit_minus_debit\r\nFROM\r\n    `tabGL Entry` AS gl_entry\r\nJOIN\r\n    `tabAccount` AS account ON gl_entry.account = account.name\r\nWHERE\r\n    gl_entry.is_cancelled = 0\r\n    AND account.parent_account = 'SL-SALES-INCOME - AATE';\r\n",
+  "ref_doctype": "GL Entry",
+  "reference_report": null,
+  "report_name": "Sales Analysis from GL",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Sales Analysis from GL",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   },
+   {
+    "parent": "Sales Analysis from GL",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Sales Analysis from GL",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "Sales Analysis from GL",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{}",
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-05-29 09:27:36.698387",
+  "module": "Accounts",
+  "name": "Current Month Sale by Cost Center",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    gl_entry.cost_center,\r\n    COUNT(gl_entry.name) AS entry_count,\r\n    SUM(gl_entry.debit) AS total_debit,\r\n    SUM(gl_entry.credit) AS total_credit,\r\n    (SUM(gl_entry.credit) - SUM(gl_entry.debit)) AS net_sale\r\nFROM\r\n\r\n\r\n\r\n    `tabGL Entry` AS gl_entry\r\n    \r\n    \r\nJOIN\r\n\r\n\r\n\r\n    `tabAccount` AS account ON gl_entry.account = account.name\r\n    \r\n    \r\nWHERE\r\n\r\n\r\n\r\n    gl_entry.is_cancelled = 0\r\n    AND account.parent_account = 'SL-SALES-INCOME - AATE'\r\n    AND MONTH(gl_entry.posting_date) = MONTH(CURRENT_DATE)\r\n    AND YEAR(gl_entry.posting_date) = YEAR(CURRENT_DATE)\r\n    \r\n    \r\n    \r\nGROUP BY\r\n    gl_entry.cost_center;\r\n",
+  "ref_doctype": "GL Entry",
+  "reference_report": null,
+  "report_name": "Current Month Sale by Cost Center",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Current Month Sale by Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   },
+   {
+    "parent": "Current Month Sale by Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Current Month Sale by Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "Current Month Sale by Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{}",
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-05-29 19:32:05.243737",
+  "module": "Accounts",
+  "name": "VAT on Sale",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    gl_entry.*, \r\n    account.account_name, \r\n    (gl_entry.debit - gl_entry.credit) AS debit_minus_credit,\r\n    (gl_entry.credit - gl_entry.debit) AS credit_minus_debit\r\nFROM\r\n    `tabGL Entry` AS gl_entry\r\nJOIN\r\n    `tabAccount` AS account ON gl_entry.account = account.name\r\nWHERE\r\n    gl_entry.is_cancelled = 0\r\n    AND account.parent_account = 'VAT OUTPUT - AATE';\r\n",
+  "ref_doctype": "GL Entry",
+  "reference_report": null,
+  "report_name": "VAT on Sale",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "VAT on Sale",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   },
+   {
+    "parent": "VAT on Sale",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "VAT on Sale",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "VAT on Sale",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{}",
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-05-29 19:34:50.638783",
+  "module": "Accounts",
+  "name": "VAT - Output Summary",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \n    YEAR(gl_entry.posting_date) AS year,\n    MONTH(gl_entry.posting_date) AS month,\n    SUM(gl_entry.debit) AS total_debit,\n    SUM(gl_entry.credit) AS total_credit,\n    SUM(gl_entry.debit - gl_entry.credit) AS net_vat_debit_minus_credit,\n    SUM(gl_entry.credit - gl_entry.debit) AS net_vat_credit_minus_debit\nFROM\n    `tabGL Entry` AS gl_entry\nJOIN\n    `tabAccount` AS account ON gl_entry.account = account.name\nWHERE\n    gl_entry.is_cancelled = 0\n    AND account.parent_account = 'VAT OUTPUT - AATE'\nGROUP BY \n    YEAR(gl_entry.posting_date),\n    MONTH(gl_entry.posting_date)\nORDER BY \n    year, month;\n",
+  "ref_doctype": "GL Entry",
+  "reference_report": null,
+  "report_name": "VAT - Output Summary",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "VAT - Output Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   },
+   {
+    "parent": "VAT - Output Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "VAT - Output Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Vice President"
+   },
+   {
+    "parent": "VAT - Output Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BOD"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
   "is_standard": "Yes",
   "javascript": null,
   "json": null,
@@ -12325,52 +12881,6 @@
   "filters": [],
   "is_standard": "Yes",
   "javascript": null,
-  "json": "{\"add_total_row\": 0, \"sort_by\": \"Serial No.modified\", \"sort_order\": \"desc\", \"sort_by_next\": null, \"filters\": [[\"Serial No\", \"delivery_document_type\", \"in\", [\"Delivery Note\", \"Sales Invoice\"]], [\"Serial No\", \"warehouse\", \"=\", \"\"]], \"sort_order_next\": \"desc\", \"columns\": [[\"name\", \"Serial No\"], [\"item_code\", \"Serial No\"], [\"warranty_expiry_date\", \"Serial No\"], [\"warranty_period\", \"Serial No\"], [\"maintenance_status\", \"Serial No\"], [\"purchase_document_no\", \"Serial No\"], [\"purchase_date\", \"Serial No\"], [\"supplier\", \"Serial No\"], [\"supplier_name\", \"Serial No\"], [\"delivery_document_no\", \"Serial No\"], [\"delivery_date\", \"Serial No\"], [\"customer\", \"Serial No\"], [\"customer_name\", \"Serial No\"], [\"item_name\", \"Serial No\"], [\"description\", \"Serial No\"], [\"item_group\", \"Serial No\"], [\"brand\", \"Serial No\"]]}",
-  "letter_head": null,
-  "modified": "2017-02-24 20:01:53.097456",
-  "module": "Stock",
-  "name": "Serial No Warranty Expiry",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "prepared_report": 0,
-  "query": null,
-  "ref_doctype": "Serial No",
-  "reference_report": null,
-  "report_name": "Serial No Warranty Expiry",
-  "report_script": null,
-  "report_type": "Report Builder",
-  "roles": [
-   {
-    "parent": "Serial No Warranty Expiry",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "Item Manager"
-   },
-   {
-    "parent": "Serial No Warranty Expiry",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "Stock Manager"
-   },
-   {
-    "parent": "Serial No Warranty Expiry",
-    "parentfield": "roles",
-    "parenttype": "Report",
-    "role": "Stock User"
-   }
-  ]
- },
- {
-  "add_total_row": 0,
-  "columns": [],
-  "disable_prepared_report": 0,
-  "disabled": 0,
-  "docstatus": 0,
-  "doctype": "Report",
-  "filters": [],
-  "is_standard": "Yes",
-  "javascript": null,
   "json": "{\"add_total_row\": 0, \"sort_by\": \"Serial No.modified\", \"sort_order\": \"desc\", \"sort_by_next\": null, \"filters\": [[\"Serial No\", \"delivery_document_type\", \"in\", [\"Delivery Note\", \"Sales Invoice\"]], [\"Serial No\", \"warehouse\", \"=\", \"\"]], \"sort_order_next\": \"desc\", \"columns\": [[\"name\", \"Serial No\"], [\"item_code\", \"Serial No\"], [\"amc_expiry_date\", \"Serial No\"], [\"maintenance_status\", \"Serial No\"], [\"delivery_document_no\", \"Serial No\"], [\"customer\", \"Serial No\"], [\"customer_name\", \"Serial No\"], [\"item_name\", \"Serial No\"], [\"description\", \"Serial No\"], [\"item_group\", \"Serial No\"], [\"brand\", \"Serial No\"]]}",
   "letter_head": null,
   "modified": "2017-02-24 20:02:00.706889",
@@ -12401,6 +12911,52 @@
    },
    {
     "parent": "Serial No Service Contract Expiry",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": "{\"add_total_row\": 0, \"sort_by\": \"Serial No.modified\", \"sort_order\": \"desc\", \"sort_by_next\": null, \"filters\": [[\"Serial No\", \"delivery_document_type\", \"in\", [\"Delivery Note\", \"Sales Invoice\"]], [\"Serial No\", \"warehouse\", \"=\", \"\"]], \"sort_order_next\": \"desc\", \"columns\": [[\"name\", \"Serial No\"], [\"item_code\", \"Serial No\"], [\"warranty_expiry_date\", \"Serial No\"], [\"warranty_period\", \"Serial No\"], [\"maintenance_status\", \"Serial No\"], [\"purchase_document_no\", \"Serial No\"], [\"purchase_date\", \"Serial No\"], [\"supplier\", \"Serial No\"], [\"supplier_name\", \"Serial No\"], [\"delivery_document_no\", \"Serial No\"], [\"delivery_date\", \"Serial No\"], [\"customer\", \"Serial No\"], [\"customer_name\", \"Serial No\"], [\"item_name\", \"Serial No\"], [\"description\", \"Serial No\"], [\"item_group\", \"Serial No\"], [\"brand\", \"Serial No\"]]}",
+  "letter_head": null,
+  "modified": "2017-02-24 20:01:53.097456",
+  "module": "Stock",
+  "name": "Serial No Warranty Expiry",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Serial No",
+  "reference_report": null,
+  "report_name": "Serial No Warranty Expiry",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "parent": "Serial No Warranty Expiry",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Item Manager"
+   },
+   {
+    "parent": "Serial No Warranty Expiry",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "Serial No Warranty Expiry",
     "parentfield": "roles",
     "parenttype": "Report",
     "role": "Stock User"
@@ -13039,9 +13595,9 @@
   "javascript": null,
   "json": null,
   "letter_head": null,
-  "modified": "2020-06-24 17:16:40.251116",
+  "modified": "2020-06-24 17:16:13.307053",
   "module": "Education",
-  "name": "Absent Student Report",
+  "name": "Student Monthly Attendance Sheet",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
@@ -13049,7 +13605,7 @@
   "query": null,
   "ref_doctype": "Student Attendance",
   "reference_report": null,
-  "report_name": "Absent Student Report",
+  "report_name": "Student Monthly Attendance Sheet",
   "report_script": null,
   "report_type": "Script Report",
   "roles": []
@@ -13066,9 +13622,9 @@
   "javascript": null,
   "json": null,
   "letter_head": null,
-  "modified": "2020-06-24 17:16:13.307053",
+  "modified": "2020-06-24 17:16:40.251116",
   "module": "Education",
-  "name": "Student Monthly Attendance Sheet",
+  "name": "Absent Student Report",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
@@ -13076,7 +13632,7 @@
   "query": null,
   "ref_doctype": "Student Attendance",
   "reference_report": null,
-  "report_name": "Student Monthly Attendance Sheet",
+  "report_name": "Absent Student Report",
   "report_script": null,
   "report_type": "Script Report",
   "roles": []
