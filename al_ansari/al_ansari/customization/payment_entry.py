@@ -33,14 +33,14 @@ def validate_reference_details(doc,method):
 	for rec1 in doc.references_details:
 		total_detail_reference_amount += rec1.allocated_amount
 
-	print("total_reference_amount", total_reference_amount)
-	print("total_detail_reference_amount", total_detail_reference_amount)
+	# print("total_reference_amount", total_reference_amount)
+	# print("total_detail_reference_amount", total_detail_reference_amount)
 
-	if total_reference_amount > doc.paid_amount: 
-		frappe.throw("Cannot Allocate More amount from Paid Amount")
+	# if total_reference_amount > doc.paid_amount: 
+	# 	frappe.throw("Cannot Allocate More amount from Paid Amount")
 
-	if total_detail_reference_amount > doc.paid_amount:
-		frappe.throw("Cannot Allocate More amount from Paid Amount")
+	# if total_detail_reference_amount > doc.paid_amount:
+	# 	frappe.throw("Cannot Allocate More amount from Paid Amount")
 
 	if len(doc.references)>0 and len(doc.references_details) > 0 :
 		if doc.references:
