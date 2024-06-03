@@ -11758,6 +11758,76 @@
   "docstatus": 0,
   "doctype": "Report",
   "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"columns\":[{\"label\":\"Posting Date\",\"fieldname\":\"posting_date\",\"fieldtype\":\"Date\",\"options\":null,\"width\":90,\"id\":\"posting_date\",\"name\":\"Posting Date\",\"editable\":false},{\"label\":\"Supplier\",\"fieldname\":\"party\",\"fieldtype\":\"Link\",\"options\":\"Supplier\",\"width\":180,\"id\":\"party\",\"name\":\"Supplier\",\"editable\":false,\"compareValue\":null},{\"fieldname\":\"supplier_name\",\"field\":\"supplier_name\",\"fieldtype\":\"Data\",\"label\":\"Supplier Name\",\"insert_after_index\":1,\"link_field\":\"party\",\"doctype\":\"Supplier\",\"width\":100,\"id\":\"supplier_name\",\"name\":\"Supplier Name\",\"editable\":false,\"compareValue\":null},{\"label\":\"Payable Account\",\"fieldname\":\"party_account\",\"fieldtype\":\"Link\",\"options\":\"Account\",\"width\":180,\"id\":\"party_account\",\"name\":\"Payable Account\",\"editable\":false,\"compareValue\":null},{\"label\":\"Cost Center\",\"fieldname\":\"cost_center\",\"fieldtype\":\"Data\",\"options\":null,\"width\":120,\"id\":\"cost_center\",\"name\":\"Cost Center\",\"editable\":false,\"compareValue\":null},{\"label\":\"Voucher Type\",\"fieldname\":\"voucher_type\",\"fieldtype\":\"Data\",\"options\":null,\"width\":120,\"id\":\"voucher_type\",\"name\":\"Voucher Type\",\"editable\":false,\"compareValue\":null},{\"label\":\"Voucher No\",\"fieldname\":\"voucher_no\",\"fieldtype\":\"Dynamic Link\",\"options\":\"voucher_type\",\"width\":180,\"id\":\"voucher_no\",\"name\":\"Voucher No\",\"editable\":false,\"compareValue\":null},{\"label\":\"Due Date\",\"fieldname\":\"due_date\",\"fieldtype\":\"Date\",\"options\":null,\"width\":90,\"id\":\"due_date\",\"name\":\"Due Date\",\"editable\":false},{\"label\":\"Bill No\",\"fieldname\":\"bill_no\",\"fieldtype\":\"Data\",\"options\":null,\"width\":120,\"id\":\"bill_no\",\"name\":\"Bill No\",\"editable\":false,\"compareValue\":null},{\"label\":\"Bill Date\",\"fieldname\":\"bill_date\",\"fieldtype\":\"Date\",\"options\":null,\"width\":90,\"id\":\"bill_date\",\"name\":\"Bill Date\",\"editable\":false},{\"label\":\"Invoiced Amount\",\"fieldname\":\"invoiced\",\"fieldtype\":\"Currency\",\"options\":\"currency\",\"width\":120,\"id\":\"invoiced\",\"name\":\"Invoiced Amount\",\"editable\":false,\"compareValue\":null},{\"label\":\"Paid Amount\",\"fieldname\":\"paid\",\"fieldtype\":\"Currency\",\"options\":\"currency\",\"width\":120,\"id\":\"paid\",\"name\":\"Paid Amount\",\"editable\":false,\"compareValue\":null},{\"label\":\"Debit Note\",\"fieldname\":\"credit_note\",\"fieldtype\":\"Currency\",\"options\":\"currency\",\"width\":120,\"id\":\"credit_note\",\"name\":\"Debit Note\",\"editable\":false,\"compareValue\":null},{\"label\":\"Outstanding Amount\",\"fieldname\":\"outstanding\",\"fieldtype\":\"Currency\",\"options\":\"currency\",\"width\":120,\"id\":\"outstanding\",\"name\":\"Outstanding Amount\",\"editable\":false,\"compareValue\":null},{\"label\":\"Age (Days)\",\"fieldname\":\"age\",\"fieldtype\":\"Int\",\"options\":null,\"width\":80,\"id\":\"age\",\"name\":\"Age (Days)\",\"editable\":false,\"compareValue\":null},{\"label\":\"Currency\",\"fieldname\":\"currency\",\"fieldtype\":\"Link\",\"options\":\"Currency\",\"width\":80,\"id\":\"currency\",\"name\":\"Currency\",\"editable\":false,\"compareValue\":null},{\"label\":\"Supplier Group\",\"fieldname\":\"supplier_group\",\"fieldtype\":\"Link\",\"options\":\"Supplier Group\",\"width\":120,\"id\":\"supplier_group\",\"name\":\"Supplier Group\",\"editable\":false,\"compareValue\":null}]}",
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-06-02 12:05:55.367966",
+  "module": "Accounts",
+  "name": "Account Payable-Party-name",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Purchase Invoice",
+  "reference_report": "Accounts Payable - Al Ansari",
+  "report_name": "Account Payable-Party-name",
+  "report_script": null,
+  "report_type": "Custom Report",
+  "roles": [
+   {
+    "parent": "Account Payable-Party-name",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Account Payable-Party-name",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase User"
+   },
+   {
+    "parent": "Account Payable-Party-name",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   },
+   {
+    "parent": "Account Payable-Party-name",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Account Payable-Party-name",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Account Payable-Party-name",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll Manager"
+   },
+   {
+    "parent": "Account Payable-Party-name",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
   "is_standard": "Yes",
   "javascript": null,
   "json": null,
@@ -13622,33 +13692,6 @@
   "javascript": null,
   "json": null,
   "letter_head": null,
-  "modified": "2020-06-24 17:16:40.251116",
-  "module": "Education",
-  "name": "Absent Student Report",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "prepared_report": 0,
-  "query": null,
-  "ref_doctype": "Student Attendance",
-  "reference_report": null,
-  "report_name": "Absent Student Report",
-  "report_script": null,
-  "report_type": "Script Report",
-  "roles": []
- },
- {
-  "add_total_row": 0,
-  "columns": [],
-  "disable_prepared_report": 0,
-  "disabled": 0,
-  "docstatus": 0,
-  "doctype": "Report",
-  "filters": [],
-  "is_standard": "Yes",
-  "javascript": null,
-  "json": null,
-  "letter_head": null,
   "modified": "2017-02-24 20:16:50.550242",
   "module": "HR",
   "name": "Monthly Attendance Sheet",
@@ -13682,6 +13725,33 @@
     "role": "HR Manager"
    }
   ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2020-06-24 17:16:40.251116",
+  "module": "Education",
+  "name": "Absent Student Report",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Student Attendance",
+  "reference_report": null,
+  "report_name": "Absent Student Report",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": []
  },
  {
   "add_total_row": 1,

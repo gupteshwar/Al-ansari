@@ -743,7 +743,7 @@ def fetch_detailed_entries(doc):
 				bifurcated_cc = 1
 			elif len(bifurcated_cost_center)==0 and len(std_cost_center)>0:	
 				bifurcated_cc = 0
-	ref_details = allocate_paid_amount(doc,ref_details)
+			ref_details = allocate_paid_amount(doc,ref_details)
 
 	return ref_details,bifurcated_cc
 		
@@ -802,12 +802,11 @@ def allocate_paid_amount(doc,ref_details):
 				i['outstanding'] = i['amount'] or 0
 
 			for re in references:
-				print(re)
 				for update_i in ref:
 					if update_i['reference_name'] == re['reference_name'] and update_i['custom_cost_center']:
-						if paid_amount > update_i['outstanding']:
-							update_i['allocated_amount'] = update_i['outstanding']
-							paid_amount = paid_amount - update_i['outstanding']
+						if paid_amount > re['allocated_amount']:
+							update_i['allocated_amount'] = re['allocated_amount']
+							paid_amount = paid_amount - re['allocated_amount']
 						else:
 							update_i['allocated_amount'] = paid_amount
 							paid_amount = 0
