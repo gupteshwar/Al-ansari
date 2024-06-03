@@ -1819,7 +1819,7 @@
   "doctype": "Workflow",
   "document_type": "Expense Claim",
   "is_active": 1,
-  "modified": "2024-05-27 10:49:54.418804",
+  "modified": "2024-05-30 15:08:10.002917",
   "name": "Expense Claim",
   "override_status": 0,
   "parent": null,
@@ -1841,7 +1841,7 @@
     "update_value": "Draft"
    },
    {
-    "allow_edit": "Line Manager",
+    "allow_edit": "HOD",
     "doc_status": "0",
     "is_optional_state": 0,
     "message": null,
@@ -1862,12 +1862,12 @@
     "parent": "Expense Claim",
     "parentfield": "states",
     "parenttype": "Workflow",
-    "state": "Approved by Line Manager",
+    "state": "Requested",
     "update_field": null,
-    "update_value": "Approved by Line Manager"
+    "update_value": "Requested"
    },
    {
-    "allow_edit": "System Manager",
+    "allow_edit": "Accounts Manager",
     "doc_status": "0",
     "is_optional_state": 0,
     "message": null,
@@ -1880,20 +1880,7 @@
     "update_value": "Approved"
    },
    {
-    "allow_edit": "Vice President",
-    "doc_status": "0",
-    "is_optional_state": 0,
-    "message": null,
-    "next_action_email_template": null,
-    "parent": "Expense Claim",
-    "parentfield": "states",
-    "parenttype": "Workflow",
-    "state": "Submitted to VP",
-    "update_field": null,
-    "update_value": "Submitted to VP"
-   },
-   {
-    "allow_edit": "Accounts Manager",
+    "allow_edit": "System Manager",
     "doc_status": "1",
     "is_optional_state": 0,
     "message": null,
@@ -1921,9 +1908,9 @@
    {
     "action": "Approve",
     "allow_self_approval": 1,
-    "allowed": "Line Manager",
-    "condition": null,
-    "next_state": "Approved by Line Manager",
+    "allowed": "Expense Approver",
+    "condition": "doc.total_claimed_amount < 100",
+    "next_state": "Approved",
     "parent": "Expense Claim",
     "parentfield": "transitions",
     "parenttype": "Workflow",
@@ -1932,24 +1919,24 @@
    {
     "action": "Approve",
     "allow_self_approval": 1,
-    "allowed": "Expense Approver",
+    "allowed": "HOD",
     "condition": "doc.total_claimed_amount < 100",
     "next_state": "Approved",
     "parent": "Expense Claim",
     "parentfield": "transitions",
     "parenttype": "Workflow",
-    "state": "Approved by Line Manager"
+    "state": "Requested"
    },
    {
-    "action": "Submit",
+    "action": "Approve",
     "allow_self_approval": 1,
-    "allowed": "Expense Approver",
-    "condition": "doc.total_claimed_amount >= 100",
-    "next_state": "Submitted to VP",
+    "allowed": "Vice President",
+    "condition": "",
+    "next_state": "Approved",
     "parent": "Expense Claim",
     "parentfield": "transitions",
     "parenttype": "Workflow",
-    "state": "Approved by Line Manager"
+    "state": "Requested"
    },
    {
     "action": "Approve",
@@ -1960,12 +1947,12 @@
     "parent": "Expense Claim",
     "parentfield": "transitions",
     "parenttype": "Workflow",
-    "state": "Submitted to VP"
+    "state": "Requested"
    },
    {
     "action": "Submit",
     "allow_self_approval": 1,
-    "allowed": "Accounts Manager",
+    "allowed": "Accounts User",
     "condition": null,
     "next_state": "Submitted",
     "parent": "Expense Claim",
