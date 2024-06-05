@@ -20,6 +20,8 @@ from erpnext.accounts.utils import get_account_currency
 
 
 def validate_reference_details(doc,method):
+	if len(doc.references_details)==0 and not doc.cost_center:
+		pass
 	if len(doc.references)>0 and len(doc.references_details)==0 and doc.is_new !=1:
 		frappe.throw("Please click the Get Detailed Entries button to proceed")
 	# else:
