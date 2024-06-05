@@ -17,18 +17,28 @@ def submit_consign_tracking(doc):
 	items_data = frappe.get_doc("Purchase Order", doc['purchase_order_reference'])
       	
 	print(items_data.items)  
-	consign_doc = frappe.get_doc({
-	"doctype":"Consignment Tracking",
-	"purchase_order_reference":doc['purchase_order_reference'],
-	"shipper":doc['shipper'],
-	"shipper_name":doc['shipper_name'],
-	"type_of_shipment":doc['type_of_shipment'],
-	"container_number":doc['container_number'],
-	"actual_date_of_shipment":doc['actual_date_of_shipment'],
-	"expected_arrival_date":doc['expected_arrival_date'],
-	})
-	consign_doc.save(ignore_permissions=True)
-	consign_doc.items = items_data.items
+	# consign_doc = frappe.get_doc({
+	# "doctype":"Consignment Tracking",
+	# "purchase_order_reference":doc['purchase_order_reference'],
+	# "shipper":doc['shipper'],
+	# "shipper_name":doc['shipper_name'],
+	# "type_of_shipment":doc['type_of_shipment'],
+	# "container_number":doc['container_number'],
+	# "actual_date_of_shipment":doc['actual_date_of_shipment'],
+	# "expected_arrival_date":doc['expected_arrival_date'],
+	# })
+	x = items_data.items
+	consign_doc = frappe.new_doc("Consignment Tracking")
+	consign_doc.purchase_order_reference = doc['purchase_order_reference']
+	consign_doc.shipper = doc['shipper']
+	consign_doc.shipper_name = doc['shipper_name']
+	consign_doc.type_of_shipment = doc['type_of_shipment']
+	consign_doc.container_number = doc['container_number']
+	consign_doc.actual_date_of_shipment = doc['actual_date_of_shipment']
+	consign_doc.expected_arrival_date = doc['expected_arrival_date']
+
+	# consign_doc.save(ignore_permissions=True)
+	consign_doc.items = x
 	consign_doc.save(ignore_permissions=True)
 
 	return consign_doc	
