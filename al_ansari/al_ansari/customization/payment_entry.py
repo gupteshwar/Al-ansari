@@ -756,11 +756,12 @@ def fetch_detailed_entries(doc):
 def allocate_paid_amount(doc,ref_details):
 	paid_amount = doc.get('paid_amount')
 	references = doc.get('references')
+	
 	print(ref_details)
 	print("ref_details")
 	for ref in ref_details:
 		for i in ref:
-			print(i)
+			print(i,"---")
 			i['outstanding'] = i['amount'] or 0
 			part_payments = frappe.db.sql("""
 							select
@@ -803,15 +804,40 @@ def allocate_paid_amount(doc,ref_details):
 			else:
 				i['outstanding'] = i['amount'] or 0
 
+			# allocated_amt = 0
+			# for re1 in references:
+			# 	allocated_amt += re1["allocated_amount"]
+
 			for re in references:
+				allocated_amt = re["allocated_amount"]
 				for update_i in ref:
+					print(update_i, "-----------")
 					if update_i['reference_name'] == re['reference_name'] and update_i['custom_cost_center']:
-						if paid_amount > re['allocated_amount']:
-							update_i['allocated_amount'] = re['allocated_amount']
-							paid_amount = paid_amount - re['allocated_amount']
+						# print(ref['outstanding'])
+						# print("-----------")
+						# print(allocated_amt)
+						if allocated_amt > update_i["amount"]:
+							update_i['allocated_amount'] = update_i["amount"]
+							allocated_amt = allocated_amt - update_i["amount"]
 						else:
-							update_i['allocated_amount'] = paid_amount
-							paid_amount = 0
+							update_i['allocated_amount'] = allocated_amt
+							allocated_amt = 0
+			# for re in references:
+			# 	for update_i in ref:
+			# 		# print(update_i['reference_name'])
+			# 		# print(update_i['custom_cost_center'])
+			# 		# print('---------------')
+			# 		if update_i['reference_name'] == re['reference_name'] and update_i['custom_cost_center']:
+			# 			print(re['allocated_amount'])
+			# 			print(paid_amount)
+			# 			print("----------")
+			# 			if paid_amount >= re['allocated_amount']:
+			# 				print("--------------")
+			# 				update_i['allocated_amount'] = i['amount']
+			# 				paid_amount = paid_amount - i['amount']
+			# 			else:
+			# 				update_i['allocated_amount'] = paid_amount
+			# 				paid_amount = 0
 
 		# if paid_amount > ref_details[ref]['amount']:
 		# 	ref_details[0][ref]['allocated_amount'] = ref_details[0][ref]['amount']
