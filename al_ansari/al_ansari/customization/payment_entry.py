@@ -733,6 +733,8 @@ def fetch_detailed_entries(doc):
 
 			data, bifurcate_cost_center = get_item_reference_details(ref.get('reference_doctype'),ref.get('reference_name'))
 
+			print(data, "------------data")
+			print(bifurcate_cost_center, "--------------bcc")
 			ref_details.append(data)
 			if bifurcate_cost_center == 1:
 				bifurcated_cost_center.append(bifurcate_cost_center)
@@ -809,7 +811,7 @@ def allocate_paid_amount(doc,ref_details):
 			# 	allocated_amt += re1["allocated_amount"]
 
 			for re in references:
-				allocated_amt = re["allocated_amount"]
+				allocated_amt = re["allocated_amount"] if re["allocated_amount"] else 0
 				for update_i in ref:
 					print(update_i, "-----------")
 					if update_i['reference_name'] == re['reference_name'] and update_i['custom_cost_center']:
