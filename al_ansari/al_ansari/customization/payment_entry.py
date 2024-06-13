@@ -779,7 +779,7 @@ def allocate_paid_amount(doc,ref_details):
 								and per.custom_cost_center = '{1}'
 								and pe.docstatus = 1
 								and pe.name != '{2}'
-							""".format(i['reference_name'], i['custom_cost_center'],doc['name']))
+							""".format(i['reference_name'].replace("'","''"), i['custom_cost_center'],doc['name']))
 			# if part_payments and part_payments[0][0] != None:
 			# 	if i['amount'] == part_payments[0][0]:
 			# 		i['allocated_amount'] = 0
@@ -887,7 +887,7 @@ def validate_outstanding_amount(doc, method):
 									and per.custom_cost_center = '{}'
 									and pe.party = '{}'
 									and pe.docstatus != 2
-							""".format(i.reference_name, i.custom_cost_center, doc.party))
+							""".format(i.reference_name.replace("'","''"), i.custom_cost_center, doc.party))
 		if outstanding_amount and (outstanding_amount[0][0] != None and outstanding_amount[0][1] != None):
 			i.outstanding = outstanding_amount[0][0] - outstanding_amount[0][1]
 
