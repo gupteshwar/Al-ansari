@@ -7083,7 +7083,7 @@
   "name": "Purchase Order-purchase_type",
   "no_copy": 0,
   "non_negative": 0,
-  "options": "Import\nLocal",
+  "options": "Import\nLocal\nSite Purchase\nWork Order",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
