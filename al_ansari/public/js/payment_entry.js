@@ -200,7 +200,7 @@ frappe.ui.form.on("Payment Entry", {
             cur_frm.doc.references_details.forEach(function (rd) {
                 console.log("----------1", rd.allocated_amount)
                 console.log("----------2", rd.outstanding.toFixed(3))
-                if ((rd.allocated_amount > rd.outstanding.toFixed(3)) || (rd.allocated_amount<0) ){
+                if ((rd.allocated_amount.toFixed(3) > rd.outstanding.toFixed(3)) || (rd.allocated_amount<0) ){
                     rd_issue.push(rd.idx)
                 }
             })
