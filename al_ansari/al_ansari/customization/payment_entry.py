@@ -720,8 +720,11 @@ def fetch_detailed_entries(doc):
 			# return ref_details,bifurcated_cc
 
 		elif ref.get('reference_doctype') == 'Expense Claim':
-
-			cc = doc.get('cost_center')
+			print("*--------*")
+			print(ref)
+			print(type(doc))
+			cc = frappe.get_value("Expense Claim", ref.get('reference_name'), "cost_center")
+			# cc = doc.get('cost_center')
 			bifurcated_cc = 1
 			ref_details.append([{'reference_doctype':ref.get('reference_doctype'),'reference_name':ref.get('reference_name'),'custom_cost_center':cc,'amount':ref.get('total_amount'),'outstanding':ref.get('outstanding_amount'),'allocated_amount':ref.get('allocated_amount')}])
 
@@ -749,6 +752,8 @@ def fetch_detailed_entries(doc):
 				bifurcated_cc = 0
 			ref_details = allocate_paid_amount(doc,ref_details)
 
+	print("-------------------ref details")
+	print(ref_details)
 	return ref_details,bifurcated_cc
 		
 
