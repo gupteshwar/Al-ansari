@@ -12,7 +12,8 @@
   "column_break_4",
   "amount",
   "outstanding",
-  "allocated_amount"
+  "allocated_amount",
+  "exchange_rate"
  ],
  "fields": [
   {
@@ -30,6 +31,7 @@
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Total Amount",
+   "precision": "5",
    "read_only": 1
   },
   {
@@ -53,7 +55,8 @@
    "fieldname": "allocated_amount",
    "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Allocated Amount"
+   "label": "Allocated Amount",
+   "precision": "5"
   },
   {
    "columns": 2,
@@ -61,17 +64,23 @@
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Outstanding",
+   "precision": "5",
    "read_only": 1
   },
   {
    "fieldname": "column_break_4",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "label": "Exchange Rate"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-06-12 13:33:15.919692",
+ "modified": "2024-07-05 12:39:04.839613",
  "modified_by": "Administrator",
  "module": "Al Ansari",
  "name": "Payment Entry Reference Item",
