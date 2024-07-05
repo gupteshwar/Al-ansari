@@ -199,11 +199,15 @@ frappe.ui.form.on("Payment Entry", {
             var rd_issue =[]
             cur_frm.doc.references_details.forEach(function (rd) {
                 console.log("----------1", rd.allocated_amount)
-                console.log("----------2", rd.outstanding.toFixed(3))
-                if ((rd.allocated_amount.toFixed(3) > rd.outstanding.toFixed(3)) || (rd.allocated_amount<0) ){
+                console.log("----------2", rd.outstanding)
+                console.log("----------3", (rd.allocated_amount > rd.outstanding))
+                console.log("----------4", (rd.allocated_amount<0))
+
+                if ((rd.allocated_amount > rd.outstanding) || (rd.allocated_amount<0) ){
                     rd_issue.push(rd.idx)
                 }
             })
+            console.log(rd_issue)
             if (rd_issue.length >0){
                     frappe.throw(__("The following records in reference details table has issue with allocated amount {0}",[rd_issue]))
                 }
@@ -273,6 +277,7 @@ function fetch_detailed_entries(frm) {
                                 childTable.reference_doctype = r.reference_doctype
                                 childTable.reference_name = r.reference_name
                                 childTable.allocated_amount = r.allocated_amount || 0
+                                childTable.exchange_rate = r.exchange_rate
                             })
                             // var childTable = cur_frm.add_child("references_details");
                             // childTable.custom_cost_center = row.custom_cost_center

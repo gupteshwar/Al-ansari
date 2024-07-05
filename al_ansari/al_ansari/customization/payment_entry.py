@@ -82,7 +82,7 @@ def validate_reference_details(doc,method):
 
 				doc.total_amount = t_amount
 				doc.total_allocated = t_allocated
-		print("====================",t_allocated,allocated_amount_r)
+	
 		# if round(t_allocated, 2) != round(allocated_amount_r,2):
 		# 	frappe.throw("The total allocated amount should be same in both the table and also as paid amount")
 		
@@ -707,26 +707,33 @@ def fetch_detailed_entries(doc):
 	except:
 		references_details = []
 
-	print(doc['references'])
+
 	references = doc['references']
 	for ref in references:
+		
 		if ref.get('reference_doctype') == 'Employee Advance':
 
 			cc = doc.get('cost_center')
 			bifurcated_cc = 1
-			ref_details.append([{'reference_doctype':ref.get('reference_doctype'),'reference_name':ref.get('reference_name'),'custom_cost_center':cc,'amount':ref.get('total_amount'),'outstanding':ref.get('outstanding_amount'),'allocated_amount':ref.get('allocated_amount')}])
+			ref_details.append([{
+				'reference_doctype':ref.get('reference_doctype'),
+				'reference_name':ref.get('reference_name'),
+				'custom_cost_center':cc,
+				'amount':ref.get('total_amount'),
+				'outstanding':ref.get('outstanding_amount'),
+				'allocated_amount':ref.get('allocated_amount'),
+				'exchange_rate':ref.get('exchange_rate'),
+			}])
 			# print('\n\n\n\n\n\n>>>>>>>>>>qqqref_details',ref_details,bifurcated_cc)
 
 			# return ref_details,bifurcated_cc
 
 		elif ref.get('reference_doctype') == 'Expense Claim':
-			print("*--------*")
-			print(ref)
-			print(type(doc))
+			
 			cc = frappe.get_value("Expense Claim", ref.get('reference_name'), "cost_center")
 			# cc = doc.get('cost_center')
 			bifurcated_cc = 1
-			ref_details.append([{'reference_doctype':ref.get('reference_doctype'),'reference_name':ref.get('reference_name'),'custom_cost_center':cc,'amount':ref.get('total_amount'),'outstanding':ref.get('outstanding_amount'),'allocated_amount':ref.get('allocated_amount')}])
+			ref_details.append([{'reference_doctype':ref.get('reference_doctype'),'reference_name':ref.get('reference_name'),'custom_cost_center':cc,'amount':ref.get('total_amount'),'outstanding':ref.get('outstanding_amount'),'allocated_amount':ref.get('allocated_amount'),'exchange_rate':ref.get('exchange_rate'),}])
 
 
 			# return ref_details,bifurcated_cc
@@ -736,8 +743,7 @@ def fetch_detailed_entries(doc):
 
 			data, bifurcate_cost_center = get_item_reference_details(ref.get('reference_doctype'),ref.get('reference_name'))
 
-			print(data, "------------data")
-			print(bifurcate_cost_center, "--------------bcc")
+			
 			ref_details.append(data)
 			if bifurcate_cost_center == 1:
 				bifurcated_cost_center.append(bifurcate_cost_center)
@@ -752,8 +758,7 @@ def fetch_detailed_entries(doc):
 				bifurcated_cc = 0
 			ref_details = allocate_paid_amount(doc,ref_details)
 
-	print("-------------------ref details")
-	print(ref_details)
+	
 	return ref_details,bifurcated_cc
 		
 
@@ -764,11 +769,10 @@ def allocate_paid_amount(doc,ref_details):
 	paid_amount = doc.get('paid_amount')
 	references = doc.get('references')
 	
-	print(ref_details)
-	print("ref_details")
+
 	for ref in ref_details:
 		for i in ref:
-			print(i,"---")
+			
 			i['outstanding'] = i['amount'] or 0
 			part_payments = frappe.db.sql("""
 							select
@@ -818,7 +822,7 @@ def allocate_paid_amount(doc,ref_details):
 			for re in references:
 				allocated_amt = re["allocated_amount"] if re["allocated_amount"] else 0
 				for update_i in ref:
-					print(update_i, "-----------")
+					
 					if update_i['reference_name'] == re['reference_name'] and update_i['custom_cost_center']:
 						# print(ref['outstanding'])
 						# print("-----------")
@@ -852,7 +856,11 @@ def allocate_paid_amount(doc,ref_details):
 		# else:
 		# 	ref_details[ref]['allocated_amount'] = paid_amount
 		# 	break
-	print(ref_details)
+			for ii in references:
+				if ii['reference_name'] == re['reference_name']:
+					i["exchange_rate"] = ii["exchange_rate"]
+
+	
 	return ref_details
 
 @frappe.whitelist()
