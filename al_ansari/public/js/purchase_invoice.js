@@ -1,5 +1,7 @@
 frappe.ui.form.on('Purchase Invoice',{
     before_save:function (frm) {
+        frm.set_df_property('cost_center', 'read_only', 0);
+        frm.set_df_property('project', 'read_only', 0);
         // validate_posting_date(frm)
     },
     onload_post_render:function(frm) {
@@ -27,6 +29,8 @@ frappe.ui.form.on('Purchase Invoice',{
         hide_child_table_buttons(event,frm)
     },
     onload: function(frm) {
+        frm.set_df_property('cost_center', 'read_only', 0);
+        frm.set_df_property('project', 'read_only', 0);
         if(frappe.user.has_role("Accounts Manager") || frappe.user.has_role("System Manager")){
             frm.set_df_property('set_posting_time', 'read_only', 0)
         }else{
