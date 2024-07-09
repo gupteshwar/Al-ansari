@@ -15,19 +15,6 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
-  "dt": "Earned Leave Deductions",
-  "enabled": 1,
-  "modified": "2023-09-05 12:07:26.031973",
-  "name": "Earned Leave Deductions-Form",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "script": "frappe.ui.form.on('Earned Leave Deductions', {\n    get_employees(frm) {\n        frm.set_value('eliminate_zero_deductions',0)\n    },\n    after_save(frm) {\n        if(frm.doc.eliminate_zero_deductions === 0) {\n            eliminate_zero_deduction(frm)\n            frm.set_value('eliminate_zero_deductions',1)\n            frm.save()\n        } \n    }\n})\n\nfunction eliminate_zero_deduction(frm) {\n    console.log(\"eliminate_zero_deduction\")\n    if(frm.doc.deduction_ratio.length>0){\n\t    for(var i=frm.doc.deduction_ratio.length-1;i>=0;i--){\n\t        if(frm.doc.deduction_ratio[i].to_be_deducted === 0) {\n\t             cur_frm.get_field(\"deduction_ratio\").grid.grid_rows[i].remove();\n\t        }\n\t    }\n\t}\n}",
-  "view": "Form"
- },
- {
-  "docstatus": 0,
-  "doctype": "Client Script",
   "dt": "HelpTicket",
   "enabled": 1,
   "modified": "2023-06-01 10:02:37.160050",
@@ -101,6 +88,58 @@
   "parentfield": null,
   "parenttype": null,
   "script": "frappe.ui.form.on(\"Stock Entry\", {\r\n  validate: function(frm) {\r\n    console.log(\"Stock Entry Script is Running\");\r\n\r\n    // Check if stock_entry_type is \"Material Issue\"\r\n    if (frm.doc.stock_entry_type === \"Material Issue\") {\r\n\r\n      // Iterate over the child table `items` (which is Stock Entry Detail)\r\n      frm.doc.items.forEach((item) => {\r\n        // Set the `expense_account` field value\r\n        item.expense_account = \"E1101 - PURCHASES - PROJECTS - AATE\";\r\n      });\r\n\r\n        console.log(\"Accounts Changed\");\r\n      // Refresh the field to show updated values\r\n      frm.refresh_field(\"items\");\r\n    }\r\n  }\r\n});\r\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Earned Leave Deductions",
+  "enabled": 1,
+  "modified": "2023-09-05 12:07:26.031973",
+  "name": "Earned Leave Deductions-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Earned Leave Deductions', {\n    get_employees(frm) {\n        frm.set_value('eliminate_zero_deductions',0)\n    },\n    after_save(frm) {\n        if(frm.doc.eliminate_zero_deductions === 0) {\n            eliminate_zero_deduction(frm)\n            frm.set_value('eliminate_zero_deductions',1)\n            frm.save()\n        } \n    }\n})\n\nfunction eliminate_zero_deduction(frm) {\n    console.log(\"eliminate_zero_deduction\")\n    if(frm.doc.deduction_ratio.length>0){\n\t    for(var i=frm.doc.deduction_ratio.length-1;i>=0;i--){\n\t        if(frm.doc.deduction_ratio[i].to_be_deducted === 0) {\n\t             cur_frm.get_field(\"deduction_ratio\").grid.grid_rows[i].remove();\n\t        }\n\t    }\n\t}\n}",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Job Offer",
+  "enabled": 0,
+  "modified": "2024-06-27 16:05:39.203188",
+  "name": "Job Offer-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Job Offer', {\r\n    validate(frm) {\r\n        if (frm.doc.company == \"JKS Engineering Private Limited\") {\r\n            frm.set_value('select_print_heading', 'JKS - LetterHead');\r\n        }\r\n    }\r\n});\r\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Expense Claim",
+  "enabled": 1,
+  "modified": "2024-07-01 16:52:16.131037",
+  "name": "Expense Claim-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Expense Claim', {\r\n    cost_center(frm) {\r\n        let approver_email = '';\r\n\r\n        if (frm.doc.employee == 'E11448' || frm.doc.employee == 'E20523' ) {\r\n            // Specific logic for employee E11448\r\n            if (frm.doc.cost_center == 'BS-BUILDING SERVICES - AATE') {\r\n                approver_email = 'umesh.shamarao@alansariglobal.com';\r\n            } else if (frm.doc.cost_center == 'WW-WATER & WASTE WATER - AATE') {\r\n                approver_email = 'venu.gopal@alansariglobal.com';\r\n            }\r\n        }\r\n\r\n        if (approver_email) {\r\n            frappe.call({\r\n                method: 'frappe.client.set_value',\r\n                args: {\r\n                    doctype: 'Employee',\r\n                    name: frm.doc.employee,\r\n                    fieldname: 'expense_approver',\r\n                    value: approver_email\r\n                },\r\n                callback: function(response) {\r\n                    if (response.message) {\r\n                        frappe.show_alert({message: __('Expense approver updated'), indicator: 'green'});\r\n                    }\r\n                }\r\n            });\r\n        }\r\n    }\r\n});\r\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Attendance Request",
+  "enabled": 0,
+  "modified": "2024-07-01 14:28:37.883308",
+  "name": "Attendance Request-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Attendance Request', {\r\n    before_submit: function(frm) {\r\n        if (frm.doc.status === 'Submitted') {\r\n            let from_date = frm.doc.from_date;\r\n            let to_date = frm.doc.to_date;\r\n            let employee = frm.doc.employee;\r\n\r\n            // Get the list of dates between from_date and to_date\r\n            let dates = [];\r\n            let currentDate = new Date(from_date);\r\n            let endDate = new Date(to_date);\r\n\r\n            while (currentDate <= endDate) {\r\n                dates.push(frappe.datetime.get_today());\r\n                currentDate.setDate(currentDate.getDate() + 1);\r\n            }\r\n\r\n            // Iterate over each date and cancel the corresponding attendance records\r\n            dates.forEach(function(date) {\r\n                frappe.call({\r\n                    method: 'frappe.client.get_list',\r\n                    args: {\r\n                        doctype: 'Attendance',\r\n                        filters: {\r\n                            attendance_date: date,\r\n                            employee: employee\r\n                        },\r\n                        fields: ['name']\r\n                    },\r\n                    callback: function(response) {\r\n                        if (response.message) {\r\n                            response.message.forEach(function(attendance) {\r\n                                frappe.call({\r\n                                    method: 'frappe.client.set_value',\r\n                                    args: {\r\n                                        doctype: 'Attendance',\r\n                                        name: attendance.name,\r\n                                        fieldname: 'status',\r\n                                        value: 'Cancelled'\r\n                                    },\r\n                                    callback: function(cancelResponse) {\r\n                                        if (cancelResponse.message) {\r\n                                            frappe.show_alert({\r\n                                                message: __('Attendance for {0} on {1} has been cancelled', [employee, date]),\r\n                                                indicator: 'green'\r\n                                            });\r\n                                        }\r\n                                    }\r\n                                });\r\n                            });\r\n                        }\r\n                    }\r\n                });\r\n            });\r\n        }\r\n    }\r\n});\r\n",
   "view": "Form"
  }
 ]
