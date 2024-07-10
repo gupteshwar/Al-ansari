@@ -864,9 +864,14 @@ def allocate_paid_amount(doc,ref_details):
 	return ref_details
 
 @frappe.whitelist()
-def get_cc_deductions(doc):
+def get_cc_deductions(doc, x_account):
 	doc = json.loads(doc)
-	account = frappe.db.get_value("Company", doc.get('company'), 'exchange_gain_loss_account')
+	# print(doc)
+	# account = None
+	# if doc.deductions:
+	# 	for ii in doc.deductions:
+	# 		account = ii.account
+	account = frappe.db.get_value("Company", doc.get('company'), x_account)
 	
 	cost_center_ = []
 	for i in doc.get('references_details'):
