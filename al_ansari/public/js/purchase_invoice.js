@@ -148,7 +148,7 @@ function hide_child_table_buttons(event,frm) {
         });
         if(hasLinkedReferenceOrder == true) {
             if (event != 'rate'){
-                frm.fields_dict.items.grid.update_docfield_property("rate", "read_only", 1);
+                frm.fields_dict.items.grid.update_docfield_property("rate", "read_only", 0);
             }
 
             $('*[data-fieldname="items"]').find('.grid-download').hide();
