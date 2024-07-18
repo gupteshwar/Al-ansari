@@ -762,6 +762,14 @@ def fetch_detailed_entries(doc):
 				bifurcated_cc = 0
 			ref_details = allocate_paid_amount(doc,ref_details)
 	
+
+
+	for recs in ref_details:
+		for ref_1 in references:
+			if recs[0]['reference_name'] == ref_1.get('reference_name'):
+				recs[0]['exchange_rate'] = ref_1.get('exchange_rate')
+
+	print("--||||||||||||||||||||||||||||||--", ref_details)
 	return ref_details,bifurcated_cc
 		
 
@@ -772,8 +780,9 @@ def allocate_paid_amount(doc,ref_details):
 	paid_amount = doc.get('paid_amount')
 	references = doc.get('references')
 	
-
+	print("-----------------------9999999999999", ref_details)
 	for ref in ref_details:
+		# print("-----------------------88888888888", ref)
 		for i in ref:
 			
 			i['outstanding'] = i['amount'] or 0
@@ -861,9 +870,14 @@ def allocate_paid_amount(doc,ref_details):
 		# else:
 		# 	ref_details[ref]['allocated_amount'] = paid_amount
 		# 	break
-			for ii in references:
-				if ii['reference_name'] == re['reference_name']:
-					i["exchange_rate"] = ii["exchange_rate"]
+			# for ii in references:
+				
+			# 	if ii['reference_name'] == re['reference_name']:
+			# 		print("-----------------ii  ref name", ii['reference_name'])
+			# 		print("-----------------re  ref name", re['reference_name'])
+			# 		print("-----------------ii  rate", ii["exchange_rate"])
+			# 		print("111111")
+			# 		i["exchange_rate"] = ii["exchange_rate"]
 
 	return ref_details
 
