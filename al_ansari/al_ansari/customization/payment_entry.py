@@ -85,7 +85,11 @@ def validate_reference_details(doc,method):
 	
 		# if round(t_allocated, 2) != round(allocated_amount_r,2):
 		# 	frappe.throw("The total allocated amount should be same in both the table and also as paid amount")
-		
+	
+	for rec_1 in doc.payment_deductions:
+		for rec_2 in doc.deductions:
+			if rec_1.account == rec_2.account:
+				rec_2.cost_center = rec_1.cost_center
 
 # def check_and_allocate_amount(doc):
 # 	for ref in doc.references:
@@ -877,16 +881,20 @@ def get_cc_deductions(doc, x_account):
 	for i in doc.get('references_details'):
 		cost_center_.append({i.get('custom_cost_center'): i.get('allocated_amount')})
 	
-	max_value_cost_center = max(cost_center_[0], key=cost_center_[0].get)
+	max_value_cost_center = ""
+	# max_value_cost_center = max(cost_center_[0], key=cost_center_[0].get)
 	
 	payment_deductions_dict = []
 	amount = doc.get('difference_amount')
 	diff_amount = 0
 	for i in doc.get('references_details'):
-		if i.get('custom_cost_center') ==  max_value_cost_center:
-			payment_deductions_dict.append({'account': account, 'cost_center': i.get('custom_cost_center'), 'amount': amount})
-		else:
-			payment_deductions_dict.append({'account': account, 'cost_center': i.get('custom_cost_center'), 'amount': diff_amount})
+		cost_center_.append({i.get('custom_cost_center'): i.get('allocated_amount')})
+
+		max_value_cost_center = max(cost_center_[0], key=cost_center_[0].get)
+	# if i.get('custom_cost_center') ==  max_value_cost_center:
+	payment_deductions_dict.append({'account': account, 'cost_center': max_value_cost_center, 'amount': amount})
+	# else:
+		# payment_deductions_dict.append({'account': account, 'cost_center': i.get('custom_cost_center'), 'amount': diff_amount})
 	return payment_deductions_dict
 
 def validate_outstanding_amount(doc, method):
