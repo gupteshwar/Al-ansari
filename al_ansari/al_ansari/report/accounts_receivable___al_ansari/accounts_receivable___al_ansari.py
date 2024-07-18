@@ -532,7 +532,8 @@ class ReceivablePayableReport(object):
 				payment_entry.party_type,
 				payment_entry.posting_date as future_date,
 				ref.allocated_amount as future_amount,
-				payment_entry.reference_no as future_ref
+				payment_entry.reference_no as future_ref, 
+				payment_entry.is_pdc, payment_entry.reference_date
 			from
 				`tabPayment Entry` as payment_entry inner join `tabPayment Entry Reference` as ref
 			on
@@ -543,7 +544,7 @@ class ReceivablePayableReport(object):
 				and payment_entry.party_type = %s
 			""",
 			(self.filters.report_date, self.party_type),
-			as_dict=1,
+			as_dict=1,debug=1
 		)
 
 	def get_future_payments_from_journal_entry(self):
@@ -919,6 +920,8 @@ class ReceivablePayableReport(object):
 
 		self.add_column(label=_("Cost Center"), fieldname="cost_center", fieldtype="Data")
 		self.add_column(label=_("Voucher Type"), fieldname="voucher_type", fieldtype="Data")
+		self.add_column(label=_("Is PDC"), fieldname="is_pdc", fieldtype="Check")
+		self.add_column(label=_("Check Reference Date"), fieldname="reference_date", fieldtype="Data")
 		self.add_column(
 			label=_("Voucher No"),
 			fieldname="voucher_no",
@@ -926,6 +929,8 @@ class ReceivablePayableReport(object):
 			options="voucher_type",
 			width=180,
 		)
+
+		
 
 		if self.filters.show_remarks:
 			self.add_column(label=_("Remarks"), fieldname="remarks", fieldtype="Text", width=200),
