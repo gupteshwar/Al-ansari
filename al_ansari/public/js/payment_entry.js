@@ -185,10 +185,14 @@ frappe.ui.form.on("Payment Entry", {
         if (cur_frm.doc.references && cur_frm.doc.references.length >0 && frm.doc.bifurcate_cost_center ==1){
             var rs_issue =[]
             cur_frm.doc.references.forEach(function (rs) {
-                if ((rs.allocated_amount > rs.outstanding_amount) || (rs.allocated_amount<0) ){
+                console.log("11111111111.........", rs.allocated_amount)
+                console.log("22222222222.........", rs.outstanding_amount)
+                if ((rs.allocated_amount > rs.outstanding_amount.toFixed(3)) || (rs.allocated_amount<0) ){
                     rs_issue.push(rs.idx)
                 }
             })
+
+            console.log("rs_issue....................", rs_issue)
             if (rs_issue.length >0){
                     frappe.throw(__("The following records in reference table has issue with allocated amount {0}",[rs_issue]))
                 }
