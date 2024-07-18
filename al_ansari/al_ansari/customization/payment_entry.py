@@ -742,7 +742,7 @@ def fetch_detailed_entries(doc):
 		else:
 
 			data, bifurcate_cost_center = get_item_reference_details(ref.get('reference_doctype'),ref.get('reference_name'))
-
+			
 			
 			ref_details.append(data)
 			if bifurcate_cost_center == 1:
@@ -757,7 +757,6 @@ def fetch_detailed_entries(doc):
 			elif len(bifurcated_cost_center)==0 and len(std_cost_center)>0:	
 				bifurcated_cc = 0
 			ref_details = allocate_paid_amount(doc,ref_details)
-
 	
 	return ref_details,bifurcated_cc
 		
@@ -789,6 +788,8 @@ def allocate_paid_amount(doc,ref_details):
 								and pe.docstatus = 1
 								and pe.name != '{2}'
 							""".format(i['reference_name'].replace("'","''"), i['custom_cost_center'],doc['name']))
+			
+
 			# if part_payments and part_payments[0][0] != None:
 			# 	if i['amount'] == part_payments[0][0]:
 			# 		i['allocated_amount'] = 0
@@ -860,7 +861,6 @@ def allocate_paid_amount(doc,ref_details):
 				if ii['reference_name'] == re['reference_name']:
 					i["exchange_rate"] = ii["exchange_rate"]
 
-	
 	return ref_details
 
 @frappe.whitelist()
