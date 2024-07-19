@@ -62,7 +62,10 @@ class ReceivablePayableReport(object):
 		for row in self.data:
 			if row.get('voucher_type') == 'Payment Entry':
 				get_doc = frappe.get_doc('Payment Entry', row.get('voucher_no'))
-				row.update({'is_pdc':get_doc.is_pdc, 'reference_date':get_doc.reference_date})
+				if get_doc.is_pdc == 0:
+					row.update({'is_pdc':'No', 'reference_date':get_doc.reference_date})
+				elif get_doc.is_pdc == 1:
+					row.update({'is_pdc':'Yes', 'reference_date':get_doc.reference_date})
 
 		return self.columns, self.data, None, self.chart, None, self.skip_total_row
 

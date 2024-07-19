@@ -66,12 +66,42 @@ frappe.ui.form.on("Payment Entry", {
                 d.show();
         }     
     },
-    refresh:function(frm) {
+    refresh:function(frm, cdt, cdn) {
         if(frm.doc.docstatus == 0) {
             frm.add_custom_button(__('Get Detailed Entries'), function(){ 
                 fetch_detailed_entries(frm)     
             })
+          
         }
+        frm.add_custom_button(__('PO FIX'), function(){ 
+            frm.doc.references.forEach(function(row){
+                if (row.reference_name && row.reference_doctype) {
+                    return frappe.call({
+                        method: "erpnext.accounts.doctype.payment_entry.payment_entry.get_reference_details",
+                        args: {
+                            reference_doctype: row.reference_doctype,
+                            reference_name: row.reference_name,
+                            party_account_currency: frm.doc.payment_type=="Receive" ?
+                                frm.doc.paid_from_account_currency : frm.doc.paid_to_account_currency
+                        },
+                        callback: function(r, rt) {
+                            if(r.message) {
+                                console.log(r.message.outstanding_amount)
+                                row.outstanding_amount = r.message.outstanding_amount
+                                row.exchange_rate = r.message.exchange_rate
+                             
+                                frm.refresh_field("outstanding_amount");
+                                frm.refresh_field("exchange_rate");
+
+                                 frm.refresh_field('references')
+                            }
+                        }
+                    })
+                }
+            })
+            
+            
+        })
         frm.set_df_property('references_details','cannot_add_rows',true)
         frm.set_df_property('references_details','cannot_delete_rows',true)
 
