@@ -773,11 +773,13 @@ def fetch_detailed_entries(doc):
 			ref_details = allocate_paid_amount(doc,ref_details)
 	
 
-
-	for recs in ref_details:
+	print("Line no : 778 ::: ",ref_details)
+	for recs in ref_details[0]:
+		print("Line no : 778 ::: ",recs['reference_name'])
 		for ref_1 in references:
-			if recs[0]['reference_name'] == ref_1.get('reference_name'):
-				recs[0]['exchange_rate'] = ref_1.get('exchange_rate')
+			print("Line no : 780 ::: ",ref_1.get('reference_name'))
+			if recs['reference_name'] == ref_1.get('reference_name'):
+				recs['exchange_rate'] = ref_1.get('exchange_rate')
 
 	print("--||||||||||||||||||||||||||||||--", ref_details)
 	return ref_details,bifurcated_cc
