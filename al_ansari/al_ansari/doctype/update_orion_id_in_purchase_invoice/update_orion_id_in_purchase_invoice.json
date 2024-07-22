@@ -7,7 +7,8 @@
  "engine": "InnoDB",
  "field_order": [
   "attach_document",
-  "select_document"
+  "column_break_mj0g2",
+  "update_data"
  ],
  "fields": [
   {
@@ -16,19 +17,22 @@
    "label": "Attach Document"
   },
   {
-   "fieldname": "select_document",
-   "fieldtype": "Select",
-   "label": "Select Document",
-   "options": "Doctype"
+   "fieldname": "update_data",
+   "fieldtype": "Button",
+   "label": "Update data"
+  },
+  {
+   "fieldname": "column_break_mj0g2",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-07-19 08:47:35.208663",
+ "modified": "2024-07-19 12:49:18.451597",
  "modified_by": "Administrator",
  "module": "Al Ansari",
- "name": "PR and PI Orion ID",
+ "name": "Update Orion ID in Purchase Invoice",
  "owner": "Administrator",
  "permissions": [
   {
