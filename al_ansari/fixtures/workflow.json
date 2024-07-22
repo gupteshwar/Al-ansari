@@ -1347,7 +1347,7 @@
   "doctype": "Workflow",
   "document_type": "Expense Claim",
   "is_active": 1,
-  "modified": "2024-07-02 15:48:25.796619",
+  "modified": "2024-07-18 16:26:20.516849",
   "name": "Expense Claim",
   "override_status": 0,
   "parent": null,
@@ -1422,6 +1422,19 @@
    },
    {
     "allow_edit": "System Manager",
+    "doc_status": "1",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Expense Claim",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Submitted",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "Payroll Manager",
     "doc_status": "1",
     "is_optional_state": 0,
     "message": null,
@@ -3995,7 +4008,7 @@
   "doctype": "Workflow",
   "document_type": "Leave Application",
   "is_active": 1,
-  "modified": "2024-03-19 10:39:06.240622",
+  "modified": "2024-07-18 12:31:53.857076",
   "name": "Leave Approval 2024 - Final",
   "override_status": 0,
   "parent": null,
@@ -4018,6 +4031,19 @@
    },
    {
     "allow_edit": "HOD",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Leave Approval 2024 - Final",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Approval Pending",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "HR User",
     "doc_status": "0",
     "is_optional_state": 0,
     "message": null,
@@ -6141,10 +6167,10 @@
   "doctype": "Workflow",
   "document_type": "Employee Advance",
   "is_active": 1,
-  "modified": "2024-06-12 11:56:43.090783",
+  "modified": "2024-07-18 16:50:33.236792",
   "name": "Employee Advance",
   "override_status": 0,
-  "parent": null,
+  "parent": "Employee Advance",
   "parentfield": null,
   "parenttype": null,
   "send_email_alert": 0,
@@ -6202,8 +6228,21 @@
     "update_value": "Requested"
    },
    {
+    "allow_edit": "Payroll Manager",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Employee Advance",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Requested",
+    "update_field": null,
+    "update_value": "Requested"
+   },
+   {
     "allow_edit": "Accounts Manager",
-    "doc_status": "1",
+    "doc_status": "0",
     "is_optional_state": 0,
     "message": null,
     "next_action_email_template": null,
@@ -6212,7 +6251,20 @@
     "parenttype": "Workflow",
     "state": "Approved",
     "update_field": "approval_status",
-    "update_value": ""
+    "update_value": "Approved"
+   },
+   {
+    "allow_edit": "Accounts Manager",
+    "doc_status": "1",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Employee Advance",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Submitted",
+    "update_field": null,
+    "update_value": null
    }
   ],
   "transitions": [
@@ -6259,6 +6311,17 @@
     "parentfield": "transitions",
     "parenttype": "Workflow",
     "state": "Requested"
+   },
+   {
+    "action": "Submit",
+    "allow_self_approval": 1,
+    "allowed": "Accounts Manager",
+    "condition": null,
+    "next_state": "Submitted",
+    "parent": "Employee Advance",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Approved"
    }
   ],
   "workflow_name": "Employee Advance",
@@ -6414,6 +6477,134 @@
    }
   ],
   "workflow_name": "Stock Adjustment",
+  "workflow_state_field": "workflow_state"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow",
+  "document_type": "Credit Application",
+  "is_active": 0,
+  "modified": "2024-07-17 16:37:36.385387",
+  "name": "Credit Application - 2024",
+  "override_status": 0,
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "send_email_alert": 1,
+  "states": [
+   {
+    "allow_edit": "Sales User",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Credit Application - 2024",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Draft",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "Sales User",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Credit Application - 2024",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Requested",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "HOD",
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Credit Application - 2024",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Rejected",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "HOD",
+    "doc_status": "1",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Credit Application - 2024",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Approved",
+    "update_field": null,
+    "update_value": null
+   },
+   {
+    "allow_edit": "HOD",
+    "doc_status": "2",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Credit Application - 2024",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Cancelled",
+    "update_field": null,
+    "update_value": null
+   }
+  ],
+  "transitions": [
+   {
+    "action": "Request for Approval",
+    "allow_self_approval": 1,
+    "allowed": "Sales User",
+    "condition": null,
+    "next_state": "Requested",
+    "parent": "Credit Application - 2024",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Draft"
+   },
+   {
+    "action": "Reject",
+    "allow_self_approval": 1,
+    "allowed": "HOD",
+    "condition": null,
+    "next_state": "Rejected",
+    "parent": "Credit Application - 2024",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Requested"
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "HOD",
+    "condition": null,
+    "next_state": "Approved",
+    "parent": "Credit Application - 2024",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Rejected"
+   },
+   {
+    "action": "Cancel",
+    "allow_self_approval": 1,
+    "allowed": "HOD",
+    "condition": null,
+    "next_state": "Cancelled",
+    "parent": "Credit Application - 2024",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Approved"
+   }
+  ],
+  "workflow_name": "Credit Application - 2024",
   "workflow_state_field": "workflow_state"
  }
 ]
