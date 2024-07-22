@@ -69,12 +69,12 @@
   "doctype": "Client Script",
   "dt": "Salary Slip",
   "enabled": 1,
-  "modified": "2024-01-07 15:43:40.300744",
+  "modified": "2024-07-09 15:21:15.583503",
   "name": "Salary Slip-Form",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
-  "script": "frappe.ui.form.on(\"Salary Slip\", \"before_submit\", function (frm) {\r\n  console.log(\"Parent Doc Script is Running Good\");\r\n  const deductions = frm.doc.deductions;\r\n  const earnings = frm.doc.earnings;\r\n\r\n  deductions.forEach((item) => {\r\n    // console.log(item.additional_salary);\r\n\r\n    if (item.additional_salary && item.remarks !== \" \" ) {\r\n      frappe.db.get_value(\r\n        \"Additional Salary\",\r\n        { name: item.additional_salary },\r\n        \"remarks\",\r\n        function (value) {\r\n          item.remarks = value.remarks;\r\n          frappe.model.set_value(\"remarks\", value.remarks);\r\n          frm.toggle_display(\"remarks\", true);\r\n          frm.refresh_field(\"remarks\");\r\n          frm.refresh_field(\"deductions\");\r\n        }\r\n      );\r\n    } else {\r\n      frm.toggle_display(\"remarks\", false);\r\n      frm.refresh_field(\"remarks\");\r\n      frm.refresh_field(\"deductions\");\r\n    }\r\n  });\r\n\r\n  earnings.forEach((item) => {\r\n    // console.log(item.additional_salary);\r\n\r\n    if (item.additional_salary && item.remarks !== \" \" ) {\r\n      frappe.db.get_value(\r\n        \"Additional Salary\",\r\n        { name: item.additional_salary },\r\n        \"remarks\",\r\n        function (value) {\r\n          item.remarks = value.remarks;\r\n          frappe.model.set_value(\"remarks\", value.remarks);\r\n          frm.toggle_display(\"remarks\", true);\r\n          frm.refresh_field(\"remarks\");\r\n          frm.refresh_field(\"earnings\");\r\n        }\r\n      );\r\n    } else {\r\n      frm.toggle_display(\"remarks\", false);\r\n      frm.refresh_field(\"remarks\");\r\n      frm.refresh_field(\"earnings\");\r\n    }\r\n  });\r\n\r\n  frm.refresh_field(\"earnings\");\r\n  frm.refresh_field(\"deductions\");\r\n});\r\n",
+  "script": "frappe.ui.form.on(\"Salary Slip\", {\r\n    refresh: function (frm) {\r\n        console.log(\"Checking and updating missing remarks fields\");\r\n\r\n        const deductions = frm.doc.deductions;\r\n        const earnings = frm.doc.earnings;\r\n\r\n\r\n        // Helper function to process items (deductions or earnings)\r\n        function processItems(items, fieldname) {\r\n            items.forEach((item) => {\r\n                if (item.additional_salary && (!item.remarks || item.remarks.trim() === \"\")) {\r\n                    frappe.db.get_value(\r\n                        \"Additional Salary\",\r\n                        { name: item.additional_salary },\r\n                        \"remarks\",\r\n                        function (value) {\r\n                            if (value) {\r\n                                frappe.model.set_value(item.doctype, item.name, \"remarks\", value.remarks);\r\n                                frm.refresh_field(fieldname);\r\n                            }\r\n                        }\r\n                    );\r\n                }\r\n            });\r\n        }\r\n\r\n        // Process deductions\r\n        processItems(deductions, \"deductions\");\r\n\r\n        // Process earnings\r\n        processItems(earnings, \"earnings\");\r\n        \r\n        \r\n    }\r\n});\r\n",
   "view": "Form"
  },
  {
@@ -82,12 +82,12 @@
   "doctype": "Client Script",
   "dt": "Stock Entry",
   "enabled": 1,
-  "modified": "2024-05-20 14:37:21.019783",
+  "modified": "2024-07-17 18:13:36.307111",
   "name": "Stock Entry-Form",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
-  "script": "frappe.ui.form.on(\"Stock Entry\", {\r\n  validate: function(frm) {\r\n    console.log(\"Stock Entry Script is Running\");\r\n\r\n    // Check if stock_entry_type is \"Material Issue\"\r\n    if (frm.doc.stock_entry_type === \"Material Issue\") {\r\n\r\n      // Iterate over the child table `items` (which is Stock Entry Detail)\r\n      frm.doc.items.forEach((item) => {\r\n        // Set the `expense_account` field value\r\n        item.expense_account = \"E1101 - PURCHASES - PROJECTS - AATE\";\r\n      });\r\n\r\n        console.log(\"Accounts Changed\");\r\n      // Refresh the field to show updated values\r\n      frm.refresh_field(\"items\");\r\n    }\r\n  }\r\n});\r\n",
+  "script": "frappe.ui.form.on(\"Stock Entry\", {\r\n  validate: function(frm) {\r\n    console.log(\"Stock Entry Script is Running\");\r\n\r\n    // Check if stock_entry_type is \"Material Issue\"\r\n    if (frm.doc.stock_entry_type === \"Material Issue\") {\r\n\r\n      // Iterate over the child table `items` (which is Stock Entry Detail)\r\n      frm.doc.items.forEach((item) => {\r\n        // Set the `expense_account` field value\r\n        item.expense_account = \"E1101 - PURCHASES - PROJECTS - AATE\";\r\n      });\r\n\r\n        console.log(\"Accounts Changed\");\r\n      // Refresh the field to show updated values\r\n      frm.refresh_field(\"items\");\r\n    }\r\n  }\r\n});\r\n\r\n\r\n",
   "view": "Form"
  },
  {
@@ -140,6 +140,19 @@
   "parentfield": null,
   "parenttype": null,
   "script": "frappe.ui.form.on('Attendance Request', {\r\n    before_submit: function(frm) {\r\n        if (frm.doc.status === 'Submitted') {\r\n            let from_date = frm.doc.from_date;\r\n            let to_date = frm.doc.to_date;\r\n            let employee = frm.doc.employee;\r\n\r\n            // Get the list of dates between from_date and to_date\r\n            let dates = [];\r\n            let currentDate = new Date(from_date);\r\n            let endDate = new Date(to_date);\r\n\r\n            while (currentDate <= endDate) {\r\n                dates.push(frappe.datetime.get_today());\r\n                currentDate.setDate(currentDate.getDate() + 1);\r\n            }\r\n\r\n            // Iterate over each date and cancel the corresponding attendance records\r\n            dates.forEach(function(date) {\r\n                frappe.call({\r\n                    method: 'frappe.client.get_list',\r\n                    args: {\r\n                        doctype: 'Attendance',\r\n                        filters: {\r\n                            attendance_date: date,\r\n                            employee: employee\r\n                        },\r\n                        fields: ['name']\r\n                    },\r\n                    callback: function(response) {\r\n                        if (response.message) {\r\n                            response.message.forEach(function(attendance) {\r\n                                frappe.call({\r\n                                    method: 'frappe.client.set_value',\r\n                                    args: {\r\n                                        doctype: 'Attendance',\r\n                                        name: attendance.name,\r\n                                        fieldname: 'status',\r\n                                        value: 'Cancelled'\r\n                                    },\r\n                                    callback: function(cancelResponse) {\r\n                                        if (cancelResponse.message) {\r\n                                            frappe.show_alert({\r\n                                                message: __('Attendance for {0} on {1} has been cancelled', [employee, date]),\r\n                                                indicator: 'green'\r\n                                            });\r\n                                        }\r\n                                    }\r\n                                });\r\n                            });\r\n                        }\r\n                    }\r\n                });\r\n            });\r\n        }\r\n    }\r\n});\r\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Customer",
+  "enabled": 1,
+  "modified": "2024-07-14 16:11:19.256205",
+  "name": "Customer-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Customer', {\r\n    before_save: function(frm) {\r\n        if (frm.doc.type_of_customer === 'Credit') {\r\n            frappe.msgprint({\r\n                title: __('Not Allowed'),\r\n                message: __('You cannot Select Credit Customer Right Now, Sorry!!! \ud83d\ude1e'),\r\n                indicator: 'red'\r\n            });\r\n            // Prevent the form from being saved\r\n            frappe.validated = false;\r\n        }\r\n    }\r\n});\r\n",
   "view": "Form"
  }
 ]
