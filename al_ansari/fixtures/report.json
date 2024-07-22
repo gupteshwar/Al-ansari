@@ -9162,14 +9162,14 @@
   "javascript": null,
   "json": null,
   "letter_head": "Al Ansari Oman",
-  "modified": "2023-10-24 17:13:19.143247",
+  "modified": "2024-07-15 10:21:13.424564",
   "module": "HR",
   "name": "employe details for sumit",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
   "prepared_report": 0,
-  "query": "select name, employee_name, department from `tabEmployee` where status= 'Active' and company= 'Al Ansari Trading Enterprise LLC'; ",
+  "query": "select name, employee_name, department,job_category from `tabEmployee` where status= 'Active' and company= 'Al Ansari Trading Enterprise LLC'; ",
   "ref_doctype": "Employee",
   "reference_report": null,
   "report_name": "employe details for sumit",
@@ -11702,23 +11702,23 @@
   "add_total_row": 0,
   "columns": [],
   "disable_prepared_report": 0,
-  "disabled": 1,
+  "disabled": 0,
   "docstatus": 0,
   "doctype": "Report",
   "filters": [],
   "is_standard": "No",
   "javascript": null,
   "json": null,
-  "letter_head": "Al Yusr Letter Head",
-  "modified": "2024-04-08 14:06:14.341616",
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-16 10:46:56.191794",
   "module": "HR",
   "name": "test",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
   "prepared_report": 0,
-  "query": "SELECT * \r\nFROM tabUser\r\nWHERE name REGEXP 'bmt\\\\.';\r\n",
-  "ref_doctype": "Employee",
+  "query": "SELECT\r\n  CASE WHEN p.company = 'Al Ansari Trading Enterprise LLC' THEN 'AA' ELSE p.company END AS Company,\r\n  p.supplier_name AS 'Supplier Name',\r\n  p.supplier AS 'Supplier Code',\r\n  LEFT(pi.cost_center, LOCATE('-', pi.cost_center) - 1) AS 'Cost Center',\r\n  po.name AS 'Purchase Order',\r\n  pr.name AS 'Purchase Receipt',\r\n  pr.posting_date AS 'Purchase Receipt DT',\r\n  pr.currency AS 'Currency',\r\n  pr.conversion_rate AS 'Exchange Rate',\r\n  pr.grand_total AS 'FC Value',\r\n  pr.base_grand_total AS 'LC Value',\r\n  p.bill_no AS 'Gh Supp Inv Ref',\r\n  pr.supplier_delivery_note AS 'Gh Supp Del Ref',\r\n  pi.expense_account AS 'Expense Account',\r\n  MAX(\r\n    CASE\r\n      WHEN lcv.expense_account = 'A3709 - FREIGHT A/C (GRV) - ACTUALS - AATE' THEN ROUND(lcv.amount, 3)\r\n      ELSE NULL\r\n    END\r\n  ) AS 'A3709 - Freight (Amt)',\r\n  MAX(\r\n    CASE\r\n      WHEN lcv.expense_account = 'A3719 - DUTY A/C (GRV) - ACTUALS - AATE' THEN ROUND(lcv.amount, 3)\r\n      ELSE NULL\r\n    END\r\n  ) AS 'A3719 - DUTY (Amt)',\r\n  MAX(\r\n    CASE\r\n      WHEN lcv.expense_account = 'A3729 - MISC.EXP.(GRV) - ACTUALS - AATE' THEN ROUND(lcv.amount, 3)\r\n      ELSE NULL\r\n    END\r\n  ) AS 'A3721 - MISC (Amt)',\r\n  MAX(\r\n    CASE\r\n      WHEN lcv.expense_account = 'E6155 - FINANCE CHARGES - GRV - AATE' THEN ROUND(lcv.amount, 3)\r\n      ELSE NULL\r\n    END\r\n  ) AS 'E6155 - FINANCE (Amt)'\r\nFROM `tabPurchase Invoice Item` AS pi\r\nJOIN `tabPurchase Invoice` AS p ON pi.parent = p.name\r\nJOIN `tabPurchase Receipt` AS pr ON pi.purchase_receipt = pr.name\r\nJOIN `tabPurchase Order` AS po ON pi.purchase_order = po.name\r\nLEFT JOIN `tabLanded Cost Purchase Receipt` AS lcpr ON pr.name = lcpr.receipt_document\r\nLEFT JOIN `tabLanded Cost Taxes and Charges` AS lcv ON lcpr.parent = lcv.parent\r\nGROUP BY\r\n  pr.name",
+  "ref_doctype": "Purchase Receipt",
   "reference_report": null,
   "report_name": "test",
   "report_script": "",
@@ -11848,14 +11848,14 @@
   "javascript": null,
   "json": null,
   "letter_head": "Al Ansari Oman",
-  "modified": "2024-07-06 14:25:25.002688",
+  "modified": "2024-07-08 19:16:42.606696",
   "module": "Payroll",
   "name": "Salary Disbursement(SIF)",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
   "prepared_report": 0,
-  "query": "SELECT \r\n    CONCAT(\r\n        CASE \r\n            WHEN MONTH(`tabSalary Slip`.`posting_date`) < 10 THEN CONCAT('0', MONTH(`tabSalary Slip`.`posting_date`))\r\n            ELSE MONTH(`tabSalary Slip`.`posting_date`)\r\n        END,\r\n        YEAR(`tabSalary Slip`.`posting_date`)\r\n    ) AS `Salary Period`,\r\n    CASE \r\n        WHEN `tabEmployee`.`group` = 'Expat' THEN 'P'\r\n        ELSE 'C'\r\n    END AS `Employee ID Type`,\r\n    CASE \r\n        WHEN `doc_id_card`.`document_type` = 'ID Card' THEN `doc_id_card`.`document_number`\r\n        ELSE `tabEmployee`.`passport_number`\r\n    END AS `ID / Passport Number`,\r\n    `tabSalary Slip`.`employee` AS `Employee Reference`,\r\n    REPLACE(`tabSalary Slip`.`employee_name`, '  ', ' ') AS `Employee Name`,\r\n    `tabEmployee`.`group` AS `Group`,\r\n    `tabEmployee`.`payroll_cost_center` AS `Cost Center`,\r\n    `tabEmployee`.`salary_mode` AS `MODE`,\r\n    `tabEmployee`.`bank_code` AS `BANK MIC`,\r\n    `tabEmployee`.`bank_ac_no` AS `Employee Account`,\r\n    'M' AS `Salary Frequency`,\r\n    ROUND(`tabSalary Slip`.`payment_days`, 3) AS `Number of Working Days`,\r\n    ROUND(`tabSalary Slip`.`net_pay`, 3) AS `Net Salary`,\r\n    ROUND(\r\n        (SELECT SUM(`amount`) FROM `tabSalary Detail` WHERE `parent` = `tabSalary Slip`.`name` AND `salary_component` LIKE '%%BASIC%%SALARY%%'), 3\r\n    ) AS `Basic Salary`,\r\n    COALESCE(ROUND(SUM(`tabOvertime Calculator Detail`.`non_holiday_productive_hours` + `tabOvertime Calculator Detail`.`holiday_productive_hours`), 3), '0.000') AS `Extra Hours`,\r\n\r\n    ROUND(\r\n        (\r\n            SELECT SUM(sd.`amount`) \r\n            FROM `tabSalary Detail` sd\r\n            JOIN `tabSalary Component` sc ON sd.`salary_component` = sc.`name`\r\n            WHERE sd.`parent` = `tabSalary Slip`.`name`\r\n            AND sd.`salary_component` NOT LIKE '%%BASIC%%SALARY%%'\r\n            AND sc.`type` NOT LIKE 'Deduction'\r\n        ), \r\n    3) AS `Extra Income`,\r\n    ROUND(\r\n        (\r\n            SELECT SUM(sd.`amount`) \r\n            FROM `tabSalary Detail` sd\r\n            JOIN `tabSalary Component` sc ON sd.`salary_component` = sc.`name`\r\n            WHERE sd.`parent` = `tabSalary Slip`.`name`\r\n            AND sd.`salary_component` NOT LIKE '%%PASI%%Employe%%'\r\n            AND sc.`type` = 'Deduction'\r\n        ), \r\n    3) AS 'Total Deductions',\r\n    ROUND(\r\n        (SELECT SUM(`amount`) FROM `tabSalary Detail` WHERE `parent` = `tabSalary Slip`.`name` AND `salary_component` LIKE '%%PASI%%Employee%%'), 3\r\n    ) AS `Social Security Deductions`,\r\n    `tabSalary Slip`.`base_total_in_words` AS `Total In Words`,\r\n    COALESCE(ROUND(SUM(`tabOvertime Calculator Detail`.`overtime_amount`), 3), '0.000') AS `Overtime Amount`\r\nFROM \r\n    `tabEmployee`\r\nINNER JOIN\r\n    `tabSalary Slip`\r\nON\r\n    `tabEmployee`.`name` = `tabSalary Slip`.`employee`\r\nLEFT JOIN\r\n    (\r\n        SELECT \r\n            `parent`, \r\n            `document_type`, \r\n            `document_number`,\r\n            ROW_NUMBER() OVER (PARTITION BY `parent` ORDER BY `document_type` DESC) AS `row_num`\r\n        FROM \r\n            `tabEmployee Documents`\r\n        WHERE \r\n            `document_type` = 'ID Card' OR `document_type` = 'Passport'\r\n    ) AS `doc_id_card`\r\nON\r\n    `tabEmployee`.`name` = `doc_id_card`.`parent`\r\n    AND `doc_id_card`.`row_num` = 1\r\nLEFT JOIN\r\n    `tabOvertime Calculator` ON \r\n    CONCAT(\r\n        CASE \r\n            WHEN MONTH(`tabSalary Slip`.`posting_date`) < 10 THEN CONCAT('0', MONTH(`tabSalary Slip`.`posting_date`))\r\n            ELSE MONTH(`tabSalary Slip`.`posting_date`)\r\n        END,\r\n        YEAR(`tabSalary Slip`.`posting_date`)\r\n    ) = CONCAT(\r\n        CASE \r\n            WHEN MONTH(`tabOvertime Calculator`.`to_date`) < 10 THEN CONCAT('0', MONTH(`tabOvertime Calculator`.`to_date`))\r\n            ELSE MONTH(`tabOvertime Calculator`.`to_date`)\r\n        END,\r\n        YEAR(`tabOvertime Calculator`.`to_date`)\r\n    )\r\nLEFT JOIN \r\n    `tabOvertime Calculator Detail` ON `tabOvertime Calculator Detail`.`parent` = `tabOvertime Calculator`.`name`\r\n    AND `tabOvertime Calculator Detail`.`employee` = `tabSalary Slip`.`employee`\r\nWHERE \r\n    `tabSalary Slip`.`docstatus` IN (1, 0)\r\n    AND\r\n    `tabEmployee`.`status`= 'Active'\r\n    \r\nGROUP BY\r\n    `tabSalary Slip`.`name`, `doc_id_card`.`document_type`, `doc_id_card`.`document_number`\r\n    \r\n    \r\n\r\n",
+  "query": "SELECT \r\n    CONCAT(\r\n        CASE \r\n            WHEN MONTH(`tabSalary Slip`.`posting_date`) < 10 THEN CONCAT('0', MONTH(`tabSalary Slip`.`posting_date`))\r\n            ELSE MONTH(`tabSalary Slip`.`posting_date`)\r\n        END,\r\n        YEAR(`tabSalary Slip`.`posting_date`)\r\n    ) AS `Salary Period`,\r\n    CASE \r\n        WHEN `tabEmployee`.`group` = 'Expat' THEN 'P'\r\n        ELSE 'C'\r\n    END AS `Employee ID Type`,\r\n    CASE \r\n        WHEN `doc_id_card`.`document_type` = 'ID Card' THEN `doc_id_card`.`document_number`\r\n        ELSE `tabEmployee`.`passport_number`\r\n    END AS `ID / Passport Number`,\r\n    `tabSalary Slip`.`employee` AS `Employee Reference`,\r\n    REPLACE(`tabSalary Slip`.`employee_name`, '  ', ' ') AS `Employee Name`,\r\n    `tabEmployee`.`group` AS `Group`,\r\n    `tabEmployee`.`job_category` AS `Job Category`,\r\n    `tabEmployee`.`payroll_cost_center` AS `Cost Center`,\r\n    `tabEmployee`.`salary_mode` AS `MODE`,\r\n    `tabEmployee`.`bank_code` AS `BANK MIC`,\r\n    `tabEmployee`.`bank_ac_no` AS `Employee Account`,\r\n    'M' AS `Salary Frequency`,\r\n    ROUND(`tabSalary Slip`.`payment_days`, 3) AS `Number of Working Days`,\r\n    COALESCE(ROUND(`tabSalary Slip`.`net_pay`, 3),'0.000') AS `Net Salary`,\r\n    COALESCE(ROUND(\r\n        (SELECT SUM(`amount`) FROM `tabSalary Detail` WHERE `parent` = `tabSalary Slip`.`name` AND `salary_component` LIKE '%%BASIC%%SALARY%%'), 3\r\n    ), '0.000' )AS `Basic Salary`,\r\n    COALESCE(ROUND(SUM(`tabOvertime Calculator Detail`.`non_holiday_productive_hours` + `tabOvertime Calculator Detail`.`holiday_productive_hours`), 3), '0.000') AS `Extra Hours`,\r\n\r\n    COALESCE(ROUND((\r\n    SELECT SUM(sd.`amount`) \r\n    FROM `tabSalary Detail` sd\r\n    JOIN `tabSalary Component` sc ON sd.`salary_component` = sc.`name`\r\n    WHERE sd.`parent` = `tabSalary Slip`.`name`\r\n    AND sd.`salary_component` NOT LIKE '%%BASIC%%SALARY%%'\r\n    AND sc.`type` NOT LIKE 'Deduction'\r\n), 3), '0.000') AS `Extra Income`,\r\n\r\n    ROUND(\r\n        (\r\n            SELECT SUM(sd.`amount`) \r\n            FROM `tabSalary Detail` sd\r\n            JOIN `tabSalary Component` sc ON sd.`salary_component` = sc.`name`\r\n            WHERE sd.`parent` = `tabSalary Slip`.`name`\r\n            AND sd.`salary_component` NOT LIKE '%%PASI%%Employe%%'\r\n            AND sc.`type` = 'Deduction'\r\n        ), \r\n    3) AS 'Total Deductions',\r\n    COALESCE(ROUND((\r\n    SELECT SUM(sd.`amount`) \r\n    FROM `tabSalary Detail` sd\r\n    JOIN `tabSalary Component` sc ON sd.`salary_component` = sc.`name`\r\n    WHERE sd.`parent` = `tabSalary Slip`.`name`\r\n    AND sd.`salary_component` NOT LIKE '%%PASI%%Employe%%'\r\n    AND sc.`type` = 'Deduction'\r\n), 3), '0.000') AS `Total Deductions`,\r\n\r\n    `tabSalary Slip`.`base_total_in_words` AS `Total In Words`,\r\n    COALESCE(ROUND(SUM(`tabOvertime Calculator Detail`.`overtime_amount`), 3), '0.000') AS `Overtime Amount`\r\nFROM \r\n    `tabEmployee`\r\nINNER JOIN\r\n    `tabSalary Slip`\r\nON\r\n    `tabEmployee`.`name` = `tabSalary Slip`.`employee`\r\nLEFT JOIN\r\n    (\r\n        SELECT \r\n            `parent`, \r\n            `document_type`, \r\n            `document_number`,\r\n            ROW_NUMBER() OVER (PARTITION BY `parent` ORDER BY `document_type` DESC) AS `row_num`\r\n        FROM \r\n            `tabEmployee Documents`\r\n        WHERE \r\n            `document_type` = 'ID Card' OR `document_type` = 'Passport'\r\n    ) AS `doc_id_card`\r\nON\r\n    `tabEmployee`.`name` = `doc_id_card`.`parent`\r\n    AND `doc_id_card`.`row_num` = 1\r\nLEFT JOIN\r\n    `tabOvertime Calculator` ON \r\n    CONCAT(\r\n        CASE \r\n            WHEN MONTH(`tabSalary Slip`.`posting_date`) < 10 THEN CONCAT('0', MONTH(`tabSalary Slip`.`posting_date`))\r\n            ELSE MONTH(`tabSalary Slip`.`posting_date`)\r\n        END,\r\n        YEAR(`tabSalary Slip`.`posting_date`)\r\n    ) = CONCAT(\r\n        CASE \r\n            WHEN MONTH(`tabOvertime Calculator`.`to_date`) < 10 THEN CONCAT('0', MONTH(`tabOvertime Calculator`.`to_date`))\r\n            ELSE MONTH(`tabOvertime Calculator`.`to_date`)\r\n        END,\r\n        YEAR(`tabOvertime Calculator`.`to_date`)\r\n    )\r\nLEFT JOIN \r\n    `tabOvertime Calculator Detail` ON `tabOvertime Calculator Detail`.`parent` = `tabOvertime Calculator`.`name`\r\n    AND `tabOvertime Calculator Detail`.`employee` = `tabSalary Slip`.`employee`\r\nWHERE \r\n    `tabSalary Slip`.`docstatus` IN (1, 0)\r\n    AND\r\n    `tabEmployee`.`status`= 'Active'\r\n    \r\nGROUP BY\r\n    `tabSalary Slip`.`name`, `doc_id_card`.`document_type`, `doc_id_card`.`document_number`\r\n    \r\n    \r\n\r\n",
   "ref_doctype": "Payment Entry",
   "reference_report": null,
   "report_name": "Salary Disbursement(SIF)",
@@ -14757,6 +14757,825 @@
   "docstatus": 0,
   "doctype": "Report",
   "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-08 16:14:06.855219",
+  "module": "Al Ansari",
+  "name": "Shipment Arrival by Month",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    YEAR(ct.arrival_date) AS \"Year\",\r\n    MONTH(ct.arrival_date) AS \"Month\",\r\n    CONCAT(MONTHNAME(ct.arrival_date), ', ', YEAR(ct.arrival_date)) AS \"Month, Year\",\r\n    COUNT(po.name) AS \"PO Count\"\r\nFROM \r\n    `tabConsignment Tracking` ct\r\nJOIN \r\n    `tabPurchase Order` po\r\nON \r\n    ct.purchase_order_reference = po.name\r\nWHERE \r\n    ct.shipment_arrived = 1   \r\nGROUP BY \r\n    YEAR(ct.arrival_date),\r\n    MONTH(ct.arrival_date),\r\n    CONCAT(MONTHNAME(ct.arrival_date), ', ', YEAR(ct.arrival_date))\r\nORDER BY \r\n    YEAR(ct.arrival_date),\r\n    MONTH(ct.arrival_date);\r\n",
+  "ref_doctype": "Consignment Tracking",
+  "reference_report": null,
+  "report_name": "Shipment Arrival by Month",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Shipment Arrival by Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Shipment Arrival by Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase Manager"
+   },
+   {
+    "parent": "Shipment Arrival by Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-14 11:14:21.247775",
+  "module": "Accounts",
+  "name": "Sales by Cost Center Last Month",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n    gl_entry.cost_center AS \"Cost Center:Link/Cost Center:120\",\r\n    SUM(COALESCE(gl_entry.credit, 0) - COALESCE(gl_entry.debit, 0)) AS \"Total Sale:Currency:120\"\r\nFROM\r\n    `tabGL Entry` AS gl_entry\r\nJOIN\r\n    `tabAccount` AS account ON gl_entry.account = account.name\r\nWHERE\r\n    gl_entry.is_cancelled = 0\r\n    AND account.parent_account = 'SL-SALES-INCOME - AATE'\r\n    AND gl_entry.posting_date >= SUBDATE(LAST_DAY(CURDATE()), INTERVAL 1 MONTH)\r\n    AND gl_entry.posting_date < LAST_DAY(CURDATE())\r\n    AND gl_entry.company = 'Al Ansari Trading Enterprise LLC'  -- Replace with your company name\r\nGROUP BY\r\n    gl_entry.cost_center;\r\n",
+  "ref_doctype": "GL Entry",
+  "reference_report": null,
+  "report_name": "Sales by Cost Center Last Month",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Sales by Cost Center Last Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   },
+   {
+    "parent": "Sales by Cost Center Last Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Sales by Cost Center Last Month",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-14 11:16:34.027086",
+  "module": "Accounts",
+  "name": "Sales by Cost Center Last Month - AATE",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n    gl_entry.cost_center AS \"Cost Center:Link/Cost Center:120\",\r\n    SUM(COALESCE(gl_entry.credit, 0) - COALESCE(gl_entry.debit, 0)) AS \"Total Sale:Currency:120\"\r\nFROM\r\n    `tabGL Entry` AS gl_entry\r\nJOIN\r\n    `tabAccount` AS account ON gl_entry.account = account.name\r\nWHERE\r\n    gl_entry.is_cancelled = 0\r\n    AND account.parent_account = 'SL-SALES-INCOME - AATE'\r\n    AND gl_entry.posting_date >= LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 2 MONTH)) + INTERVAL 1 DAY\r\n    AND gl_entry.posting_date < LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH)) + INTERVAL 1 DAY\r\n    AND gl_entry.company = 'Al Ansari Trading Enterprise LLC'\r\nGROUP BY\r\n    gl_entry.cost_center;\r\n",
+  "ref_doctype": "GL Entry",
+  "reference_report": null,
+  "report_name": "Sales by Cost Center Last Month - AATE",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Sales by Cost Center Last Month - AATE",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   },
+   {
+    "parent": "Sales by Cost Center Last Month - AATE",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Sales by Cost Center Last Month - AATE",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-14 11:17:03.401973",
+  "module": "Accounts",
+  "name": "Sales by Cost Center Current Month - AATE",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n    gl_entry.cost_center AS \"Cost Center:Link/Cost Center:120\",\r\n    SUM(COALESCE(gl_entry.credit, 0) - COALESCE(gl_entry.debit, 0)) AS \"Total Sale:Currency:120\"\r\nFROM\r\n    `tabGL Entry` AS gl_entry\r\nJOIN\r\n    `tabAccount` AS account ON gl_entry.account = account.name\r\nWHERE\r\n    gl_entry.is_cancelled = 0\r\n    AND account.parent_account = 'SL-SALES-INCOME - AATE'\r\n    AND MONTH(gl_entry.posting_date) = MONTH(CURDATE())\r\n    AND YEAR(gl_entry.posting_date) = YEAR(CURDATE())\r\n    AND gl_entry.company = 'Al Ansari Trading Enterprise LLC'\r\nGROUP BY\r\n    gl_entry.cost_center;\r\n",
+  "ref_doctype": "GL Entry",
+  "reference_report": null,
+  "report_name": "Sales by Cost Center Current Month - AATE",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Sales by Cost Center Current Month - AATE",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   },
+   {
+    "parent": "Sales by Cost Center Current Month - AATE",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Sales by Cost Center Current Month - AATE",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 1,
+    "options": null,
+    "parent": "MRN Report - New!",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 1,
+    "options": null,
+    "parent": "MRN Report - New!",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-21 09:49:24.333119",
+  "module": "Accounts",
+  "name": "MRN Report - New!",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n  CASE WHEN p.company = 'Al Ansari Trading Enterprise LLC' THEN 'AA' ELSE p.company END AS Company,\r\n  p.supplier_name AS 'Supplier Name',\r\n  p.supplier AS 'Supplier Code',\r\n  LEFT(pi.cost_center, LOCATE('-', pi.cost_center) - 1) AS 'Cost Center',\r\n  po.name AS 'Purchase Order',\r\n  pr.name AS 'Purchase Receipt',\r\n  pr.posting_date AS 'Purchase Receipt DT',\r\n  pr.currency AS 'Currency',\r\n  pr.conversion_rate AS 'Exchange Rate',\r\n  pr.grand_total AS 'FC Value',\r\n  pr.base_grand_total AS 'LC Value',\r\n  p.bill_no AS 'Gh Supp Inv Ref',\r\n  pr.supplier_delivery_note AS 'Gh Supp Del Ref',\r\n  pi.expense_account AS 'Expense Account(PI)',\r\n  MAX(\r\n    CASE\r\n      WHEN lcv.expense_account = 'A3709 - FREIGHT A/C (GRV) - ACTUALS - AATE' THEN ROUND(lcv.amount, 3)\r\n      ELSE NULL\r\n    END\r\n  ) AS 'A3709 - Freight (Amt)',\r\n  MAX(\r\n    CASE\r\n      WHEN lcv.expense_account = 'A3719 - DUTY A/C (GRV) - ACTUALS - AATE' THEN ROUND(lcv.amount, 3)\r\n      ELSE NULL\r\n    END\r\n  ) AS 'A3719 - DUTY (Amt)',\r\n  MAX(\r\n    CASE\r\n      WHEN lcv.expense_account = 'A3729 - MISC.EXP.(GRV) - ACTUALS - AATE' THEN ROUND(lcv.amount, 3)\r\n      ELSE NULL\r\n    END\r\n  ) AS 'A3721 - MISC (Amt)',\r\n  MAX(\r\n    CASE\r\n      WHEN lcv.expense_account = 'E6155 - FINANCE CHARGES - GRV - AATE' THEN ROUND(lcv.amount, 3)\r\n      ELSE NULL\r\n    END\r\n  ) AS 'E6155 - FINANCE (Amt)'\r\nFROM `tabPurchase Invoice Item` AS pi\r\nJOIN `tabPurchase Invoice` AS p ON pi.parent = p.name\r\nJOIN `tabPurchase Receipt` AS pr ON pi.purchase_receipt = pr.name\r\nJOIN `tabPurchase Order` AS po ON pi.purchase_order = po.name\r\nLEFT JOIN `tabLanded Cost Purchase Receipt` AS lcpr ON pr.name = lcpr.receipt_document\r\nLEFT JOIN `tabLanded Cost Taxes and Charges` AS lcv ON lcpr.parent = lcv.parent\r\nWHERE\r\n    pr.`posting_date` BETWEEN %(from_date)s AND %(to_date)s\r\nGROUP BY\r\n  pr.name",
+  "ref_doctype": "Journal Entry",
+  "reference_report": null,
+  "report_name": "MRN Report - New!",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "MRN Report - New!",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "MRN Report - New!",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-18 09:48:05.981931",
+  "module": "Accounts",
+  "name": "Payment Entry Validation",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    pe.name AS voucher_no,\r\n    pe.posting_date as date,\r\n    pe.payment_type,\r\n    pe.mode_of_payment,\r\n    pe.party_type,\r\n    pe.party_name,\r\n    pe.received_amount,\r\n    pe.source_exchange_rate,\r\n    pe.paid_from_account_currency,\r\n    pe.target_exchange_rate,\r\n    paid_to_account_currency,\r\n    pe.base_received_amount,\r\n    pe.base_total_taxes_and_charges,\r\n    pe.base_received_amount + pe.base_total_taxes_and_charges as total_amount,\r\n    SUM(gl.debit) AS total_gl_debit,\r\n    SUM(gl.credit) AS total_gl_credit,\r\n    pe.base_received_amount + pe.base_total_taxes_and_charges - (SUM(gl.debit)) AS difference_total_base_gl\r\nFROM `tabPayment Entry` pe\r\nLEFT JOIN `tabGL Entry` gl ON pe.name = gl.voucher_no\r\nWHERE pe.status = 'submitted' AND is_cancelled=0\r\nGROUP BY pe.name, pe.payment_type, pe.mode_of_payment, pe.party_type, pe.party_name, pe.paid_to_account_currency,\r\n         pe.received_amount, pe.source_exchange_rate, pe.base_received_amount, pe.base_total_taxes_and_charges\r\nHAVING difference_total_base_gl <> 0;\r\n",
+  "ref_doctype": "Payment Entry",
+  "reference_report": null,
+  "report_name": "Payment Entry Validation",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Payment Entry Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Payment Entry Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Payment Entry Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BU Cordinators"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-17 10:26:21.911271",
+  "module": "Accounts",
+  "name": "GL Entry Transaction Difference by Cost Center",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    voucher_no,\r\n    cost_center,\r\n    SUM(debit) AS total_debit,\r\n    SUM(credit) AS total_credit,\r\n    SUM(debit - credit) AS difference\r\nFROM `tabGL Entry`\r\nWHERE is_cancelled = 0\r\nGROUP BY voucher_no, cost_center\r\nHAVING difference <> 0;\r\n",
+  "ref_doctype": "Payment Entry",
+  "reference_report": null,
+  "report_name": "GL Entry Transaction Difference by Cost Center",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "GL Entry Transaction Difference by Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "GL Entry Transaction Difference by Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "GL Entry Transaction Difference by Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BU Cordinators"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-17 10:26:47.173340",
+  "module": "Accounts",
+  "name": "GL Entry Difference by Voucher",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    voucher_no,\r\n    SUM(debit) AS total_debit,\r\n    SUM(credit) AS total_credit,\r\n    SUM(debit - credit) AS difference\r\nFROM `tabGL Entry`\r\nwhere is_cancelled = 0\r\nGROUP BY voucher_no\r\nHAVING difference <> 0;\r\n",
+  "ref_doctype": "Payment Entry",
+  "reference_report": null,
+  "report_name": "GL Entry Difference by Voucher",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "GL Entry Difference by Voucher",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "GL Entry Difference by Voucher",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "GL Entry Difference by Voucher",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BU Cordinators"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-17 10:30:55.438444",
+  "module": "Accounts",
+  "name": "GL Entry Missing Cost Center",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    voucher_no,\r\n    SUM(debit) AS total_debit,\r\n    SUM(credit) AS total_credit,\r\n    SUM(debit - credit) AS difference\r\nFROM `tabGL Entry`\r\nWHERE is_cancelled = 0             -- Exclude cancelled entries\r\n    AND cost_center IS NULL        -- Filter for entries where cost_center is null\r\nGROUP BY voucher_no;\r\n",
+  "ref_doctype": "Payment Entry",
+  "reference_report": null,
+  "report_name": "GL Entry Missing Cost Center",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "GL Entry Missing Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "GL Entry Missing Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "GL Entry Missing Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BU Cordinators"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-18 09:41:05.832740",
+  "module": "Accounts",
+  "name": "Journal Entry Validation",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n  je.name,\r\n  je.posting_date,\r\n  je.total_debit AS je_total_debit,\r\n  COALESCE(ge.total_debit, 0) AS gl_total_debit,\r\n  COALESCE(je.total_debit, 0) - COALESCE(ge.total_debit, 0) AS debit_difference\r\nFROM `tabJournal Entry` je\r\nLEFT JOIN (\r\n  SELECT voucher_no, SUM(debit) AS total_debit\r\n  FROM `tabGL Entry`\r\n  GROUP BY voucher_no\r\n) ge ON je.name = ge.voucher_no\r\nWHERE je.docstatus = 1\r\nAND je.posting_date > '2024-05-01'  -- Filter for posting dates after May 1st, 2024\r\nAND EXISTS (  -- Use EXISTS to check for non-zero difference in subquery\r\n  SELECT 1\r\n  FROM `tabGL Entry` gl\r\n  WHERE gl.voucher_no = je.name  -- Correlate with je.name from main query\r\n  AND COALESCE(je.total_debit, 0) - (  -- Use je.total_debit from main query\r\n    SELECT SUM(debit)\r\n    FROM `tabGL Entry`\r\n    WHERE voucher_no = gl.voucher_no\r\n    GROUP BY voucher_no\r\n  ) <> 0\r\n)\r\nORDER BY je.name;\r\n",
+  "ref_doctype": "Journal Entry",
+  "reference_report": null,
+  "report_name": "Journal Entry Validation",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Journal Entry Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Journal Entry Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   },
+   {
+    "parent": "Journal Entry Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Journal Entry Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee Self Service"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-18 10:16:42.968660",
+  "module": "Accounts",
+  "name": "Purchase Invoice Validation",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n  pi.name AS voucher_no, -- Use a meaningful alias\r\n  pi.posting_date AS date,\r\n  pi.supplier_name,\r\n  pi.currency,\r\n  pi.conversion_rate,\r\n  pi.base_grand_total AS pi_base_grand_total,  -- Alias for clarity\r\n  pi.grand_total,\r\n  SUM(gl.debit) AS total_gl_debit,\r\n  SUM(gl.credit) AS total_gl_credit,\r\n  COALESCE(pi.base_grand_total, 0) - COALESCE(SUM(gl.debit), 0) AS base_grand_total_difference\r\nFROM `tabPurchase Invoice` pi\r\nLEFT JOIN `tabGL Entry` gl ON pi.name = gl.voucher_no -- Assuming name is linking field\r\nWHERE pi.docstatus = 1  -- Assuming active invoices\r\nGROUP BY pi.name, pi.supplier_name, pi.currency, pi.conversion_rate, pi.base_grand_total, pi.grand_total\r\nHAVING base_grand_total_difference <> 0;\r\n",
+  "ref_doctype": "Purchase Invoice",
+  "reference_report": null,
+  "report_name": "Purchase Invoice Validation",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Purchase Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Purchase Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase User"
+   },
+   {
+    "parent": "Purchase Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   },
+   {
+    "parent": "Purchase Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Purchase Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Purchase Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll Manager"
+   },
+   {
+    "parent": "Purchase Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase Manager"
+   },
+   {
+    "parent": "Purchase Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-18 10:32:01.138576",
+  "module": "Accounts",
+  "name": "Sales  Invoice Validation",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n  si.name AS voucher_no, -- Use a meaningful alias\r\n  si.posting_date AS date,\r\n  si.customer_name,\r\n  si.currency,\r\n  si.conversion_rate,\r\n  si.base_grand_total AS si_base_grand_total,  -- Alias for clarity\r\n  si.grand_total,\r\n  SUM(credit) AS total_gl_credit,  -- Assuming credit column is named 'credit'\r\n  SUM(gl.debit) AS total_gl_debit,\r\n  COALESCE(si.base_grand_total, 0) - COALESCE(SUM(credit), 0) AS base_grand_total_difference\r\nFROM `tabSales Invoice` si\r\nLEFT JOIN `tabGL Entry` gl ON si.name = gl.voucher_no -- Assuming name is linking field\r\nWHERE si.docstatus = 1  -- Filter active invoices\r\n  AND gl.voucher_type='Sales Invoice'  -- Optional filter for GL entry type\r\nGROUP BY si.name, si.customer_name, si.currency, si.conversion_rate, si.base_grand_total, si.grand_total\r\nHAVING base_grand_total_difference <> 0;\r\n",
+  "ref_doctype": "Sales Invoice",
+  "reference_report": null,
+  "report_name": "Sales  Invoice Validation",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Sales  Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Sales  Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase User"
+   },
+   {
+    "parent": "Sales  Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   },
+   {
+    "parent": "Sales  Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Sales  Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Sales  Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Payroll Manager"
+   },
+   {
+    "parent": "Sales  Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Purchase Manager"
+   },
+   {
+    "parent": "Sales  Invoice Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[[\"Sales Order\",\"transaction_date\",\"Between\",[\"2024-06-01\",\"2024-06-30\"],false],[\"Sales Team\",\"sales_person\",\"=\",\"Umesh Shamarao Raut\",false],[\"Sales Order\",\"company\",\"=\",\"Al Ansari Trading Enterprise LLC\"],[\"Sales Order\",\"billing_status\",\"=\",\"Fully Billed\"]],\"fields\":[[\"name\",\"Sales Order\"],[\"docstatus\",\"Sales Order\"],[\"customer_name\",\"Sales Order\"],[\"customer\",\"Sales Order\"],[\"company\",\"Sales Order\"],[\"transaction_date\",\"Sales Order\"],[\"delivery_date\",\"Sales Order\"],[\"grand_total\",\"Sales Order\"],[\"status\",\"Sales Order\"],[\"delivery_status\",\"Sales Order\"],[\"per_delivered\",\"Sales Order\"],[\"per_billed\",\"Sales Order\"],[\"billing_status\",\"Sales Order\"],[\"currency\",\"Sales Order\"],[\"base_grand_total\",\"Sales Order\"],[\"order_type\",\"Sales Order\"],[\"skip_delivery_note\",\"Sales Order\"]],\"order_by\":\"`tabSales Order`.`modified` desc\",\"add_totals_row\":0,\"page_length\":500,\"column_widths\":{\"name\":120,\"customer_name\":120,\"customer\":120,\"company\":150,\"transaction_date\":160,\"delivery_date\":120,\"grand_total\":150,\"status\":100,\"delivery_status\":120,\"per_delivered\":100,\"per_billed\":100,\"billing_status\":120,\"currency\":100,\"base_grand_total\":150,\"order_type\":120,\"skip_delivery_note\":120},\"group_by\":null}",
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-18 11:31:20.345031",
+  "module": "Selling",
+  "name": "DW- FULLY BILLED. JULY24",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Sales Order",
+  "reference_report": null,
+  "report_name": "DW- FULLY BILLED. JULY24",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "parent": "DW- FULLY BILLED. JULY24",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Maintenance User"
+   },
+   {
+    "parent": "DW- FULLY BILLED. JULY24",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Manager"
+   },
+   {
+    "parent": "DW- FULLY BILLED. JULY24",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "DW- FULLY BILLED. JULY24",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
+   },
+   {
+    "parent": "DW- FULLY BILLED. JULY24",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "DW- FULLY BILLED. JULY24",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "fieldname": "company",
+    "fieldtype": "Link",
+    "label": "Company",
+    "mandatory": 1,
+    "options": "Company",
+    "parent": "Trial Balance by Cost Center",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 1,
+    "options": null,
+    "parent": "Trial Balance by Cost Center",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 1,
+    "options": null,
+    "parent": "Trial Balance by Cost Center",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-21 09:46:25.235311",
+  "module": "Accounts",
+  "name": "Trial Balance by Cost Center",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT\r\n  company,\r\n  account,\r\n  cost_center,\r\n  SUM(opening_debit) AS opening_debit,\r\n  SUM(opening_credit) AS opening_credit,\r\n  SUM(month_debit) AS month_debit,\r\n  SUM(month_credit) AS month_credit,\r\n  SUM(opening_debit + month_debit) AS closing_debit,\r\n  SUM(opening_credit + month_credit) AS closing_credit\r\nFROM (\r\n  SELECT\r\n    company,\r\n    account,\r\n    cost_center,\r\n    CASE WHEN posting_date < (%(from_date)s) THEN COALESCE(debit, 0) ELSE 0 END AS opening_debit,\r\n    CASE WHEN posting_date < (%(from_date)s) THEN COALESCE(credit, 0) ELSE 0 END AS opening_credit,\r\n    CASE WHEN posting_date BETWEEN (%(from_date)s) AND (%(to_date)s) THEN debit ELSE 0 END AS month_debit,\r\n    CASE WHEN posting_date BETWEEN (%(from_date)s) AND (%(to_date)s) THEN credit ELSE 0 END AS month_credit\r\n  FROM `tabGL Entry`\r\n  WHERE company = %(company)s AND is_cancelled=0\r\n) AS subquery\r\nGROUP BY company, account, cost_center;\r\n",
+  "ref_doctype": "GL Entry",
+  "reference_report": null,
+  "report_name": "Trial Balance by Cost Center",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Trial Balance by Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Auditor"
+   },
+   {
+    "parent": "Trial Balance by Cost Center",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Al Ansari Oman",
+  "modified": "2024-07-22 09:44:36.580307",
+  "module": "Accounts",
+  "name": "Cancelled Payment Entries Validation",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": "SELECT \r\n    gl.name AS gl_entry_name,\r\n    gl.posting_date AS gl_posting_date,\r\n    gl.account AS gl_account,\r\n    gl.debit AS gl_debit,\r\n    gl.credit AS gl_credit,\r\n    gl.docstatus AS gl_entry_status, -- Status field for GL Entry\r\n    pe.name AS payment_entry_name,\r\n    pe.docstatus AS payment_entry_status -- Status field for Payment Entry\r\nFROM \r\n    `tabGL Entry` AS gl\r\nJOIN \r\n    `tabPayment Entry` AS pe\r\nON \r\n    gl.voucher_no = pe.name\r\nWHERE \r\n    pe.docstatus = 1 -- Assuming docstatus 2 represents 'Cancelled' status\r\n    AND gl.is_cancelled = 1;\r\n",
+  "ref_doctype": "Payment Entry",
+  "reference_report": null,
+  "report_name": "Cancelled Payment Entries Validation",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Cancelled Payment Entries Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Cancelled Payment Entries Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Cancelled Payment Entries Validation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "BU Cordinators"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
   "is_standard": "Yes",
   "javascript": null,
   "json": null,
@@ -16581,6 +17400,33 @@
   "javascript": null,
   "json": null,
   "letter_head": null,
+  "modified": "2020-06-24 17:16:40.251116",
+  "module": "Education",
+  "name": "Absent Student Report",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Student Attendance",
+  "reference_report": null,
+  "report_name": "Absent Student Report",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": []
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disable_prepared_report": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
   "modified": "2017-02-24 20:16:50.550242",
   "module": "HR",
   "name": "Monthly Attendance Sheet",
@@ -16614,33 +17460,6 @@
     "role": "HR Manager"
    }
   ]
- },
- {
-  "add_total_row": 0,
-  "columns": [],
-  "disable_prepared_report": 0,
-  "disabled": 0,
-  "docstatus": 0,
-  "doctype": "Report",
-  "filters": [],
-  "is_standard": "Yes",
-  "javascript": null,
-  "json": null,
-  "letter_head": null,
-  "modified": "2020-06-24 17:16:40.251116",
-  "module": "Education",
-  "name": "Absent Student Report",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "prepared_report": 0,
-  "query": null,
-  "ref_doctype": "Student Attendance",
-  "reference_report": null,
-  "report_name": "Absent Student Report",
-  "report_script": null,
-  "report_type": "Script Report",
-  "roles": []
  },
  {
   "add_total_row": 1,
