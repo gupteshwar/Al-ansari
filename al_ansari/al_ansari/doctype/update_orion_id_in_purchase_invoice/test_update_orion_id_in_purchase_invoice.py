@@ -4,5 +4,5 @@
 # import frappe
 import unittest
 
-class TestPRandPIOrionID(unittest.TestCase):
+class TestUpdateOrionIDinPurchaseInvoice(unittest.TestCase):
 	pass
