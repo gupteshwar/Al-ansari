@@ -97,9 +97,9 @@ def validate_reference_details(doc,method):
 	for i in doc.get('references_details'):
 		cost_center_.append({i.get('custom_cost_center'): i.get('allocated_amount')})
 		max_value_cost_center = max(cost_center_[0], key=cost_center_[0].get)	
-	
-	for tax_row in doc.taxes:
-		tax_row.cost_center = max_value_cost_center
+	if doc.get('references_details'):
+		for tax_row in doc.taxes:
+			tax_row.cost_center = max_value_cost_center
 
 # def check_and_allocate_amount(doc):
 # 	for ref in doc.references:
