@@ -15,3 +15,7 @@ def validate_cost_center(doc, method):
                 for so in purchase_receipt.items:
                     if i.item_code == so.item_code and i.idx == so.idx:
                         i.cost_center = so.cost_center
+
+        for j in doc.taxes:
+            if not j.cost_center:
+                j.cost_center = doc.cost_center 
