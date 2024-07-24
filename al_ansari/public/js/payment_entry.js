@@ -249,8 +249,10 @@ frappe.ui.form.on("Payment Entry", {
 
     },
     target_exchange_rate: function(frm){
-        frm.doc.paid_amount = frm.doc.received_amount * frm.doc.target_exchange_rate
-        frm.refresh_field('paid_amount')
+        if(frm.doc.paid_from_account_currency != frm.doc.paid_to_account_currency){
+            frm.doc.paid_amount = frm.doc.received_amount * frm.doc.target_exchange_rate
+            frm.refresh_field('paid_amount')
+        }
     }
 });
 
