@@ -100,6 +100,12 @@ def validate_reference_details(doc,method):
 	if doc.get('references_details'):
 		for tax_row in doc.taxes:
 			tax_row.cost_center = max_value_cost_center
+	else:
+		if doc.is_advance_pay:
+			for tax_row in doc.taxes:
+				tax_row.cost_center = doc.cost_center
+
+
 
 # def check_and_allocate_amount(doc):
 # 	for ref in doc.references:
