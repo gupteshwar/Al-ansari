@@ -23,3 +23,6 @@ def validate_cost_center(doc, method):
 
                         i.cost_center = dn.cost_center
 
+        for j in doc.taxes:
+            if not j.cost_center:
+                j.cost_center = doc.cost_center 
