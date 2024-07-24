@@ -248,12 +248,15 @@ frappe.ui.form.on("Payment Entry", {
         }
 
     },
-    target_exchange_rate: function(frm){
-        if(frm.doc.paid_from_account_currency != frm.doc.paid_to_account_currency){
-            frm.doc.paid_amount = frm.doc.received_amount * frm.doc.target_exchange_rate
-            frm.refresh_field('paid_amount')
-        }
-    }
+    // target_exchange_rate: function(frm){
+    //     if(frm.doc.paid_from_account_currency != frm.doc.paid_to_account_currency){
+    //         if(!frm.doc.paid_amount){
+    //             frm.doc.paid_amount = frm.doc.received_amount * frm.doc.target_exchange_rate
+    //             frm.refresh_field('paid_amount')
+
+    //         }
+    //     }
+    // }
 });
 
 function split_entries_as_per_cc(frm,taxes,references_details) {
