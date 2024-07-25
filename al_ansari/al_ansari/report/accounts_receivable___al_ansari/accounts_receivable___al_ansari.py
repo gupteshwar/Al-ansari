@@ -34,6 +34,7 @@ def execute(filters=None):
 		"party_type": "Customer",
 		"naming_by": ["Selling Settings", "cust_master_name"],
 	}
+	
 	return ReceivablePayableReport(filters).run(args)
 
 
@@ -56,6 +57,16 @@ class ReceivablePayableReport(object):
 		self.get_columns()
 		self.get_data()
 		self.get_chart_data()
+
+
+		for row in self.data:
+			if row.get('voucher_type') == 'Payment Entry':
+				get_doc = frappe.get_doc('Payment Entry', row.get('voucher_no'))
+				if get_doc.is_pdc == 0:
+					row.update({'is_pdc':'No', 'reference_date':get_doc.reference_date})
+				elif get_doc.is_pdc == 1:
+					row.update({'is_pdc':'Yes', 'reference_date':get_doc.reference_date})
+
 		return self.columns, self.data, None, self.chart, None, self.skip_total_row
 
 	def set_defaults(self):
@@ -524,7 +535,7 @@ class ReceivablePayableReport(object):
 						self.future_payments.setdefault((d.invoice_no, d.party), []).append(d)
 
 	def get_future_payments_from_payment_entry(self):
-		return frappe.db.sql(
+		get_d = frappe.db.sql(
 			"""
 			select
 				ref.reference_name as invoice_no,
@@ -532,7 +543,8 @@ class ReceivablePayableReport(object):
 				payment_entry.party_type,
 				payment_entry.posting_date as future_date,
 				ref.allocated_amount as future_amount,
-				payment_entry.reference_no as future_ref
+				payment_entry.reference_no as future_ref, 
+				payment_entry.is_pdc, payment_entry.reference_date
 			from
 				`tabPayment Entry` as payment_entry inner join `tabPayment Entry Reference` as ref
 			on
@@ -543,7 +555,31 @@ class ReceivablePayableReport(object):
 				and payment_entry.party_type = %s
 			""",
 			(self.filters.report_date, self.party_type),
-			as_dict=1,
+			as_dict=1,debug=1
+		)
+
+	
+		return frappe.db.sql(
+			"""
+			select
+				ref.reference_name as invoice_no,
+				payment_entry.party,
+				payment_entry.party_type,
+				payment_entry.posting_date as future_date,
+				ref.allocated_amount as future_amount,
+				payment_entry.reference_no as future_ref, 
+				payment_entry.is_pdc, payment_entry.reference_date
+			from
+				`tabPayment Entry` as payment_entry inner join `tabPayment Entry Reference` as ref
+			on
+				(ref.parent = payment_entry.name)
+			where
+				payment_entry.docstatus < 2
+				and payment_entry.posting_date > %s
+				and payment_entry.party_type = %s
+			""",
+			(self.filters.report_date, self.party_type),
+			as_dict=1,debug=1
 		)
 
 	def get_future_payments_from_journal_entry(self):
@@ -697,7 +733,7 @@ class ReceivablePayableReport(object):
 			"""
 			select
 				name, posting_date, account, party_type, party, voucher_type, voucher_no, cost_center,
-				against_voucher_type, against_voucher, account_currency, {0}, {1} {remarks}
+				against_voucher_type, against_voucher, account_currency,{0}, {1} {remarks}
 			from
 				`tabGL Entry`
 			where
@@ -927,6 +963,10 @@ class ReceivablePayableReport(object):
 			width=180,
 		)
 
+		self.add_column(label=_("Is PDC"), fieldname="is_pdc", fieldtype="Data")
+		self.add_column(label=_("Cheque Reference Date"), fieldname="reference_date", fieldtype="Data")
+		
+
 		if self.filters.show_remarks:
 			self.add_column(label=_("Remarks"), fieldname="remarks", fieldtype="Text", width=200),
 
@@ -959,6 +999,8 @@ class ReceivablePayableReport(object):
 			self.add_column(label=_("Future Payment Ref"), fieldname="future_ref", fieldtype="Data")
 			self.add_column(label=_("Future Payment Amount"), fieldname="future_amount")
 			self.add_column(label=_("Remaining Balance"), fieldname="remaining_balance")
+			self.add_column(label=_("Is PDC"), fieldname="is_pdc", fieldtype="Check")
+			self.add_column(label=_("Cheque Reference Date"), fieldname="reference_date", fieldtype="Data")
 
 		if self.filters.party_type == "Customer":
 			self.add_column(label=_("Customer LPO"), fieldname="po_no", fieldtype="Data")
@@ -985,6 +1027,8 @@ class ReceivablePayableReport(object):
 				fieldtype="Link",
 				options="Supplier Group",
 			)
+
+		
 
 	def add_column(self, label, fieldname=None, fieldtype="Currency", options=None, width=120):
 		if not fieldname:

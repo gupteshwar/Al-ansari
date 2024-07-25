@@ -1,0 +1,60 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-18 11:01:27.034390",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "attach_document",
+  "column_break_mj0g2",
+  "select_document",
+  "update_data"
+ ],
+ "fields": [
+  {
+   "fieldname": "attach_document",
+   "fieldtype": "Attach",
+   "label": "Attach Document"
+  },
+  {
+   "fieldname": "update_data",
+   "fieldtype": "Button",
+   "label": "Update data"
+  },
+  {
+   "fieldname": "column_break_mj0g2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "select_document",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Select Document",
+   "options": "\nPurchase Invoice\nSales Invoice",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-07-24 08:41:56.528298",
+ "modified_by": "Administrator",
+ "module": "Al Ansari",
+ "name": "Update Orion ID in Purchase Invoice",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

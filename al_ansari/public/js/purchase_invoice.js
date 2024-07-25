@@ -1,5 +1,7 @@
 frappe.ui.form.on('Purchase Invoice',{
     before_save:function (frm) {
+        frm.set_df_property('cost_center', 'read_only', 0);
+        frm.set_df_property('project', 'read_only', 0);
         // validate_posting_date(frm)
     },
     onload_post_render:function(frm) {
@@ -27,6 +29,8 @@ frappe.ui.form.on('Purchase Invoice',{
         hide_child_table_buttons(event,frm)
     },
     onload: function(frm) {
+        frm.set_df_property('cost_center', 'read_only', 0);
+        frm.set_df_property('project', 'read_only', 0);
         if(frappe.user.has_role("Accounts Manager") || frappe.user.has_role("System Manager")){
             frm.set_df_property('set_posting_time', 'read_only', 0)
         }else{
@@ -144,7 +148,7 @@ function hide_child_table_buttons(event,frm) {
         });
         if(hasLinkedReferenceOrder == true) {
             if (event != 'rate'){
-                frm.fields_dict.items.grid.update_docfield_property("rate", "read_only", 1);
+                frm.fields_dict.items.grid.update_docfield_property("rate", "read_only", 0);
             }
 
             $('*[data-fieldname="items"]').find('.grid-download').hide();
