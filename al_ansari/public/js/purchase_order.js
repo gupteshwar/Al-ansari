@@ -73,6 +73,14 @@ frappe.ui.form.on("Purchase Order",{
     // }
 })
 
+
+// frappe.ui.form.on("Purchase Order Item",{
+//     rate(frm,cdt,cdn) {
+//         var row = locals[cdt][cdn]
+//         row.price_list_rate = row.rate
+//         frm.refresh_field("price_list_rate")
+//     }
+// }) 
 function validate_posting_date(frm) {
     if(frm.transaction_date){
         var currentdate = get_today()

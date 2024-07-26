@@ -116,7 +116,8 @@ def validate_reference_details(doc,method):
 # 		ref['allocated_amount'] = ref_allocation
 
 def validate_paid_amt_greater_than_outstanding_amt(doc,method):
-
+	if doc.payment_type == "Internal Transfer":
+		return
 	default_currency = frappe.db.get_value("Company", doc.company, 'default_currency')
 	if doc.paid_from_account_currency == default_currency:
 		# if doc.references:
