@@ -232,10 +232,7 @@ frappe.ui.form.on("Payment Entry", {
         if (cur_frm.doc.references_details && cur_frm.doc.references_details.length >0 && frm.doc.bifurcate_cost_center ==1){
             var rd_issue =[]
             cur_frm.doc.references_details.forEach(function (rd) {
-                console.log("----------1", rd.allocated_amount)
-                console.log("----------2", rd.outstanding)
-                console.log("----------3", (rd.allocated_amount > rd.outstanding))
-                console.log("----------4", (rd.allocated_amount<0))
+               
 
                 if ((rd.allocated_amount > rd.outstanding) || (rd.allocated_amount<0) ){
                     rd_issue.push(rd.idx)
