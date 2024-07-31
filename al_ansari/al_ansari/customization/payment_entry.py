@@ -31,6 +31,8 @@ def validate_reference_details(doc,method):
 
 	for rec in doc.references:
 		total_reference_amount += rec.allocated_amount
+		if rec.reference_doctype == "Journal Entry":
+			doc.bifurcate_cost_center = 1
 
 	for rec1 in doc.references_details:
 		total_detail_reference_amount += rec1.allocated_amount
